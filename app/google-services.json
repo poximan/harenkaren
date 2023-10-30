@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "888607814936",
+    "project_id": "harenkaren-37ddf",
+    "storage_bucket": "harenkaren-37ddf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:888607814936:android:59f20d41928d2a58089a6d",
+        "android_client_info": {
+          "package_name": "com.example.demo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBD1e3xebzmbwswW8BjKKuwpbchdqrICGU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
