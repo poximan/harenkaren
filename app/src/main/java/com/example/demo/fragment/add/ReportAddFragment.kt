@@ -25,7 +25,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.example.demo.R
 import com.example.demo.databinding.FragmentReportAddBinding
-import com.example.demo.fragment.list.ReportListFragmentDirections
 import com.example.demo.model.Report
 import com.example.demo.viewModel.ReportViewModel
 import java.io.File
@@ -52,14 +51,15 @@ class ReportAddFragment : Fragment() {
         _binding = FragmentReportAddBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        val fishType = resources.getStringArray(R.array.fishType)
-        val species = resources.getStringArray(R.array.species)
-        val fishTypeArrayAdapter = ArrayAdapter(view.context, R.layout.dropdown_item, fishType)
+        val ptObsCenso = resources.getStringArray(R.array.op_punto_obs_censo)
+        val species = resources.getStringArray(R.array.op_contexto_social)
+        val fishTypeArrayAdapter = ArrayAdapter(view.context, R.layout.dropdown_item, ptObsCenso)
         val speciesArrayAdapter = ArrayAdapter(view.context, R.layout.dropdown_item, species)
 
-        _binding!!.spinner.adapter = fishTypeArrayAdapter
-        _binding!!.spinnerFishSpecies.adapter = speciesArrayAdapter
-        _binding!!.helpButton.setOnClickListener { fishingInfo() }
+        _binding!!.spinnerPtoObsCenso.adapter = fishTypeArrayAdapter
+        _binding!!.spinnerCtxSocial.adapter = speciesArrayAdapter
+        _binding!!.helpPtoObsCenso.setOnClickListener { fishingInfo() }
+
         _binding!!.photoButton.setOnClickListener { takePhoto() }
         _binding!!.continueButton.setOnClickListener { continueToMap() }
 
@@ -133,15 +133,14 @@ class ReportAddFragment : Fragment() {
     private fun continueToMap() {
         if (checkData()) {
             val title = _binding?.titleTextInput?.text.toString()
-            val fishingType = _binding?.spinner?.selectedItem.toString()
-            val specie = _binding?.spinnerFishSpecies?.selectedItem.toString()
+            val fishingType = _binding?.spinnerPtoObsCenso?.selectedItem.toString()
+            val specie = _binding?.spinnerCtxSocial?.selectedItem.toString()
             val sdf = SimpleDateFormat("d/M/yyyy")
             val currentDate = sdf.format(Date())
             val report = Report(0, title, fishingType, specie, currentDate, currentPhotoPath, null, null)
 
             val action = ReportAddFragmentDirections.goToMapsFragmentAction(report)
             findNavController().navigate(action)
-
         }
     }
 

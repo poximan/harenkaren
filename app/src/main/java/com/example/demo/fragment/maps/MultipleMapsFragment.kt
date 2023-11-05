@@ -46,7 +46,7 @@ class MultipleMapsFragment : Fragment() {
             val snippet = String.format(
                 Locale.getDefault(),
                 "Tipo: %1$.15s - Especie: %2$.15s - Fecha: %3$.15s",
-                report.fishing_type,
+                report.fishingType,
                 report.specie,
                 report.date
             )

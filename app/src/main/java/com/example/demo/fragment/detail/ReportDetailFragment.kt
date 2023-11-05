@@ -32,13 +32,13 @@ class ReportDetailFragment : Fragment() {
         _binding = FragmentReportDetailBinding.inflate(inflater, container, false)
 
         _binding!!.titleTextView.text = args.currentReport.title
-        _binding!!.fishingTypeTextView.text = args.currentReport.fishing_type
+        _binding!!.fishingTypeTextView.text = args.currentReport.fishingType
         _binding!!.specieTextView.text = args.currentReport.specie
         _binding!!.dateTextView.text = args.currentReport.date
 
-        val file = File(args.currentReport.photo_path)
+        val file = File(args.currentReport.photoPath)
         if (file.exists()) {
-            val imageBitmap: Bitmap? = BitmapFactory.decodeFile(args.currentReport.photo_path)
+            val imageBitmap: Bitmap? = BitmapFactory.decodeFile(args.currentReport.photoPath)
             rotateImage(imageBitmap!!)
         }
 
@@ -65,7 +65,7 @@ class ReportDetailFragment : Fragment() {
 
     private fun rotateImage(bitmap: Bitmap) {
 
-        val exif = ExifInterface(args.currentReport.photo_path)
+        val exif = ExifInterface(args.currentReport.photoPath)
         val orientation: Int =
             exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
         Log.i("orientation", orientation.toString())

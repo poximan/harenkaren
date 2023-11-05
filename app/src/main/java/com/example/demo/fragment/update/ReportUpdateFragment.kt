@@ -53,18 +53,18 @@ class ReportUpdateFragment : Fragment() {
         val view = binding.root
         model = ViewModelProvider(this)[ReportViewModel::class.java]
 
-        val fishType = resources.getStringArray(R.array.fishType)
-        val species = resources.getStringArray(R.array.species)
-        val fishTypeArrayAdapter = ArrayAdapter(view.context, R.layout.dropdown_item, fishType)
-        val speciesArrayAdapter = ArrayAdapter(view.context, R.layout.dropdown_item, species)
+        val ptObsCenso = resources.getStringArray(R.array.op_punto_obs_censo)
+        val ctxSocial = resources.getStringArray(R.array.op_contexto_social)
+        val fishTypeArrayAdapter = ArrayAdapter(view.context, R.layout.dropdown_item, ptObsCenso)
+        val speciesArrayAdapter = ArrayAdapter(view.context, R.layout.dropdown_item, ctxSocial)
 
-        currentPhotoPath = args.currentReport.photo_path
+        currentPhotoPath = args.currentReport.photoPath
         _binding!!.spinner.adapter = fishTypeArrayAdapter
         _binding!!.spinnerFishSpecies.adapter = speciesArrayAdapter
         _binding!!.helpButton.setOnClickListener { fishingInfo() }
         _binding!!.photoButton.setOnClickListener { takePhoto() }
         _binding!!.continueButton.setOnClickListener { continueToMap() }
-        val fishTypeArrayPosition = fishTypeArrayAdapter.getPosition(args.currentReport.fishing_type)
+        val fishTypeArrayPosition = fishTypeArrayAdapter.getPosition(args.currentReport.fishingType)
         _binding!!.spinner.setSelection(fishTypeArrayPosition)
 
         val fishSpecieArrayPosition = speciesArrayAdapter.getPosition(args.currentReport.specie)
@@ -72,9 +72,9 @@ class ReportUpdateFragment : Fragment() {
 
         _binding!!.updateTitleTextInput.setText(args.currentReport.title)
 
-        val file = File(args.currentReport.photo_path)
+        val file = File(args.currentReport.photoPath)
         if (file.exists()) {
-            val imageBitmap: Bitmap? = BitmapFactory.decodeFile(args.currentReport.photo_path)
+            val imageBitmap: Bitmap? = BitmapFactory.decodeFile(args.currentReport.photoPath)
             rotateImage(imageBitmap!!)
         }
         return view
@@ -197,7 +197,7 @@ class ReportUpdateFragment : Fragment() {
 
         // If empty, photo path did not change
         val photoPath: String = if (currentPhotoPath == "") {
-            args.currentReport.photo_path
+            args.currentReport.photoPath
         } else {
             currentPhotoPath
         }

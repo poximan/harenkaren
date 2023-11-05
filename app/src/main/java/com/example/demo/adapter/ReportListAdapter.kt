@@ -47,14 +47,14 @@ class ReportListAdapter(
         fun bind(report: Report) {
             itemView.setOnClickListener { itemClickListener.onItemClick(report) }
             title.text = "Título: " + report.title
-            fishingType.text = "Tipo: " + report.fishing_type + " - Especie: " + report.specie
+            fishingType.text = "Tipo: " + report.fishingType + " - Especie: " + report.specie
             date.text = report.date
 
-            val file = File(report.photo_path)
+            val file = File(report.photoPath)
             if (file.exists()) {
 
-                val imageBitmap: Bitmap = BitmapFactory.decodeFile(report.photo_path)
-                val exif = ExifInterface(report.photo_path)
+                val imageBitmap: Bitmap = BitmapFactory.decodeFile(report.photoPath)
+                val exif = ExifInterface(report.photoPath)
                 val orientation: Int =
                     exif.getAttributeInt(
                         ExifInterface.TAG_ORIENTATION,

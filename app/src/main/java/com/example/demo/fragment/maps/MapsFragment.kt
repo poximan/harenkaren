@@ -51,7 +51,7 @@ class MapsFragment : Fragment() {
             val snippet = String.format(
                 Locale.getDefault(),
                 "Tipo: %1$.15s - Especie: %2$.15s - Fecha: %3$.15s",
-                args.currentReport.fishing_type,
+                args.currentReport.fishingType,
                 args.currentReport.specie,
                 args.currentReport.date
             )
@@ -144,10 +144,10 @@ class MapsFragment : Fragment() {
             db.collection("reports").document().set(
                 hashMapOf(
                     "title" to args.currentReport.title,
-                    "fishing_type" to args.currentReport.fishing_type,
+                    "fishing_type" to args.currentReport.fishingType,
                     "specie" to args.currentReport.specie,
                     "date" to args.currentReport.date,
-                    "photo_path" to args.currentReport.photo_path,
+                    "photo_path" to args.currentReport.photoPath,
                     "latitude" to args.currentReport.latitude,
                     "longitude" to args.currentReport.longitude
                 )
@@ -176,10 +176,10 @@ class MapsFragment : Fragment() {
 
         db.collection("reports").document(args.currentReport.id.toString()).update(
                 "title", args.currentReport.title,
-                "fishing_type", args.currentReport.fishing_type,
+                "fishing_type", args.currentReport.fishingType,
                 "specie", args.currentReport.specie,
                 "date", args.currentReport.date,
-                "photo_path", args.currentReport.photo_path,
+                "photo_path", args.currentReport.photoPath,
                 "latitude", args.currentReport.latitude,
                 "longitude", args.currentReport.longitude
         )

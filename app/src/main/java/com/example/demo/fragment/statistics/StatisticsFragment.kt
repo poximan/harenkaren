@@ -49,10 +49,10 @@ class StatisticsFragment : Fragment() {
         var currentMonthReports = 0
         var lastSixMonthsReports = 0
 
-        val species = resources.getStringArray(R.array.species)
-        var theSpeciesMap = createMutableMapOf(species)
+        val ctxSocial = resources.getStringArray(R.array.op_contexto_social)
+        var theSpeciesMap = createMutableMapOf(ctxSocial)
 
-        if (!reportList.isEmpty()) {
+        if (reportList.isNotEmpty()) {
             _binding!!.startActivityTextView.text = getFirstDayOfReportList(reportList)
             for (report in reportList) {
                 val splitedDate = report.date.split(delim)
