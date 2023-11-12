@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.FishingInfoActivity">
+    tools:context=".activity.PtoObsHelpActivity">
 
     <RadioGroup
         android:layout_width="wrap_content"
@@ -16,30 +16,18 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <RadioButton
-            android:id="@+id/sportFishingRadioButton"
+            android:id="@+id/censoAltoRadioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Pesca deportiva" />
+            android:text="alto" />
 
         <RadioButton
-            android:id="@+id/scientistFishingRadioButton"
+            android:id="@+id/censoBajoRadioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Pesca científica" />
+            android:text="bajo" />
 
-        <RadioButton
-            android:id="@+id/touristicFishingRadioButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Pesca turística" />
-        <RadioButton
-            android:id="@+id/comercialFishingRadioButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Pesca comercial" />
     </RadioGroup>
 </androidx.constraintlayout.widget.ConstraintLayout>

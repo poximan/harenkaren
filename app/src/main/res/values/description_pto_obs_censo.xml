@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="descriptionPtoObsCenso">
+        <item>
+            Alto: indica el lugar desde donde se realizó el censo (alto = desde acantilado)
+        </item>
+        <item>
+            Bajo: indica el lugar desde donde se realizó el censo (bajo = desde la playa).
+        </item>
+    </string-array>
+</resources>

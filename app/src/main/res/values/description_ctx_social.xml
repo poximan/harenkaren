@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="descriptionCtxSocial">
+        <item>
+            Es el contexto social en el que se encuentra el/los animal/les censado/s.
+            Haren (H): más de dos hembras y un macho
+        </item>
+        <item>
+            Es el contexto social en el que se encuentra el/los animal/les censado/s.
+            Grupo de Harenes (GH): hay más de un macho dentro el harén y no queda claro cuál es el alfa
+        </item>
+        <item>
+            Es el contexto social en el que se encuentra el/los animal/les censado/s.
+            Pareja Solitaria (PS): una hembra y un macho
+        </item>
+        <item>
+            Es el contexto social en el que se encuentra el/los animal/les censado/s.
+            Individuos Solos (S): hembras, juveniles o machos no integrados a harenes
+        </item>
+    </string-array>
+</resources>

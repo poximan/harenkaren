@@ -4,18 +4,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activity.FishingInfoActivity">
+    tools:context=".activity.PtoObsHelpActivity">
 
     <fragment
-        android:id="@+id/fragment_fishing_type"
-        android:name="com.example.demo.fragment.info.FishingTypeFragment"
+        android:id="@+id/fragment_ptoObsHelp"
+        android:name="com.example.demo.fragment.info.PtoObsHelpFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1" />
 
     <fragment
-        android:id="@+id/fragment_fishing_description2"
-        android:name="com.example.demo.fragment.info.DescriptionFishingTypeFragment"
+        android:id="@+id/fragment_ptoObsHelpDescrip"
+        android:name="com.example.demo.fragment.info.PtoObsHelpDescripFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="2" />

@@ -6,13 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.demo.R
-import com.example.demo.databinding.FragmentDescriptionFishingTypeBinding
+import com.example.demo.databinding.FragmentCtxSocialDescripBinding
 
-class DescriptionFishingTypeFragment : Fragment() {
-    lateinit var arrFishingTypeDesc: Array<String>
-    var fishingTypeindex = 0
+class CtxSocialHelpDescripFragment : Fragment() {
+    private lateinit var arrCtxSocial: Array<String>
+    private var ctxSocialIndex = 0
 
-    private var _binding: FragmentDescriptionFishingTypeBinding? = null
+    private var _binding: FragmentCtxSocialDescripBinding? = null
 
     private val binding get() = _binding!!
 
@@ -21,10 +21,10 @@ class DescriptionFishingTypeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        _binding = FragmentDescriptionFishingTypeBinding.inflate(inflater, container, false)
+        _binding = FragmentCtxSocialDescripBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        arrFishingTypeDesc = resources.getStringArray(R.array.descriptionFishingType)
+        arrCtxSocial = resources.getStringArray(R.array.descriptionCtxSocial)
         return view
     }
 
@@ -34,8 +34,7 @@ class DescriptionFishingTypeFragment : Fragment() {
     }
 
     fun changeFishingType(index: Int) {
-        fishingTypeindex = index
-    binding.descriptionFishingTypeTextView.text = arrFishingTypeDesc[fishingTypeindex]
+        ctxSocialIndex = index
+        binding.descriptionCtxSocialTextView.text = arrCtxSocial[ctxSocialIndex]
     }
-
 }

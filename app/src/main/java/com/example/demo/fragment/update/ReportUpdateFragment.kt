@@ -81,7 +81,7 @@ class ReportUpdateFragment : Fragment() {
     }
 
     private fun fishingInfo() {
-        findNavController().navigate(R.id.fishing_info_activity)
+        findNavController().navigate(R.id.ptoObsCenso_activity)
     }
 
     @RequiresApi(Build.VERSION_CODES.N)

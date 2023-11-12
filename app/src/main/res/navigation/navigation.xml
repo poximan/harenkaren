@@ -32,12 +32,21 @@
         android:label="Crear reporte"
         tools:layout="@layout/fragment_report_add">
         <action
-            android:id="@+id/fishingInfoAction"
-            app:destination="@id/fishing_info_activity"
+            android:id="@+id/ptoObsCensoAction"
+            app:destination="@id/ptoObsCenso_activity"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out"
             app:popEnterAnim="@android:anim/fade_in"
             app:popExitAnim="@android:anim/fade_out" />
+
+        <action
+            android:id="@+id/ctxSocialAction"
+            app:destination="@id/ctxSocial_activity"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
+
         <action
             android:id="@+id/goToMapsFragmentAction"
             app:destination="@id/maps_fragment"
@@ -48,10 +57,14 @@
 
     </fragment>
     <activity
-        android:id="@+id/fishing_info_activity"
-        android:name="com.example.demo.activity.FishingInfoActivity"
-        android:label="Información"
-        tools:layout="@layout/activity_fishing_info" />
+        android:id="@+id/ptoObsCenso_activity"
+        android:name="com.example.demo.activity.PtoObsHelpActivity"
+        tools:layout="@layout/activity_pto_obs_censo" />
+    <activity
+        android:id="@+id/ctxSocial_activity"
+        android:name="com.example.demo.activity.CtxSocialHelpActivity"
+        tools:layout="@layout/activity_ctx_social_info" />
+
     <fragment
         android:id="@+id/report_detail_fragment"
         android:name="com.example.demo.fragment.detail.ReportDetailFragment"

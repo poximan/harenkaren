@@ -52,13 +52,16 @@ class ReportAddFragment : Fragment() {
         val view = binding.root
 
         val ptObsCenso = resources.getStringArray(R.array.op_punto_obs_censo)
-        val species = resources.getStringArray(R.array.op_contexto_social)
-        val fishTypeArrayAdapter = ArrayAdapter(view.context, R.layout.dropdown_item, ptObsCenso)
-        val speciesArrayAdapter = ArrayAdapter(view.context, R.layout.dropdown_item, species)
+        val ptObsCensoArrayAdapter = ArrayAdapter(view.context, R.layout.dropdown_item, ptObsCenso)
 
-        _binding!!.spinnerPtoObsCenso.adapter = fishTypeArrayAdapter
-        _binding!!.spinnerCtxSocial.adapter = speciesArrayAdapter
-        _binding!!.helpPtoObsCenso.setOnClickListener { fishingInfo() }
+        _binding!!.spinnerPtoObsCenso.adapter = ptObsCensoArrayAdapter
+        _binding!!.helpPtoObsCenso.setOnClickListener { ptoObsCensoInfo() }
+
+        val ctxSocial = resources.getStringArray(R.array.op_contexto_social)
+        val ctxSocialArrayAdapter = ArrayAdapter(view.context, R.layout.dropdown_item, ctxSocial)
+
+        _binding!!.spinnerCtxSocial.adapter = ctxSocialArrayAdapter
+        _binding!!.helpCtxSocial.setOnClickListener { ctxSocialInfo() }
 
         _binding!!.photoButton.setOnClickListener { takePhoto() }
         _binding!!.continueButton.setOnClickListener { continueToMap() }
@@ -71,8 +74,12 @@ class ReportAddFragment : Fragment() {
         _binding = null
     }
 
-    private fun fishingInfo() {
-        findNavController().navigate(R.id.fishingInfoAction)
+    private fun ptoObsCensoInfo() {
+        findNavController().navigate(R.id.ptoObsCensoAction)
+    }
+
+    private fun ctxSocialInfo() {
+        findNavController().navigate(R.id.ctxSocialAction)
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -202,9 +209,7 @@ class ReportAddFragment : Fragment() {
             80,
             outputStream
         )
-
         _binding!!.captureImageView.setImageBitmap(rotatedBitmap)
     }
-
 
 }
