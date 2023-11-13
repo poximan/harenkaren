@@ -1,5 +1,6 @@
 package com.example.demo.fragment.add
 
+import com.example.demo.adapter.PhotoAdapter
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -11,7 +12,6 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +23,8 @@ import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.demo.R
 import com.example.demo.databinding.FragmentReportAddBinding
 import com.example.demo.model.Report
@@ -39,7 +41,9 @@ class ReportAddFragment : Fragment() {
 
     private var _binding: FragmentReportAddBinding? = null
     private val binding get() = _binding!!
-    lateinit var currentPhotoPath: String
+    private lateinit var currentPhotoPath: String
+    private val photoPaths = mutableListOf<String>()
+    private val adapter = PhotoAdapter(photoPaths)
 
     private val model: ReportViewModel by navGraphViewModels(R.id.app_navigation)
 
@@ -48,8 +52,14 @@ class ReportAddFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         _binding = FragmentReportAddBinding.inflate(inflater, container, false)
         val view = binding.root
+
+        val photoRecyclerView: RecyclerView = _binding?.photoRecyclerView!!
+        val layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        photoRecyclerView.layoutManager = layoutManager
+        photoRecyclerView.adapter = adapter
 
         val ptObsCenso = resources.getStringArray(R.array.op_punto_obs_censo)
         val ptObsCensoArrayAdapter = ArrayAdapter(view.context, R.layout.dropdown_item, ptObsCenso)
@@ -68,6 +78,7 @@ class ReportAddFragment : Fragment() {
 
         return view
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -128,11 +139,13 @@ class ReportAddFragment : Fragment() {
         return image
     }
 
-    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == AppCompatActivity.RESULT_OK) {
-            rotateImage(reduceBitmap())
+            val rotatedBitmap = rotateImage(reduceBitmap())
+            saveRotatedBitmap(rotatedBitmap)
+            photoPaths.add(currentPhotoPath)
+            adapter.notifyDataSetChanged()
         }
     }
 
@@ -140,11 +153,12 @@ class ReportAddFragment : Fragment() {
     private fun continueToMap() {
         if (checkData()) {
             val title = _binding?.titleTextInput?.text.toString()
-            val fishingType = _binding?.spinnerPtoObsCenso?.selectedItem.toString()
-            val specie = _binding?.spinnerCtxSocial?.selectedItem.toString()
+            val ptoObsCenso = _binding?.spinnerPtoObsCenso?.selectedItem.toString()
+            val ctxSocial = _binding?.spinnerCtxSocial?.selectedItem.toString()
             val sdf = SimpleDateFormat("d/M/yyyy")
             val currentDate = sdf.format(Date())
-            val report = Report(0, title, fishingType, specie, currentDate, currentPhotoPath, null, null)
+
+            val report = Report(0, title, ptoObsCenso, ctxSocial, currentDate, currentPhotoPath, null, null)
 
             val action = ReportAddFragmentDirections.goToMapsFragmentAction(report)
             findNavController().navigate(action)
@@ -167,6 +181,10 @@ class ReportAddFragment : Fragment() {
         val targetImageViewWidth = _binding!!.captureImageView.width
         val targetImageViewHeight = _binding!!.captureImageView.height
 
+        if (targetImageViewWidth <= 0 || targetImageViewHeight <= 0) {
+            throw IllegalArgumentException("Las dimensiones del ImageView no pueden ser cero o negativas.")
+        }
+
         val bmOptions = BitmapFactory.Options()
         bmOptions.inJustDecodeBounds = true
         BitmapFactory.decodeFile(currentPhotoPath, bmOptions)
@@ -180,36 +198,23 @@ class ReportAddFragment : Fragment() {
         return BitmapFactory.decodeFile(currentPhotoPath, bmOptions)
     }
 
-    private fun rotateImage(bitmap: Bitmap) {
-
+    private fun rotateImage(bitmap: Bitmap): Bitmap {
         val exif = ExifInterface(currentPhotoPath)
-        val orientation: Int =
-            exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
-        Log.i("orientation", orientation.toString())
+        val orientation: Int = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
 
         val matrix = Matrix()
         when (orientation) {
-            ExifInterface.ORIENTATION_ROTATE_90 -> {
-                matrix.setRotate(90F)
-            }
-            ExifInterface.ORIENTATION_ROTATE_180 -> {
-                matrix.setRotate(180F)
-            }
-            ExifInterface.ORIENTATION_ROTATE_270 -> {
-                matrix.setRotate(270F)
-            }
+            ExifInterface.ORIENTATION_ROTATE_90 -> matrix.setRotate(90F)
+            ExifInterface.ORIENTATION_ROTATE_180 -> matrix.setRotate(180F)
+            ExifInterface.ORIENTATION_ROTATE_270 -> matrix.setRotate(270F)
         }
 
-        val rotatedBitmap =
-            Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
-
-        val outputStream: FileOutputStream = FileOutputStream(currentPhotoPath)
-        rotatedBitmap?.compress(
-            Bitmap.CompressFormat.JPEG,
-            80,
-            outputStream
-        )
-        _binding!!.captureImageView.setImageBitmap(rotatedBitmap)
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
     }
 
+    private fun saveRotatedBitmap(rotatedBitmap: Bitmap) {
+        val outputStream: FileOutputStream = FileOutputStream(currentPhotoPath)
+        rotatedBitmap.compress(Bitmap.CompressFormat.JPEG, 80, outputStream)
+        _binding!!.captureImageView.setImageBitmap(rotatedBitmap)
+    }
 }

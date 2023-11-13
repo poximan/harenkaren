@@ -18,10 +18,10 @@ data class Report(
     @ColumnInfo(name = "title")
     var title: String,
 
-    @ColumnInfo(name = "fishing_type")
+    @ColumnInfo(name = "pto_obs_censo")
     var fishingType: String,
 
-    @ColumnInfo(name = "specie")
+    @ColumnInfo(name = "ctx_social")
     var specie: String,
 
     @ColumnInfo(name = "date")
@@ -35,5 +35,9 @@ data class Report(
 
     @ColumnInfo(name="longitude")
     var longitude: Double?
-):Parcelable
+):Parcelable {
+    override fun describeContents(): Int {
+        TODO("Not yet implemented")
+    }
+}
 

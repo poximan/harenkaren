@@ -96,6 +96,4 @@ class ReportListAdapter(
     interface OnReportClickListener {
         fun onItemClick(report: Report)
     }
-
-
 }
