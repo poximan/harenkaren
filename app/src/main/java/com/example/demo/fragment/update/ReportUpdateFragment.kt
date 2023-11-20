@@ -70,8 +70,6 @@ class ReportUpdateFragment : Fragment() {
         val fishSpecieArrayPosition = speciesArrayAdapter.getPosition(args.currentReport.specie)
         _binding!!.spinnerFishSpecies.setSelection(fishSpecieArrayPosition)
 
-        _binding!!.updateTitleTextInput.setText(args.currentReport.title)
-
         val file = File(args.currentReport.photoPath)
         if (file.exists()) {
             val imageBitmap: Bitmap? = BitmapFactory.decodeFile(args.currentReport.photoPath)
@@ -190,7 +188,6 @@ class ReportUpdateFragment : Fragment() {
     }
 
     private fun continueToMap() {
-        val title = _binding?.updateTitleTextInput?.text.toString()
         val fishingType = _binding?.spinner?.selectedItem.toString()
         val specie = _binding?.spinnerFishSpecies?.selectedItem.toString()
         val date = args.currentReport.date
@@ -201,7 +198,7 @@ class ReportUpdateFragment : Fragment() {
         } else {
             currentPhotoPath
         }
-        val updatedReport = Report(args.currentReport.id, title, fishingType, specie, date, photoPath, args.currentReport.latitude, args.currentReport.longitude)
+        val updatedReport = Report(args.currentReport.id, fishingType, specie, date, photoPath, args.currentReport.latitude, args.currentReport.longitude)
         val action = ReportUpdateFragmentDirections.goToMapsFragmentFromReportUpdateFragment(updatedReport)
         findNavController().navigate(action)
     }

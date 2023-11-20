@@ -1,7 +1,9 @@
 package com.example.demo.fragment.add
 
+import android.Manifest
 import com.example.demo.adapter.PhotoAdapter
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
@@ -12,6 +14,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,16 +22,16 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.demo.R
 import com.example.demo.databinding.FragmentReportAddBinding
 import com.example.demo.model.Report
-import com.example.demo.viewModel.ReportViewModel
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -36,6 +39,7 @@ import java.util.*
 import kotlin.math.min
 
 const val REQUEST_TAKE_PHOTO = 1
+const val PERMISSION_REQUEST_CODE = 2
 
 class ReportAddFragment : Fragment() {
 
@@ -44,8 +48,6 @@ class ReportAddFragment : Fragment() {
     private lateinit var currentPhotoPath: String
     private val photoPaths = mutableListOf<String>()
     private val adapter = PhotoAdapter(photoPaths)
-
-    private val model: ReportViewModel by navGraphViewModels(R.id.app_navigation)
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
@@ -57,7 +59,8 @@ class ReportAddFragment : Fragment() {
         val view = binding.root
 
         val photoRecyclerView: RecyclerView = _binding?.photoRecyclerView!!
-        val layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        val layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         photoRecyclerView.layoutManager = layoutManager
         photoRecyclerView.adapter = adapter
 
@@ -95,6 +98,42 @@ class ReportAddFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.N)
     private fun takePhoto() {
+        Log.d("depurando codigo", "hasta aca llego")
+
+        // Verificar permisos
+        if (checkPermissions()) {
+            // Los permisos están concedidos, continuar con la captura de fotos
+            launchCamera()
+        } else {
+            // Los permisos no están concedidos, solicitarlos al usuario
+            requestPermissions()
+        }
+    }
+
+    private fun checkPermissions(): Boolean = // Verificar permisos
+        ContextCompat.checkSelfPermission(
+            requireContext(),
+            Manifest.permission.CAMERA
+        ) == PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ) == PackageManager.PERMISSION_GRANTED
+
+    private fun requestPermissions() {
+        // Solicitar permisos al usuario
+        ActivityCompat.requestPermissions(
+            requireActivity(),
+            arrayOf(
+                Manifest.permission.CAMERA,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ),
+            PERMISSION_REQUEST_CODE
+        )
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    private fun launchCamera() {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             // Ensure that there's a camera activity to handle the intent
             takePictureIntent.resolveActivity(activity?.packageManager!!)?.also {
@@ -117,6 +156,30 @@ class ReportAddFragment : Fragment() {
 
                     startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO)
                 }
+            }
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            // Verificar si los permisos fueron concedidos por el usuario
+            if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
+                // Los permisos fueron concedidos, continuar con la captura de fotos
+                launchCamera()
+            } else {
+                // Los permisos no fueron concedidos, mostrar un mensaje al usuario
+                Toast.makeText(
+                    requireContext(),
+                    "Los permisos son necesarios para capturar fotos",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -151,30 +214,17 @@ class ReportAddFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.N)
     private fun continueToMap() {
-        if (checkData()) {
-            val title = _binding?.titleTextInput?.text.toString()
-            val ptoObsCenso = _binding?.spinnerPtoObsCenso?.selectedItem.toString()
-            val ctxSocial = _binding?.spinnerCtxSocial?.selectedItem.toString()
-            val sdf = SimpleDateFormat("d/M/yyyy")
-            val currentDate = sdf.format(Date())
 
-            val report = Report(0, title, ptoObsCenso, ctxSocial, currentDate, currentPhotoPath, null, null)
+        val ptoObsCenso = _binding?.spinnerPtoObsCenso?.selectedItem.toString()
+        val ctxSocial = _binding?.spinnerCtxSocial?.selectedItem.toString()
+        val sdf = SimpleDateFormat("d/M/yyyy")
+        val currentDate = sdf.format(Date())
 
-            val action = ReportAddFragmentDirections.goToMapsFragmentAction(report)
-            findNavController().navigate(action)
-        }
-    }
+        val report =
+            Report(0, ptoObsCenso, ctxSocial, currentDate, currentPhotoPath, null, null)
 
-    private fun checkData(): Boolean {
-        return if (_binding!!.titleTextInput.text?.isEmpty() == true) {
-            Toast.makeText(activity, "Ingrese un título para la imagen", Toast.LENGTH_LONG).show()
-            false
-        } else if (_binding!!.captureImageView.drawable == null) {
-            Toast.makeText(activity, "Capture una imagen", Toast.LENGTH_LONG).show()
-            false
-        } else {
-            true
-        }
+        val action = ReportAddFragmentDirections.goToMapsFragmentAction(report)
+        findNavController().navigate(action)
     }
 
     private fun reduceBitmap(): Bitmap {
@@ -200,7 +250,8 @@ class ReportAddFragment : Fragment() {
 
     private fun rotateImage(bitmap: Bitmap): Bitmap {
         val exif = ExifInterface(currentPhotoPath)
-        val orientation: Int = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
+        val orientation: Int =
+            exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
 
         val matrix = Matrix()
         when (orientation) {

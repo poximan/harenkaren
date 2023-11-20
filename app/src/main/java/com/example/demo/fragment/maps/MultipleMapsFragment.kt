@@ -53,7 +53,6 @@ class MultipleMapsFragment : Fragment() {
             marker = googleMap.addMarker(
                 MarkerOptions()
                     .position(pos)
-                    .title("Título: " + report.title)
                     .snippet(snippet)
                     .icon(BitmapDescriptorFactory.fromBitmap(smallMarker!!))
             )

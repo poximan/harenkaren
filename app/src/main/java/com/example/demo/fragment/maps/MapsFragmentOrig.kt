@@ -1,17 +1,12 @@
 package com.example.demo.fragment.maps
 
-import android.annotation.SuppressLint
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -27,14 +22,10 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.Locale
 
-const val PERMISSION_REQUEST_CODE = 1
-
-class MapsFragment : Fragment() {
+class MapsFragmentOrig : Fragment() {
 
     private var _binding: FragmentMapsBinding? = null
     private val binding get() = _binding!!
@@ -43,102 +34,42 @@ class MapsFragment : Fragment() {
     private var marker: Marker? = null
     private var smallMarker: Bitmap? = null
 
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
-
     private val db = FirebaseFirestore.getInstance()
 
-    @SuppressLint("MissingPermission")
     private val callback = OnMapReadyCallback { googleMap ->
 
         val height = 120
         val width = 120
-        val bitmapdraw =
-            ContextCompat.getDrawable(requireContext(), R.drawable.map_icon) as BitmapDrawable
+        val bitmapdraw = resources.getDrawable(R.drawable.map_icon) as BitmapDrawable
         val b = bitmapdraw.bitmap
         smallMarker = Bitmap.createScaledBitmap(b, width, height, false)
 
-        if (hasLocationPermission()) {
-            fusedLocationClient.lastLocation
-                .addOnSuccessListener { location ->
-                    if (location != null) {
-                        val currentLatLng = LatLng(location.latitude, location.longitude)
-                        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 12F))
-                    }
-                }
-                .addOnFailureListener { e ->
-                    Log.e("Location", "Error al obtener la ubicación: ${e.message}")
-                }
-
-            if (args.currentReport.latitude != null && args.currentReport.longitude != null) {
-                val pos = LatLng(args.currentReport.latitude!!, args.currentReport.longitude!!)
-                val snippet = String.format(
-                    Locale.getDefault(),
-                    "Tipo: %1$.15s - Especie: %2$.15s - Fecha: %3$.15s",
-                    args.currentReport.fishingType,
-                    args.currentReport.specie,
-                    args.currentReport.date
-                )
-                marker = googleMap.addMarker(
-                    MarkerOptions()
-                        .position(pos)
-                        .snippet(snippet)
-                        .icon(BitmapDescriptorFactory.fromBitmap(smallMarker!!))
-                )
-                marker!!.showInfoWindow()
-                if (findNavController().previousBackStackEntry?.destination?.displayName!! == "com.example.demo:id/report_update_fragment") {
-                    _binding!!.sendReportActionButton.show()
-                    setMapLongClick(googleMap)
-                }
-            } else {
+        if (args.currentReport.latitude != null && args.currentReport.longitude != null) {
+            val pos = LatLng(args.currentReport.latitude!!, args.currentReport.longitude!!)
+            val snippet = String.format(
+                Locale.getDefault(),
+                "Tipo: %1$.15s - Especie: %2$.15s - Fecha: %3$.15s",
+                args.currentReport.fishingType,
+                args.currentReport.specie,
+                args.currentReport.date
+            )
+            marker = googleMap.addMarker(
+                MarkerOptions()
+                    .position(pos)
+                    .snippet(snippet)
+                    .icon(BitmapDescriptorFactory.fromBitmap(smallMarker!!))
+            )
+            marker!!.showInfoWindow()
+            if (findNavController().previousBackStackEntry?.destination?.displayName!! == "com.example.demo:id/report_update_fragment") {
                 _binding!!.sendReportActionButton.show()
                 setMapLongClick(googleMap)
             }
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker!!.position, 12F))
         } else {
-            // Si no tienes permisos, solicítalos
-            requestPermissions()
-        }
-    }
-
-    // Función para verificar si tienes permisos de ubicación
-    private fun hasLocationPermission(): Boolean {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            ContextCompat.checkSelfPermission(
-                requireContext(),
-                android.Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-        } else {
-            // Si la versión de Android es anterior a Marshmallow, los permisos se otorgan en el manifiesto
-            true
-        }
-    }
-
-    // Función para solicitar permisos de ubicación
-    private fun requestPermissions() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(
-                arrayOf(
-                    android.Manifest.permission.ACCESS_FINE_LOCATION,
-                    android.Manifest.permission.ACCESS_COARSE_LOCATION
-                ),
-                PERMISSION_REQUEST_CODE
-            )
-        }
-    }
-
-    // Sobrescribe este método para manejar el resultado de la solicitud de permisos
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == PERMISSION_REQUEST_CODE) {
-            // Verificar si el usuario concedió los permisos
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // TODO El usuario concedió permisos, pero hay que levantar a mano el servicio
-            } else {
-                // TODO El usuario no concedió los permisos, mostrar un mensaje
-            }
+            _binding!!.sendReportActionButton.show()
+            val pos = LatLng(-42.78469053756446, -65.00895665709373)
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, 12F))
+            setMapLongClick(googleMap)
         }
     }
 
@@ -151,8 +82,6 @@ class MapsFragment : Fragment() {
         _binding = FragmentMapsBinding.inflate(inflater, container, false)
         val view = binding.root
         model = ViewModelProvider(this)[ReportViewModel::class.java]
-
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
 
         _binding!!.goBackActionButton.setOnClickListener { goBack() }
         if (findNavController().previousBackStackEntry?.destination?.displayName!! == "com.example.demo:id/report_update_fragment") {
@@ -172,7 +101,7 @@ class MapsFragment : Fragment() {
     private fun setMapLongClick(map: GoogleMap) {
 
         map.setOnMapLongClickListener { latLng ->
-            // Snippet --> texto adicional que se muestra debajo del título.
+            // Snippet --> texto adicional que se muestra debajo del titulo.
             val snippet = String.format(
                 Locale.getDefault(),
                 "Lat: %1$.5f, Long: %2$.5f",
@@ -207,6 +136,7 @@ class MapsFragment : Fragment() {
 
     private fun sendReport() {
         if (checkCoords()) {
+
             db.collection("reports").document().set(
                 hashMapOf(
                     "fishing_type" to args.currentReport.fishingType,
@@ -240,12 +170,12 @@ class MapsFragment : Fragment() {
          Esto habría que verlo en el futuro si el proyecto prospera
         */
         db.collection("reports").document(args.currentReport.id.toString()).update(
-            "fishing_type", args.currentReport.fishingType,
-            "specie", args.currentReport.specie,
-            "date", args.currentReport.date,
-            "photo_path", args.currentReport.photoPath,
-            "latitude", args.currentReport.latitude,
-            "longitude", args.currentReport.longitude
+                "fishing_type", args.currentReport.fishingType,
+                "specie", args.currentReport.specie,
+                "date", args.currentReport.date,
+                "photo_path", args.currentReport.photoPath,
+                "latitude", args.currentReport.latitude,
+                "longitude", args.currentReport.longitude
         )
 
         model.updateReport(args.currentReport)

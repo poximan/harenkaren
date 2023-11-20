@@ -31,7 +31,6 @@ class ReportDetailFragment : Fragment() {
     ): View {
         _binding = FragmentReportDetailBinding.inflate(inflater, container, false)
 
-        _binding!!.titleTextView.text = args.currentReport.title
         _binding!!.fishingTypeTextView.text = args.currentReport.fishingType
         _binding!!.specieTextView.text = args.currentReport.specie
         _binding!!.dateTextView.text = args.currentReport.date

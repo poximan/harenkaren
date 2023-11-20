@@ -73,6 +73,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:20.0.5'
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.google.firebase:firebase-firestore-ktx:24.1.2'
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
 
 
     testImplementation 'junit:junit:4.13.2'

@@ -1,7 +1,4 @@
 package com.example.demo.model
-
-import android.graphics.Bitmap
-import android.os.Parcel
 import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -14,9 +11,6 @@ data class Report(
 
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
-
-    @ColumnInfo(name = "title")
-    var title: String,
 
     @ColumnInfo(name = "pto_obs_censo")
     var fishingType: String,
