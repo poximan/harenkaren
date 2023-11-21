@@ -9,9 +9,8 @@ import com.example.demo.R
 import com.example.demo.databinding.FragmentPtoObsCensoDescripBinding
 
 class PtoObsHelpDescripFragment : Fragment() {
-    private lateinit var arrDesc: Array<String>
-    private var ptoObsCensoIndex = 0
 
+    private lateinit var arr: Array<String>
     private var _binding: FragmentPtoObsCensoDescripBinding? = null
 
     private val binding get() = _binding!!
@@ -24,7 +23,7 @@ class PtoObsHelpDescripFragment : Fragment() {
         _binding = FragmentPtoObsCensoDescripBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        arrDesc = resources.getStringArray(R.array.descriptionPtoObsCenso)
+        arr = resources.getStringArray(R.array.descriptionPtoObsCenso)
         return view
     }
 
@@ -34,7 +33,6 @@ class PtoObsHelpDescripFragment : Fragment() {
     }
 
     fun change(index: Int) {
-        this.ptoObsCensoIndex = index
-        binding.descriptionPtoObsTextView.text = arrDesc[ptoObsCensoIndex]
+        binding.descriptionPtoObsTextView.text = arr[index]
     }
 }

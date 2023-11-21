@@ -60,7 +60,7 @@ class HomeFragment : Fragment() {
     private fun logOut() {
         var builder = AlertDialog.Builder(activity)
         builder.setTitle("Salir")
-        builder.setMessage("¿Desea salir de Fishing App?")
+        builder.setMessage("¿confirma salir?")
         builder.setPositiveButton("Si", DialogInterface.OnClickListener { _, _ ->
             exitProcess(0)
         })

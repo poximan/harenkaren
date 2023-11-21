@@ -64,24 +64,32 @@ class ReportAddFragment : Fragment() {
         photoRecyclerView.layoutManager = layoutManager
         photoRecyclerView.adapter = adapter
 
+        // punto de observacion
         val ptObsCenso = resources.getStringArray(R.array.op_punto_obs_censo)
         val ptObsCensoArrayAdapter = ArrayAdapter(view.context, R.layout.dropdown_item, ptObsCenso)
 
         _binding!!.spinnerPtoObsCenso.adapter = ptObsCensoArrayAdapter
         _binding!!.helpPtoObsCenso.setOnClickListener { ptoObsCensoInfo() }
 
+        // contexto social
         val ctxSocial = resources.getStringArray(R.array.op_contexto_social)
         val ctxSocialArrayAdapter = ArrayAdapter(view.context, R.layout.dropdown_item, ctxSocial)
 
         _binding!!.spinnerCtxSocial.adapter = ctxSocialArrayAdapter
         _binding!!.helpCtxSocial.setOnClickListener { ctxSocialInfo() }
 
+        // tipo de sustrato en playa
+        val tpoSustrato = resources.getStringArray(R.array.op_tipo_sustrato)
+        val tpoSustratoArrayAdapter = ArrayAdapter(view.context, R.layout.dropdown_item, tpoSustrato)
+
+        _binding!!.spinnerTpoSustrato.adapter = tpoSustratoArrayAdapter
+        _binding!!.helpTpoSustrato.setOnClickListener { tpoSustratoInfo() }
+
         _binding!!.photoButton.setOnClickListener { takePhoto() }
         _binding!!.continueButton.setOnClickListener { continueToMap() }
 
         return view
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -94,6 +102,10 @@ class ReportAddFragment : Fragment() {
 
     private fun ctxSocialInfo() {
         findNavController().navigate(R.id.ctxSocialAction)
+    }
+
+    private fun tpoSustratoInfo() {
+        findNavController().navigate(R.id.tpoSustratoAction)
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -220,11 +232,15 @@ class ReportAddFragment : Fragment() {
         val sdf = SimpleDateFormat("d/M/yyyy")
         val currentDate = sdf.format(Date())
 
-        val report =
-            Report(0, ptoObsCenso, ctxSocial, currentDate, currentPhotoPath, null, null)
+        try {
+            val report =
+                Report(0, ptoObsCenso, ctxSocial, currentDate, currentPhotoPath, null, null)
+            val action = ReportAddFragmentDirections.goToMapsFragmentAction(report)
 
-        val action = ReportAddFragmentDirections.goToMapsFragmentAction(report)
-        findNavController().navigate(action)
+            findNavController().navigate(action)
+        } catch (e: UninitializedPropertyAccessException) {
+            Toast.makeText(requireContext(), "Debe tomar una foto primero", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun reduceBitmap(): Bitmap {

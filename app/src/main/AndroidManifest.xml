@@ -20,7 +20,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBD1e3xebzmbwswW8BjKKuwpbchdqrICGU" />
+            android:value="AIzaSyAuAoMgHLl4iK6IunyQgFK0kl5Y0xyzwXI"/>
 
         <activity
             android:name=".activity.MainActivity"
@@ -40,6 +40,12 @@
 
         <activity
             android:name=".activity.CtxSocialHelpActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:taskAffinity="" />
+
+        <activity
+            android:name=".activity.TipoSustratoHelpActivity"
             android:excludeFromRecents="true"
             android:exported="false"
             android:taskAffinity="" />
@@ -70,11 +76,6 @@
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
-        </service>
-
-        <service
-            android:name="MyNavigationService"
-            android:foregroundServiceType="location">
         </service>
 
 </application>

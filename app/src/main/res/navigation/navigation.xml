@@ -48,6 +48,10 @@
             app:popExitAnim="@android:anim/fade_out" />
 
         <action
+            android:id="@+id/tpoSustratoAction"
+            app:destination="@id/tpoSustrato_activity" />
+
+        <action
             android:id="@+id/goToMapsFragmentAction"
             app:destination="@id/maps_fragment"
             app:enterAnim="@android:anim/fade_in"
@@ -60,10 +64,16 @@
         android:id="@+id/ptoObsCenso_activity"
         android:name="com.example.demo.activity.PtoObsHelpActivity"
         tools:layout="@layout/activity_pto_obs_censo" />
+
     <activity
         android:id="@+id/ctxSocial_activity"
         android:name="com.example.demo.activity.CtxSocialHelpActivity"
         tools:layout="@layout/activity_ctx_social_info" />
+
+    <activity
+        android:id="@+id/tpoSustrato_activity"
+        android:name="com.example.demo.activity.TipoSustratoHelpActivity"
+        tools:layout="@layout/activity_tpo_sustrato_info" />
 
     <fragment
         android:id="@+id/report_detail_fragment"

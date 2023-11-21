@@ -7,11 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.demo.R
 import com.example.demo.databinding.FragmentCtxSocialDescripBinding
+import com.example.demo.databinding.FragmentTpoSustratoDescripBinding
 
-class CtxSocialHelpDescripFragment : Fragment() {
+class TipoSustratoHelpDescripFragment : Fragment() {
+
     private lateinit var arr: Array<String>
-
-    private var _binding: FragmentCtxSocialDescripBinding? = null
+    private var _binding: FragmentTpoSustratoDescripBinding? = null
 
     private val binding get() = _binding!!
 
@@ -20,10 +21,10 @@ class CtxSocialHelpDescripFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        _binding = FragmentCtxSocialDescripBinding.inflate(inflater, container, false)
+        _binding = FragmentTpoSustratoDescripBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        arr = resources.getStringArray(R.array.descriptionCtxSocial)
+        arr = resources.getStringArray(R.array.descriptionTpoSustrato)
         return view
     }
 
@@ -33,6 +34,6 @@ class CtxSocialHelpDescripFragment : Fragment() {
     }
 
     fun change(index: Int) {
-        binding.descriptionCtxSocialTextView.text = arr[index]
+        binding.descriptionTpoSustratoTextView.text = arr[index]
     }
 }

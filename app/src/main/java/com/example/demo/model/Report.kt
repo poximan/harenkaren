@@ -1,4 +1,5 @@
 package com.example.demo.model
+import android.os.Parcel
 import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity

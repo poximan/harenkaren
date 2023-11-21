@@ -13,7 +13,7 @@
         android:layout_marginStart="50dp"
         android:layout_marginTop="36dp"
         android:gravity="center"
-        android:text="Tipo de pesca:"
+        android:text="@string/punto_obs_censo"
         android:textColor="@color/black"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,18 +28,7 @@
         android:contentDescription="Tipo de pesca"
         android:gravity="center"
         android:inputType="none"
-        android:text="@string/fish_prompt"
         app:layout_constraintStart_toEndOf="@+id/textView"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/helpButton"
-        android:layout_width="56dp"
-        android:layout_height="64dp"
-        android:layout_marginTop="27dp"
-        android:layout_marginEnd="30dp"
-        android:drawableLeft="@drawable/ic_help"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -48,7 +37,7 @@
         android:layout_height="50dp"
         android:layout_marginStart="50dp"
         android:gravity="center"
-        android:text="Especie:"
+        android:text="@string/contexto_social"
         android:textColor="@color/black"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,7 +51,6 @@
         android:contentDescription="Especie"
         android:gravity="center"
         android:inputType="none"
-        android:text="@string/fish_prompt"
         app:layout_constraintStart_toEndOf="@+id/textView"
         app:layout_constraintTop_toBottomOf="@+id/spinner" />
 
@@ -88,19 +76,6 @@
         app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
-
-    <EditText
-        android:id="@+id/updateTitleTextInput"
-        android:layout_width="328dp"
-        android:layout_height="51dp"
-        android:layout_marginStart="39dp"
-        android:layout_marginEnd="39dp"
-        android:layout_marginBottom="24dp"
-        android:hint="Título imagen"
-        android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/updateCaptureImageView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/continueButton"

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="descriptionTpoSustrato">
+        <item>
+            Es tipo de sustrato para la porcion de playa (Pya) que ocupa él o los mamiferos censados.
+            Arena (A)
+        </item>
+        <item>
+            Es tipo de sustrato para la porcion de playa (Pya) que ocupa él o los mamiferos censados.
+            Canto Rodado (CR)
+        </item>
+        <item>
+            Es tipo de sustrato para la porcion de playa (Pya) que ocupa él o los mamiferos censados.
+            Mezcla (M)
+        </item>
+        <item>
+            Es tipo de sustrato para la porcion de playa (Pya) que ocupa él o los mamiferos censados.
+            Restinga (R)
+        </item>
+    </string-array>
+</resources>

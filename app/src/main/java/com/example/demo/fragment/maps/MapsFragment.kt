@@ -28,13 +28,16 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.Locale
 
-const val PERMISSION_REQUEST_CODE = 1
-
 class MapsFragment : Fragment() {
+
+    object DbConstants {
+        const val PERMISSION_REQUEST_CODE = 1
+    }
 
     private var _binding: FragmentMapsBinding? = null
     private val binding get() = _binding!!
@@ -58,7 +61,7 @@ class MapsFragment : Fragment() {
         smallMarker = Bitmap.createScaledBitmap(b, width, height, false)
 
         if (hasLocationPermission()) {
-            fusedLocationClient.lastLocation
+            fusedLocationClient.getCurrentLocation(LocationRequest.PRIORITY_HIGH_ACCURACY, null)
                 .addOnSuccessListener { location ->
                     if (location != null) {
                         val currentLatLng = LatLng(location.latitude, location.longitude)
@@ -120,7 +123,7 @@ class MapsFragment : Fragment() {
                     android.Manifest.permission.ACCESS_FINE_LOCATION,
                     android.Manifest.permission.ACCESS_COARSE_LOCATION
                 ),
-                PERMISSION_REQUEST_CODE
+                DbConstants.PERMISSION_REQUEST_CODE
             )
         }
     }
@@ -132,7 +135,7 @@ class MapsFragment : Fragment() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == PERMISSION_REQUEST_CODE) {
+        if (requestCode == DbConstants.PERMISSION_REQUEST_CODE) {
             // Verificar si el usuario concedió los permisos
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // TODO El usuario concedió permisos, pero hay que levantar a mano el servicio

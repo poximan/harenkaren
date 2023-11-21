@@ -1,22 +1,26 @@
 <resources>
     <string name="app_name">Haren Karen</string>
 
-    <string name="fish_prompt">Tipo de pesca</string>
-
     <string name="punto_obs_censo">Punto de observacion:</string>
-
     <string-array name="op_punto_obs_censo">
         <item id="alto">Alto</item>
         <item id="bajo">Bajo</item>
     </string-array>
 
     <string name="contexto_social">Ctx social (Ref):</string>
-
     <string-array name="op_contexto_social">
         <item id="H">haren(H)</item>
         <item id="GH">gpo harenes(GH)</item>
         <item id="PS">pja solitaria(PS)</item>
         <item id="S">indiv solo(S)</item>
+    </string-array>
+
+    <string name="tipo_sustrato">Tipo sustrato (Pya)</string>
+    <string-array name="op_tipo_sustrato">
+        <item id="A">arena(A)</item>
+        <item id="CR">canto rodado(CR)</item>
+        <item id="M">mezcla(M)</item>
+        <item id="R">restinga(R)</item>
     </string-array>
 
     <string name="title_activity_maps">Agregar ubicación</string>
@@ -65,6 +69,6 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
-    <string name="help_btn"></string>
+    <string name="fecha_censo">Fecha censo</string>
 
 </resources>

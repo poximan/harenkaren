@@ -40,7 +40,7 @@ class ReportUpdateFragment : Fragment() {
     private var _binding: FragmentReportUpdateBinding? = null
     private val binding get() = _binding!!
     private val args: ReportUpdateFragmentArgs by navArgs()
-    lateinit var currentPhotoPath: String
+    private lateinit var currentPhotoPath: String
 
     private lateinit var model: ReportViewModel
 
@@ -61,7 +61,6 @@ class ReportUpdateFragment : Fragment() {
         currentPhotoPath = args.currentReport.photoPath
         _binding!!.spinner.adapter = fishTypeArrayAdapter
         _binding!!.spinnerFishSpecies.adapter = speciesArrayAdapter
-        _binding!!.helpButton.setOnClickListener { fishingInfo() }
         _binding!!.photoButton.setOnClickListener { takePhoto() }
         _binding!!.continueButton.setOnClickListener { continueToMap() }
         val fishTypeArrayPosition = fishTypeArrayAdapter.getPosition(args.currentReport.fishingType)
@@ -76,10 +75,6 @@ class ReportUpdateFragment : Fragment() {
             rotateImage(imageBitmap!!)
         }
         return view
-    }
-
-    private fun fishingInfo() {
-        findNavController().navigate(R.id.ptoObsCenso_activity)
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
