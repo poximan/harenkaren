@@ -70,5 +70,13 @@
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
     <string name="fecha_censo">Fecha censo</string>
+    <string name="sub_ad_metodo_seleccion">Dominante (\u03B1) \nMet. Selecc.</string>
+
+    <string name="s4_ad">S4/Ad</string>
+    <string name="otros_ad">otros SA</string>
+
+    <string name="periferico"><![CDATA[Perif.(<10m)]]></string>
+    <string name="cercano">Cerca(10-50m)</string>
+    <string name="lejos">Lejos(50-100m)</string>
 
 </resources>

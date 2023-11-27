@@ -1,25 +1,26 @@
 package com.example.demo.fragment.add
 
 import android.Manifest
-import com.example.demo.adapter.PhotoAdapter
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.icu.text.SimpleDateFormat
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.media.ExifInterface
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -30,6 +31,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.demo.R
+import com.example.demo.adapter.PhotoAdapter
 import com.example.demo.databinding.FragmentReportAddBinding
 import com.example.demo.model.Report
 import java.io.File
@@ -38,8 +40,9 @@ import java.io.IOException
 import java.util.*
 import kotlin.math.min
 
-const val REQUEST_TAKE_PHOTO = 1
-const val PERMISSION_REQUEST_CODE = 2
+const val REQUEST_TAKE_PHOTO = 2
+const val PERMISSION_REQUEST_CAMERA = 3
+const val PERMISSION_REQUEST_LOCATION = 4
 
 class ReportAddFragment : Fragment() {
 
@@ -48,6 +51,8 @@ class ReportAddFragment : Fragment() {
     private lateinit var currentPhotoPath: String
     private val photoPaths = mutableListOf<String>()
     private val adapter = PhotoAdapter(photoPaths)
+
+    private lateinit var locationManager: LocationManager
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
@@ -58,7 +63,7 @@ class ReportAddFragment : Fragment() {
         _binding = FragmentReportAddBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        val photoRecyclerView: RecyclerView = _binding?.photoRecyclerView!!
+        val photoRecyclerView: RecyclerView = binding.photoRecyclerView
         val layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         photoRecyclerView.layoutManager = layoutManager
@@ -68,27 +73,55 @@ class ReportAddFragment : Fragment() {
         val ptObsCenso = resources.getStringArray(R.array.op_punto_obs_censo)
         val ptObsCensoArrayAdapter = ArrayAdapter(view.context, R.layout.dropdown_item, ptObsCenso)
 
-        _binding!!.spinnerPtoObsCenso.adapter = ptObsCensoArrayAdapter
-        _binding!!.helpPtoObsCenso.setOnClickListener { ptoObsCensoInfo() }
+        binding.spinnerPtoObsCenso.adapter = ptObsCensoArrayAdapter
+        binding.helpPtoObsCenso.setOnClickListener { ptoObsCensoInfo() }
 
         // contexto social
         val ctxSocial = resources.getStringArray(R.array.op_contexto_social)
         val ctxSocialArrayAdapter = ArrayAdapter(view.context, R.layout.dropdown_item, ctxSocial)
 
-        _binding!!.spinnerCtxSocial.adapter = ctxSocialArrayAdapter
-        _binding!!.helpCtxSocial.setOnClickListener { ctxSocialInfo() }
+        binding.spinnerCtxSocial.adapter = ctxSocialArrayAdapter
+        binding.helpCtxSocial.setOnClickListener { ctxSocialInfo() }
 
         // tipo de sustrato en playa
         val tpoSustrato = resources.getStringArray(R.array.op_tipo_sustrato)
         val tpoSustratoArrayAdapter = ArrayAdapter(view.context, R.layout.dropdown_item, tpoSustrato)
 
-        _binding!!.spinnerTpoSustrato.adapter = tpoSustratoArrayAdapter
-        _binding!!.helpTpoSustrato.setOnClickListener { tpoSustratoInfo() }
+        binding.spinnerTpoSustrato.adapter = tpoSustratoArrayAdapter
+        binding.helpTpoSustrato.setOnClickListener { tpoSustratoInfo() }
 
-        _binding!!.photoButton.setOnClickListener { takePhoto() }
-        _binding!!.continueButton.setOnClickListener { continueToMap() }
+        binding.photoButton.setOnClickListener { takePhoto() }
+        binding.continueButton.setOnClickListener { continueToMap() }
+        binding.getPosicion.setOnClickListener { getLocation() }
 
         return view
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val ctxSocialSpinner = view.findViewById<Spinner>(R.id.spinner_ctxSocial)
+        val ctxSocial = resources.getStringArray(R.array.op_contexto_social)
+
+        val linearLayout4 = view.findViewById<LinearLayout>(R.id.linearLayout4)
+        val linearLayout5 = view.findViewById<LinearLayout>(R.id.linearLayout5)
+
+        ctxSocialSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if (ctxSocialSpinner.selectedItem == ctxSocial[0] || ctxSocialSpinner.selectedItem == ctxSocial[1]) {
+                    linearLayout4.visibility = View.VISIBLE
+                    linearLayout5.visibility = View.VISIBLE
+                } else {
+                    linearLayout4.visibility = View.GONE
+                    linearLayout5.visibility = View.GONE
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // No se necesita hacer nada aquí.
+            }
+        }
     }
 
     override fun onDestroyView() {
@@ -110,20 +143,18 @@ class ReportAddFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.N)
     private fun takePhoto() {
-        Log.d("depurando codigo", "hasta aca llego")
-
         // Verificar permisos
-        if (checkPermissions()) {
+        if (checkCameraPermission()) {
             // Los permisos están concedidos, continuar con la captura de fotos
             launchCamera()
         } else {
             // Los permisos no están concedidos, solicitarlos al usuario
-            requestPermissions()
+            requestCameraPermission()
         }
     }
 
-    private fun checkPermissions(): Boolean = // Verificar permisos
-        ContextCompat.checkSelfPermission(
+    private fun checkCameraPermission(): Boolean {
+        return ContextCompat.checkSelfPermission(
             requireContext(),
             Manifest.permission.CAMERA
         ) == PackageManager.PERMISSION_GRANTED &&
@@ -131,16 +162,16 @@ class ReportAddFragment : Fragment() {
                     requireContext(),
                     Manifest.permission.WRITE_EXTERNAL_STORAGE
                 ) == PackageManager.PERMISSION_GRANTED
+    }
 
-    private fun requestPermissions() {
-        // Solicitar permisos al usuario
+    private fun requestCameraPermission() {
         ActivityCompat.requestPermissions(
             requireActivity(),
             arrayOf(
                 Manifest.permission.CAMERA,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
             ),
-            PERMISSION_REQUEST_CODE
+            PERMISSION_REQUEST_CAMERA
         )
     }
 
@@ -180,18 +211,33 @@ class ReportAddFragment : Fragment() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-        if (requestCode == PERMISSION_REQUEST_CODE) {
-            // Verificar si los permisos fueron concedidos por el usuario
-            if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
-                // Los permisos fueron concedidos, continuar con la captura de fotos
-                launchCamera()
-            } else {
-                // Los permisos no fueron concedidos, mostrar un mensaje al usuario
-                Toast.makeText(
-                    requireContext(),
-                    "Los permisos son necesarios para capturar fotos",
-                    Toast.LENGTH_SHORT
-                ).show()
+        when (requestCode) {
+            PERMISSION_REQUEST_CAMERA -> {
+                // Maneja los resultados de los permisos de la cámara
+                if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
+                    // Los permisos de la cámara fueron concedidos, puedes lanzar la cámara
+                    launchCamera()
+                } else {
+                    // Los permisos de la cámara no fueron concedidos, muestra un mensaje al usuario
+                    Toast.makeText(
+                        requireContext(),
+                        "Los permisos de la cámara son necesarios para tomar fotos.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+            PERMISSION_REQUEST_LOCATION -> {
+                // Maneja los resultados de los permisos de ubicación
+                if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
+                    // Los permisos de ubicación fueron concedidos, pero no solicitamos actualizaciones aquí
+                } else {
+                    // Los permisos de ubicación no fueron concedidos, muestra un mensaje al usuario
+                    Toast.makeText(
+                        requireContext(),
+                        "Los permisos de ubicación son necesarios para obtener la posición actual.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
         }
     }
@@ -201,7 +247,7 @@ class ReportAddFragment : Fragment() {
     private fun createImageFile(): File? {
         // Create an image file name
         val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        val imageFileName = "JPEG_" + timeStamp + "_"
+        val imageFileName = "JPEG_$timeStamp"+"_"
 
         val storageDir: File? = context?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         val image = File.createTempFile(
@@ -226,9 +272,8 @@ class ReportAddFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.N)
     private fun continueToMap() {
-
-        val ptoObsCenso = _binding?.spinnerPtoObsCenso?.selectedItem.toString()
-        val ctxSocial = _binding?.spinnerCtxSocial?.selectedItem.toString()
+        val ptoObsCenso = binding.spinnerPtoObsCenso.selectedItem.toString()
+        val ctxSocial = binding.spinnerCtxSocial.selectedItem.toString()
         val sdf = SimpleDateFormat("d/M/yyyy")
         val currentDate = sdf.format(Date())
 
@@ -239,13 +284,17 @@ class ReportAddFragment : Fragment() {
 
             findNavController().navigate(action)
         } catch (e: UninitializedPropertyAccessException) {
-            Toast.makeText(requireContext(), "Debe tomar una foto primero", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                requireContext(),
+                "Debe tomar una foto primero",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
     private fun reduceBitmap(): Bitmap {
-        val targetImageViewWidth = _binding!!.captureImageView.width
-        val targetImageViewHeight = _binding!!.captureImageView.height
+        val targetImageViewWidth = binding.captureImageView.width
+        val targetImageViewHeight = binding.captureImageView.height
 
         if (targetImageViewWidth <= 0 || targetImageViewHeight <= 0) {
             throw IllegalArgumentException("Las dimensiones del ImageView no pueden ser cero o negativas.")
@@ -282,6 +331,76 @@ class ReportAddFragment : Fragment() {
     private fun saveRotatedBitmap(rotatedBitmap: Bitmap) {
         val outputStream: FileOutputStream = FileOutputStream(currentPhotoPath)
         rotatedBitmap.compress(Bitmap.CompressFormat.JPEG, 80, outputStream)
-        _binding!!.captureImageView.setImageBitmap(rotatedBitmap)
+        binding.captureImageView.setImageBitmap(rotatedBitmap)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    @SuppressLint("MissingPermission")
+    private fun getLocation() {
+        locationManager = requireActivity().getSystemService(LocationManager::class.java)
+
+        if (checkLocationPermission()) {
+            locationManager.requestSingleUpdate(
+                LocationManager.GPS_PROVIDER,
+                object : LocationListener {
+                    override fun onLocationChanged(location: Location) {
+                        updateLocationViews(location.latitude, location.longitude)
+                    }
+
+                    override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {
+                        // No se necesita implementar aquí
+                    }
+
+                    override fun onProviderEnabled(provider: String) {
+                        // No se necesita implementar aquí
+                    }
+
+                    override fun onProviderDisabled(provider: String) {
+                        val message =
+                            "El GPS está deshabilitado. Por favor, habilítelo en Configuraciones."
+                        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                    }
+                },
+                null
+            )
+        } else {
+            requestLocationPermission()
+        }
+    }
+
+    private fun updateLocationViews(latitude: Double, longitude: Double) {
+        binding.latitud.text = latitude.toString()
+        binding.longitud.text = longitude.toString()
+    }
+
+    private fun checkLocationPermission(): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val fineLocationPermission =
+                ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                )
+            val coarseLocationPermission =
+                ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                )
+            fineLocationPermission == PackageManager.PERMISSION_GRANTED &&
+                    coarseLocationPermission == PackageManager.PERMISSION_GRANTED
+        } else {
+            true
+        }
+    }
+
+    private fun requestLocationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ),
+                PERMISSION_REQUEST_LOCATION
+            )
+        }
     }
 }
