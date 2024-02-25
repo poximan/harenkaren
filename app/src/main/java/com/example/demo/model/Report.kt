@@ -4,9 +4,7 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import kotlinx.android.parcel.Parcelize
 
-@Parcelize
 @Entity(tableName = "report_table")
 data class Report(
 
@@ -31,8 +29,33 @@ data class Report(
     @ColumnInfo(name="longitude")
     var longitude: Double?
 ):Parcelable {
+    constructor(parcel: Parcel) : this(
+        parcel.readInt(),
+        parcel.readString().toString(),
+        parcel.readString().toString(),
+        parcel.readString().toString(),
+        parcel.readString().toString(),
+        parcel.readValue(Double::class.java.classLoader) as? Double,
+        parcel.readValue(Double::class.java.classLoader) as? Double
+    ) {
+    }
+
     override fun describeContents(): Int {
         TODO("Not yet implemented")
+    }
+
+    override fun writeToParcel(p0: Parcel, p1: Int) {
+        TODO("Not yet implemented")
+    }
+
+    companion object CREATOR : Parcelable.Creator<Report> {
+        override fun createFromParcel(parcel: Parcel): Report {
+            return Report(parcel)
+        }
+
+        override fun newArray(size: Int): Array<Report?> {
+            return arrayOfNulls(size)
+        }
     }
 }
 

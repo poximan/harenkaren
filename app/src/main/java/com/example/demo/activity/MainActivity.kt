@@ -10,10 +10,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.example.demo.R
 import com.example.demo.databinding.ActivityMainBinding
-import com.example.demo.fragment.add.ReportAddFragment
 import com.google.firebase.FirebaseApp
-import kotlinx.android.synthetic.main.fragment_report_add.latitud
-
 
 private lateinit var binding: ActivityMainBinding
 private lateinit var appBarConfiguration: AppBarConfiguration
@@ -21,11 +18,15 @@ private lateinit var drawerLayout: DrawerLayout
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var agregarReporte: ReportAddFragment
-
     override fun onSaveInstanceState(savedInstanceState: Bundle) {
         super.onSaveInstanceState(savedInstanceState)
-        savedInstanceState.putString("latAnterior", supportFragmentManager.findFragmentById(R.id.reportFrameLayout)!!.latitud.text.toString() );
+        val latitudTextView = findViewById<TextView>(R.id.latitud)
+        try {
+            savedInstanceState.putString("latAnterior", latitudTextView.text.toString())
+        }
+        catch (nulo : NullPointerException){
+            savedInstanceState.putString("latAnterior", "0.0")
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,9 +35,7 @@ class MainActivity : AppCompatActivity() {
 
         if (savedInstanceState != null) {
 
-            agregarReporte =
-                supportFragmentManager.findFragmentById(R.id.reportFrameLayout) as ReportAddFragment
-            val latitud: TextView = agregarReporte.latitud
+            val latitud: TextView = findViewById(R.id.latitud)
             latitud.text = savedInstanceState.getString("latAnterior")
         }
 

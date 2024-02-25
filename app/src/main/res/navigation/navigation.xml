@@ -80,6 +80,11 @@
         android:name="com.example.demo.fragment.detail.ReportDetailFragment"
         android:label="Reporte - Detalle"
         tools:layout="@layout/fragment_report_detail">
+
+        <argument
+            android:name="currentReport"
+            app:argType="com.example.demo.model.Report" />
+
         <action
             android:id="@+id/goToReportUpdateAction"
             app:destination="@id/report_update_fragment"
@@ -87,9 +92,11 @@
             app:exitAnim="@android:anim/fade_out"
             app:popEnterAnim="@android:anim/fade_in"
             app:popExitAnim="@android:anim/fade_out" />
-        <argument
-            android:name="currentReport"
-            app:argType="com.example.demo.model.Report" />
+
+        <action
+            android:id="@+id/goToMapsFragmentFromReportDetailFragment"
+            app:destination="@id/maps_fragment" />
+
         <action
             android:id="@+id/goToMyReportsFromReportDetailAction"
             app:destination="@id/my_reports_fragment"
@@ -97,10 +104,9 @@
             app:exitAnim="@android:anim/fade_out"
             app:popEnterAnim="@android:anim/fade_in"
             app:popExitAnim="@android:anim/fade_out" />
-        <action
-            android:id="@+id/goToMapsFragmentFromReportDetailFragment"
-            app:destination="@id/maps_fragment" />
+
     </fragment>
+
     <fragment
         android:id="@+id/about_fragment"
         android:name="com.example.demo.fragment.info.AboutFragment"

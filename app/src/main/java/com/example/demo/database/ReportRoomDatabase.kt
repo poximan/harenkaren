@@ -60,7 +60,6 @@ abstract class ReportRoomDatabase : RoomDatabase() {
             suspend fun populateDatabase(reportDAO: ReportDAO) {
                 if (reportDAO.getCount() == 0) {
                     reportDAO.deleteAll()
-
                 }
             }
         }

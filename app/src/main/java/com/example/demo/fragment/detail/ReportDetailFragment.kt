@@ -53,13 +53,13 @@ class ReportDetailFragment : Fragment() {
         findNavController().navigate(action)
     }
 
-    private fun goBack() {
-        findNavController().navigate(R.id.goToMyReportsFromReportDetailAction)
-    }
-
     private fun updateReport() {
         val action = ReportDetailFragmentDirections.goToReportUpdateAction(args.currentReport)
         findNavController().navigate(action)
+    }
+
+    private fun goBack() {
+        findNavController().navigate(R.id.goToMyReportsFromReportDetailAction)
     }
 
     private fun rotateImage(bitmap: Bitmap) {
