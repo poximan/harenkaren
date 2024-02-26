@@ -85,7 +85,5 @@ class ReportDetailFragment : Fragment() {
         val rotatedBitmap =
             Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
         _binding!!.captureImageView.setImageBitmap(rotatedBitmap)
-
     }
-
 }

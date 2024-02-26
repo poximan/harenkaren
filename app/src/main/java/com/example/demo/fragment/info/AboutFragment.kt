@@ -27,6 +27,4 @@ class AboutFragment : Fragment() {
         _binding!!.aboutTypeTextView.text = resources.getString(R.string.about)
         return view
     }
-
-
 }

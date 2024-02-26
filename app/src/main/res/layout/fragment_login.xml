@@ -4,106 +4,88 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.login.LoginFragment">
+    tools:context=".fragment.login.LoginFragment"
+    android:layout_margin="40dp">
 
-    <TextView
-        android:id="@+id/emailTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="75dp"
-        android:layout_marginTop="104dp"
-        android:layout_marginEnd="191dp"
-        android:text=" Ingrese Email"
-        android:textSize="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent" >
 
-    <EditText
-        android:id="@+id/editTextEmail"
-        android:layout_width="261dp"
-        android:layout_height="43dp"
-        android:layout_marginStart="75dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="75dp"
-        android:backgroundTint="@color/black"
-        android:ems="10"
-        android:hint="Email"
-        android:text="hdonato@donato.com"
-        android:inputType="textEmailAddress"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailTextView"
-        tools:ignore="TouchTargetSizeCheck" />
+        <TextView
+            android:id="@+id/emailTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="100dp"
+            android:textSize="20dp"
+            android:text="Ingrese Email"/>
 
-    <TextView
-        android:id="@+id/passwordTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="75dp"
-        android:layout_marginTop="64dp"
-        android:layout_marginEnd="152dp"
-        android:text="  Ingrese Contraseña"
-        android:textSize="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextEmail" />
+        <EditText
+            android:id="@+id/editTextEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/black"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:text="hdonato@donato.com" />
 
-    <EditText
-        android:id="@+id/editTextPassword"
-        android:layout_width="261dp"
-        android:layout_height="43dp"
-        android:layout_marginStart="75dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="75dp"
-        android:backgroundTint="@color/black"
-        android:drawableRight="@drawable/visible_on"
-        android:ems="10"
-        android:hint="Contraseña"
-        android:text="hdonato"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordTextView"
-        tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
+        <TextView
+            android:id="@+id/passwordTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="40dp"
+            android:textSize="20dp"
+            android:text="Ingrese Contraseña"/>
+
+        <EditText
+            android:id="@+id/editTextPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/black"
+            android:drawableRight="@drawable/visible_on"
+            android:hint="Contraseña"
+            android:inputType="textPassword"
+            android:text="hdonato"/>
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/loginFailedTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="57dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="50dp"
         android:text="Usuario y/o contraseña incorrecta"
-        android:textStyle="bold"
         android:textSize="20dp"
+        android:textStyle="bold"
         android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
+        app:layout_constraintTop_toBottomOf="@id/linearLayout1"/>
 
-    <Button
-        android:id="@+id/cancelButton"
-        android:layout_width="120dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="57dp"
-        android:layout_marginBottom="44dp"
-        android:text="Cancelar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-    <Button
-        android:id="@+id/loginButton"
-        android:layout_width="120dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="57dp"
-        android:layout_marginEnd="57dp"
-        android:layout_marginBottom="44dp"
-        android:text="Ingresar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/photoButton" />
+        <Button
+            android:id="@+id/cancelButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancelar"/>
+
+        <View
+            android:layout_width="40dp"
+            android:layout_height="match_parent"/>
+
+        <Button
+            android:id="@+id/loginButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ingresar"/>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

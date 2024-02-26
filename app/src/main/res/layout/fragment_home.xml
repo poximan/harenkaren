@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="40dp"
     tools:context=".fragment.home.HomeFragment">
 
     <Button
         android:id="@+id/myReportsButton"
         android:layout_width="262dp"
         android:layout_height="55dp"
-        android:layout_marginTop="24dp"
         android:text="Mis reportes"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,7 +20,6 @@
         android:id="@+id/myTopicsButton"
         android:layout_width="262dp"
         android:layout_height="55dp"
-        android:layout_marginTop="5dp"
         android:text="Mis tópicos"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,7 +29,6 @@
         android:id="@+id/contestsButton"
         android:layout_width="262dp"
         android:layout_height="55dp"
-        android:layout_marginTop="5dp"
         android:text="Concursos"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,7 +38,6 @@
         android:id="@+id/regulationsButton"
         android:layout_width="262dp"
         android:layout_height="55dp"
-        android:layout_marginTop="5dp"
         android:text="Reglamentaciones"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -48,31 +45,28 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="260dp"
-        android:layout_height="262dp"
-        android:layout_marginStart="64dp"
-        android:src="@drawable/pescador"
-        app:layout_constraintBottom_toTopOf="@+id/logOutButton"
+        android:layout_width="215dp"
+        android:layout_height="163dp"
+        android:layout_marginTop="10dp"
+        android:scaleX="-1"
+        android:src="@mipmap/elephant_adobenidae"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/imageView3" />
+        app:layout_constraintTop_toBottomOf="@+id/regulationsButton" />
 
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="215dp"
         android:layout_height="163dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="8dp"
-        android:scaleX="-1"
-        android:src="@drawable/barquitos"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/regulationsButton" />
+        android:layout_marginBottom="30dp"
+        android:src="@mipmap/elephant_adobenidae"
+        app:layout_constraintBottom_toTopOf="@+id/logOutButton"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/logOutButton"
         android:layout_width="120dp"
         android:layout_height="50dp"
         android:text="Salir"
-        android:layout_marginLeft="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -81,7 +75,6 @@
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:text="Estadísticas"
-        android:layout_marginRight="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

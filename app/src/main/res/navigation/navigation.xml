@@ -29,7 +29,7 @@
     <fragment
         android:id="@+id/report_add_fragment"
         android:name="com.example.demo.fragment.add.ReportAddFragment"
-        android:label="Crear reporte"
+        android:label="Nuevo censo"
         tools:layout="@layout/fragment_report_add">
         <action
             android:id="@+id/ptoObsCensoAction"
@@ -78,7 +78,7 @@
     <fragment
         android:id="@+id/report_detail_fragment"
         android:name="com.example.demo.fragment.detail.ReportDetailFragment"
-        android:label="Reporte - Detalle"
+        android:label="Detalle censo"
         tools:layout="@layout/fragment_report_detail">
 
         <argument
@@ -104,7 +104,6 @@
             app:exitAnim="@android:anim/fade_out"
             app:popEnterAnim="@android:anim/fade_in"
             app:popExitAnim="@android:anim/fade_out" />
-
     </fragment>
 
     <fragment
@@ -114,7 +113,7 @@
     <fragment
         android:id="@+id/my_reports_fragment"
         android:name="com.example.demo.fragment.list.ReportListFragment"
-        android:label="Mis reportes"
+        android:label="Censos"
         tools:layout="@layout/fragment_report_list">
         <action
             android:id="@+id/goToReportDetailFromMyReportsAction"
@@ -205,7 +204,7 @@
     <fragment
         android:id="@+id/report_update_fragment"
         android:name="com.example.demo.fragment.update.ReportUpdateFragment"
-        android:label="Reporte - Edición"
+        android:label="Editar censo"
         tools:layout="@layout/fragment_report_update">
         <action
             android:id="@+id/goToReportDetailFromUpdateReportAction"

@@ -20,7 +20,6 @@ abstract class ReportRoomDatabase : RoomDatabase() {
 
     companion object {
 
-
         @Volatile
         private var INSTANCIA: ReportRoomDatabase? = null
 
