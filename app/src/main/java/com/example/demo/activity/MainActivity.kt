@@ -34,9 +34,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         if (savedInstanceState != null) {
-
-            val latitud: TextView = findViewById(R.id.latitud)
-            latitud.text = savedInstanceState.getString("latAnterior")
+            val latitud: TextView? = findViewById(R.id.latitud)
+            latitud?.text = savedInstanceState.getString("latAnterior")
         }
 
         FirebaseApp.initializeApp(this)

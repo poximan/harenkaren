@@ -40,6 +40,7 @@ import java.io.IOException
 import java.util.*
 import kotlin.math.min
 
+
 const val REQUEST_TAKE_PHOTO = 2
 const val PERMISSION_REQUEST_CAMERA = 3
 const val PERMISSION_REQUEST_LOCATION = 4
@@ -48,11 +49,14 @@ class ReportAddFragment : Fragment() {
 
     private var _binding: FragmentReportAddBinding? = null
     private val binding get() = _binding!!
+
     private lateinit var currentPhotoPath: String
     private val photoPaths = mutableListOf<String>()
     private val adapter = PhotoAdapter(photoPaths)
 
     private lateinit var locationManager: LocationManager
+    private var indicatorLight: ImageView? = null
+
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
@@ -85,14 +89,15 @@ class ReportAddFragment : Fragment() {
 
         // tipo de sustrato en playa
         val tpoSustrato = resources.getStringArray(R.array.op_tipo_sustrato)
-        val tpoSustratoArrayAdapter = ArrayAdapter(view.context, R.layout.dropdown_item, tpoSustrato)
+        val tpoSustratoArrayAdapter =
+            ArrayAdapter(view.context, R.layout.dropdown_item, tpoSustrato)
 
         binding.spinnerTpoSustrato.adapter = tpoSustratoArrayAdapter
         binding.helpTpoSustrato.setOnClickListener { tpoSustratoInfo() }
 
         binding.photoButton.setOnClickListener { takePhoto() }
         binding.continueButton.setOnClickListener { continueToMap() }
-        binding.getPosicion.setOnClickListener { getLocation() }
+        binding.getPosicion.setOnClickListener { getPosicionActual() }
 
         return view
     }
@@ -108,7 +113,12 @@ class ReportAddFragment : Fragment() {
         val linearLayout5 = view.findViewById<LinearLayout>(R.id.linearLayout5)
 
         ctxSocialSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 if (ctxSocialSpinner.selectedItem == ctxSocial[0] || ctxSocialSpinner.selectedItem == ctxSocial[1]) {
                     linearLayout4.visibility = View.VISIBLE
                     linearLayout5.visibility = View.VISIBLE
@@ -122,6 +132,7 @@ class ReportAddFragment : Fragment() {
                 // No se necesita hacer nada aquí.
             }
         }
+        indicatorLight = view.findViewById(R.id.indicatorLight);
     }
 
     override fun onDestroyView() {
@@ -226,6 +237,7 @@ class ReportAddFragment : Fragment() {
                     ).show()
                 }
             }
+
             PERMISSION_REQUEST_LOCATION -> {
                 // Maneja los resultados de los permisos de ubicación
                 if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
@@ -247,7 +259,7 @@ class ReportAddFragment : Fragment() {
     private fun createImageFile(): File? {
         // Create an image file name
         val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        val imageFileName = "JPEG_$timeStamp"+"_"
+        val imageFileName = "JPEG_$timeStamp" + "_"
 
         val storageDir: File? = context?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         val image = File.createTempFile(
@@ -329,35 +341,33 @@ class ReportAddFragment : Fragment() {
     }
 
     private fun saveRotatedBitmap(rotatedBitmap: Bitmap) {
-        val outputStream: FileOutputStream = FileOutputStream(currentPhotoPath)
+        val outputStream = FileOutputStream(currentPhotoPath)
         rotatedBitmap.compress(Bitmap.CompressFormat.JPEG, 80, outputStream)
         binding.captureImageView.setImageBitmap(rotatedBitmap)
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
     @SuppressLint("MissingPermission")
-    private fun getLocation() {
+    private fun getPosicionActual() {
+
         locationManager = requireActivity().getSystemService(LocationManager::class.java)
 
         if (checkLocationPermission()) {
+            indicatorLight?.setImageResource(R.drawable.indicator_off);
+
             locationManager.requestSingleUpdate(
                 LocationManager.GPS_PROVIDER,
                 object : LocationListener {
                     override fun onLocationChanged(location: Location) {
+                        indicatorLight?.setImageResource(R.drawable.indicator_on);
                         updateLocationViews(location.latitude, location.longitude)
                     }
 
-                    override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {
-                        // No se necesita implementar aquí
-                    }
-
-                    override fun onProviderEnabled(provider: String) {
-                        // No se necesita implementar aquí
-                    }
-
+                    override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {}
+                    override fun onProviderEnabled(provider: String) {}
                     override fun onProviderDisabled(provider: String) {
                         val message =
-                            "El GPS está deshabilitado. Por favor, habilítelo en Configuraciones."
+                            "GPS deshabilitado. Habilítar en Configuraciones."
                         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
                     }
                 },

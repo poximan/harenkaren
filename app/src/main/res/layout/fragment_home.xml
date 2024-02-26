@@ -10,9 +10,9 @@
         android:id="@+id/myReportsButton"
         android:layout_width="262dp"
         android:layout_height="55dp"
-        android:layout_marginStart="74dp"
         android:layout_marginTop="24dp"
         android:text="Mis reportes"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -20,9 +20,9 @@
         android:id="@+id/myTopicsButton"
         android:layout_width="262dp"
         android:layout_height="55dp"
-        android:layout_marginStart="74dp"
         android:layout_marginTop="5dp"
         android:text="Mis tópicos"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/myReportsButton" />
 
@@ -30,9 +30,9 @@
         android:id="@+id/contestsButton"
         android:layout_width="262dp"
         android:layout_height="55dp"
-        android:layout_marginStart="74dp"
         android:layout_marginTop="5dp"
         android:text="Concursos"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/myTopicsButton" />
 
@@ -40,40 +40,20 @@
         android:id="@+id/regulationsButton"
         android:layout_width="262dp"
         android:layout_height="55dp"
-        android:layout_marginStart="74dp"
         android:layout_marginTop="5dp"
         android:text="Reglamentaciones"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/contestsButton" />
-
-    <Button
-        android:id="@+id/logOutButton"
-        android:layout_width="120dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="57dp"
-        android:layout_marginBottom="44dp"
-        android:text="Salir"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/goToStatisticsButton"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="57dp"
-        android:layout_marginBottom="44dp"
-        android:text="Estadísticas"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="260dp"
         android:layout_height="262dp"
-
-        android:layout_marginStart="135dp"
+        android:layout_marginStart="64dp"
         android:src="@drawable/pescador"
         app:layout_constraintBottom_toTopOf="@+id/logOutButton"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/imageView3" />
 
     <ImageView
@@ -87,6 +67,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/regulationsButton" />
 
+    <Button
+        android:id="@+id/logOutButton"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:text="Salir"
+        android:layout_marginLeft="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/goToStatisticsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="Estadísticas"
+        android:layout_marginRight="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

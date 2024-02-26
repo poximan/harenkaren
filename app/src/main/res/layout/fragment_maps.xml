@@ -25,7 +25,6 @@
         app:backgroundTint="@android:color/background_light"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:maxImageSize="35dp"
         app:srcCompat="@drawable/ic_back" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -39,7 +38,6 @@
         app:backgroundTint="@android:color/background_light"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/map"
-        app:maxImageSize="35dp"
         app:srcCompat="@drawable/ic_check" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
