@@ -59,15 +59,15 @@ class ReportUpdateFragment : Fragment() {
         val speciesArrayAdapter = ArrayAdapter(view.context, R.layout.dropdown_item, ctxSocial)
 
         currentPhotoPath = args.currentReport.photoPath
-        _binding!!.spinner.adapter = fishTypeArrayAdapter
-        _binding!!.spinnerFishSpecies.adapter = speciesArrayAdapter
+        _binding!!.spinnerUpdPtoObs.adapter = fishTypeArrayAdapter
+        _binding!!.spinnerUpdCtxSocial.adapter = speciesArrayAdapter
         _binding!!.photoButton.setOnClickListener { takePhoto() }
         _binding!!.continueButton.setOnClickListener { continueToMap() }
-        val fishTypeArrayPosition = fishTypeArrayAdapter.getPosition(args.currentReport.fishingType)
-        _binding!!.spinner.setSelection(fishTypeArrayPosition)
+        val fishTypeArrayPosition = fishTypeArrayAdapter.getPosition(args.currentReport.ptoObsCenso)
+        _binding!!.spinnerUpdPtoObs.setSelection(fishTypeArrayPosition)
 
-        val fishSpecieArrayPosition = speciesArrayAdapter.getPosition(args.currentReport.specie)
-        _binding!!.spinnerFishSpecies.setSelection(fishSpecieArrayPosition)
+        val fishSpecieArrayPosition = speciesArrayAdapter.getPosition(args.currentReport.ctxSocial)
+        _binding!!.spinnerUpdCtxSocial.setSelection(fishSpecieArrayPosition)
 
         val file = File(args.currentReport.photoPath)
         if (file.exists()) {
@@ -177,14 +177,13 @@ class ReportUpdateFragment : Fragment() {
             80,
             outputStream
         )
-
         _binding!!.updateCaptureImageView.setImageBitmap(rotatedBitmap)
-
     }
 
     private fun continueToMap() {
-        val fishingType = _binding?.spinner?.selectedItem.toString()
-        val specie = _binding?.spinnerFishSpecies?.selectedItem.toString()
+        val ptoObsCenso = binding.spinnerUpdPtoObs.selectedItem.toString()
+        val ctxSocial = binding.spinnerUpdCtxSocial.selectedItem.toString()
+
         val date = args.currentReport.date
 
         // If empty, photo path did not change
@@ -193,7 +192,16 @@ class ReportUpdateFragment : Fragment() {
         } else {
             currentPhotoPath
         }
-        val updatedReport = Report(args.currentReport.id, fishingType, specie, date, photoPath, args.currentReport.latitude, args.currentReport.longitude)
+
+        val updatedReport = Report(
+            args.currentReport.id,
+            ptoObsCenso, ctxSocial, "",
+            0, 0, 0, 0,
+            0, 0, 0, 0,
+            0, 0, 0, 0, 0,
+            date, args.currentReport.latitude, args.currentReport.longitude, photoPath
+        )
+
         val action = ReportUpdateFragmentDirections.goToMapsFragmentFromReportUpdateFragment(updatedReport)
         findNavController().navigate(action)
     }

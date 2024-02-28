@@ -31,8 +31,8 @@ class ReportDetailFragment : Fragment() {
     ): View {
         _binding = FragmentReportDetailBinding.inflate(inflater, container, false)
 
-        _binding!!.fishingTypeTextView.text = args.currentReport.fishingType
-        _binding!!.specieTextView.text = args.currentReport.specie
+        _binding!!.fishingTypeTextView.text = args.currentReport.ptoObsCenso
+        _binding!!.specieTextView.text = args.currentReport.ctxSocial
         _binding!!.dateTextView.text = args.currentReport.date
 
         val file = File(args.currentReport.photoPath)

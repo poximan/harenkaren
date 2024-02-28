@@ -26,22 +26,13 @@
         app:layout_constraintTop_toBottomOf="@+id/myReportsButton" />
 
     <Button
-        android:id="@+id/contestsButton"
-        android:layout_width="262dp"
-        android:layout_height="55dp"
-        android:text="Concursos"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/myTopicsButton" />
-
-    <Button
         android:id="@+id/regulationsButton"
         android:layout_width="262dp"
         android:layout_height="55dp"
         android:text="Reglamentaciones"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/contestsButton" />
+        app:layout_constraintTop_toBottomOf="@+id/myTopicsButton" />
 
     <ImageView
         android:id="@+id/imageView2"

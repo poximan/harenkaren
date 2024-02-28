@@ -77,8 +77,8 @@ class MapsFragment : Fragment() {
                 val snippet = String.format(
                     Locale.getDefault(),
                     "Tipo: %1$.15s - Especie: %2$.15s - Fecha: %3$.15s",
-                    args.currentReport.fishingType,
-                    args.currentReport.specie,
+                    args.currentReport.ptoObsCenso,
+                    args.currentReport.ctxSocial,
                     args.currentReport.date
                 )
                 marker = googleMap.addMarker(
@@ -212,8 +212,8 @@ class MapsFragment : Fragment() {
         if (checkCoords()) {
             db.collection("reports").document().set(
                 hashMapOf(
-                    "fishing_type" to args.currentReport.fishingType,
-                    "specie" to args.currentReport.specie,
+                    "ptoObs" to args.currentReport.ptoObsCenso,
+                    "ctxSoc" to args.currentReport.ctxSocial,
                     "date" to args.currentReport.date,
                     "photo_path" to args.currentReport.photoPath,
                     "latitude" to args.currentReport.latitude,
@@ -243,8 +243,8 @@ class MapsFragment : Fragment() {
          Esto habría que verlo en el futuro si el proyecto prospera
         */
         db.collection("reports").document(args.currentReport.id.toString()).update(
-            "fishing_type", args.currentReport.fishingType,
-            "specie", args.currentReport.specie,
+            "pto_obs_censo", args.currentReport.ptoObsCenso,
+            "ctx_social", args.currentReport.ctxSocial,
             "date", args.currentReport.date,
             "photo_path", args.currentReport.photoPath,
             "latitude", args.currentReport.latitude,

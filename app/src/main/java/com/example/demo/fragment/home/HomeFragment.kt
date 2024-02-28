@@ -25,7 +25,6 @@ class HomeFragment : Fragment() {
         _binding!!.myReportsButton.setOnClickListener { showMyReports() }
         _binding!!.goToStatisticsButton.setOnClickListener { goToStatistics() }
         _binding!!.myTopicsButton.setOnClickListener { goToMyTopics() }
-        _binding!!.contestsButton.setOnClickListener { showContests() }
         _binding!!.regulationsButton.setOnClickListener { showRegulations() }
         _binding!!.logOutButton.setOnClickListener { logOut() }
 
@@ -47,10 +46,6 @@ class HomeFragment : Fragment() {
 
     private fun newReport() {
         findNavController().navigate(R.id.goToNewReportAction)
-    }
-
-    private fun showContests() {
-        findNavController().navigate(R.id.goToContestsAction)
     }
 
     private fun showRegulations() {

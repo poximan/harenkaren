@@ -45,7 +45,8 @@ class ReportListAdapter(
 
         fun bind(report: Report) {
             itemView.setOnClickListener { itemClickListener.onItemClick(report) }
-            reporte_resumen.text = "Tipo: " + report.fishingType + " - Especie: " + report.specie
+            reporte_resumen.text = "Pto.obs.: " + report.ptoObsCenso + " - Ctx.social: " + report.ctxSocial + "Tpo.sust.: " + report.tpoSustrato +
+                    " / AlfaS4/Ad: " + report.alfaS4Ad + " - OtrosSA: " + report.alfaOtrosSA
             date.text = report.date
 
             val file = File(report.photoPath)

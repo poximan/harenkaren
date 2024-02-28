@@ -17,6 +17,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -77,14 +78,14 @@ class ReportAddFragment : Fragment() {
         val ptObsCenso = resources.getStringArray(R.array.op_punto_obs_censo)
         val ptObsCensoArrayAdapter = ArrayAdapter(view.context, R.layout.dropdown_item, ptObsCenso)
 
-        binding.spinnerPtoObsCenso.adapter = ptObsCensoArrayAdapter
+        binding.spinnerAddPtoObs.adapter = ptObsCensoArrayAdapter
         binding.helpPtoObsCenso.setOnClickListener { ptoObsCensoInfo() }
 
         // contexto social
         val ctxSocial = resources.getStringArray(R.array.op_contexto_social)
         val ctxSocialArrayAdapter = ArrayAdapter(view.context, R.layout.dropdown_item, ctxSocial)
 
-        binding.spinnerCtxSocial.adapter = ctxSocialArrayAdapter
+        binding.spinnerAddCtxSocial.adapter = ctxSocialArrayAdapter
         binding.helpCtxSocial.setOnClickListener { ctxSocialInfo() }
 
         // tipo de sustrato en playa
@@ -92,7 +93,7 @@ class ReportAddFragment : Fragment() {
         val tpoSustratoArrayAdapter =
             ArrayAdapter(view.context, R.layout.dropdown_item, tpoSustrato)
 
-        binding.spinnerTpoSustrato.adapter = tpoSustratoArrayAdapter
+        binding.spinnerAddTpoSustrato.adapter = tpoSustratoArrayAdapter
         binding.helpTpoSustrato.setOnClickListener { tpoSustratoInfo() }
 
         binding.photoButton.setOnClickListener { takePhoto() }
@@ -106,7 +107,7 @@ class ReportAddFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val ctxSocialSpinner = view.findViewById<Spinner>(R.id.spinner_ctxSocial)
+        val ctxSocialSpinner = view.findViewById<Spinner>(R.id.spinnerAddCtxSocial)
         val ctxSocial = resources.getStringArray(R.array.op_contexto_social)
 
         val linearLayout4 = view.findViewById<LinearLayout>(R.id.linearLayout4)
@@ -284,17 +285,46 @@ class ReportAddFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.N)
     private fun continueToMap() {
-        val ptoObsCenso = binding.spinnerPtoObsCenso.selectedItem.toString()
-        val ctxSocial = binding.spinnerCtxSocial.selectedItem.toString()
+        // ----- entorno ----- //
+        val ptoObsCenso = binding.spinnerAddPtoObs.selectedItem.toString()
+        val ctxSocial = binding.spinnerAddCtxSocial.selectedItem.toString()
+        val tpoSustrato = binding.spinnerAddTpoSustrato.selectedItem.toString()
+        // ----- dominante ----- //
+        val alfaS4Ad = binding.editTextMachoAdS4.text.toString().toInt()
+        val alfaOtrosSA = binding.editTextMachoAdS4.text.toString().toInt()
+        // ----- hembras y crias ----- //
+        val hembrasAd = binding.editTextHembrasAd.text.toString().toInt()
+        val criasVivas = binding.editTextCriasVivas.text.toString().toInt()
+        val criasMuertas = binding.editTextCriasMuertas.text.toString().toInt()
+        val destetados = binding.editTextDestetados.text.toString().toInt()
+        val juveniles = binding.editTextJuveniles.text.toString().toInt()
+        // ----- Ad/SA proximos ----- //
+        val s4AdPerif = binding.editTextS4AdPerif.text.toString().toInt()
+        val s4AdCerca = binding.editTextS4AdCerca.text.toString().toInt()
+        val s4AdLejos = binding.editTextS4AdLejos.text.toString().toInt()
+        val otrosSAPerif = binding.editTextOtroSAPerif.text.toString().toInt()
+        val otrosSACerca = binding.editTextOtroSACerca.text.toString().toInt()
+        val otrosSALejos = binding.editTextOtroSALejos.text.toString().toInt()
+        // ----- tiempo/espacio ----- //
         val sdf = SimpleDateFormat("d/M/yyyy")
-        val currentDate = sdf.format(Date())
+        val date = sdf.format(Date())
+        val latitude = binding.latitud.text.toString().toDouble()
+        val longitude = binding.longitud.text.toString().toDouble()
 
         try {
             val report =
-                Report(0, ptoObsCenso, ctxSocial, currentDate, currentPhotoPath, null, null)
-            val action = ReportAddFragmentDirections.goToMapsFragmentAction(report)
+                Report(
+                    0,
+                    ptoObsCenso, ctxSocial, tpoSustrato,
+                    alfaS4Ad, alfaOtrosSA, hembrasAd, criasVivas,
+                    criasMuertas, destetados, juveniles, s4AdPerif,
+                    s4AdCerca, s4AdLejos, otrosSAPerif, otrosSACerca, otrosSALejos,
+                    date, latitude, longitude, currentPhotoPath
+                )
 
+            val action = ReportAddFragmentDirections.goToMapsFragmentAction(report)
             findNavController().navigate(action)
+
         } catch (e: UninitializedPropertyAccessException) {
             Toast.makeText(
                 requireContext(),

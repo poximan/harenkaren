@@ -146,20 +146,10 @@
 
     </fragment>
     <fragment
-        android:id="@+id/contest_fragment"
-        android:name="com.example.demo.fragment.list.ContestListFragment"
-        android:label="Concursos"
-        tools:layout="@layout/fragment_contest_list" />
-    <fragment
         android:id="@+id/regulations_fragment"
         android:name="com.example.demo.fragment.list.RegulationListFragment"
         android:label="Reglamentaciones"
         tools:layout="@layout/fragment_regulation_list" />
-    <fragment
-        android:id="@+id/contest_detail_fragment"
-        android:name="com.example.demo.fragment.detail.ContestDetailFragment"
-        android:label="Concurso - Detalle"
-        tools:layout="@layout/fragment_contest_detail" />
     <fragment
         android:id="@+id/home_fragment"
         android:name="com.example.demo.fragment.home.HomeFragment"
@@ -168,13 +158,6 @@
         <action
             android:id="@+id/goToMyReportsFromHomeAction"
             app:destination="@id/my_reports_fragment"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out"
-            app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/fade_out" />
-        <action
-            android:id="@+id/goToContestsAction"
-            app:destination="@id/contest_fragment"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out"
             app:popEnterAnim="@android:anim/fade_in"

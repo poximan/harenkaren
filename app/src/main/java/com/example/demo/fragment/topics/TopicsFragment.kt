@@ -1,6 +1,5 @@
 package com.example.demo.fragment.topics
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
@@ -10,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
-import com.example.demo.R
 import com.example.demo.databinding.FragmentTopicsBinding
 import com.google.firebase.messaging.FirebaseMessaging
 
@@ -27,7 +25,6 @@ class TopicsFragment : Fragment() {
         loadTopicSubscriptions()
         _binding!!.goBackButton2.setOnClickListener { goBack() }
         _binding!!.saveTopicsButton.setOnClickListener { saveTopics() }
-
 
         return binding.root
     }
@@ -101,7 +98,4 @@ class TopicsFragment : Fragment() {
         binding.regulationCheckBox.isChecked = preferences.getBoolean("Regulation", false)
         binding.newsCheckBox.isChecked = preferences.getBoolean("News", false)
     }
-
-
-
 }

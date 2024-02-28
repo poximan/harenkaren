@@ -29,6 +29,7 @@ class StatisticsFragment : Fragment() {
     private val sdf = SimpleDateFormat("d/M/yyyy")
     private val delim = "/"
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,13 +45,14 @@ class StatisticsFragment : Fragment() {
         return view
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     private fun fillLabels(reportList: List<Report>) {
 
         var currentMonthReports = 0
         var lastSixMonthsReports = 0
 
         val ctxSocial = resources.getStringArray(R.array.op_contexto_social)
-        var theSpeciesMap = createMutableMapOf(ctxSocial)
+        var ctxSocialMap = createMutableMapOf(ctxSocial)
 
         if (reportList.isNotEmpty()) {
             _binding!!.startActivityTextView.text = getFirstDayOfReportList(reportList)
@@ -62,7 +64,7 @@ class StatisticsFragment : Fragment() {
 
                 val actualReportDate: Date = sdf.parse(report.date)
                 lastSixMonthsReports += checkForSixMonthsReport(actualReportDate)
-                theSpeciesMap[report.specie] = (theSpeciesMap[report.specie] ?: 0) + 1
+                ctxSocialMap[report.ctxSocial] = (ctxSocialMap[report.ctxSocial] ?: 0) + 1
             }
 
             _binding!!.currentMonthTextView.text = currentMonthReports.toString()
@@ -70,13 +72,13 @@ class StatisticsFragment : Fragment() {
 
             //Extract function from here
             val delimEqual = "="
-            var maxBy = theSpeciesMap.maxBy { it.value }
+            var maxBy = ctxSocialMap.maxBy { it.value }
             var splitedMaxBy = maxBy.toString().split(delimEqual)
 
             _binding!!.firstPlaceTextView.text = splitedMaxBy[0] + " (" + splitedMaxBy[1] + ")"
 
-            theSpeciesMap.remove(splitedMaxBy[0])
-            maxBy = theSpeciesMap.maxBy { it.value }
+            ctxSocialMap.remove(splitedMaxBy[0])
+            maxBy = ctxSocialMap.maxBy { it.value }
 
             splitedMaxBy = maxBy.toString().split(delimEqual)
             if(splitedMaxBy[1] == "0") {
@@ -84,8 +86,8 @@ class StatisticsFragment : Fragment() {
             } else {
                 _binding!!.secondPlaceTextView.text = splitedMaxBy[0] + " (" + splitedMaxBy[1] + ")"
             }
-            theSpeciesMap.remove(splitedMaxBy[0])
-            maxBy = theSpeciesMap.maxBy { it.value }
+            ctxSocialMap.remove(splitedMaxBy[0])
+            maxBy = ctxSocialMap.maxBy { it.value }
 
             splitedMaxBy = maxBy.toString().split(delimEqual)
             if(splitedMaxBy[1] == "0") {
@@ -96,7 +98,7 @@ class StatisticsFragment : Fragment() {
             //To here
 
             _binding!!.totalReportsTextView.text = reportList.size.toString()
-            _binding!!.lastCaptureTextView.text = reportList.first().specie
+            _binding!!.lastCaptureTextView.text = reportList.first().ctxSocial
         } else {
             _binding!!.startActivityTextView.text = "Aún no existen registros"
             _binding!!.currentMonthTextView.text = "0"
@@ -109,6 +111,7 @@ class StatisticsFragment : Fragment() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     private fun checkForSixMonthsReport(date: Date): Int {
         var count = 0
 

@@ -26,13 +26,13 @@
                 android:text="@string/punto_obs_censo" />
 
             <Spinner
-                android:id="@+id/spinner_ptoObsCenso"
+                android:id="@+id/spinnerAddPtoObs"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
 
             <ImageButton
-                android:id="@+id/help_ptoObsCenso"
+                android:id="@+id/helpPtoObsCenso"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_help" />
@@ -53,13 +53,13 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <Spinner
-                android:id="@+id/spinner_ctxSocial"
+                android:id="@+id/spinnerAddCtxSocial"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
 
             <ImageButton
-                android:id="@+id/help_ctxSocial"
+                android:id="@+id/helpCtxSocial"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_help" />
@@ -80,13 +80,13 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <Spinner
-                android:id="@+id/spinner_tpoSustrato"
+                android:id="@+id/spinnerAddTpoSustrato"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
 
             <ImageButton
-                android:id="@+id/help_tpoSustrato"
+                android:id="@+id/helpTpoSustrato"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_help" />
@@ -121,10 +121,10 @@
                     android:text="@string/s4_ad" />
 
                 <EditText
-                    android:id="@+id/editText_machoAdS4"
+                    android:id="@+id/editTextMachoAdS4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="#"
+                    android:text="0"
                     android:inputType="number" />
 
             </LinearLayout>
@@ -142,10 +142,10 @@
                     android:text="@string/otros_ad" />
 
                 <EditText
-                    android:id="@+id/editText_machoSA"
+                    android:id="@+id/editTextMachoSA"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="#"
+                    android:text="0"
                     android:inputType="number" />
 
             </LinearLayout>
@@ -186,10 +186,10 @@
                     android:text="hembra Ad" />
 
                 <EditText
-                    android:id="@+id/editText_hembrasAd"
+                    android:id="@+id/editTextHembrasAd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="#"
+                    android:text="0"
                     android:inputType="number" />
             </LinearLayout>
 
@@ -206,7 +206,6 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textView_crias"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -231,10 +230,10 @@
                             android:text="vivas" />
 
                         <EditText
-                            android:id="@+id/editText_criasVivas"
+                            android:id="@+id/editTextCriasVivas"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:hint="#"
+                            android:text="0"
                             android:inputType="number" />
 
                     </LinearLayout>
@@ -253,10 +252,10 @@
                             android:text="muertas" />
 
                         <EditText
-                            android:id="@+id/editText_criasMuertas"
+                            android:id="@+id/editTextCriasMuertas"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:hint="#"
+                            android:text="0"
                             android:inputType="number" />
 
                     </LinearLayout>
@@ -283,10 +282,10 @@
                     android:text="destet." />
 
                 <EditText
-                    android:id="@+id/editText_destetados"
+                    android:id="@+id/editTextDestetados"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="#"
+                    android:text="0"
                     android:inputType="number" />
 
             </LinearLayout>
@@ -304,10 +303,10 @@
                     android:text="juvenil" />
 
                 <EditText
-                    android:id="@+id/editText_juveniles"
+                    android:id="@+id/editTextJuveniles"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="#"
+                    android:text="0"
                     android:inputType="number" />
 
             </LinearLayout>
@@ -366,10 +365,10 @@
                             android:text="@string/periferico" />
 
                         <EditText
-                            android:id="@+id/editText_S4AdPerif"
+                            android:id="@+id/editTextS4AdPerif"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:hint="#"
+                            android:text="0"
                             android:inputType="number" />
 
                     </LinearLayout>
@@ -393,10 +392,10 @@
                             android:text="@string/cercano" />
 
                         <EditText
-                            android:id="@+id/editText_S4AdCerca"
+                            android:id="@+id/editTextS4AdCerca"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:hint="#"
+                            android:text="0"
                             android:inputType="number" />
 
                     </LinearLayout>
@@ -420,10 +419,10 @@
                             android:text="@string/lejos" />
 
                         <EditText
-                            android:id="@+id/editText_S4AdLejos"
+                            android:id="@+id/editTextS4AdLejos"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:hint="#"
+                            android:text="0"
                             android:inputType="number" />
 
                     </LinearLayout>
@@ -467,10 +466,10 @@
                             android:text="@string/periferico" />
 
                         <EditText
-                            android:id="@+id/editText_otroSAPerif"
+                            android:id="@+id/editTextOtroSAPerif"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:hint="#"
+                            android:text="0"
                             android:inputType="number" />
 
                     </LinearLayout>
@@ -494,10 +493,10 @@
                             android:text="@string/cercano" />
 
                         <EditText
-                            android:id="@+id/editText_otroSACerca"
+                            android:id="@+id/editTextOtroSACerca"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:hint="#"
+                            android:text="0"
                             android:inputType="number" />
 
                     </LinearLayout>
@@ -521,10 +520,10 @@
                             android:text="@string/lejos" />
 
                         <EditText
-                            android:id="@+id/editText_otroSALejos"
+                            android:id="@+id/editTextOtroSALejos"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:hint="#"
+                            android:text="0"
                             android:inputType="number" />
 
                     </LinearLayout>
