@@ -28,6 +28,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -35,6 +36,7 @@ import com.example.demo.R
 import com.example.demo.adapter.PhotoAdapter
 import com.example.demo.databinding.FragmentReportAddBinding
 import com.example.demo.model.Report
+import com.example.demo.viewModel.ReportViewModel
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -51,7 +53,9 @@ class ReportAddFragment : Fragment() {
     private var _binding: FragmentReportAddBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var currentPhotoPath: String
+    private lateinit var model: ReportViewModel
+
+    private var currentPhotoPath: String = ""
     private val photoPaths = mutableListOf<String>()
     private val adapter = PhotoAdapter(photoPaths)
 
@@ -67,6 +71,8 @@ class ReportAddFragment : Fragment() {
 
         _binding = FragmentReportAddBinding.inflate(inflater, container, false)
         val view = binding.root
+
+        model = ViewModelProvider(this)[ReportViewModel::class.java]
 
         val photoRecyclerView: RecyclerView = binding.photoRecyclerView
         val layoutManager =
@@ -100,7 +106,56 @@ class ReportAddFragment : Fragment() {
         binding.continueButton.setOnClickListener { continueToMap() }
         binding.getPosicion.setOnClickListener { getPosicionActual() }
 
+        binding.sendReportActionButton.setOnClickListener { enviarCenso() }
+
         return view
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    private fun enviarCenso() {
+
+        val censo = armarCenso()
+        model.insertCenso(censo)
+        Toast.makeText(activity, "Reporte agregado correctamente", Toast.LENGTH_LONG).show()
+        findNavController().navigate(R.id.my_reports_fragment)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    private fun armarCenso(): Report {
+
+        val ptoObsCenso = binding.spinnerAddPtoObs.selectedItem.toString()
+        val ctxSocial = binding.spinnerAddCtxSocial.selectedItem.toString()
+        val tpoSustrato = binding.spinnerAddTpoSustrato.selectedItem.toString()
+        // ----- dominante ----- //
+        val alfaS4Ad = binding.editTextMachoAdS4.text.toString().toInt()
+        val alfaOtrosSA = binding.editTextMachoAdS4.text.toString().toInt()
+        // ----- hembras y crias ----- //
+        val hembrasAd = binding.editTextHembrasAd.text.toString().toInt()
+        val criasVivas = binding.editTextCriasVivas.text.toString().toInt()
+        val criasMuertas = binding.editTextCriasMuertas.text.toString().toInt()
+        val destetados = binding.editTextDestetados.text.toString().toInt()
+        val juveniles = binding.editTextJuveniles.text.toString().toInt()
+        // ----- Ad/SA proximos ----- //
+        val s4AdPerif = binding.editTextS4AdPerif.text.toString().toInt()
+        val s4AdCerca = binding.editTextS4AdCerca.text.toString().toInt()
+        val s4AdLejos = binding.editTextS4AdLejos.text.toString().toInt()
+        val otrosSAPerif = binding.editTextOtroSAPerif.text.toString().toInt()
+        val otrosSACerca = binding.editTextOtroSACerca.text.toString().toInt()
+        val otrosSALejos = binding.editTextOtroSALejos.text.toString().toInt()
+        // ----- tiempo/espacio ----- //
+        val sdf = SimpleDateFormat("d/M/yyyy")
+        val date = sdf.format(Date())
+        val latitude = binding.latitud.text.toString().toDouble()
+        val longitude = binding.longitud.text.toString().toDouble()
+
+        return Report(
+                0,
+                ptoObsCenso, ctxSocial, tpoSustrato,
+                alfaS4Ad, alfaOtrosSA, hembrasAd, criasVivas,
+                criasMuertas, destetados, juveniles, s4AdPerif,
+                s4AdCerca, s4AdLejos, otrosSAPerif, otrosSACerca, otrosSALejos,
+                date, latitude, longitude, currentPhotoPath
+            )
     }
 
     @RequiresApi(Build.VERSION_CODES.N)

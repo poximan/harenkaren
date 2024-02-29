@@ -69,11 +69,11 @@ class ReportViewModel(application: Application) : AndroidViewModel(application) 
         repository = ReportsRepository(reportsDao)
         allReports = repository.allReports
     }
-    fun insert(report: Report) = CoroutineScope(Dispatchers.IO).launch(Dispatchers.IO) {
+    fun insertCenso(report: Report) = CoroutineScope(Dispatchers.IO).launch(Dispatchers.IO) {
         repository.insertReport(report)
     }
 
-    fun updateReport(report: Report) = CoroutineScope(Dispatchers.IO).launch {
+    fun updateCenso(report: Report) = CoroutineScope(Dispatchers.IO).launch {
             repository.updateReport(report)
         }
 
