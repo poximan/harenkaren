@@ -1,17 +1,15 @@
 package com.example.demo.viewModel
 
 import android.app.Application
-import android.graphics.Bitmap
-import android.util.Log
 import androidx.lifecycle.*
-import com.example.demo.model.Report
+import com.example.demo.model.Censo
 import com.example.demo.database.ReportRoomDatabase
 import com.example.demo.repository.ReportsRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class ReportViewModel(application: Application) : AndroidViewModel(application) {
+class CensoViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _title = MutableLiveData<String>()
     val title: LiveData<String>
@@ -62,19 +60,19 @@ class ReportViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     val repository: ReportsRepository
-    val allReports: LiveData<List<Report>>
+    val allCensos: LiveData<List<Censo>>
     init {
         val reportsDao = ReportRoomDatabase
             .getDatabase(application, viewModelScope).reportDao()
         repository = ReportsRepository(reportsDao)
-        allReports = repository.allReports
+        allCensos = repository.allReports
     }
-    fun insertCenso(report: Report) = CoroutineScope(Dispatchers.IO).launch(Dispatchers.IO) {
-        repository.insertReport(report)
+    fun insertCenso(censo: Censo) = CoroutineScope(Dispatchers.IO).launch(Dispatchers.IO) {
+        repository.insertReport(censo)
     }
 
-    fun updateCenso(report: Report) = CoroutineScope(Dispatchers.IO).launch {
-            repository.updateReport(report)
+    fun updateCenso(censo: Censo) = CoroutineScope(Dispatchers.IO).launch {
+            repository.updateReport(censo)
         }
 
 }

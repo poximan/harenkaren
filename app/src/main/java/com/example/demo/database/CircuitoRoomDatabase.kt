@@ -6,26 +6,26 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.example.demo.dao.ReportDAO
-import com.example.demo.model.Censo
+import com.example.demo.dao.CircuitoDAO
+import com.example.demo.model.Circuito
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = arrayOf(Censo::class), version = 1, exportSchema = false)
+@Database(entities = arrayOf(Circuito::class), version = 1, exportSchema = false)
 @TypeConverters(Converter::class)
-abstract class ReportRoomDatabase : RoomDatabase() {
+abstract class CircuitoRoomDatabase : RoomDatabase() {
 
-    abstract fun reportDao(): ReportDAO
+    abstract fun cicuitoDao(): CircuitoDAO
 
     companion object {
 
         @Volatile
-        private var INSTANCIA: ReportRoomDatabase? = null
+        private var INSTANCIA: CircuitoRoomDatabase? = null
 
         fun getDatabase(
             context: Context,
             viewModelScope: CoroutineScope
-        ): ReportRoomDatabase {
+        ): CircuitoRoomDatabase {
             val instanciaTemporal = INSTANCIA
             if (instanciaTemporal != null) {
                 return instanciaTemporal
@@ -33,8 +33,8 @@ abstract class ReportRoomDatabase : RoomDatabase() {
             synchronized(this) {
                 val instancia = Room.databaseBuilder(
                     context.applicationContext,
-                    ReportRoomDatabase::class.java,
-                    "report_database"
+                    CircuitoRoomDatabase::class.java,
+                    "circuito_database"
                 )
                     .addCallback(ReportDatabaseCallback(viewModelScope))
                     .build()
@@ -55,9 +55,9 @@ abstract class ReportRoomDatabase : RoomDatabase() {
                     }
                 }
             }
-            suspend fun populateDatabase(reportDAO: ReportDAO) {
-                if (reportDAO.getCount() == 0) {
-                    reportDAO.deleteAll()
+            suspend fun populateDatabase(circuitoDAO: CircuitoDAO) {
+                if (circuitoDAO.getCount() == 0) {
+                    circuitoDAO.deleteAll()
                 }
             }
         }

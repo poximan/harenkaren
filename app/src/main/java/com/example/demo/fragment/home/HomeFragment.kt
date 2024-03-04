@@ -2,7 +2,6 @@ package com.example.demo.fragment.home
 
 import android.app.AlertDialog
 import android.content.DialogInterface
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -22,7 +21,7 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        _binding!!.myReportsButton.setOnClickListener { showMyReports() }
+        _binding!!.misCensosButton.setOnClickListener { showMyReports() }
         _binding!!.goToStatisticsButton.setOnClickListener { goToStatistics() }
         _binding!!.myTopicsButton.setOnClickListener { goToMyTopics() }
         _binding!!.regulationsButton.setOnClickListener { showRegulations() }
@@ -45,7 +44,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun newReport() {
-        findNavController().navigate(R.id.goToNewReportAction)
+        findNavController().navigate(R.id.goToNewCensoAction)
     }
 
     private fun showRegulations() {

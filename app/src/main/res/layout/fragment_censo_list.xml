@@ -14,7 +14,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/report_item" />
+        tools:listitem="@layout/item_censo" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/homeActionButton"
@@ -31,7 +31,7 @@
         tools:ignore="SpeakableTextPresentCheck" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/newReportActionButton"
+        android:id="@+id/new_censo_action_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="57dp"

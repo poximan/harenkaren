@@ -15,21 +15,21 @@ import androidx.annotation.RequiresApi
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.demo.R
-import com.example.demo.databinding.FragmentReportDetailBinding
+import com.example.demo.databinding.FragmentCensoDetailBinding
 import java.io.File
 
-class ReportDetailFragment : Fragment() {
+class CensoDetailFragment : Fragment() {
 
-    private var _binding: FragmentReportDetailBinding? = null
+    private var _binding: FragmentCensoDetailBinding? = null
     private val binding get() = _binding!!
-    private val args: ReportDetailFragmentArgs by navArgs()
+    private val args: CensoDetailFragmentArgs by navArgs()
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentReportDetailBinding.inflate(inflater, container, false)
+        _binding = FragmentCensoDetailBinding.inflate(inflater, container, false)
 
         _binding!!.fishingTypeTextView.text = args.currentReport.ptoObsCenso
         _binding!!.specieTextView.text = args.currentReport.ctxSocial
@@ -49,12 +49,12 @@ class ReportDetailFragment : Fragment() {
     }
 
     private fun goMap() {
-        val action = ReportDetailFragmentDirections.goToMapsFragmentFromReportDetailFragment(args.currentReport)
+        val action = CensoDetailFragmentDirections.goToMapsFragmentFromReportDetailFragment(args.currentReport)
         findNavController().navigate(action)
     }
 
     private fun updateReport() {
-        val action = ReportDetailFragmentDirections.goToReportUpdateAction(args.currentReport)
+        val action = CensoDetailFragmentDirections.goToReportUpdateAction(args.currentReport)
         findNavController().navigate(action)
     }
 

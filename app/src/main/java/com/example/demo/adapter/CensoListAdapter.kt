@@ -12,29 +12,29 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.demo.R
-import com.example.demo.model.Report
+import com.example.demo.model.Censo
 import java.io.File
 
-class ReportListAdapter(
-    private val itemClickListener: OnReportClickListener
-) : RecyclerView.Adapter<ReportListAdapter.ReportViewHolder>() {
+class CensoListAdapter(
+    private val itemClickListener: OnCensoClickListener
+) : RecyclerView.Adapter<CensoListAdapter.ReportViewHolder>() {
 
-    private var reports = emptyList<Report>()
+    private var censos = emptyList<Censo>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReportViewHolder {
         val view = LayoutInflater
             .from(parent.context)
-            .inflate(R.layout.report_item, parent, false)
+            .inflate(R.layout.item_censo, parent, false)
         return ReportViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ReportViewHolder, position: Int) {
-        val report = reports[position]
+        val report = censos[position]
         holder.bind(report)
     }
 
-    internal fun setReports(reports: List<Report>) {
-        this.reports = reports
+    internal fun setCensos(censos: List<Censo>) {
+        this.censos = censos
         notifyDataSetChanged()
     }
 
@@ -43,17 +43,17 @@ class ReportListAdapter(
         private val date: TextView = view.findViewById(R.id.report_timestamp)
         private val image: ImageView = view.findViewById(R.id.report_imageView)
 
-        fun bind(report: Report) {
-            itemView.setOnClickListener { itemClickListener.onItemClick(report) }
-            reporte_resumen.text = "Pto.obs.: " + report.ptoObsCenso + " - Ctx.social: " + report.ctxSocial + "Tpo.sust.: " + report.tpoSustrato +
-                    " / AlfaS4/Ad: " + report.alfaS4Ad + " - OtrosSA: " + report.alfaOtrosSA
-            date.text = report.date
+        fun bind(censo: Censo) {
+            itemView.setOnClickListener { itemClickListener.onItemClick(censo) }
+            reporte_resumen.text = "Pto.obs.: " + censo.ptoObsCenso + " - Ctx.social: " + censo.ctxSocial + "Tpo.sust.: " + censo.tpoSustrato +
+                    " / AlfaS4/Ad: " + censo.alfaS4Ad + " - OtrosSA: " + censo.alfaOtrosSA
+            date.text = censo.date
 
-            val file = File(report.photoPath)
+            val file = File(censo.photoPath)
             if (file.exists()) {
 
-                val imageBitmap: Bitmap = BitmapFactory.decodeFile(report.photoPath)
-                val exif = ExifInterface(report.photoPath)
+                val imageBitmap: Bitmap = BitmapFactory.decodeFile(censo.photoPath)
+                val exif = ExifInterface(censo.photoPath)
                 val orientation: Int =
                     exif.getAttributeInt(
                         ExifInterface.TAG_ORIENTATION,
@@ -90,9 +90,9 @@ class ReportListAdapter(
         }
     }
 
-    override fun getItemCount() = reports.size
+    override fun getItemCount() = censos.size
 
-    interface OnReportClickListener {
-        fun onItemClick(report: Report)
+    interface OnCensoClickListener {
+        fun onItemClick(censo: Censo)
     }
 }

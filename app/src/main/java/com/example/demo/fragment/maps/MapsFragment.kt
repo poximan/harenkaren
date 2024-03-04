@@ -19,7 +19,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.demo.R
 import com.example.demo.databinding.FragmentMapsBinding
-import com.example.demo.viewModel.ReportViewModel
+import com.example.demo.viewModel.CensoViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -43,7 +43,7 @@ class MapsFragment : Fragment() {
     private var _binding: FragmentMapsBinding? = null
     private val binding get() = _binding!!
     private val args: MapsFragmentArgs by navArgs()
-    private lateinit var model: ReportViewModel
+    private lateinit var model: CensoViewModel
     private var marker: Marker? = null
     private var smallMarker: Bitmap? = null
 
@@ -59,7 +59,7 @@ class MapsFragment : Fragment() {
 
         _binding = FragmentMapsBinding.inflate(inflater, container, false)
         val view = binding.root
-        model = ViewModelProvider(this)[ReportViewModel::class.java]
+        model = ViewModelProvider(this)[CensoViewModel::class.java]
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
 
@@ -198,7 +198,7 @@ class MapsFragment : Fragment() {
             )
             model.insertCenso(args.currentReport)
             Toast.makeText(activity, "Reporte agregado correctamente", Toast.LENGTH_LONG).show()
-            findNavController().navigate(R.id.my_reports_fragment)
+            findNavController().navigate(R.id.my_censos_fragment)
         }
     }
 
@@ -229,7 +229,7 @@ class MapsFragment : Fragment() {
 
         model.updateCenso(args.currentReport)
         Toast.makeText(activity, "Reporte editado correctamente", Toast.LENGTH_LONG).show()
-        findNavController().navigate(R.id.my_reports_fragment)
+        findNavController().navigate(R.id.my_censos_fragment)
     }
 
     override fun onRequestPermissionsResult(

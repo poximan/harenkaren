@@ -5,8 +5,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "report_table")
-data class Report(
+@Entity(tableName = "censo_table")
+data class Censo(
 
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
@@ -100,8 +100,7 @@ data class Report(
         parcel.readValue(Double::class.java.classLoader) as? Double,
         parcel.readValue(Double::class.java.classLoader) as? Double,
         parcel.readString().toString()
-    ) {
-    }
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(id)
@@ -131,12 +130,12 @@ data class Report(
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<Report> {
-        override fun createFromParcel(parcel: Parcel): Report {
-            return Report(parcel)
+    companion object CREATOR : Parcelable.Creator<Censo> {
+        override fun createFromParcel(parcel: Parcel): Censo {
+            return Censo(parcel)
         }
 
-        override fun newArray(size: Int): Array<Report?> {
+        override fun newArray(size: Int): Array<Censo?> {
             return arrayOfNulls(size)
         }
     }

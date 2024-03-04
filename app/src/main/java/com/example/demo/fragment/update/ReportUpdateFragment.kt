@@ -25,33 +25,34 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.demo.R
-import com.example.demo.databinding.FragmentReportUpdateBinding
-import com.example.demo.fragment.add.REQUEST_TAKE_PHOTO
-import com.example.demo.model.Report
-import com.example.demo.viewModel.ReportViewModel
+import com.example.demo.databinding.FragmentCensoUpdateBinding
+import com.example.demo.fragment.add.CensoAdd1Fragment.DbConstants.REQUEST_TAKE_PHOTO
+import com.example.demo.model.Censo
+import com.example.demo.viewModel.CensoViewModel
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
-import java.util.*
+import java.util.Date
+
 import kotlin.math.min
 
 class ReportUpdateFragment : Fragment() {
 
-    private var _binding: FragmentReportUpdateBinding? = null
+    private var _binding: FragmentCensoUpdateBinding? = null
     private val binding get() = _binding!!
     private val args: ReportUpdateFragmentArgs by navArgs()
     private lateinit var currentPhotoPath: String
 
-    private lateinit var model: ReportViewModel
+    private lateinit var model: CensoViewModel
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentReportUpdateBinding.inflate(inflater, container, false)
+        _binding = FragmentCensoUpdateBinding.inflate(inflater, container, false)
         val view = binding.root
-        model = ViewModelProvider(this)[ReportViewModel::class.java]
+        model = ViewModelProvider(this)[CensoViewModel::class.java]
 
         val ptObsCenso = resources.getStringArray(R.array.op_punto_obs_censo)
         val ctxSocial = resources.getStringArray(R.array.op_contexto_social)
@@ -193,7 +194,7 @@ class ReportUpdateFragment : Fragment() {
             currentPhotoPath
         }
 
-        val updatedReport = Report(
+        val updatedCenso = Censo(
             args.currentReport.id,
             ptoObsCenso, ctxSocial, "",
             0, 0, 0, 0,
@@ -202,7 +203,7 @@ class ReportUpdateFragment : Fragment() {
             date, args.currentReport.latitude, args.currentReport.longitude, photoPath
         )
 
-        val action = ReportUpdateFragmentDirections.goToMapsFragmentFromReportUpdateFragment(updatedReport)
+        val action = ReportUpdateFragmentDirections.goToMapsFragmentFromReportUpdateFragment(updatedCenso)
         findNavController().navigate(action)
     }
 

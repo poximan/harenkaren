@@ -12,13 +12,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.example.demo.R
 import com.example.demo.databinding.FragmentStatisticsBinding
-import com.example.demo.model.Report
-import com.example.demo.viewModel.ReportViewModel
+import com.example.demo.model.Censo
+import com.example.demo.viewModel.CensoViewModel
 import java.util.*
 
 class StatisticsFragment : Fragment() {
 
-    private val reportViewModel: ReportViewModel by navGraphViewModels(R.id.app_navigation)
+    private val censoViewModel: CensoViewModel by navGraphViewModels(R.id.app_navigation)
     private var _binding: FragmentStatisticsBinding? = null
     private val binding get() = _binding!!
 
@@ -36,7 +36,7 @@ class StatisticsFragment : Fragment() {
     ): View {
         _binding = FragmentStatisticsBinding.inflate(inflater, container, false)
 
-        val reportList = reportViewModel.allReports.value!!
+        val reportList = censoViewModel.allCensos.value!!
         fillLabels(reportList)
 
         _binding!!.goBackButton.setOnClickListener { goBack() }
@@ -46,7 +46,7 @@ class StatisticsFragment : Fragment() {
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
-    private fun fillLabels(reportList: List<Report>) {
+    private fun fillLabels(censoList: List<Censo>) {
 
         var currentMonthReports = 0
         var lastSixMonthsReports = 0
@@ -54,9 +54,9 @@ class StatisticsFragment : Fragment() {
         val ctxSocial = resources.getStringArray(R.array.op_contexto_social)
         var ctxSocialMap = createMutableMapOf(ctxSocial)
 
-        if (reportList.isNotEmpty()) {
-            _binding!!.startActivityTextView.text = getFirstDayOfReportList(reportList)
-            for (report in reportList) {
+        if (censoList.isNotEmpty()) {
+            _binding!!.startActivityTextView.text = getFirstDayOfReportList(censoList)
+            for (report in censoList) {
                 val splitedDate = report.date.split(delim)
                 if (splitedDate[1] == currentMonth.toString() && splitedDate[2] == currentYear.toString()) {
                     currentMonthReports += 1
@@ -97,8 +97,8 @@ class StatisticsFragment : Fragment() {
             }
             //To here
 
-            _binding!!.totalReportsTextView.text = reportList.size.toString()
-            _binding!!.lastCaptureTextView.text = reportList.first().ctxSocial
+            _binding!!.totalReportsTextView.text = censoList.size.toString()
+            _binding!!.lastCaptureTextView.text = censoList.first().ctxSocial
         } else {
             _binding!!.startActivityTextView.text = "Aún no existen registros"
             _binding!!.currentMonthTextView.text = "0"
@@ -149,11 +149,11 @@ class StatisticsFragment : Fragment() {
         return aMutableMapOfSpecies
     }
 
-    private fun getFirstDayOfReportList(reports: List<Report>): CharSequence {
-        if (reports.isEmpty()) {
+    private fun getFirstDayOfReportList(censos: List<Censo>): CharSequence {
+        if (censos.isEmpty()) {
             return "No hay reportes cargados"
         }
-        return reports.last().date
+        return censos.last().date
     }
 
     private fun goToMultipleMaps() {

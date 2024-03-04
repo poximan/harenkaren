@@ -3,26 +3,27 @@ package com.example.demo.fragment.list
 import android.app.DatePickerDialog
 import android.icu.util.Calendar
 import android.os.Bundle
-import android.util.Log
-import android.view.*
-import android.widget.Toast
-import androidx.core.view.forEach
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.example.demo.R
-import com.example.demo.adapter.ReportListAdapter
-import com.example.demo.databinding.FragmentReportListBinding
-import com.example.demo.model.Report
-import com.example.demo.viewModel.ReportViewModel
+import com.example.demo.adapter.CensoListAdapter
+import com.example.demo.databinding.FragmentCensoListBinding
+import com.example.demo.model.Censo
+import com.example.demo.viewModel.CensoViewModel
 
-class ReportListFragment : Fragment(), ReportListAdapter.OnReportClickListener {
+class CensoListFragment : Fragment(), CensoListAdapter.OnCensoClickListener {
 
-    private val reportViewModel: ReportViewModel by navGraphViewModels(R.id.app_navigation)
-    private var _binding: FragmentReportListBinding? = null
+    private val reportViewModel: CensoViewModel by navGraphViewModels(R.id.app_navigation)
+    private var _binding: FragmentCensoListBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -30,19 +31,18 @@ class ReportListFragment : Fragment(), ReportListAdapter.OnReportClickListener {
         savedInstanceState: Bundle?
     ): View {
         setHasOptionsMenu(true)
-        _binding = FragmentReportListBinding.inflate(inflater, container, false)
+        _binding = FragmentCensoListBinding.inflate(inflater, container, false)
         _binding!!.homeActionButton.setOnClickListener { goHome() }
 
-        _binding!!.newReportActionButton.setOnClickListener{ newReport() }
+        _binding!!.newCensoActionButton.setOnClickListener{ newCenso() }
 
         loadFullList()
 
-        val view = binding.root
-        return view
+        return binding.root
     }
 
-    override fun onItemClick(report: Report) {
-        val action = ReportListFragmentDirections.goToReportDetailFromMyReportsAction(report)
+    override fun onItemClick(report: Censo) {
+        val action = CensoListFragmentDirections.goToReportDetailFromMyReportsAction(report)
         findNavController().navigate(action)
     }
 
@@ -50,8 +50,8 @@ class ReportListFragment : Fragment(), ReportListAdapter.OnReportClickListener {
         findNavController().navigate(R.id.home_fragment)
     }
 
-    private fun newReport() {
-        findNavController().navigate(R.id.goToNewReportAction)
+    private fun newCenso() {
+        findNavController().navigate(R.id.goToNewCensoAction)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -85,14 +85,14 @@ class ReportListFragment : Fragment(), ReportListAdapter.OnReportClickListener {
 
     private fun loadFullList() {
         val reportList: RecyclerView = binding.list
-        val reportAdapter = ReportListAdapter(this)
+        val reportAdapter = CensoListAdapter(this)
         reportList.adapter = reportAdapter
 
-        reportViewModel.allReports
+        reportViewModel.allCensos
             .observe(
                 viewLifecycleOwner,
                 Observer { reports ->
-                    reports?.let { reportAdapter.setReports(it) }
+                    reports?.let { reportAdapter.setCensos(it) }
                 }
             )
 
@@ -100,21 +100,21 @@ class ReportListFragment : Fragment(), ReportListAdapter.OnReportClickListener {
 
     private fun loadListWithDate(date: String) {
         val reportList: RecyclerView = binding.list
-        val reportAdapter = ReportListAdapter(this)
+        val reportAdapter = CensoListAdapter(this)
         reportList.adapter = reportAdapter
 
-        reportViewModel.allReports
+        reportViewModel.allCensos
             .observe(
                 viewLifecycleOwner,
                 Observer { reports ->
                     val filteredList = remove(reports, date)
-                    reports?.let { reportAdapter.setReports(filteredList) }
+                    reports?.let { reportAdapter.setCensos(filteredList) }
                 }
             )
     }
 
-    private fun remove(arr: List<Report>, target: String): List<Report> {
-        val result: MutableList<Report> = ArrayList()
+    private fun remove(arr: List<Censo>, target: String): List<Censo> {
+        val result: MutableList<Censo> = ArrayList()
 
         for (report in arr) {
             if (report.date == target) {

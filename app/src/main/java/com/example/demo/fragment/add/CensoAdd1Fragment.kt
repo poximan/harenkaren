@@ -1,32 +1,30 @@
 package com.example.demo.fragment.add
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
-import android.icu.text.SimpleDateFormat
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
-import android.media.ExifInterface
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ImageView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.exifinterface.media.ExifInterface
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -34,26 +32,28 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.demo.R
 import com.example.demo.adapter.PhotoAdapter
-import com.example.demo.databinding.FragmentReportAddBinding
-import com.example.demo.model.Report
-import com.example.demo.viewModel.ReportViewModel
+import com.example.demo.databinding.FragmentCensoAdd1Binding
+import com.example.demo.model.Censo
+import com.example.demo.viewModel.CensoViewModel
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
-import java.util.*
-import kotlin.math.min
+import java.lang.Integer.min
+import java.text.SimpleDateFormat
+import java.util.Date
 
+class CensoAdd1Fragment : Fragment() {
 
-const val REQUEST_TAKE_PHOTO = 2
-const val PERMISSION_REQUEST_CAMERA = 3
-const val PERMISSION_REQUEST_LOCATION = 4
-
-class ReportAddFragment : Fragment() {
-
-    private var _binding: FragmentReportAddBinding? = null
+    object DbConstants {
+        const val REQUEST_TAKE_PHOTO = 2
+        const val PERMISSION_REQUEST_CAMERA = 3
+        const val PERMISSION_REQUEST_LOCATION = 4
+    }
+    
+    private var _binding: FragmentCensoAdd1Binding? = null
     private val binding get() = _binding!!
 
-    private lateinit var model: ReportViewModel
+    private lateinit var model: CensoViewModel
 
     private var currentPhotoPath: String = ""
     private val photoPaths = mutableListOf<String>()
@@ -62,17 +62,16 @@ class ReportAddFragment : Fragment() {
     private lateinit var locationManager: LocationManager
     private var indicatorLight: ImageView? = null
 
-
-    @RequiresApi(Build.VERSION_CODES.N)
+    @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
 
-        _binding = FragmentReportAddBinding.inflate(inflater, container, false)
+        _binding = FragmentCensoAdd1Binding.inflate(inflater, container, false)
         val view = binding.root
 
-        model = ViewModelProvider(this)[ReportViewModel::class.java]
+        model = ViewModelProvider(this)[CensoViewModel::class.java]
 
         val photoRecyclerView: RecyclerView = binding.photoRecyclerView
         val layoutManager =
@@ -80,132 +79,28 @@ class ReportAddFragment : Fragment() {
         photoRecyclerView.layoutManager = layoutManager
         photoRecyclerView.adapter = adapter
 
-        // punto de observacion
-        val ptObsCenso = resources.getStringArray(R.array.op_punto_obs_censo)
-        val ptObsCensoArrayAdapter = ArrayAdapter(view.context, R.layout.dropdown_item, ptObsCenso)
-
-        binding.spinnerAddPtoObs.adapter = ptObsCensoArrayAdapter
-        binding.helpPtoObsCenso.setOnClickListener { ptoObsCensoInfo() }
-
-        // contexto social
-        val ctxSocial = resources.getStringArray(R.array.op_contexto_social)
-        val ctxSocialArrayAdapter = ArrayAdapter(view.context, R.layout.dropdown_item, ctxSocial)
-
-        binding.spinnerAddCtxSocial.adapter = ctxSocialArrayAdapter
-        binding.helpCtxSocial.setOnClickListener { ctxSocialInfo() }
-
-        // tipo de sustrato en playa
-        val tpoSustrato = resources.getStringArray(R.array.op_tipo_sustrato)
-        val tpoSustratoArrayAdapter =
-            ArrayAdapter(view.context, R.layout.dropdown_item, tpoSustrato)
-
-        binding.spinnerAddTpoSustrato.adapter = tpoSustratoArrayAdapter
-        binding.helpTpoSustrato.setOnClickListener { tpoSustratoInfo() }
-
-        binding.photoButton.setOnClickListener { takePhoto() }
-        binding.continueButton.setOnClickListener { continueToMap() }
         binding.getPosicion.setOnClickListener { getPosicionActual() }
-
-        binding.sendReportActionButton.setOnClickListener { enviarCenso() }
+        binding.photoButton.setOnClickListener { takePhoto() }
+        binding.mapButton.setOnClickListener { continueToMap() }
+        binding.continueReportButton.setOnClickListener { continuarReporte() }
 
         return view
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
-    private fun enviarCenso() {
-
-        val censo = armarCenso()
-        model.insertCenso(censo)
-        Toast.makeText(activity, "Reporte agregado correctamente", Toast.LENGTH_LONG).show()
-        findNavController().navigate(R.id.my_reports_fragment)
-    }
-
-    @RequiresApi(Build.VERSION_CODES.N)
-    private fun armarCenso(): Report {
-
-        val ptoObsCenso = binding.spinnerAddPtoObs.selectedItem.toString()
-        val ctxSocial = binding.spinnerAddCtxSocial.selectedItem.toString()
-        val tpoSustrato = binding.spinnerAddTpoSustrato.selectedItem.toString()
-        // ----- dominante ----- //
-        val alfaS4Ad = binding.editTextMachoAdS4.text.toString().toInt()
-        val alfaOtrosSA = binding.editTextMachoAdS4.text.toString().toInt()
-        // ----- hembras y crias ----- //
-        val hembrasAd = binding.editTextHembrasAd.text.toString().toInt()
-        val criasVivas = binding.editTextCriasVivas.text.toString().toInt()
-        val criasMuertas = binding.editTextCriasMuertas.text.toString().toInt()
-        val destetados = binding.editTextDestetados.text.toString().toInt()
-        val juveniles = binding.editTextJuveniles.text.toString().toInt()
-        // ----- Ad/SA proximos ----- //
-        val s4AdPerif = binding.editTextS4AdPerif.text.toString().toInt()
-        val s4AdCerca = binding.editTextS4AdCerca.text.toString().toInt()
-        val s4AdLejos = binding.editTextS4AdLejos.text.toString().toInt()
-        val otrosSAPerif = binding.editTextOtroSAPerif.text.toString().toInt()
-        val otrosSACerca = binding.editTextOtroSACerca.text.toString().toInt()
-        val otrosSALejos = binding.editTextOtroSALejos.text.toString().toInt()
-        // ----- tiempo/espacio ----- //
-        val sdf = SimpleDateFormat("d/M/yyyy")
-        val date = sdf.format(Date())
-        val latitude = binding.latitud.text.toString().toDouble()
-        val longitude = binding.longitud.text.toString().toDouble()
-
-        return Report(
-                0,
-                ptoObsCenso, ctxSocial, tpoSustrato,
-                alfaS4Ad, alfaOtrosSA, hembrasAd, criasVivas,
-                criasMuertas, destetados, juveniles, s4AdPerif,
-                s4AdCerca, s4AdLejos, otrosSAPerif, otrosSACerca, otrosSALejos,
-                date, latitude, longitude, currentPhotoPath
-            )
+    private fun continuarReporte() {
+        val action = CensoAdd1FragmentDirections.goToAdd2FragmentAction()
+        findNavController().navigate(action)
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val ctxSocialSpinner = view.findViewById<Spinner>(R.id.spinnerAddCtxSocial)
-        val ctxSocial = resources.getStringArray(R.array.op_contexto_social)
-
-        val linearLayout4 = view.findViewById<LinearLayout>(R.id.linearLayout4)
-        val linearLayout5 = view.findViewById<LinearLayout>(R.id.linearLayout5)
-
-        ctxSocialSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                if (ctxSocialSpinner.selectedItem == ctxSocial[0] || ctxSocialSpinner.selectedItem == ctxSocial[1]) {
-                    linearLayout4.visibility = View.VISIBLE
-                    linearLayout5.visibility = View.VISIBLE
-                } else {
-                    linearLayout4.visibility = View.GONE
-                    linearLayout5.visibility = View.GONE
-                }
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                // No se necesita hacer nada aquí.
-            }
-        }
-        indicatorLight = view.findViewById(R.id.indicatorLight);
+        indicatorLight = view.findViewById(R.id.indicatorLight)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    private fun ptoObsCensoInfo() {
-        findNavController().navigate(R.id.ptoObsCensoAction)
-    }
-
-    private fun ctxSocialInfo() {
-        findNavController().navigate(R.id.ctxSocialAction)
-    }
-
-    private fun tpoSustratoInfo() {
-        findNavController().navigate(R.id.tpoSustratoAction)
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -238,7 +133,7 @@ class ReportAddFragment : Fragment() {
                 Manifest.permission.CAMERA,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
             ),
-            PERMISSION_REQUEST_CAMERA
+            DbConstants.PERMISSION_REQUEST_CAMERA
         )
     }
 
@@ -264,7 +159,7 @@ class ReportAddFragment : Fragment() {
                     )
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
 
-                    startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO)
+                    startActivityForResult(takePictureIntent, DbConstants.REQUEST_TAKE_PHOTO)
                 }
             }
         }
@@ -279,7 +174,7 @@ class ReportAddFragment : Fragment() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         when (requestCode) {
-            PERMISSION_REQUEST_CAMERA -> {
+            DbConstants.PERMISSION_REQUEST_CAMERA -> {
                 // Maneja los resultados de los permisos de la cámara
                 if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
                     // Los permisos de la cámara fueron concedidos, puedes lanzar la cámara
@@ -294,7 +189,7 @@ class ReportAddFragment : Fragment() {
                 }
             }
 
-            PERMISSION_REQUEST_LOCATION -> {
+            DbConstants.PERMISSION_REQUEST_LOCATION -> {
                 // Maneja los resultados de los permisos de ubicación
                 if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
                     // Los permisos de ubicación fueron concedidos, pero no solicitamos actualizaciones aquí
@@ -330,7 +225,7 @@ class ReportAddFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == AppCompatActivity.RESULT_OK) {
+        if (requestCode == DbConstants.REQUEST_TAKE_PHOTO && resultCode == AppCompatActivity.RESULT_OK) {
             val rotatedBitmap = rotateImage(reduceBitmap())
             saveRotatedBitmap(rotatedBitmap)
             photoPaths.add(currentPhotoPath)
@@ -340,26 +235,7 @@ class ReportAddFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.N)
     private fun continueToMap() {
-        // ----- entorno ----- //
-        val ptoObsCenso = binding.spinnerAddPtoObs.selectedItem.toString()
-        val ctxSocial = binding.spinnerAddCtxSocial.selectedItem.toString()
-        val tpoSustrato = binding.spinnerAddTpoSustrato.selectedItem.toString()
-        // ----- dominante ----- //
-        val alfaS4Ad = binding.editTextMachoAdS4.text.toString().toInt()
-        val alfaOtrosSA = binding.editTextMachoAdS4.text.toString().toInt()
-        // ----- hembras y crias ----- //
-        val hembrasAd = binding.editTextHembrasAd.text.toString().toInt()
-        val criasVivas = binding.editTextCriasVivas.text.toString().toInt()
-        val criasMuertas = binding.editTextCriasMuertas.text.toString().toInt()
-        val destetados = binding.editTextDestetados.text.toString().toInt()
-        val juveniles = binding.editTextJuveniles.text.toString().toInt()
-        // ----- Ad/SA proximos ----- //
-        val s4AdPerif = binding.editTextS4AdPerif.text.toString().toInt()
-        val s4AdCerca = binding.editTextS4AdCerca.text.toString().toInt()
-        val s4AdLejos = binding.editTextS4AdLejos.text.toString().toInt()
-        val otrosSAPerif = binding.editTextOtroSAPerif.text.toString().toInt()
-        val otrosSACerca = binding.editTextOtroSACerca.text.toString().toInt()
-        val otrosSALejos = binding.editTextOtroSALejos.text.toString().toInt()
+
         // ----- tiempo/espacio ----- //
         val sdf = SimpleDateFormat("d/M/yyyy")
         val date = sdf.format(Date())
@@ -367,17 +243,17 @@ class ReportAddFragment : Fragment() {
         val longitude = binding.longitud.text.toString().toDouble()
 
         try {
-            val report =
-                Report(
+            val censo =
+                Censo(
                     0,
-                    ptoObsCenso, ctxSocial, tpoSustrato,
-                    alfaS4Ad, alfaOtrosSA, hembrasAd, criasVivas,
-                    criasMuertas, destetados, juveniles, s4AdPerif,
-                    s4AdCerca, s4AdLejos, otrosSAPerif, otrosSACerca, otrosSALejos,
+                    "", "", "",
+                    1, 2, 3, 4,
+                    5, 6, 7, 8,
+                    9, 10, 11, 12, 13,
                     date, latitude, longitude, currentPhotoPath
                 )
 
-            val action = ReportAddFragmentDirections.goToMapsFragmentAction(report)
+            val action = CensoAdd1FragmentDirections.goToMapsFragmentAction(censo)
             findNavController().navigate(action)
 
         } catch (e: UninitializedPropertyAccessException) {
@@ -431,20 +307,33 @@ class ReportAddFragment : Fragment() {
         binding.captureImageView.setImageBitmap(rotatedBitmap)
     }
 
-    @RequiresApi(Build.VERSION_CODES.M)
-    @SuppressLint("MissingPermission")
+    @RequiresApi(Build.VERSION_CODES.R)
     private fun getPosicionActual() {
 
         locationManager = requireActivity().getSystemService(LocationManager::class.java)
 
         if (checkLocationPermission()) {
-            indicatorLight?.setImageResource(R.drawable.indicator_off);
+            indicatorLight?.setImageResource(R.drawable.indicator_off)
 
+            /*
+            val proveedores : MutableList<String> = locationManager.allProviders
+            val indiceGps = proveedores.indexOf("gps")
+            val provGps : String = proveedores[indiceGps]
+
+            locationManager.getCurrentLocation(provGps,null, Executors.newSingleThreadExecutor()) { location: Location? ->
+                // Manejar la ubicación obtenida
+                location?.let {
+                    // Hacer algo con la ubicación (por ejemplo, mostrarla en un TextView)
+                    indicatorLight?.setImageResource(R.drawable.indicator_on)
+                    updateLocationViews(location.latitude, location.longitude)
+                }
+            }
+            */
             locationManager.requestSingleUpdate(
                 LocationManager.GPS_PROVIDER,
                 object : LocationListener {
                     override fun onLocationChanged(location: Location) {
-                        indicatorLight?.setImageResource(R.drawable.indicator_on);
+                        indicatorLight?.setImageResource(R.drawable.indicator_on)
                         updateLocationViews(location.latitude, location.longitude)
                     }
 
@@ -494,8 +383,9 @@ class ReportAddFragment : Fragment() {
                     Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.ACCESS_COARSE_LOCATION
                 ),
-                PERMISSION_REQUEST_LOCATION
+                DbConstants.PERMISSION_REQUEST_LOCATION
             )
         }
     }
 }
+

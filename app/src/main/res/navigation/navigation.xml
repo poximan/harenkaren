@@ -10,6 +10,7 @@
         android:name="com.example.demo.fragment.MainFragment"
         android:label="@string/app_name"
         tools:layout="@layout/fragment_main">
+
         <action
             android:id="@+id/loginAction"
             app:destination="@id/login_fragment"
@@ -26,30 +27,12 @@
             app:popExitAnim="@android:anim/fade_out" />
 
     </fragment>
+
     <fragment
-        android:id="@+id/report_add_fragment"
-        android:name="com.example.demo.fragment.add.ReportAddFragment"
+        android:id="@+id/report_add1_fragment"
+        android:name="com.example.demo.fragment.add.CensoAdd1Fragment"
         android:label="Nuevo censo"
-        tools:layout="@layout/fragment_report_add">
-        <action
-            android:id="@+id/ptoObsCensoAction"
-            app:destination="@id/ptoObsCenso_activity"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out"
-            app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/fade_out" />
-
-        <action
-            android:id="@+id/ctxSocialAction"
-            app:destination="@id/ctxSocial_activity"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out"
-            app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/fade_out" />
-
-        <action
-            android:id="@+id/tpoSustratoAction"
-            app:destination="@id/tpoSustrato_activity" />
+        tools:layout="@layout/fragment_censo_add1">
 
         <action
             android:id="@+id/goToMapsFragmentAction"
@@ -58,6 +41,33 @@
             app:exitAnim="@android:anim/fade_out"
             app:popEnterAnim="@android:anim/fade_in"
             app:popExitAnim="@android:anim/fade_out" />
+
+        <action
+            android:id="@+id/goToAdd2FragmentAction"
+            app:destination="@id/report_add2_fragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/report_add2_fragment"
+        android:name="com.example.demo.fragment.add.CensoAdd2Fragment"
+        android:label="Nuevo censo"
+        tools:layout="@layout/fragment_censo_add2">
+        <action
+            android:id="@+id/ptoObsCensoAction"
+            app:destination="@id/ptoObsCenso_activity" />
+
+        <action
+            android:id="@+id/ctxSocialAction"
+            app:destination="@id/ctxSocial_activity" />
+
+        <action
+            android:id="@+id/tpoSustratoAction"
+            app:destination="@id/tpoSustrato_activity" />
 
     </fragment>
     <activity
@@ -77,13 +87,13 @@
 
     <fragment
         android:id="@+id/report_detail_fragment"
-        android:name="com.example.demo.fragment.detail.ReportDetailFragment"
+        android:name="com.example.demo.fragment.detail.CensoDetailFragment"
         android:label="Detalle censo"
-        tools:layout="@layout/fragment_report_detail">
+        tools:layout="@layout/fragment_censo_detail">
 
         <argument
             android:name="currentReport"
-            app:argType="com.example.demo.model.Report" />
+            app:argType="com.example.demo.model.Censo" />
 
         <action
             android:id="@+id/goToReportUpdateAction"
@@ -99,7 +109,7 @@
 
         <action
             android:id="@+id/goToMyReportsFromReportDetailAction"
-            app:destination="@id/my_reports_fragment"
+            app:destination="@id/my_censos_fragment"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out"
             app:popEnterAnim="@android:anim/fade_in"
@@ -111,24 +121,29 @@
         android:name="com.example.demo.fragment.info.AboutFragment"
         tools:layout="@layout/fragment_about" />
     <fragment
-        android:id="@+id/my_reports_fragment"
-        android:name="com.example.demo.fragment.list.ReportListFragment"
+        android:id="@+id/my_censos_fragment"
+        android:name="com.example.demo.fragment.list.CensoListFragment"
         android:label="Censos"
-        tools:layout="@layout/fragment_report_list">
+        tools:layout="@layout/fragment_censo_list">
         <action
             android:id="@+id/goToReportDetailFromMyReportsAction"
-            app:destination="@id/report_detail_fragment"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out"
-            app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/fade_out" />
+            app:destination="@id/report_detail_fragment" />
         <action
-            android:id="@+id/goToNewReportAction"
-            app:destination="@id/report_add_fragment"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out"
-            app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/fade_out" />
+            android:id="@+id/goToNewCensoAction"
+            app:destination="@id/report_add1_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/mis_circuitos_fragment"
+        android:name="com.example.demo.fragment.list.CircuitoListFragment"
+        android:label="Censos"
+        tools:layout="@layout/fragment_censo_list">
+        <action
+            android:id="@+id/goToReportDetailFromMyReportsAction"
+            app:destination="@id/report_detail_fragment" />
+        <action
+            android:id="@+id/goToNewCensoAction"
+            app:destination="@id/report_add1_fragment" />
     </fragment>
 
     <fragment
@@ -157,7 +172,7 @@
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/goToMyReportsFromHomeAction"
-            app:destination="@id/my_reports_fragment"
+            app:destination="@id/my_censos_fragment"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out"
             app:popEnterAnim="@android:anim/fade_in"
@@ -188,7 +203,7 @@
         android:id="@+id/report_update_fragment"
         android:name="com.example.demo.fragment.update.ReportUpdateFragment"
         android:label="Editar censo"
-        tools:layout="@layout/fragment_report_update">
+        tools:layout="@layout/fragment_censo_update">
         <action
             android:id="@+id/goToReportDetailFromUpdateReportAction"
             app:destination="@id/report_detail_fragment"
@@ -198,7 +213,7 @@
             app:popExitAnim="@android:anim/fade_out" />
         <argument
             android:name="currentReport"
-            app:argType="com.example.demo.model.Report" />
+            app:argType="com.example.demo.model.Censo" />
         <action
             android:id="@+id/goToMapsFragmentFromReportUpdateFragment"
             app:destination="@id/maps_fragment" />
@@ -210,7 +225,7 @@
         tools:layout="@layout/fragment_maps">
         <argument
             android:name="currentReport"
-            app:argType="com.example.demo.model.Report" />
+            app:argType="com.example.demo.model.Censo" />
     </fragment>
     <fragment
         android:id="@+id/multiple_maps_fragment"
