@@ -3,13 +3,24 @@ import android.os.Parcel
 import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "censo_table")
+@Entity(tableName = "censo_table",
+    foreignKeys = [ForeignKey(
+        entity = Circuito::class,
+        parentColumns = ["id"],
+        childColumns = ["circuito_id"],
+        onDelete = ForeignKey.CASCADE
+    )]
+)
 data class Censo(
 
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
+
+    @ColumnInfo(name = "circuito_id")
+    val circuitoId: Int,
 
     // ----- entorno ----- //
     @ColumnInfo(name = "pto_obs_censo")
@@ -80,6 +91,7 @@ data class Censo(
 ):Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
+        parcel.readInt(),
         parcel.readString().toString(),
         parcel.readString().toString(),
         parcel.readString().toString(),
@@ -104,6 +116,7 @@ data class Censo(
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(id)
+        parcel.writeInt(circuitoId)
         parcel.writeString(ptoObsCenso)
         parcel.writeString(ctxSocial)
         parcel.writeString(tpoSustrato)

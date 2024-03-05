@@ -103,14 +103,15 @@ class CensoAdd2Fragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.N)
     private fun enviarCenso() {
 
-        val censo = armarCenso()
+        val censo = dataDesdeIU()
         model.insertCenso(censo)
+
         Toast.makeText(activity, "Reporte agregado correctamente", Toast.LENGTH_LONG).show()
         findNavController().navigate(R.id.my_censos_fragment)
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
-    private fun armarCenso(): Censo {
+    private fun dataDesdeIU(): Censo {
 
         val ptoObsCenso = binding.spinnerAddPtoObs.selectedItem.toString()
         val ctxSocial = binding.spinnerAddCtxSocial.selectedItem.toString()
@@ -133,7 +134,7 @@ class CensoAdd2Fragment : Fragment() {
         val otrosSALejos = binding.editTextOtroSALejos.text.toString().toInt()
 
         return Censo(
-                0,
+                0, 0,
                 ptoObsCenso, ctxSocial, tpoSustrato,
                 alfaS4Ad, alfaOtrosSA, hembrasAd, criasVivas,
                 criasMuertas, destetados, juveniles, s4AdPerif,

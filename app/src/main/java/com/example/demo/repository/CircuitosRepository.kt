@@ -5,12 +5,12 @@ import com.example.demo.dao.CircuitoDAO
 import com.example.demo.model.Circuito
 
 class CircuitosRepository(private val circuitoDao: CircuitoDAO) {
-    val allCircuitos: LiveData<List<Circuito>> = circuitoDao.getReports()
+    val allCircuitos: LiveData<List<Circuito>> = circuitoDao.getAll()
     fun insertCircuito(circuito: Circuito) {
-        circuitoDao.insertReport(circuito)
+        circuitoDao.insert(circuito)
     }
 
     fun updateCircuito(circuito: Circuito) {
-        circuitoDao.updateReport(circuito)
+        circuitoDao.update(circuito)
     }
 }

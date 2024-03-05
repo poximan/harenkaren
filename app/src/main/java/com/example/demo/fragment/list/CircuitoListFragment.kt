@@ -34,8 +34,9 @@ class CircuitoListFragment : Fragment(), CircuitoListAdapter.OnCircuitoClickList
     ): View {
         setHasOptionsMenu(true)
         _binding = FragmentCircuitoListBinding.inflate(inflater, container, false)
-        _binding!!.homeActionButton.setOnClickListener { goHome() }
 
+        _binding!!.homeActionButton.setOnClickListener { goHome() }
+        _binding!!.newCensoActionButton.setOnClickListener{ newCenso() }
         _binding!!.newCensoActionButton.setOnClickListener{ newCenso() }
 
         loadFullList()
@@ -43,8 +44,8 @@ class CircuitoListFragment : Fragment(), CircuitoListAdapter.OnCircuitoClickList
         return binding.root
     }
 
-    override fun onItemClick(report: Circuito) {
-        val action = CircuitoListFragmentDirections.goToReportDetailFromMyReportsAction(report)
+    override fun onItemClick(circuito: Circuito) {
+        val action = CircuitoListFragmentDirections.goToCircuitoDetailFromMyCircuitoAction(circuito)
         findNavController().navigate(action)
     }
 
@@ -53,7 +54,7 @@ class CircuitoListFragment : Fragment(), CircuitoListAdapter.OnCircuitoClickList
     }
 
     private fun newCenso() {
-        findNavController().navigate(R.id.goToNewCensoAction)
+        findNavController().navigate(R.id.goToNewCircuitoAction)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -71,7 +72,7 @@ class CircuitoListFragment : Fragment(), CircuitoListAdapter.OnCircuitoClickList
 
             val dpd = DatePickerDialog(
                 activity!!,
-                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                { _, year, monthOfYear, dayOfMonth ->
                     val dateSelected = "" + dayOfMonth + "/" + (monthOfYear + 1)  + "/" + year
                     loadListWithDate(dateSelected)
                 }, year, month, day
@@ -93,11 +94,10 @@ class CircuitoListFragment : Fragment(), CircuitoListAdapter.OnCircuitoClickList
 
         reportViewModel.allCircuitos
             .observe(
-                viewLifecycleOwner,
-                Observer { reports ->
-                    reports?.let { reportAdapter.setCircuito(it) }
-                }
-            )
+                viewLifecycleOwner
+            ) { reports ->
+                reports?.let { reportAdapter.setCircuito(it) }
+            }
 
     }
 
@@ -108,12 +108,11 @@ class CircuitoListFragment : Fragment(), CircuitoListAdapter.OnCircuitoClickList
 
         reportViewModel.allCircuitos
             .observe(
-                viewLifecycleOwner,
-                Observer { reports ->
-                    val filteredList = remove(reports, date)
-                    reports?.let { reportAdapter.setCircuito(filteredList) }
-                }
-            )
+                viewLifecycleOwner
+            ) { reports ->
+                val filteredList = remove(reports, date)
+                reports?.let { reportAdapter.setCircuito(filteredList) }
+            }
     }
 
     private fun remove(arr: List<Circuito>, target: String): List<Circuito> {

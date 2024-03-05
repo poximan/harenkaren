@@ -59,7 +59,7 @@ class CensoDetailFragment : Fragment() {
     }
 
     private fun goBack() {
-        findNavController().navigate(R.id.goToMyReportsFromReportDetailAction)
+        findNavController().navigate(R.id.goToMyCensosFromCensoDetailAction)
     }
 
     private fun rotateImage(bitmap: Bitmap) {

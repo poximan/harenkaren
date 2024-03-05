@@ -8,10 +8,10 @@
     tools:context=".fragment.home.HomeFragment">
 
     <Button
-        android:id="@+id/mis_censos_button"
+        android:id="@+id/mis_circuitos_button"
         android:layout_width="262dp"
         android:layout_height="55dp"
-        android:text="Mis reportes"
+        android:text="Mis circuitos"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -23,7 +23,7 @@
         android:text="Mis tópicos"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mis_censos_button" />
+        app:layout_constraintTop_toBottomOf="@+id/mis_circuitos_button" />
 
     <Button
         android:id="@+id/regulationsButton"

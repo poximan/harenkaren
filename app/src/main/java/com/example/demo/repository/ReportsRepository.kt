@@ -5,12 +5,12 @@ import com.example.demo.dao.ReportDAO
 import com.example.demo.model.Censo
 
 class ReportsRepository(private val reportDao: ReportDAO) {
-    val allReports: LiveData<List<Censo>> = reportDao.getReports()
+    val allReports: LiveData<List<Censo>> = reportDao.getAll()
     fun insertReport(censo: Censo) {
-        reportDao.insertReport(censo)
+        reportDao.insert(censo)
     }
 
     fun updateReport(censo: Censo) {
-        reportDao.updateReport(censo)
+        reportDao.update(censo)
     }
 }

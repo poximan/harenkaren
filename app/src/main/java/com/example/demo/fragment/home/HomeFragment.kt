@@ -21,10 +21,10 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        _binding!!.misCensosButton.setOnClickListener { showMyReports() }
-        _binding!!.goToStatisticsButton.setOnClickListener { goToStatistics() }
+        _binding!!.misCircuitosButton.setOnClickListener { showMyReports() }
         _binding!!.myTopicsButton.setOnClickListener { goToMyTopics() }
         _binding!!.regulationsButton.setOnClickListener { showRegulations() }
+        _binding!!.goToStatisticsButton.setOnClickListener { goToStatistics() }
         _binding!!.logOutButton.setOnClickListener { logOut() }
 
         val view = binding.root
@@ -32,7 +32,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun showMyReports() {
-        findNavController().navigate(R.id.goToMyReportsFromHomeAction)
+        findNavController().navigate(R.id.goToMyCircuitosFromHomeAction)
     }
 
     private fun goToMyTopics() {

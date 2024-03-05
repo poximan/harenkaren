@@ -245,7 +245,7 @@ class CensoAdd1Fragment : Fragment() {
         try {
             val censo =
                 Censo(
-                    0,
+                    0, 0,
                     "", "", "",
                     1, 2, 3, 4,
                     5, 6, 7, 8,

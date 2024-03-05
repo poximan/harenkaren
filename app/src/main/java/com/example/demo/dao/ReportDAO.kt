@@ -8,10 +8,10 @@ import com.example.demo.model.Censo
 @Dao
 interface ReportDAO {
     @Query("SELECT * from censo_table ORDER BY id DESC")
-    fun getReports(): LiveData<List<Censo>>
+    fun getAll(): LiveData<List<Censo>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertReport(censo: Censo)
+    fun insert(censo: Censo)
 
     @Query("DELETE FROM censo_table")
     fun deleteAll()
@@ -21,6 +21,6 @@ interface ReportDAO {
 
     @Transaction
     @Update
-    fun updateReport(censo: Censo)
+    fun update(censo: Censo)
 }
 

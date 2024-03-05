@@ -42,7 +42,7 @@ class CensoListFragment : Fragment(), CensoListAdapter.OnCensoClickListener {
     }
 
     override fun onItemClick(report: Censo) {
-        val action = CensoListFragmentDirections.goToReportDetailFromMyReportsAction(report)
+        val action = CensoListFragmentDirections.goToCensoDetailFromMyCensoAction(report)
         findNavController().navigate(action)
     }
 

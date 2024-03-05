@@ -1,0 +1,47 @@
+package com.example.demo.fragment.detail
+
+import android.os.Build
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.annotation.RequiresApi
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import com.example.demo.R
+import com.example.demo.databinding.FragmentCircuitoDetailBinding
+import com.example.demo.fragment.list.CircuitoListFragmentDirections
+
+class CircuitoDetailFragment : Fragment() {
+
+    private var _binding: FragmentCircuitoDetailBinding? = null
+    private val binding get() = _binding!!
+    private val args: CircuitoDetailFragmentArgs by navArgs()
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentCircuitoDetailBinding.inflate(inflater, container, false)
+
+        _binding!!.fishingTypeTextView.text = args.currentCircuito.observador
+        _binding!!.specieTextView.text = args.currentCircuito.meteo
+        _binding!!.dateTextView.text = args.currentCircuito.areaRecorrida
+
+        _binding!!.doneButton.setOnClickListener { goBack() }
+        _binding!!.verCensosButton.setOnClickListener { verCensos() }
+
+        return binding.root
+    }
+
+    private fun verCensos() {
+        val action = CircuitoDetailFragmentDirections.goToMisCensosFromCircuitoDetailAction()
+        findNavController().navigate(action)
+    }
+
+    private fun goBack() {
+        findNavController().navigate(R.id.goToMisCircuitoFromCircuitoDetailAction)
+    }
+}

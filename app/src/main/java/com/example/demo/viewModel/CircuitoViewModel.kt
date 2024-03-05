@@ -1,8 +1,11 @@
 package com.example.demo.viewModel
 
 import android.app.Application
-import androidx.lifecycle.*
-import com.example.demo.database.CircuitoRoomDatabase
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.example.demo.database.ReportRoomDatabase
 import com.example.demo.model.Circuito
 import com.example.demo.repository.CircuitosRepository
 import kotlinx.coroutines.CoroutineScope
@@ -59,12 +62,13 @@ class CircuitoViewModel(application: Application) : AndroidViewModel(application
         _longitude.value = longitude
     }
 
-    val repository: CircuitosRepository
+    private val repository: CircuitosRepository
+
     val allCircuitos: LiveData<List<Circuito>>
     init {
-        val reportsDao = CircuitoRoomDatabase
-            .getDatabase(application, viewModelScope).cicuitoDao()
-        repository = CircuitosRepository(reportsDao)
+        val circuitosDAO = ReportRoomDatabase
+            .getDatabase(application, viewModelScope).circuitoDao()
+        repository = CircuitosRepository(circuitosDAO)
         allCircuitos = repository.allCircuitos
     }
     fun insertCircuito(censo: Circuito) = CoroutineScope(Dispatchers.IO).launch(Dispatchers.IO) {

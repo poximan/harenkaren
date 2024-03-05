@@ -39,6 +39,9 @@ data class Circuito(
     @ColumnInfo(name = "meteo")
     var meteo: String
 
+
+    //    val listaCensos: MutableList<Censo> = mutableListOf()
+
 ):Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),

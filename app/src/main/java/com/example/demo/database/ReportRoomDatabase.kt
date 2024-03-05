@@ -6,16 +6,19 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.example.demo.dao.CircuitoDAO
 import com.example.demo.dao.ReportDAO
 import com.example.demo.model.Censo
+import com.example.demo.model.Circuito
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = arrayOf(Censo::class), version = 1, exportSchema = false)
+@Database(entities = [Censo::class, Circuito::class], version = 1, exportSchema = false)
 @TypeConverters(Converter::class)
 abstract class ReportRoomDatabase : RoomDatabase() {
 
     abstract fun reportDao(): ReportDAO
+    abstract fun circuitoDao(): CircuitoDAO
 
     companion object {
 
@@ -34,7 +37,7 @@ abstract class ReportRoomDatabase : RoomDatabase() {
                 val instancia = Room.databaseBuilder(
                     context.applicationContext,
                     ReportRoomDatabase::class.java,
-                    "report_database"
+                    "haren_database"
                 )
                     .addCallback(ReportDatabaseCallback(viewModelScope))
                     .build()
@@ -47,19 +50,6 @@ abstract class ReportRoomDatabase : RoomDatabase() {
             private val scope: CoroutineScope
         ) : Callback() {
 
-            override fun onOpen(db: SupportSQLiteDatabase) {
-                super.onOpen(db)
-                INSTANCIA?.let { database ->
-                    scope.launch {
-//                        populateDatabase(database.reportDao())
-                    }
-                }
-            }
-            suspend fun populateDatabase(reportDAO: ReportDAO) {
-                if (reportDAO.getCount() == 0) {
-                    reportDAO.deleteAll()
-                }
-            }
         }
     }
 }

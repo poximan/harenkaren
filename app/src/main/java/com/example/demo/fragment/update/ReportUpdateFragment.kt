@@ -195,7 +195,7 @@ class ReportUpdateFragment : Fragment() {
         }
 
         val updatedCenso = Censo(
-            args.currentReport.id,
+            args.currentReport.id, 0,
             ptoObsCenso, ctxSocial, "",
             0, 0, 0, 0,
             0, 0, 0, 0,
