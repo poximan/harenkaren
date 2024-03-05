@@ -26,9 +26,9 @@ class CircuitoDetailFragment : Fragment() {
     ): View {
         _binding = FragmentCircuitoDetailBinding.inflate(inflater, container, false)
 
-        _binding!!.fishingTypeTextView.text = args.currentCircuito.observador
-        _binding!!.specieTextView.text = args.currentCircuito.meteo
-        _binding!!.dateTextView.text = args.currentCircuito.areaRecorrida
+        _binding!!.textViewObserv.text = args.currentCircuito.observador
+        _binding!!.textViewMeteo.text = args.currentCircuito.meteo
+        _binding!!.textViewAreaObs.text = args.currentCircuito.areaRecorrida
 
         _binding!!.doneButton.setOnClickListener { goBack() }
         _binding!!.verCensosButton.setOnClickListener { verCensos() }

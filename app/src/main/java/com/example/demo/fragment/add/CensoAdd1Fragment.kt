@@ -237,8 +237,7 @@ class CensoAdd1Fragment : Fragment() {
     private fun continueToMap() {
 
         // ----- tiempo/espacio ----- //
-        val sdf = SimpleDateFormat("d/M/yyyy")
-        val date = sdf.format(Date())
+        val timeStamp = SimpleDateFormat("yyyy/MM/dd-HH:mm:ss").format(Date())
         val latitude = binding.latitud.text.toString().toDouble()
         val longitude = binding.longitud.text.toString().toDouble()
 
@@ -250,7 +249,7 @@ class CensoAdd1Fragment : Fragment() {
                     1, 2, 3, 4,
                     5, 6, 7, 8,
                     9, 10, 11, 12, 13,
-                    date, latitude, longitude, currentPhotoPath
+                    timeStamp, latitude, longitude, currentPhotoPath
                 )
 
             val action = CensoAdd1FragmentDirections.goToMapsFragmentAction(censo)
@@ -352,11 +351,6 @@ class CensoAdd1Fragment : Fragment() {
         }
     }
 
-    private fun updateLocationViews(latitude: Double, longitude: Double) {
-        binding.latitud.text = latitude.toString()
-        binding.longitud.text = longitude.toString()
-    }
-
     private fun checkLocationPermission(): Boolean {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val fineLocationPermission =
@@ -374,6 +368,11 @@ class CensoAdd1Fragment : Fragment() {
         } else {
             true
         }
+    }
+
+    private fun updateLocationViews(latitude: Double, longitude: Double) {
+        binding.latitud.text = latitude.toString()
+        binding.longitud.text = longitude.toString()
     }
 
     private fun requestLocationPermission() {
