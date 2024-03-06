@@ -34,6 +34,7 @@ import com.example.demo.R
 import com.example.demo.adapter.PhotoAdapter
 import com.example.demo.databinding.FragmentCensoAdd1Binding
 import com.example.demo.model.Censo
+import com.example.demo.model.LatLong
 import com.example.demo.viewModel.CensoViewModel
 import java.io.File
 import java.io.FileOutputStream
@@ -88,14 +89,31 @@ class CensoAdd1Fragment : Fragment() {
     }
 
     private fun continuarReporte() {
-        val action = CensoAdd1FragmentDirections.goToAdd2FragmentAction()
-        findNavController().navigate(action)
+
+        val lat = binding.latitud.text.toString().toDouble()
+        val lon = binding.longitud.text.toString().toDouble()
+
+        try {
+
+            if (currentPhotoPath.isEmpty())
+                throw UninitializedPropertyAccessException()
+
+            val action = CensoAdd1FragmentDirections.goToAdd2FragmentAction(LatLong(lat , lon), currentPhotoPath)
+            findNavController().navigate(action)
+
+        } catch (e: UninitializedPropertyAccessException) {
+            Toast.makeText(
+                requireContext(),
+                "Debe tomar una foto primero",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        indicatorLight = view.findViewById(R.id.indicatorLight)
+        indicatorLight = view.findViewById(R.id.gpsLightCenso)
     }
 
     override fun onDestroyView() {
@@ -158,7 +176,6 @@ class CensoAdd1Fragment : Fragment() {
                         photoFile
                     )
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-
                     startActivityForResult(takePictureIntent, DbConstants.REQUEST_TAKE_PHOTO)
                 }
             }
@@ -236,23 +253,15 @@ class CensoAdd1Fragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.N)
     private fun continueToMap() {
 
-        // ----- tiempo/espacio ----- //
-        val timeStamp = SimpleDateFormat("yyyy/MM/dd-HH:mm:ss").format(Date())
-        val latitude = binding.latitud.text.toString().toDouble()
-        val longitude = binding.longitud.text.toString().toDouble()
-
         try {
-            val censo =
-                Censo(
-                    0, 0,
-                    "", "", "",
-                    1, 2, 3, 4,
-                    5, 6, 7, 8,
-                    9, 10, 11, 12, 13,
-                    timeStamp, latitude, longitude, currentPhotoPath
-                )
 
-            val action = CensoAdd1FragmentDirections.goToMapsFragmentAction(censo)
+            if (currentPhotoPath.isEmpty())
+                throw UninitializedPropertyAccessException()
+
+            val lat = binding.latitud.text.toString().toDouble()
+            val lon = binding.longitud.text.toString().toDouble()
+
+            val action = CensoAdd1FragmentDirections.goToMapsFragmentAction(Censo(1,lat,lon,currentPhotoPath))
             findNavController().navigate(action)
 
         } catch (e: UninitializedPropertyAccessException) {

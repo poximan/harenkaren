@@ -53,7 +53,7 @@ class CensoListAdapter(
             if (file.exists()) {
 
                 val imageBitmap: Bitmap = BitmapFactory.decodeFile(censo.photoPath)
-                val exif = ExifInterface(censo.photoPath)
+                val exif = ExifInterface(censo.photoPath.toString())
                 val orientation: Int =
                     exif.getAttributeInt(
                         ExifInterface.TAG_ORIENTATION,

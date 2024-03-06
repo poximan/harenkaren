@@ -5,14 +5,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.add.ReportAdd1Fragment">
+    tools:context=".fragment.add.CensoAdd1Fragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/reportFrameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp">
-
 
         <LinearLayout
             android:id="@+id/linearLayout1"
@@ -46,10 +45,10 @@
                 android:text="gps"/>
 
             <ImageView
-                android:id="@+id/indicatorLight"
+                android:id="@+id/gpsLightCenso"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/indicator_off"
+                android:src="@drawable/indicator_nof"
                 android:layout_marginHorizontal="10dp"/>
             <TextView
                 android:layout_width="wrap_content"

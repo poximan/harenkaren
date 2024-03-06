@@ -59,7 +59,7 @@ class CensoViewModel(application: Application) : AndroidViewModel(application) {
         _longitude.value = longitude
     }
 
-    val repository: ReportsRepository
+    private val repository: ReportsRepository
     val allCensos: LiveData<List<Censo>>
     init {
         val reportsDao = ReportRoomDatabase
@@ -67,13 +67,12 @@ class CensoViewModel(application: Application) : AndroidViewModel(application) {
         repository = ReportsRepository(reportsDao)
         allCensos = repository.allReports
     }
-    fun insertCenso(censo: Censo) = CoroutineScope(Dispatchers.IO).launch(Dispatchers.IO) {
-        repository.insertReport(censo)
+    fun insert(censo: Censo) = CoroutineScope(Dispatchers.IO).launch(Dispatchers.IO) {
+        repository.insert(censo)
     }
 
-    fun updateCenso(censo: Censo) = CoroutineScope(Dispatchers.IO).launch {
-            repository.updateReport(censo)
-        }
-
+    fun update(censo: Censo) = CoroutineScope(Dispatchers.IO).launch {
+            repository.update(censo)
+    }
 }
 

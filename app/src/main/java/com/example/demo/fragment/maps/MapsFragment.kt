@@ -196,7 +196,7 @@ class MapsFragment : Fragment() {
                     "longitude" to args.currentReport.longitude
                 )
             )
-            model.insertCenso(args.currentReport)
+            model.insert(args.currentReport)
             Toast.makeText(activity, "Reporte agregado correctamente", Toast.LENGTH_LONG).show()
             findNavController().navigate(R.id.my_censos_fragment)
         }
@@ -227,7 +227,7 @@ class MapsFragment : Fragment() {
             "longitude", args.currentReport.longitude
         )
 
-        model.updateCenso(args.currentReport)
+        model.update(args.currentReport)
         Toast.makeText(activity, "Reporte editado correctamente", Toast.LENGTH_LONG).show()
         findNavController().navigate(R.id.my_censos_fragment)
     }

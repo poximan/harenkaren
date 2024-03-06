@@ -17,7 +17,7 @@ class CircuitoListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CircuitoViewHolder {
         val view = LayoutInflater
             .from(parent.context)
-            .inflate(R.layout.item_censo, parent, false)
+            .inflate(R.layout.item_circuito, parent, false)
         return CircuitoViewHolder(view)
     }
 
@@ -32,13 +32,16 @@ class CircuitoListAdapter(
     }
 
     inner class CircuitoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val reporte_resumen: TextView = view.findViewById(R.id.report_resumen)
-        private val date: TextView = view.findViewById(R.id.report_timestamp)
+        private val titulo: TextView = view.findViewById(R.id.textViewCirArea)
+        private val resumen: TextView = view.findViewById(R.id.textViewCirObsMeteo)
+        private val fecha: TextView = view.findViewById(R.id.textViewTimestamp)
 
         fun bind(circuito: Circuito) {
             itemView.setOnClickListener { itemClickListener.onItemClick(circuito) }
-            reporte_resumen.text = "Observador.: " + circuito.observador + " - Meteo: " + circuito.meteo
-            date.text = circuito.fecha
+
+            titulo.text = "Area: " + circuito.areaRecorrida
+            resumen.text = "Observador: " + circuito.observador + "\n" + "Meteo: " + circuito.meteo
+            fecha.text = circuito.fecha
         }
     }
 

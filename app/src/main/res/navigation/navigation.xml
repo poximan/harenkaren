@@ -155,18 +155,22 @@
         android:name="com.example.demo.fragment.add.CensoAdd2Fragment"
         android:label="Nuevo censo"
         tools:layout="@layout/fragment_censo_add2">
+
+        <argument
+            android:name="coordenadas"
+            app:argType="com.example.demo.model.LatLong"/>
+        <argument
+            android:name="photoPath"
+            app:argType="string"/>
         <action
             android:id="@+id/ptoObsCensoAction"
             app:destination="@id/ptoObsCenso_activity" />
-
         <action
             android:id="@+id/ctxSocialAction"
             app:destination="@id/ctxSocial_activity" />
-
         <action
             android:id="@+id/tpoSustratoAction"
             app:destination="@id/tpoSustrato_activity" />
-
     </fragment>
 
     <fragment
@@ -234,6 +238,7 @@
         android:name="com.example.demo.fragment.maps.MapsFragment"
         android:label="Mapa de captura"
         tools:layout="@layout/fragment_maps">
+
         <argument
             android:name="currentReport"
             app:argType="com.example.demo.model.Censo" />

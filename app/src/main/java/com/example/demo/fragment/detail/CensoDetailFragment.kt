@@ -64,7 +64,7 @@ class CensoDetailFragment : Fragment() {
 
     private fun rotateImage(bitmap: Bitmap) {
 
-        val exif = ExifInterface(args.currentReport.photoPath)
+        val exif = ExifInterface(args.currentReport.photoPath!!)
         val orientation: Int =
             exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
         Log.i("orientation", orientation.toString())

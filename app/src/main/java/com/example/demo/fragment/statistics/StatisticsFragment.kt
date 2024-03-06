@@ -57,14 +57,16 @@ class StatisticsFragment : Fragment() {
         if (censoList.isNotEmpty()) {
             _binding!!.startActivityTextView.text = getFirstDayOfReportList(censoList)
             for (report in censoList) {
-                val splitedDate = report.date.split(delim)
+                val splitedDate = report.date!!.split(delim)
                 if (splitedDate[1] == currentMonth.toString() && splitedDate[2] == currentYear.toString()) {
                     currentMonthReports += 1
                 }
 
                 val actualReportDate: Date = sdf.parse(report.date)
                 lastSixMonthsReports += checkForSixMonthsReport(actualReportDate)
-                ctxSocialMap[report.ctxSocial] = (ctxSocialMap[report.ctxSocial] ?: 0) + 1
+
+                val indice = report.ctxSocial.toString()
+                ctxSocialMap[indice] = (ctxSocialMap[report.ctxSocial]?: 0) + 1
             }
 
             _binding!!.currentMonthTextView.text = currentMonthReports.toString()
@@ -153,7 +155,7 @@ class StatisticsFragment : Fragment() {
         if (censos.isEmpty()) {
             return "No hay reportes cargados"
         }
-        return censos.last().date
+        return censos.last().date!!
     }
 
     private fun goToMultipleMaps() {

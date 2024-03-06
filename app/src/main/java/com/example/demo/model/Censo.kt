@@ -4,33 +4,39 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Ignore
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
+/*
 @Entity(tableName = "censo_table",
     foreignKeys = [ForeignKey(
         entity = Circuito::class,
         parentColumns = ["id"],
         childColumns = ["circuito_id"],
         onDelete = ForeignKey.CASCADE
-    )]
+    )],
+    indices = [Index("circuito_id")] // Define un índice para la columna circuito_id
 )
+ */
+@Entity(tableName = "censo_table")
 data class Censo(
 
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
 
     @ColumnInfo(name = "circuito_id")
-    val circuitoId: Int,
+    var circuitoId: Int,
 
     // ----- entorno ----- //
     @ColumnInfo(name = "pto_obs_censo")
-    var ptoObsCenso: String,
+    var ptoObsCenso: String?,
 
     @ColumnInfo(name = "ctx_social")
-    var ctxSocial: String,
+    var ctxSocial: String?,
 
     @ColumnInfo(name = "tpo_sustrato")
-    var tpoSustrato: String,
+    var tpoSustrato: String?,
 
     // ----- dominante ----- //
     @ColumnInfo(name = "alfa_s4ad")
@@ -76,25 +82,25 @@ data class Censo(
 
     // ----- tiempo/espacio ----- //
     @ColumnInfo(name = "date")
-    var date: String,
+    var date: String?,
 
     @ColumnInfo(name="latitude")
-    var latitude: Double?,
+    var latitude: Double,
 
     @ColumnInfo(name="longitude")
-    var longitude: Double?,
+    var longitude: Double,
 
     // ----- otros datos ----- //
     @ColumnInfo(name = "photo_path")
-    var photoPath: String
+    var photoPath: String?
 
 ):Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
         parcel.readInt(),
-        parcel.readString().toString(),
-        parcel.readString().toString(),
-        parcel.readString().toString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
         parcel.readInt(),
         parcel.readInt(),
         parcel.readInt(),
@@ -108,11 +114,94 @@ data class Censo(
         parcel.readInt(),
         parcel.readInt(),
         parcel.readInt(),
-        parcel.readString().toString(),
-        parcel.readValue(Double::class.java.classLoader) as? Double,
-        parcel.readValue(Double::class.java.classLoader) as? Double,
-        parcel.readString().toString()
+        parcel.readString(),
+        parcel.readDouble(),
+        parcel.readDouble(),
+        parcel.readString()
     )
+
+    @Ignore
+    constructor(
+        circuitoId: Int,
+        latitude: Double,
+        longitude: Double,
+        photoPath: String
+    ) : this(
+        0, // Id con valor predeterminado
+        circuitoId,
+        null,
+        null,
+        null,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        null,
+        latitude,
+        longitude,
+        photoPath
+    )
+
+    @Ignore
+    constructor(
+        circuitoId: Int,
+        ptoObsCenso: String,
+        ctxSocial: String,
+        tpoSustrato: String,
+        alfaS4Ad: Int,
+        alfaOtrosSA: Int,
+        hembrasAd: Int,
+        criasVivas: Int,
+        criasMuertas: Int,
+        destetados: Int,
+        juveniles: Int,
+        s4AdPerif: Int,
+        s4AdCerca: Int,
+        s4AdLejos: Int,
+        otrosSAPerif: Int,
+        otrosSACerca: Int,
+        otrosSALejos: Int,
+        date: String,
+        latitude: Double,
+        longitude: Double,
+        photoPath: String
+    ) : this(
+        0, // Id con valor predeterminado
+        circuitoId,
+        ptoObsCenso,
+        ctxSocial,
+        tpoSustrato,
+        alfaS4Ad,
+        alfaOtrosSA,
+        hembrasAd,
+        criasVivas,
+        criasMuertas,
+        destetados,
+        juveniles,
+        s4AdPerif,
+        s4AdCerca,
+        s4AdLejos,
+        otrosSAPerif,
+        otrosSACerca,
+        otrosSALejos,
+        date,
+        latitude,
+        longitude,
+        photoPath
+    )
+
+    override fun describeContents(): Int {
+        return 0
+    }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(id)
@@ -134,13 +223,9 @@ data class Censo(
         parcel.writeInt(otrosSACerca)
         parcel.writeInt(otrosSALejos)
         parcel.writeString(date)
-        parcel.writeValue(latitude)
-        parcel.writeValue(longitude)
+        parcel.writeDouble(latitude)
+        parcel.writeDouble(longitude)
         parcel.writeString(photoPath)
-    }
-
-    override fun describeContents(): Int {
-        return 0
     }
 
     companion object CREATOR : Parcelable.Creator<Censo> {
@@ -151,6 +236,10 @@ data class Censo(
         override fun newArray(size: Int): Array<Censo?> {
             return arrayOfNulls(size)
         }
+    }
+
+    fun setCircuitoActual(id: Int) {
+        circuitoId = id
     }
 }
 

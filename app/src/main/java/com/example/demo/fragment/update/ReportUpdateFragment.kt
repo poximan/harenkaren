@@ -59,7 +59,7 @@ class ReportUpdateFragment : Fragment() {
         val fishTypeArrayAdapter = ArrayAdapter(view.context, R.layout.dropdown_item, ptObsCenso)
         val speciesArrayAdapter = ArrayAdapter(view.context, R.layout.dropdown_item, ctxSocial)
 
-        currentPhotoPath = args.currentReport.photoPath
+        currentPhotoPath = args.currentReport.photoPath!!
         _binding!!.spinnerUpdPtoObs.adapter = fishTypeArrayAdapter
         _binding!!.spinnerUpdCtxSocial.adapter = speciesArrayAdapter
         _binding!!.photoButton.setOnClickListener { takePhoto() }
@@ -182,29 +182,7 @@ class ReportUpdateFragment : Fragment() {
     }
 
     private fun continueToMap() {
-        val ptoObsCenso = binding.spinnerUpdPtoObs.selectedItem.toString()
-        val ctxSocial = binding.spinnerUpdCtxSocial.selectedItem.toString()
-
-        val date = args.currentReport.date
-
-        // If empty, photo path did not change
-        val photoPath: String = if (currentPhotoPath == "") {
-            args.currentReport.photoPath
-        } else {
-            currentPhotoPath
-        }
-
-        val updatedCenso = Censo(
-            args.currentReport.id, 0,
-            ptoObsCenso, ctxSocial, "",
-            0, 0, 0, 0,
-            0, 0, 0, 0,
-            0, 0, 0, 0, 0,
-            date, args.currentReport.latitude, args.currentReport.longitude, photoPath
-        )
-
-        val action = ReportUpdateFragmentDirections.goToMapsFragmentFromReportUpdateFragment(updatedCenso)
+        val action = ReportUpdateFragmentDirections.goToMapsFragmentFromReportUpdateFragment(args.currentReport)
         findNavController().navigate(action)
     }
-
 }

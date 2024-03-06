@@ -6,11 +6,11 @@ import com.example.demo.model.Censo
 
 class ReportsRepository(private val reportDao: ReportDAO) {
     val allReports: LiveData<List<Censo>> = reportDao.getAll()
-    fun insertReport(censo: Censo) {
+    fun insert(censo: Censo) {
         reportDao.insert(censo)
     }
 
-    fun updateReport(censo: Censo) {
+    fun update(censo: Censo) {
         reportDao.update(censo)
     }
 }

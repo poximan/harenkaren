@@ -14,15 +14,19 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.demo.R
 import com.example.demo.databinding.FragmentCensoAdd2Binding
 import com.example.demo.model.Censo
 import com.example.demo.viewModel.CensoViewModel
+import java.text.SimpleDateFormat
+import java.util.Date
 
 class CensoAdd2Fragment : Fragment() {
 
     private var _binding: FragmentCensoAdd2Binding? = null
     private val binding get() = _binding!!
+    private val args: CensoAdd2FragmentArgs by navArgs()
 
     private lateinit var model: CensoViewModel
 
@@ -104,7 +108,7 @@ class CensoAdd2Fragment : Fragment() {
     private fun enviarCenso() {
 
         val censo = dataDesdeIU()
-        model.insertCenso(censo)
+        model.insert(censo)
 
         Toast.makeText(activity, "Reporte agregado correctamente", Toast.LENGTH_LONG).show()
         findNavController().navigate(R.id.my_censos_fragment)
@@ -133,13 +137,15 @@ class CensoAdd2Fragment : Fragment() {
         val otrosSACerca = binding.editTextOtroSACerca.text.toString().toInt()
         val otrosSALejos = binding.editTextOtroSALejos.text.toString().toInt()
 
+        val timeStamp = SimpleDateFormat("yyyy/MM/dd-HH:mm:ss").format(Date())
+
         return Censo(
                 0, 0,
                 ptoObsCenso, ctxSocial, tpoSustrato,
                 alfaS4Ad, alfaOtrosSA, hembrasAd, criasVivas,
                 criasMuertas, destetados, juveniles, s4AdPerif,
                 s4AdCerca, s4AdLejos, otrosSAPerif, otrosSACerca, otrosSALejos,
-                "ver fecha", 1.0, 2.0, "ver path foto"
+                timeStamp, args.coordenadas.lat, args.coordenadas.lon, args.photoPath
             )
     }
 
