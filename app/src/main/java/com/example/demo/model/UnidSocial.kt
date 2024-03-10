@@ -3,13 +3,11 @@ import android.os.Parcel
 import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.ForeignKey
 import androidx.room.Ignore
-import androidx.room.Index
 import androidx.room.PrimaryKey
 
 /*
-@Entity(tableName = "censo_table",
+@Entity(tableName = "unidad_social_table",
     foreignKeys = [ForeignKey(
         entity = Circuito::class,
         parentColumns = ["id"],
@@ -19,8 +17,8 @@ import androidx.room.PrimaryKey
     indices = [Index("circuito_id")] // Define un índice para la columna circuito_id
 )
  */
-@Entity(tableName = "censo_table")
-data class Censo(
+@Entity(tableName = "unidad_social_table")
+data class UnidSocial(
 
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
@@ -29,8 +27,8 @@ data class Censo(
     var circuitoId: Int,
 
     // ----- entorno ----- //
-    @ColumnInfo(name = "pto_obs_censo")
-    var ptoObsCenso: String?,
+    @ColumnInfo(name = "pto_observacion")
+    var ptoObsUnSoc: String?,
 
     @ColumnInfo(name = "ctx_social")
     var ctxSocial: String?,
@@ -154,7 +152,7 @@ data class Censo(
     @Ignore
     constructor(
         circuitoId: Int,
-        ptoObsCenso: String,
+        ptoObsUnSoc: String,
         ctxSocial: String,
         tpoSustrato: String,
         alfaS4Ad: Int,
@@ -177,7 +175,7 @@ data class Censo(
     ) : this(
         0, // Id con valor predeterminado
         circuitoId,
-        ptoObsCenso,
+        ptoObsUnSoc,
         ctxSocial,
         tpoSustrato,
         alfaS4Ad,
@@ -206,7 +204,7 @@ data class Censo(
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(id)
         parcel.writeInt(circuitoId)
-        parcel.writeString(ptoObsCenso)
+        parcel.writeString(ptoObsUnSoc)
         parcel.writeString(ctxSocial)
         parcel.writeString(tpoSustrato)
         parcel.writeInt(alfaS4Ad)
@@ -228,12 +226,12 @@ data class Censo(
         parcel.writeString(photoPath)
     }
 
-    companion object CREATOR : Parcelable.Creator<Censo> {
-        override fun createFromParcel(parcel: Parcel): Censo {
-            return Censo(parcel)
+    companion object CREATOR : Parcelable.Creator<UnidSocial> {
+        override fun createFromParcel(parcel: Parcel): UnidSocial {
+            return UnidSocial(parcel)
         }
 
-        override fun newArray(size: Int): Array<Censo?> {
+        override fun newArray(size: Int): Array<UnidSocial?> {
             return arrayOfNulls(size)
         }
     }

@@ -5,15 +5,13 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.demo.dao.CircuitoDAO
 import com.example.demo.dao.ReportDAO
-import com.example.demo.model.Censo
+import com.example.demo.model.UnidSocial
 import com.example.demo.model.Circuito
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 
-@Database(entities = [Censo::class, Circuito::class], version = 1, exportSchema = false)
+@Database(entities = [UnidSocial::class, Circuito::class], version = 1, exportSchema = false)
 @TypeConverters(Converter::class)
 abstract class ReportRoomDatabase : RoomDatabase() {
 

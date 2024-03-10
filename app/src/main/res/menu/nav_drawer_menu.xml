@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/ptoObsCenso_activity"
+        android:id="@+id/ptoObsUnSoc_activity"
         android:icon="@android:drawable/ic_menu_help"
-        android:title="Tipos de pesca" />
+        android:title="Punto de observacion" />
     <item
         android:id="@+id/regulations_fragment"
         android:icon="@android:drawable/ic_menu_zoom"

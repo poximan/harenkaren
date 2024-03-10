@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.add.CensoAdd1Fragment">
+    tools:context=".fragment.add.UnSocAdd1Fragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/reportFrameLayout"
@@ -45,7 +45,7 @@
                 android:text="gps"/>
 
             <ImageView
-                android:id="@+id/gpsLightCenso"
+                android:id="@+id/gpsLightUnSoc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/indicator_nof"

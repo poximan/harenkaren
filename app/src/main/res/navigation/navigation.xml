@@ -107,70 +107,12 @@
             app:popExitAnim="@android:anim/fade_out" />
 
         <action
-            android:id="@+id/goToMisCensosFromCircuitoDetailAction"
-            app:destination="@id/my_censos_fragment"
+            android:id="@+id/goToUnSocListFromCircuitoDetailAction"
+            app:destination="@id/unidad_social"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out"
             app:popEnterAnim="@android:anim/fade_in"
             app:popExitAnim="@android:anim/fade_out" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/my_censos_fragment"
-        android:name="com.example.demo.fragment.list.CensoListFragment"
-        android:label="Censos"
-        tools:layout="@layout/fragment_censo_list">
-        <action
-            android:id="@+id/goToCensoDetailFromMyCensoAction"
-            app:destination="@id/censo_detail_fragment" />
-        <action
-            android:id="@+id/goToNewCensoAction"
-            app:destination="@id/report_add1_fragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/report_add1_fragment"
-        android:name="com.example.demo.fragment.add.CensoAdd1Fragment"
-        android:label="Nuevo censo"
-        tools:layout="@layout/fragment_censo_add1">
-
-        <action
-            android:id="@+id/goToMapsFragmentAction"
-            app:destination="@id/maps_fragment"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out"
-            app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/fade_out" />
-
-        <action
-            android:id="@+id/goToAdd2FragmentAction"
-            app:destination="@id/report_add2_fragment"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out"
-            app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/fade_out" />
-
-    </fragment>
-    <fragment
-        android:id="@+id/report_add2_fragment"
-        android:name="com.example.demo.fragment.add.CensoAdd2Fragment"
-        android:label="Nuevo censo"
-        tools:layout="@layout/fragment_censo_add2">
-
-        <argument
-            android:name="coordenadas"
-            app:argType="com.example.demo.model.LatLong"/>
-        <argument
-            android:name="photoPath"
-            app:argType="string"/>
-        <action
-            android:id="@+id/ptoObsCensoAction"
-            app:destination="@id/ptoObsCenso_activity" />
-        <action
-            android:id="@+id/ctxSocialAction"
-            app:destination="@id/ctxSocial_activity" />
-        <action
-            android:id="@+id/tpoSustratoAction"
-            app:destination="@id/tpoSustrato_activity" />
     </fragment>
 
     <fragment
@@ -184,78 +126,6 @@
         android:label="Nuevo circuito"
         tools:layout="@layout/fragment_circuito_add">
     </fragment>
-    <fragment
-        android:id="@+id/censo_detail_fragment"
-        android:name="com.example.demo.fragment.detail.CensoDetailFragment"
-        android:label="Detalle censo"
-        tools:layout="@layout/fragment_censo_detail">
-
-        <argument
-            android:name="currentReport"
-            app:argType="com.example.demo.model.Censo" />
-
-        <action
-            android:id="@+id/goToReportUpdateAction"
-            app:destination="@id/report_update_fragment"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out"
-            app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/fade_out" />
-
-        <action
-            android:id="@+id/goToMapsFragmentFromReportDetailFragment"
-            app:destination="@id/maps_fragment" />
-
-        <action
-            android:id="@+id/goToMyCensosFromCensoDetailAction"
-            app:destination="@id/my_censos_fragment"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out"
-            app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/fade_out" />
-    </fragment>
-    <fragment
-        android:id="@+id/report_update_fragment"
-        android:name="com.example.demo.fragment.update.ReportUpdateFragment"
-        android:label="Editar censo"
-        tools:layout="@layout/fragment_censo_update">
-        <action
-            android:id="@+id/goToReportDetailFromUpdateReportAction"
-            app:destination="@id/censo_detail_fragment"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out"
-            app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/fade_out" />
-        <argument
-            android:name="currentReport"
-            app:argType="com.example.demo.model.Censo" />
-        <action
-            android:id="@+id/goToMapsFragmentFromReportUpdateFragment"
-            app:destination="@id/maps_fragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/maps_fragment"
-        android:name="com.example.demo.fragment.maps.MapsFragment"
-        android:label="Mapa de captura"
-        tools:layout="@layout/fragment_maps">
-
-        <argument
-            android:name="currentReport"
-            app:argType="com.example.demo.model.Censo" />
-    </fragment>
-
-    <activity
-        android:id="@+id/tpoSustrato_activity"
-        android:name="com.example.demo.activity.TipoSustratoHelpActivity"
-        tools:layout="@layout/activity_tpo_sustrato_info" />
-    <activity
-        android:id="@+id/ctxSocial_activity"
-        android:name="com.example.demo.activity.CtxSocialHelpActivity"
-        tools:layout="@layout/activity_ctx_social_info" />
-    <activity
-        android:id="@+id/ptoObsCenso_activity"
-        android:name="com.example.demo.activity.PtoObsHelpActivity"
-        tools:layout="@layout/activity_pto_obs_censo" />
 
     <fragment
         android:id="@+id/regulations_fragment"
@@ -295,4 +165,138 @@
         android:name="com.example.demo.fragment.messaging.ShowMessageFragment"
         android:label="Notificación recibida"
         tools:layout="@layout/fragment_show_message" />
+
+    <navigation android:id="@+id/unidad_social"
+        app:startDestination="@id/unsoc_list_fragment">
+
+        <fragment
+            android:id="@+id/unsoc_list_fragment"
+            android:name="com.example.demo.fragment.list.UnSocListFragment"
+            android:label="Unidades sociales"
+            tools:layout="@layout/fragment_unsoc_list">
+            <action
+                android:id="@+id/goToUnSocDetailFromUnSocListAction"
+                app:destination="@id/unsoc_detail_fragment" />
+            <action
+                android:id="@+id/goToNewUnSocFromUnSocListAction"
+                app:destination="@id/unsoc_add1_fragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/unsoc_add1_fragment"
+            android:name="com.example.demo.fragment.add.UnSocAdd1Fragment"
+            android:label="Nueva unidad social"
+            tools:layout="@layout/fragment_unsoc_add1">
+
+            <action
+                android:id="@+id/goToMapsFragmentAction"
+                app:destination="@id/maps_fragment"
+                app:enterAnim="@android:anim/fade_in"
+                app:exitAnim="@android:anim/fade_out"
+                app:popEnterAnim="@android:anim/fade_in"
+                app:popExitAnim="@android:anim/fade_out" />
+
+            <action
+                android:id="@+id/goToAdd2FragmentAction"
+                app:destination="@id/unsoc_add2_fragment"
+                app:enterAnim="@android:anim/fade_in"
+                app:exitAnim="@android:anim/fade_out"
+                app:popEnterAnim="@android:anim/fade_in"
+                app:popExitAnim="@android:anim/fade_out" />
+
+        </fragment>
+        <fragment
+            android:id="@+id/unsoc_add2_fragment"
+            android:name="com.example.demo.fragment.add.UnSocAdd2Fragment"
+            android:label="Nueva unidad social"
+            tools:layout="@layout/fragment_unsoc_add2">
+
+            <argument
+                android:name="coordenadas"
+                app:argType="com.example.demo.model.LatLong" />
+            <argument
+                android:name="photoPath"
+                app:argType="string" />
+            <action
+                android:id="@+id/ptoObsUnSocAction"
+                app:destination="@id/ptoObsUnSoc_activity" />
+            <action
+                android:id="@+id/ctxSocialAction"
+                app:destination="@id/ctxSocial_activity" />
+            <action
+                android:id="@+id/tpoSustratoAction"
+                app:destination="@id/tpoSustrato_activity" />
+        </fragment>
+        <fragment
+            android:id="@+id/unsoc_detail_fragment"
+            android:name="com.example.demo.fragment.detail.UnSocDetailFragment"
+            android:label="Detalle unidad social"
+            tools:layout="@layout/fragment_unsoc_detail">
+
+            <argument
+                android:name="currentReport"
+                app:argType="com.example.demo.model.UnidSocial" />
+
+            <action
+                android:id="@+id/goToUnSocUpdateAction"
+                app:destination="@id/unsoc_update_fragment"
+                app:enterAnim="@android:anim/fade_in"
+                app:exitAnim="@android:anim/fade_out"
+                app:popEnterAnim="@android:anim/fade_in"
+                app:popExitAnim="@android:anim/fade_out" />
+
+            <action
+                android:id="@+id/goToMapsFragmentFromUnSocDetailAction"
+                app:destination="@id/maps_fragment" />
+
+            <action
+                android:id="@+id/goToUnSocListFragmentFromUnSocDetailAction"
+                app:destination="@id/unsoc_list_fragment"
+                app:enterAnim="@android:anim/fade_in"
+                app:exitAnim="@android:anim/fade_out"
+                app:popEnterAnim="@android:anim/fade_in"
+                app:popExitAnim="@android:anim/fade_out" />
+        </fragment>
+        <fragment
+            android:id="@+id/unsoc_update_fragment"
+            android:name="com.example.demo.fragment.update.UnSocUpdateFragment"
+            android:label="Editar unidad social"
+            tools:layout="@layout/fragment_unsoc_update">
+            <action
+                android:id="@+id/goToUnSocDetailFromUnSocUpdateAction"
+                app:destination="@id/unsoc_detail_fragment"
+                app:enterAnim="@android:anim/fade_in"
+                app:exitAnim="@android:anim/fade_out"
+                app:popEnterAnim="@android:anim/fade_in"
+                app:popExitAnim="@android:anim/fade_out" />
+            <argument
+                android:name="currentReport"
+                app:argType="com.example.demo.model.UnidSocial" />
+            <action
+                android:id="@+id/goToMapsFragmentFromUnSocUpdateAction"
+                app:destination="@id/maps_fragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/maps_fragment"
+            android:name="com.example.demo.fragment.maps.MapsFragment"
+            android:label="Mapa de captura"
+            tools:layout="@layout/fragment_maps">
+
+            <argument
+                android:name="currentReport"
+                app:argType="com.example.demo.model.UnidSocial" />
+        </fragment>
+
+        <activity
+            android:id="@+id/ctxSocial_activity"
+            android:name="com.example.demo.activity.CtxSocialHelpActivity"
+            tools:layout="@layout/activity_ctx_social_info" />
+        <activity
+            android:id="@+id/tpoSustrato_activity"
+            android:name="com.example.demo.activity.TipoSustratoHelpActivity"
+            tools:layout="@layout/activity_tpo_sustrato_info" />
+        <activity
+            android:id="@+id/ptoObsUnSoc_activity"
+            android:name="com.example.demo.activity.PtoObsHelpActivity"
+            tools:layout="@layout/activity_pto_obs_unsoc" />
+    </navigation>
 </navigation>

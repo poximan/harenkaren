@@ -18,7 +18,7 @@ class CircuitoViewModel(application: Application) : AndroidViewModel(application
     val title: LiveData<String>
         get() = _title
 
-    fun setTitle(title: String){
+    fun setTitle(title: String) {
         _title.value = title
     }
 
@@ -26,7 +26,7 @@ class CircuitoViewModel(application: Application) : AndroidViewModel(application
     val fishingType: LiveData<String>
         get() = _circuito
 
-    fun setFishingType(circuito: String){
+    fun setFishingType(circuito: String) {
         _circuito.value = circuito
     }
 
@@ -34,7 +34,7 @@ class CircuitoViewModel(application: Application) : AndroidViewModel(application
     val specie: LiveData<String>
         get() = _specie
 
-    fun setSpecie(specie: String){
+    fun setSpecie(specie: String) {
         _specie.value = specie
     }
 
@@ -42,7 +42,7 @@ class CircuitoViewModel(application: Application) : AndroidViewModel(application
     val date: LiveData<String>
         get() = _date
 
-    fun setDate(date: String){
+    fun setDate(date: String) {
         _date.value = date
     }
 
@@ -65,19 +65,20 @@ class CircuitoViewModel(application: Application) : AndroidViewModel(application
     private val repository: CircuitosRepository
 
     val allCircuitos: LiveData<List<Circuito>>
+
     init {
         val circuitosDAO = ReportRoomDatabase
             .getDatabase(application, viewModelScope).circuitoDao()
         repository = CircuitosRepository(circuitosDAO)
         allCircuitos = repository.allCircuitos
     }
-    fun insertCircuito(censo: Circuito) = CoroutineScope(Dispatchers.IO).launch(Dispatchers.IO) {
-        repository.insertCircuito(censo)
+
+    fun insertCircuito(circuito: Circuito) = CoroutineScope(Dispatchers.IO).launch(Dispatchers.IO) {
+        repository.insertCircuito(circuito)
     }
 
-    fun updateCircuito(censo: Circuito) = CoroutineScope(Dispatchers.IO).launch {
-            repository.updateCircuito(censo)
-        }
-
+    fun updateCircuito(circuito: Circuito) = CoroutineScope(Dispatchers.IO).launch {
+        repository.updateCircuito(circuito)
+    }
 }
 

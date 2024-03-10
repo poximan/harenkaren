@@ -15,15 +15,15 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.example.demo.R
-import com.example.demo.adapter.CensoListAdapter
-import com.example.demo.databinding.FragmentCensoListBinding
-import com.example.demo.model.Censo
-import com.example.demo.viewModel.CensoViewModel
+import com.example.demo.adapter.UnSocListAdapter
+import com.example.demo.databinding.FragmentUnsocListBinding
+import com.example.demo.model.UnidSocial
+import com.example.demo.viewModel.UnSocViewModel
 
-class CensoListFragment : Fragment(), CensoListAdapter.OnCensoClickListener {
+class UnSocListFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
 
-    private val reportViewModel: CensoViewModel by navGraphViewModels(R.id.app_navigation)
-    private var _binding: FragmentCensoListBinding? = null
+    private val reportViewModel: UnSocViewModel by navGraphViewModels(R.id.app_navigation)
+    private var _binding: FragmentUnsocListBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -31,18 +31,18 @@ class CensoListFragment : Fragment(), CensoListAdapter.OnCensoClickListener {
         savedInstanceState: Bundle?
     ): View {
         setHasOptionsMenu(true)
-        _binding = FragmentCensoListBinding.inflate(inflater, container, false)
+        _binding = FragmentUnsocListBinding.inflate(inflater, container, false)
         _binding!!.homeActionButton.setOnClickListener { goHome() }
 
-        _binding!!.newCensoActionButton.setOnClickListener{ newCenso() }
+        _binding!!.newUnsocButton.setOnClickListener{ nuevaUnidadSocial() }
 
         loadFullList()
 
         return binding.root
     }
 
-    override fun onItemClick(report: Censo) {
-        val action = CensoListFragmentDirections.goToCensoDetailFromMyCensoAction(report)
+    override fun onItemClick(report: UnidSocial) {
+        val action = UnSocListFragmentDirections.goToUnSocDetailFromUnSocListAction(report)
         findNavController().navigate(action)
     }
 
@@ -50,8 +50,8 @@ class CensoListFragment : Fragment(), CensoListAdapter.OnCensoClickListener {
         findNavController().navigate(R.id.home_fragment)
     }
 
-    private fun newCenso() {
-        findNavController().navigate(R.id.goToNewCensoAction)
+    private fun nuevaUnidadSocial() {
+        findNavController().navigate(R.id.goToNewUnSocFromUnSocListAction)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -84,15 +84,15 @@ class CensoListFragment : Fragment(), CensoListAdapter.OnCensoClickListener {
     }
 
     private fun loadFullList() {
-        val reportList: RecyclerView = binding.list
-        val reportAdapter = CensoListAdapter(this)
-        reportList.adapter = reportAdapter
+        val unSocList: RecyclerView = binding.list
+        val unSocAdapter = UnSocListAdapter(this)
+        unSocList.adapter = unSocAdapter
 
-        reportViewModel.allCensos
+        reportViewModel.allUnSoc
             .observe(
                 viewLifecycleOwner,
                 Observer { reports ->
-                    reports?.let { reportAdapter.setCensos(it) }
+                    reports?.let { unSocAdapter.setUnSoc(it) }
                 }
             )
 
@@ -100,21 +100,21 @@ class CensoListFragment : Fragment(), CensoListAdapter.OnCensoClickListener {
 
     private fun loadListWithDate(date: String) {
         val reportList: RecyclerView = binding.list
-        val reportAdapter = CensoListAdapter(this)
+        val reportAdapter = UnSocListAdapter(this)
         reportList.adapter = reportAdapter
 
-        reportViewModel.allCensos
+        reportViewModel.allUnSoc
             .observe(
                 viewLifecycleOwner,
                 Observer { reports ->
                     val filteredList = remove(reports, date)
-                    reports?.let { reportAdapter.setCensos(filteredList) }
+                    reports?.let { reportAdapter.setUnSoc(filteredList) }
                 }
             )
     }
 
-    private fun remove(arr: List<Censo>, target: String): List<Censo> {
-        val result: MutableList<Censo> = ArrayList()
+    private fun remove(arr: List<UnidSocial>, target: String): List<UnidSocial> {
+        val result: MutableList<UnidSocial> = ArrayList()
 
         for (report in arr) {
             if (report.date == target) {

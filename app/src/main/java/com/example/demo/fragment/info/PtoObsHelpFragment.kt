@@ -7,25 +7,25 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.demo.Cordinadora
 import com.example.demo.R
-import com.example.demo.databinding.FragmentPtoObsCensoBinding
+import com.example.demo.databinding.FragmentPtoObsUnsocBinding
 
 class PtoObsHelpFragment : Fragment() {
-    private var _binding: FragmentPtoObsCensoBinding? = null
+    private var _binding: FragmentPtoObsUnsocBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentPtoObsCensoBinding.inflate(inflater, container, false)
+        _binding = FragmentPtoObsUnsocBinding.inflate(inflater, container, false)
 
         val view = binding.root
 
-        binding.censoAltoRadioButton.setOnClickListener {
-            click_en_radio_button(R.id.censoAltoRadioButton)
+        binding.unsocAltoRadioButton.setOnClickListener {
+            click_en_radio_button(R.id.unsocAltoRadioButton)
         }
-        binding.censoBajoRadioButton.setOnClickListener {
-            click_en_radio_button(R.id.censoBajoRadioButton)
+        binding.unsocBajoRadioButton.setOnClickListener {
+            click_en_radio_button(R.id.unsocBajoRadioButton)
         }
 
         return view
@@ -33,8 +33,8 @@ class PtoObsHelpFragment : Fragment() {
 
     private fun click_en_radio_button(id_radio_button: Int) {
         val index = when (id_radio_button) {
-            R.id.censoAltoRadioButton -> 0
-            R.id.censoBajoRadioButton -> 1
+            R.id.unsocAltoRadioButton -> 0
+            R.id.unsocBajoRadioButton -> 1
             else -> 0
         }
         val activity = activity

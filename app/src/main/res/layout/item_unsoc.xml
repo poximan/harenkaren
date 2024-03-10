@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="90dp"
+    android:layout_height="120dp"
     android:background="?attr/selectableItemBackground"
     android:padding="6dp">
 
@@ -25,23 +25,15 @@
             android:layout_marginLeft="5dp">
 
             <TextView
-                android:id="@+id/report_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="titulo"
-                android:textStyle="bold"/>
-
-            <TextView
                 android:id="@+id/report_resumen"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="resumen censo"
-                android:layout_weight="1"/>
+                android:layout_height="75sp"
+                android:hint="resumen unidad social"/>
 
             <TextView
                 android:id="@+id/report_timestamp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="20sp"
                 android:hint="dd/mm/aa HH:mm:ss"/>
 
         </LinearLayout>

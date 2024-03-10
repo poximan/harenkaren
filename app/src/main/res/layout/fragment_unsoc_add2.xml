@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.add.CensoAdd2Fragment">
+    tools:context=".fragment.add.UnSocAdd2Fragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/reportFrameLayout"
@@ -23,7 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="@string/punto_obs_censo" />
+                android:text="@string/punto_obs_unsoc" />
 
             <Spinner
                 android:id="@+id/spinnerAddPtoObs"
@@ -32,7 +32,7 @@
                 android:layout_weight="1" />
 
             <ImageButton
-                android:id="@+id/helpPtoObsCenso"
+                android:id="@+id/helpPtoObsUnSoc"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_help" />

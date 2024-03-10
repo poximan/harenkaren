@@ -25,10 +25,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.demo.R
-import com.example.demo.databinding.FragmentCensoUpdateBinding
-import com.example.demo.fragment.add.CensoAdd1Fragment.DbConstants.REQUEST_TAKE_PHOTO
-import com.example.demo.model.Censo
-import com.example.demo.viewModel.CensoViewModel
+import com.example.demo.databinding.FragmentUnsocUpdateBinding
+import com.example.demo.fragment.add.UnSocAdd1Fragment.DbConstants.REQUEST_TAKE_PHOTO
+import com.example.demo.viewModel.UnSocViewModel
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -36,27 +35,27 @@ import java.util.Date
 
 import kotlin.math.min
 
-class ReportUpdateFragment : Fragment() {
+class UnSocUpdateFragment : Fragment() {
 
-    private var _binding: FragmentCensoUpdateBinding? = null
+    private var _binding: FragmentUnsocUpdateBinding? = null
     private val binding get() = _binding!!
-    private val args: ReportUpdateFragmentArgs by navArgs()
+    private val args: UnSocUpdateFragmentArgs by navArgs()
     private lateinit var currentPhotoPath: String
 
-    private lateinit var model: CensoViewModel
+    private lateinit var model: UnSocViewModel
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentCensoUpdateBinding.inflate(inflater, container, false)
+        _binding = FragmentUnsocUpdateBinding.inflate(inflater, container, false)
         val view = binding.root
-        model = ViewModelProvider(this)[CensoViewModel::class.java]
+        model = ViewModelProvider(this)[UnSocViewModel::class.java]
 
-        val ptObsCenso = resources.getStringArray(R.array.op_punto_obs_censo)
+        val ptObservacion = resources.getStringArray(R.array.op_punto_obs_unsoc)
         val ctxSocial = resources.getStringArray(R.array.op_contexto_social)
-        val fishTypeArrayAdapter = ArrayAdapter(view.context, R.layout.dropdown_item, ptObsCenso)
+        val fishTypeArrayAdapter = ArrayAdapter(view.context, R.layout.dropdown_item, ptObservacion)
         val speciesArrayAdapter = ArrayAdapter(view.context, R.layout.dropdown_item, ctxSocial)
 
         currentPhotoPath = args.currentReport.photoPath!!
@@ -64,7 +63,7 @@ class ReportUpdateFragment : Fragment() {
         _binding!!.spinnerUpdCtxSocial.adapter = speciesArrayAdapter
         _binding!!.photoButton.setOnClickListener { takePhoto() }
         _binding!!.continueButton.setOnClickListener { continueToMap() }
-        val fishTypeArrayPosition = fishTypeArrayAdapter.getPosition(args.currentReport.ptoObsCenso)
+        val fishTypeArrayPosition = fishTypeArrayAdapter.getPosition(args.currentReport.ptoObsUnSoc)
         _binding!!.spinnerUpdPtoObs.setSelection(fishTypeArrayPosition)
 
         val fishSpecieArrayPosition = speciesArrayAdapter.getPosition(args.currentReport.ctxSocial)
@@ -182,7 +181,7 @@ class ReportUpdateFragment : Fragment() {
     }
 
     private fun continueToMap() {
-        val action = ReportUpdateFragmentDirections.goToMapsFragmentFromReportUpdateFragment(args.currentReport)
+        val action = UnSocUpdateFragmentDirections.goToMapsFragmentFromUnSocUpdateAction(args.currentReport)
         findNavController().navigate(action)
     }
 }

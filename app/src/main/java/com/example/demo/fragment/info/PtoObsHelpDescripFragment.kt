@@ -6,12 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.demo.R
-import com.example.demo.databinding.FragmentPtoObsCensoDescripBinding
+import com.example.demo.databinding.FragmentPtoObsUnsocDescripBinding
 
 class PtoObsHelpDescripFragment : Fragment() {
 
     private lateinit var arr: Array<String>
-    private var _binding: FragmentPtoObsCensoDescripBinding? = null
+    private var _binding: FragmentPtoObsUnsocDescripBinding? = null
 
     private val binding get() = _binding!!
 
@@ -20,10 +20,10 @@ class PtoObsHelpDescripFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        _binding = FragmentPtoObsCensoDescripBinding.inflate(inflater, container, false)
+        _binding = FragmentPtoObsUnsocDescripBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        arr = resources.getStringArray(R.array.descriptionPtoObsCenso)
+        arr = resources.getStringArray(R.array.descriptionPtoObsUnSoc)
         return view
     }
 

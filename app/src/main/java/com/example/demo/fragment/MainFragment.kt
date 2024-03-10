@@ -9,14 +9,14 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.example.demo.R
-import com.example.demo.adapter.CensoListAdapter
-import com.example.demo.viewModel.CensoViewModel
-import com.example.demo.model.Censo
+import com.example.demo.adapter.UnSocListAdapter
+import com.example.demo.viewModel.UnSocViewModel
+import com.example.demo.model.UnidSocial
 
 import com.example.demo.databinding.FragmentMainBinding
 
-class MainFragment : Fragment(), CensoListAdapter.OnCensoClickListener {
-    private val censoViewModel: CensoViewModel by navGraphViewModels(R.id.app_navigation)
+class MainFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
+    private val unSocViewModel: UnSocViewModel by navGraphViewModels(R.id.app_navigation)
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
@@ -31,12 +31,12 @@ class MainFragment : Fragment(), CensoListAdapter.OnCensoClickListener {
         _binding!!.loginButton.setOnClickListener{ loginApp() }
         _binding!!.registerTextView.setOnClickListener{ registerApp() }
 
-        val reportAdapter = CensoListAdapter(this)
-        censoViewModel.allCensos
+        val reportAdapter = UnSocListAdapter(this)
+        unSocViewModel.allUnSoc
             .observe(
                 viewLifecycleOwner,
                 Observer { reports ->
-                    reports?.let { reportAdapter.setCensos(it) }
+                    reports?.let { reportAdapter.setUnSoc(it) }
                 }
             )
         return view
@@ -53,7 +53,7 @@ class MainFragment : Fragment(), CensoListAdapter.OnCensoClickListener {
     private fun registerApp() {
         findNavController().navigate(R.id.registerAction)
     }
-    override fun onItemClick(censo: Censo) {
+    override fun onItemClick(unidSocial: UnidSocial) {
 
     }
 

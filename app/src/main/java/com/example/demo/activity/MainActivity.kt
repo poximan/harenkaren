@@ -68,7 +68,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
+
         val navController = this.findNavController(R.id.theNavHostFragment)
-        return NavigationUI.navigateUp(navController, drawerLayout)
+
+        var fragActual = navController.currentDestination?.id
+        val fragObservado = R.id.unsoc_list_fragment
+        val fragObjetivo = R.id.circuito_detail_fragment
+
+        return if(fragActual == fragObservado) {
+            while (fragActual != fragObjetivo) {
+                navController.popBackStack()    // Desapilar una vez
+                fragActual = navController.currentDestination?.id   // ID del nuevo destino
+
+                // Verificar si se alcanzó el fragmento objetivo
+                if (fragActual == fragObjetivo) break
+            }
+            true
+        } else
+            NavigationUI.navigateUp(navController, drawerLayout)
     }
 }

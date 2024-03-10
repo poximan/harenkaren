@@ -16,19 +16,19 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.demo.R
-import com.example.demo.databinding.FragmentCensoAdd2Binding
-import com.example.demo.model.Censo
-import com.example.demo.viewModel.CensoViewModel
+import com.example.demo.databinding.FragmentUnsocAdd2Binding
+import com.example.demo.model.UnidSocial
+import com.example.demo.viewModel.UnSocViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 
-class CensoAdd2Fragment : Fragment() {
+class UnSocAdd2Fragment : Fragment() {
 
-    private var _binding: FragmentCensoAdd2Binding? = null
+    private var _binding: FragmentUnsocAdd2Binding? = null
     private val binding get() = _binding!!
-    private val args: CensoAdd2FragmentArgs by navArgs()
+    private val args: UnSocAdd2FragmentArgs by navArgs()
 
-    private lateinit var model: CensoViewModel
+    private lateinit var model: UnSocViewModel
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
@@ -36,17 +36,17 @@ class CensoAdd2Fragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        _binding = FragmentCensoAdd2Binding.inflate(inflater, container, false)
+        _binding = FragmentUnsocAdd2Binding.inflate(inflater, container, false)
         val view = binding.root
 
-        model = ViewModelProvider(this)[CensoViewModel::class.java]
+        model = ViewModelProvider(this)[UnSocViewModel::class.java]
 
         // punto de observacion
-        val ptObsCenso = resources.getStringArray(R.array.op_punto_obs_censo)
-        val ptObsCensoArrayAdapter = ArrayAdapter(view.context, R.layout.dropdown_item, ptObsCenso)
+        val ptObsUnSoc = resources.getStringArray(R.array.op_punto_obs_unsoc)
+        val ptObsUnSocArrayAdapter = ArrayAdapter(view.context, R.layout.dropdown_item, ptObsUnSoc)
 
-        binding.spinnerAddPtoObs.adapter = ptObsCensoArrayAdapter
-        binding.helpPtoObsCenso.setOnClickListener { ptoObsCensoInfo() }
+        binding.spinnerAddPtoObs.adapter = ptObsUnSocArrayAdapter
+        binding.helpPtoObsUnSoc.setOnClickListener { ptoObsUnidadSocialInfo() }
 
         // contexto social
         val ctxSocial = resources.getStringArray(R.array.op_contexto_social)
@@ -63,7 +63,7 @@ class CensoAdd2Fragment : Fragment() {
         binding.spinnerAddTpoSustrato.adapter = tpoSustratoArrayAdapter
         binding.helpTpoSustrato.setOnClickListener { tpoSustratoInfo() }
 
-        binding.sendReportActionButton.setOnClickListener { enviarCenso() }
+        binding.sendReportActionButton.setOnClickListener { confirmarUnidadSocial() }
 
         return view
     }
@@ -105,19 +105,19 @@ class CensoAdd2Fragment : Fragment() {
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
-    private fun enviarCenso() {
+    private fun confirmarUnidadSocial() {
 
-        val censo = dataDesdeIU()
-        model.insert(censo)
+        val unidSocial = dataDesdeIU()
+        model.insert(unidSocial)
 
         Toast.makeText(activity, "Reporte agregado correctamente", Toast.LENGTH_LONG).show()
-        findNavController().navigate(R.id.my_censos_fragment)
+        findNavController().navigate(R.id.unsoc_list_fragment)
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
-    private fun dataDesdeIU(): Censo {
+    private fun dataDesdeIU(): UnidSocial {
 
-        val ptoObsCenso = binding.spinnerAddPtoObs.selectedItem.toString()
+        val ptoObsUnSoc = binding.spinnerAddPtoObs.selectedItem.toString()
         val ctxSocial = binding.spinnerAddCtxSocial.selectedItem.toString()
         val tpoSustrato = binding.spinnerAddTpoSustrato.selectedItem.toString()
         // ----- dominante ----- //
@@ -139,9 +139,9 @@ class CensoAdd2Fragment : Fragment() {
 
         val timeStamp = SimpleDateFormat("yyyy/MM/dd-HH:mm:ss").format(Date())
 
-        return Censo(
+        return UnidSocial(
                 0, 0,
-                ptoObsCenso, ctxSocial, tpoSustrato,
+                ptoObsUnSoc, ctxSocial, tpoSustrato,
                 alfaS4Ad, alfaOtrosSA, hembrasAd, criasVivas,
                 criasMuertas, destetados, juveniles, s4AdPerif,
                 s4AdCerca, s4AdLejos, otrosSAPerif, otrosSACerca, otrosSALejos,
@@ -149,8 +149,8 @@ class CensoAdd2Fragment : Fragment() {
             )
     }
 
-    private fun ptoObsCensoInfo() {
-        findNavController().navigate(R.id.ptoObsCensoAction)
+    private fun ptoObsUnidadSocialInfo() {
+        findNavController().navigate(R.id.ptoObsUnSocAction)
     }
 
     private fun ctxSocialInfo() {

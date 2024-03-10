@@ -12,48 +12,48 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.demo.R
-import com.example.demo.model.Censo
+import com.example.demo.model.UnidSocial
 import java.io.File
 
-class CensoListAdapter(
-    private val itemClickListener: OnCensoClickListener
-) : RecyclerView.Adapter<CensoListAdapter.ReportViewHolder>() {
+class UnSocListAdapter(
+    private val itemClickListener: OnUnSocClickListener
+) : RecyclerView.Adapter<UnSocListAdapter.UnSocViewHolder>() {
 
-    private var censos = emptyList<Censo>()
+    private var unidSocialList = emptyList<UnidSocial>()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReportViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UnSocViewHolder {
         val view = LayoutInflater
             .from(parent.context)
-            .inflate(R.layout.item_censo, parent, false)
-        return ReportViewHolder(view)
+            .inflate(R.layout.item_unsoc, parent, false)
+        return UnSocViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ReportViewHolder, position: Int) {
-        val report = censos[position]
+    override fun onBindViewHolder(holder: UnSocViewHolder, position: Int) {
+        val report = unidSocialList[position]
         holder.bind(report)
     }
 
-    internal fun setCensos(censos: List<Censo>) {
-        this.censos = censos
+    internal fun setUnSoc(unidSocialList: List<UnidSocial>) {
+        this.unidSocialList = unidSocialList
         notifyDataSetChanged()
     }
 
-    inner class ReportViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class UnSocViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val reporte_resumen: TextView = view.findViewById(R.id.report_resumen)
         private val date: TextView = view.findViewById(R.id.report_timestamp)
         private val image: ImageView = view.findViewById(R.id.report_imageView)
 
-        fun bind(censo: Censo) {
-            itemView.setOnClickListener { itemClickListener.onItemClick(censo) }
-            reporte_resumen.text = "Pto.obs.: " + censo.ptoObsCenso + " - Ctx.social: " + censo.ctxSocial + "Tpo.sust.: " + censo.tpoSustrato +
-                    " / AlfaS4/Ad: " + censo.alfaS4Ad + " - OtrosSA: " + censo.alfaOtrosSA
-            date.text = censo.date
+        fun bind(unidSocial: UnidSocial) {
+            itemView.setOnClickListener { itemClickListener.onItemClick(unidSocial) }
+            reporte_resumen.text = "Pto.obs.: " + unidSocial.ptoObsUnSoc + " - Ctx.social: " + unidSocial.ctxSocial + "Tpo.sust.: " + unidSocial.tpoSustrato +
+                    " / AlfaS4/Ad: " + unidSocial.alfaS4Ad + " - OtrosSA: " + unidSocial.alfaOtrosSA
+            date.text = unidSocial.date
 
-            val file = File(censo.photoPath)
+            val file = File(unidSocial.photoPath)
             if (file.exists()) {
 
-                val imageBitmap: Bitmap = BitmapFactory.decodeFile(censo.photoPath)
-                val exif = ExifInterface(censo.photoPath.toString())
+                val imageBitmap: Bitmap = BitmapFactory.decodeFile(unidSocial.photoPath)
+                val exif = ExifInterface(unidSocial.photoPath.toString())
                 val orientation: Int =
                     exif.getAttributeInt(
                         ExifInterface.TAG_ORIENTATION,
@@ -90,9 +90,9 @@ class CensoListAdapter(
         }
     }
 
-    override fun getItemCount() = censos.size
+    override fun getItemCount() = unidSocialList.size
 
-    interface OnCensoClickListener {
-        fun onItemClick(censo: Censo)
+    interface OnUnSocClickListener {
+        fun onItemClick(unidSocial: UnidSocial)
     }
 }

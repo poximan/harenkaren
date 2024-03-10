@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Haren Karen</string>
 
-    <string name="punto_obs_censo">Punto de observacion:</string>
-    <string-array name="op_punto_obs_censo">
+    <string name="punto_obs_unsoc">Punto de observacion:</string>
+    <string-array name="op_punto_obs_unsoc">
         <item id="alto">Alto</item>
         <item id="bajo">Bajo</item>
     </string-array>
@@ -69,7 +69,7 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
-    <string name="fecha_censo">Fecha censo</string>
+    <string name="fecha_unsoc">Fecha observacion</string>
     <string name="sub_ad_metodo_seleccion">Dominante (\u03B1) \nMet. Selecc.</string>
 
     <string name="s4_ad">S4/Ad</string>

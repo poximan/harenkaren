@@ -12,7 +12,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
@@ -36,8 +35,7 @@ class CircuitoListFragment : Fragment(), CircuitoListAdapter.OnCircuitoClickList
         _binding = FragmentCircuitoListBinding.inflate(inflater, container, false)
 
         _binding!!.homeActionButton.setOnClickListener { goHome() }
-        _binding!!.newCensoActionButton.setOnClickListener{ newCenso() }
-        _binding!!.newCensoActionButton.setOnClickListener{ newCenso() }
+        _binding!!.newUnsocButton.setOnClickListener{ newUnidadSocial() }
 
         loadFullList()
 
@@ -53,7 +51,7 @@ class CircuitoListFragment : Fragment(), CircuitoListAdapter.OnCircuitoClickList
         findNavController().navigate(R.id.home_fragment)
     }
 
-    private fun newCenso() {
+    private fun newUnidadSocial() {
         findNavController().navigate(R.id.goToNewCircuitoAction)
     }
 

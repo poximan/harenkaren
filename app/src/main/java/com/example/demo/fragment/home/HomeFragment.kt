@@ -44,7 +44,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun newReport() {
-        findNavController().navigate(R.id.goToNewCensoAction)
+        findNavController().navigate(R.id.goToNewUnSocFromUnSocListAction)
     }
 
     private fun showRegulations() {

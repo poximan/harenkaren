@@ -15,23 +15,23 @@ import androidx.annotation.RequiresApi
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.demo.R
-import com.example.demo.databinding.FragmentCensoDetailBinding
+import com.example.demo.databinding.FragmentUnsocDetailBinding
 import java.io.File
 
-class CensoDetailFragment : Fragment() {
+class UnSocDetailFragment : Fragment() {
 
-    private var _binding: FragmentCensoDetailBinding? = null
+    private var _binding: FragmentUnsocDetailBinding? = null
     private val binding get() = _binding!!
-    private val args: CensoDetailFragmentArgs by navArgs()
+    private val args: UnSocDetailFragmentArgs by navArgs()
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentCensoDetailBinding.inflate(inflater, container, false)
+        _binding = FragmentUnsocDetailBinding.inflate(inflater, container, false)
 
-        _binding!!.fishingTypeTextView.text = args.currentReport.ptoObsCenso
+        _binding!!.fishingTypeTextView.text = args.currentReport.ptoObsUnSoc
         _binding!!.specieTextView.text = args.currentReport.ctxSocial
         _binding!!.dateTextView.text = args.currentReport.date
 
@@ -49,17 +49,17 @@ class CensoDetailFragment : Fragment() {
     }
 
     private fun goMap() {
-        val action = CensoDetailFragmentDirections.goToMapsFragmentFromReportDetailFragment(args.currentReport)
+        val action = UnSocDetailFragmentDirections.goToMapsFragmentFromUnSocDetailAction(args.currentReport)
         findNavController().navigate(action)
     }
 
     private fun updateReport() {
-        val action = CensoDetailFragmentDirections.goToReportUpdateAction(args.currentReport)
+        val action = UnSocDetailFragmentDirections.goToUnSocUpdateAction(args.currentReport)
         findNavController().navigate(action)
     }
 
     private fun goBack() {
-        findNavController().navigate(R.id.goToMyCensosFromCensoDetailAction)
+        findNavController().navigate(R.id.goToUnSocListFragmentFromUnSocDetailAction)
     }
 
     private fun rotateImage(bitmap: Bitmap) {

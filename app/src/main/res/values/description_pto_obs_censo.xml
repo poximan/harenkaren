@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="descriptionPtoObsCenso">
+    <string-array name="descriptionPtoObsUnSoc">
         <item>
-            Alto: indica el lugar desde donde se realizó el censo (alto = desde acantilado)
+            Alto: indica el lugar desde donde se realizó la observacion de esa unidad social (alto = desde acantilado)
         </item>
         <item>
-            Bajo: indica el lugar desde donde se realizó el censo (bajo = desde la playa).
+            Bajo: indica el lugar desde donde se realizó la observacion de esa unidad social (bajo = desde la playa).
         </item>
     </string-array>
 </resources>

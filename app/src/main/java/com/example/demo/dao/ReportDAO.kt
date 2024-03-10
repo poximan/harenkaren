@@ -2,25 +2,25 @@ package com.example.demo.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.example.demo.model.Censo
+import com.example.demo.model.UnidSocial
 
 
 @Dao
 interface ReportDAO {
-    @Query("SELECT * from censo_table ORDER BY id DESC")
-    fun getAll(): LiveData<List<Censo>>
+    @Query("SELECT * from unidad_social_table ORDER BY id DESC")
+    fun getAll(): LiveData<List<UnidSocial>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(censo: Censo)
+    fun insert(unidSocial: UnidSocial)
 
-    @Query("DELETE FROM censo_table")
+    @Query("DELETE FROM unidad_social_table")
     fun deleteAll()
 
-    @Query("SELECT COUNT(id) FROM censo_table")
+    @Query("SELECT COUNT(id) FROM unidad_social_table")
     fun getCount(): Int
 
     @Transaction
     @Update
-    fun update(censo: Censo)
+    fun update(unidSocial: UnidSocial)
 }
 

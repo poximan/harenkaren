@@ -32,10 +32,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.demo.R
 import com.example.demo.adapter.PhotoAdapter
-import com.example.demo.databinding.FragmentCensoAdd1Binding
-import com.example.demo.model.Censo
+import com.example.demo.databinding.FragmentUnsocAdd1Binding
+import com.example.demo.model.UnidSocial
 import com.example.demo.model.LatLong
-import com.example.demo.viewModel.CensoViewModel
+import com.example.demo.viewModel.UnSocViewModel
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -43,7 +43,7 @@ import java.lang.Integer.min
 import java.text.SimpleDateFormat
 import java.util.Date
 
-class CensoAdd1Fragment : Fragment() {
+class UnSocAdd1Fragment : Fragment() {
 
     object DbConstants {
         const val REQUEST_TAKE_PHOTO = 2
@@ -51,10 +51,10 @@ class CensoAdd1Fragment : Fragment() {
         const val PERMISSION_REQUEST_LOCATION = 4
     }
     
-    private var _binding: FragmentCensoAdd1Binding? = null
+    private var _binding: FragmentUnsocAdd1Binding? = null
     private val binding get() = _binding!!
 
-    private lateinit var model: CensoViewModel
+    private lateinit var model: UnSocViewModel
 
     private var currentPhotoPath: String = ""
     private val photoPaths = mutableListOf<String>()
@@ -69,10 +69,10 @@ class CensoAdd1Fragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        _binding = FragmentCensoAdd1Binding.inflate(inflater, container, false)
+        _binding = FragmentUnsocAdd1Binding.inflate(inflater, container, false)
         val view = binding.root
 
-        model = ViewModelProvider(this)[CensoViewModel::class.java]
+        model = ViewModelProvider(this)[UnSocViewModel::class.java]
 
         val photoRecyclerView: RecyclerView = binding.photoRecyclerView
         val layoutManager =
@@ -98,7 +98,7 @@ class CensoAdd1Fragment : Fragment() {
             if (currentPhotoPath.isEmpty())
                 throw UninitializedPropertyAccessException()
 
-            val action = CensoAdd1FragmentDirections.goToAdd2FragmentAction(LatLong(lat , lon), currentPhotoPath)
+            val action = UnSocAdd1FragmentDirections.goToAdd2FragmentAction(LatLong(lat , lon), currentPhotoPath)
             findNavController().navigate(action)
 
         } catch (e: UninitializedPropertyAccessException) {
@@ -113,7 +113,7 @@ class CensoAdd1Fragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        indicatorLight = view.findViewById(R.id.gpsLightCenso)
+        indicatorLight = view.findViewById(R.id.gpsLightUnSoc)
     }
 
     override fun onDestroyView() {
@@ -261,7 +261,7 @@ class CensoAdd1Fragment : Fragment() {
             val lat = binding.latitud.text.toString().toDouble()
             val lon = binding.longitud.text.toString().toDouble()
 
-            val action = CensoAdd1FragmentDirections.goToMapsFragmentAction(Censo(1,lat,lon,currentPhotoPath))
+            val action = UnSocAdd1FragmentDirections.goToMapsFragmentAction(UnidSocial(1,lat,lon,currentPhotoPath))
             findNavController().navigate(action)
 
         } catch (e: UninitializedPropertyAccessException) {

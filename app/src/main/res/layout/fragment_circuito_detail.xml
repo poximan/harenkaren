@@ -75,10 +75,10 @@
         app:layout_constraintStart_toStartOf="parent"/>
 
     <Button
-        android:id="@+id/verCensosButton"
+        android:id="@+id/verUnSocButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ver censos"
+        android:text="Unidades sociales"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

@@ -9,7 +9,7 @@ import com.example.demo.fragment.info.PtoObsHelpDescripFragment
 class PtoObsHelpActivity : AppCompatActivity(), Cordinadora {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_pto_obs_censo)
+        setContentView(R.layout.activity_pto_obs_unsoc)
     }
 
     override fun onChangeOpciones(index: Int) {

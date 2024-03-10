@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.example.demo.R
 import com.example.demo.databinding.FragmentMultipleMapsBinding
-import com.example.demo.viewModel.CensoViewModel
+import com.example.demo.viewModel.UnSocViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -25,7 +25,7 @@ class MultipleMapsFragment : Fragment() {
 
     private var _binding: FragmentMultipleMapsBinding? = null
     private val binding get() = _binding!!
-    private val censoViewModel: CensoViewModel by navGraphViewModels(R.id.app_navigation)
+    private val unSocViewModel: UnSocViewModel by navGraphViewModels(R.id.app_navigation)
 
     private var marker: Marker? = null
     private var smallMarker: Bitmap? = null
@@ -39,14 +39,14 @@ class MultipleMapsFragment : Fragment() {
         val b = bitmapdraw.bitmap
         smallMarker = Bitmap.createScaledBitmap(b, width, height, false)
 
-        val reportList = censoViewModel.allCensos.value!!
+        val reportList = unSocViewModel.allUnSoc.value!!
 
         for (report in reportList) {
             val pos = LatLng(report.latitude!!, report.longitude!!)
             val snippet = String.format(
                 Locale.getDefault(),
                 "Tipo: %1$.15s - Especie: %2$.15s - Fecha: %3$.15s",
-                report.ptoObsCenso,
+                report.ptoObsUnSoc,
                 report.ctxSocial,
                 report.date
             )

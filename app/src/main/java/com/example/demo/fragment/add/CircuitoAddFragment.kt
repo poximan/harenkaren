@@ -161,7 +161,7 @@ class CircuitoAddFragment : Fragment() {
                     Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.ACCESS_COARSE_LOCATION
                 ),
-                CensoAdd1Fragment.DbConstants.PERMISSION_REQUEST_LOCATION
+                UnSocAdd1Fragment.DbConstants.PERMISSION_REQUEST_LOCATION
             )
         }
     }

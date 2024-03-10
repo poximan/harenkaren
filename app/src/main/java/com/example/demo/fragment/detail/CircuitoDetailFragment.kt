@@ -11,7 +11,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.demo.R
 import com.example.demo.databinding.FragmentCircuitoDetailBinding
-import com.example.demo.fragment.list.CircuitoListFragmentDirections
 
 class CircuitoDetailFragment : Fragment() {
 
@@ -31,13 +30,13 @@ class CircuitoDetailFragment : Fragment() {
         _binding!!.textViewAreaObs.text = args.currentCircuito.areaRecorrida
 
         _binding!!.doneButton.setOnClickListener { goBack() }
-        _binding!!.verCensosButton.setOnClickListener { verCensos() }
+        _binding!!.verUnSocButton.setOnClickListener { verUnidadSocial() }
 
         return binding.root
     }
 
-    private fun verCensos() {
-        val action = CircuitoDetailFragmentDirections.goToMisCensosFromCircuitoDetailAction()
+    private fun verUnidadSocial() {
+        val action = CircuitoDetailFragmentDirections.goToUnSocListFromCircuitoDetailAction()
         findNavController().navigate(action)
     }
 
