@@ -8,19 +8,20 @@ import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
 import com.example.demo.model.Recorrido
+import com.example.demo.model.UnidSocial
 
 @Dao
 interface RecorrDAO {
-    @Query("SELECT * from circuito_table ORDER BY id DESC")
+    @Query("SELECT * from recorrido ORDER BY id DESC")
     fun getAll(): LiveData<List<Recorrido>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(recorrido: Recorrido)
 
-    @Query("DELETE FROM circuito_table")
+    @Query("DELETE FROM recorrido")
     fun deleteAll()
 
-    @Query("SELECT COUNT(id) FROM circuito_table")
+    @Query("SELECT COUNT(id) FROM recorrido")
     fun getCount(): Int
 
     @Transaction

@@ -95,7 +95,7 @@ class UnSocAdd1Fragment : Fragment() {
 
         try {
 
-            if (currentPhotoPath.isEmpty())
+            if (currentPhotoPath.isEmpty() && false)    // TODO ver condicion de entrada
                 throw UninitializedPropertyAccessException()
 
             val action = UnSocAdd1FragmentDirections.goToAdd2FragmentAction(LatLong(lat , lon), currentPhotoPath)

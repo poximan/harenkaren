@@ -6,25 +6,14 @@ import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
 
-/*
-@Entity(tableName = "unidad_social_table",
-    foreignKeys = [ForeignKey(
-        entity = Recorrido::class,
-        parentColumns = ["id"],
-        childColumns = ["circuito_id"],
-        onDelete = ForeignKey.CASCADE
-    )],
-    indices = [Index("circuito_id")] // Define un índice para la columna circuito_id
-)
- */
-@Entity(tableName = "unidad_social_table")
+@Entity
 data class UnidSocial(
 
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
 
-    @ColumnInfo(name = "circuito_id")
-    var circuitoId: Int,
+    @ColumnInfo(name = "id_recorrido")
+    var recorrId: Int,
 
     // ----- entorno ----- //
     @ColumnInfo(name = "pto_observacion")
@@ -203,7 +192,7 @@ data class UnidSocial(
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(id)
-        parcel.writeInt(circuitoId)
+        parcel.writeInt(recorrId)
         parcel.writeString(ptoObsUnSoc)
         parcel.writeString(ctxSocial)
         parcel.writeString(tpoSustrato)
@@ -236,8 +225,8 @@ data class UnidSocial(
         }
     }
 
-    fun setCircuitoActual(id: Int) {
-        circuitoId = id
+    fun setRecorrActual(id: Int) {
+        recorrId = id
     }
 }
 

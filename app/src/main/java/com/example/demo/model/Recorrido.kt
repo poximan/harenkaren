@@ -6,7 +6,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "circuito_table")
+@Entity
 data class Recorrido(
 
     @PrimaryKey(autoGenerate = true)
@@ -38,8 +38,6 @@ data class Recorrido(
 
     @ColumnInfo(name = "meteo")
     var meteo: String
-
-    //    val listaUnidSociales: MutableList<UnidSocial> = mutableListOf()
 
 ):Parcelable {
     constructor(parcel: Parcel) : this(

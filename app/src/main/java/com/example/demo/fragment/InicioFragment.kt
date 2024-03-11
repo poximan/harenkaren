@@ -31,12 +31,12 @@ class InicioFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
         _binding!!.loginButton.setOnClickListener { loginApp() }
         _binding!!.registerTextView.setOnClickListener { registerApp() }
 
-        val reportAdapter = UnSocListAdapter(this)
+        val unSocListAdapter = UnSocListAdapter(this)
         unSocViewModel.allUnSoc
             .observe(
                 viewLifecycleOwner
             ) { reports ->
-                reports?.let { reportAdapter.setUnSoc(it) }
+                reports?.let { unSocListAdapter.setUnSoc(it) }
             }
         return view
     }
