@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity() {
 
         var fragActual = navController.currentDestination?.id
         val fragObservado = R.id.unsoc_list_fragment
-        val fragObjetivo = R.id.circuito_detail_fragment
+        val fragObjetivo = R.id.recorr_detail_fragment
 
         return if(fragActual == fragObservado) {
             while (fragActual != fragObjetivo) {

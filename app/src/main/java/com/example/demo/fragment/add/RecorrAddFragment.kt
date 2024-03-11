@@ -18,18 +18,18 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.demo.R
-import com.example.demo.databinding.FragmentCircuitoAddBinding
-import com.example.demo.model.Circuito
-import com.example.demo.viewModel.CircuitoViewModel
+import com.example.demo.databinding.FragmentRecorrAddBinding
+import com.example.demo.model.Recorrido
+import com.example.demo.viewModel.RecorrViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 
-class CircuitoAddFragment : Fragment() {
+class RecorrAddFragment : Fragment() {
 
-    private var _binding: FragmentCircuitoAddBinding? = null
+    private var _binding: FragmentRecorrAddBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var model: CircuitoViewModel
+    private lateinit var model: RecorrViewModel
 
     private lateinit var locationManager: LocationManager
     private var indicatorLight: ImageView? = null
@@ -40,23 +40,23 @@ class CircuitoAddFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        _binding = FragmentCircuitoAddBinding.inflate(inflater, container, false)
+        _binding = FragmentRecorrAddBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        model = ViewModelProvider(this)[CircuitoViewModel::class.java]
+        model = ViewModelProvider(this)[RecorrViewModel::class.java]
 
         binding.getPosicion.setOnClickListener { getPosicionActual() }
-        binding.confirmarCircuitoButton.setOnClickListener { confirmarCircuito() }
+        binding.confirmarCircuitoButton.setOnClickListener { confirmarRecorrido() }
         return view
     }
 
-    private fun confirmarCircuito() {
+    private fun confirmarRecorrido() {
 
         val circuito = dataDesdeIU()
-        model.insertCircuito(circuito)
+        model.insert(circuito)
 
-        Toast.makeText(activity, "Circuito agregado correctamente", Toast.LENGTH_LONG).show()
-        findNavController().navigate(R.id.mis_circuitos_fragment)
+        Toast.makeText(activity, "Recorrido agregado correctamente", Toast.LENGTH_LONG).show()
+        findNavController().navigate(R.id.recorr_list_fragment)
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -71,7 +71,7 @@ class CircuitoAddFragment : Fragment() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun dataDesdeIU(): Circuito {
+    private fun dataDesdeIU(): Recorrido {
 
         val observador = binding.editTextObservador.text.toString()
         val areaRecorrida = binding.editTextAreaRecorrida.text.toString()
@@ -82,7 +82,7 @@ class CircuitoAddFragment : Fragment() {
 
         val timeStamp = SimpleDateFormat("yyyy/MM/dd-HH:mm:ss").format(Date())
 
-        return Circuito(0,observador, timeStamp,lat,lon,1.0,2.0,areaRecorrida,meteo)
+        return Recorrido(0,observador, timeStamp,lat,lon,1.0,2.0,areaRecorrida,meteo)
     }
 
     @RequiresApi(Build.VERSION_CODES.R)

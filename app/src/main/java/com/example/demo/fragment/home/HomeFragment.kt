@@ -21,14 +21,13 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        _binding!!.misCircuitosButton.setOnClickListener { showMyReports() }
-        _binding!!.myTopicsButton.setOnClickListener { goToMyTopics() }
+        _binding!!.censosButton.setOnClickListener { showMyReports() }
+        _binding!!.topicosButton.setOnClickListener { goToMyTopics() }
         _binding!!.regulationsButton.setOnClickListener { showRegulations() }
         _binding!!.goToStatisticsButton.setOnClickListener { goToStatistics() }
         _binding!!.logOutButton.setOnClickListener { logOut() }
 
-        val view = binding.root
-        return view
+        return binding.root
     }
 
     private fun showMyReports() {
@@ -54,7 +53,7 @@ class HomeFragment : Fragment() {
     private fun logOut() {
         var builder = AlertDialog.Builder(activity)
         builder.setTitle("Salir")
-        builder.setMessage("¿confirma salir?")
+        builder.setMessage("¿Confirma salir?")
         builder.setPositiveButton("Si", DialogInterface.OnClickListener { _, _ ->
             exitProcess(0)
         })

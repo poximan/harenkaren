@@ -5,28 +5,28 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.example.demo.dao.CircuitoDAO
-import com.example.demo.dao.ReportDAO
+import com.example.demo.dao.RecorrDAO
+import com.example.demo.dao.UnSocDAO
 import com.example.demo.model.UnidSocial
-import com.example.demo.model.Circuito
+import com.example.demo.model.Recorrido
 import kotlinx.coroutines.CoroutineScope
 
-@Database(entities = [UnidSocial::class, Circuito::class], version = 1, exportSchema = false)
+@Database(entities = [UnidSocial::class, Recorrido::class], version = 1, exportSchema = false)
 @TypeConverters(Converter::class)
-abstract class ReportRoomDatabase : RoomDatabase() {
+abstract class HarenKarenRoomDatabase : RoomDatabase() {
 
-    abstract fun reportDao(): ReportDAO
-    abstract fun circuitoDao(): CircuitoDAO
+    abstract fun unSocDao(): UnSocDAO
+    abstract fun recorrDao(): RecorrDAO
 
     companion object {
 
         @Volatile
-        private var INSTANCIA: ReportRoomDatabase? = null
+        private var INSTANCIA: HarenKarenRoomDatabase? = null
 
         fun getDatabase(
             context: Context,
             viewModelScope: CoroutineScope
-        ): ReportRoomDatabase {
+        ): HarenKarenRoomDatabase {
             val instanciaTemporal = INSTANCIA
             if (instanciaTemporal != null) {
                 return instanciaTemporal
@@ -34,7 +34,7 @@ abstract class ReportRoomDatabase : RoomDatabase() {
             synchronized(this) {
                 val instancia = Room.databaseBuilder(
                     context.applicationContext,
-                    ReportRoomDatabase::class.java,
+                    HarenKarenRoomDatabase::class.java,
                     "haren_database"
                 )
                     .addCallback(ReportDatabaseCallback(viewModelScope))
@@ -46,8 +46,6 @@ abstract class ReportRoomDatabase : RoomDatabase() {
 
         private class ReportDatabaseCallback(
             private val scope: CoroutineScope
-        ) : Callback() {
-
-        }
+        ) : Callback()
     }
 }

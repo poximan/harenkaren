@@ -16,15 +16,15 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.example.demo.R
-import com.example.demo.adapter.CircuitoListAdapter
-import com.example.demo.databinding.FragmentCircuitoListBinding
-import com.example.demo.model.Circuito
-import com.example.demo.viewModel.CircuitoViewModel
+import com.example.demo.adapter.RecorrListAdapter
+import com.example.demo.databinding.FragmentRecorrListBinding
+import com.example.demo.model.Recorrido
+import com.example.demo.viewModel.RecorrViewModel
 
-class CircuitoListFragment : Fragment(), CircuitoListAdapter.OnCircuitoClickListener {
+class RecorrListFragment : Fragment(), RecorrListAdapter.OnRecorrClickListener {
 
-    private val reportViewModel: CircuitoViewModel by navGraphViewModels(R.id.app_navigation)
-    private var _binding: FragmentCircuitoListBinding? = null
+    private val reportViewModel: RecorrViewModel by navGraphViewModels(R.id.app_navigation)
+    private var _binding: FragmentRecorrListBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -32,7 +32,7 @@ class CircuitoListFragment : Fragment(), CircuitoListAdapter.OnCircuitoClickList
         savedInstanceState: Bundle?
     ): View {
         setHasOptionsMenu(true)
-        _binding = FragmentCircuitoListBinding.inflate(inflater, container, false)
+        _binding = FragmentRecorrListBinding.inflate(inflater, container, false)
 
         _binding!!.homeActionButton.setOnClickListener { goHome() }
         _binding!!.newUnsocButton.setOnClickListener{ newUnidadSocial() }
@@ -42,8 +42,8 @@ class CircuitoListFragment : Fragment(), CircuitoListAdapter.OnCircuitoClickList
         return binding.root
     }
 
-    override fun onItemClick(circuito: Circuito) {
-        val action = CircuitoListFragmentDirections.goToCircuitoDetailFromMyCircuitoAction(circuito)
+    override fun onItemClick(recorrido: Recorrido) {
+        val action = RecorrListFragmentDirections.goToRecorrDetailAction(recorrido)
         findNavController().navigate(action)
     }
 
@@ -52,7 +52,7 @@ class CircuitoListFragment : Fragment(), CircuitoListAdapter.OnCircuitoClickList
     }
 
     private fun newUnidadSocial() {
-        findNavController().navigate(R.id.goToNewCircuitoAction)
+        findNavController().navigate(R.id.goToNewRecorrAction)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -87,34 +87,34 @@ class CircuitoListFragment : Fragment(), CircuitoListAdapter.OnCircuitoClickList
 
     private fun loadFullList() {
         val circuitoList: RecyclerView = binding.listCircuito
-        val reportAdapter = CircuitoListAdapter(this)
+        val reportAdapter = RecorrListAdapter(this)
         circuitoList.adapter = reportAdapter
 
-        reportViewModel.allCircuitos
+        reportViewModel.recorrList
             .observe(
                 viewLifecycleOwner
             ) { reports ->
-                reports?.let { reportAdapter.setCircuito(it) }
+                reports?.let { reportAdapter.setRecorrido(it) }
             }
 
     }
 
     private fun loadListWithDate(date: String) {
         val reportList: RecyclerView = binding.listCircuito
-        val reportAdapter = CircuitoListAdapter(this)
+        val reportAdapter = RecorrListAdapter(this)
         reportList.adapter = reportAdapter
 
-        reportViewModel.allCircuitos
+        reportViewModel.recorrList
             .observe(
                 viewLifecycleOwner
             ) { reports ->
                 val filteredList = remove(reports, date)
-                reports?.let { reportAdapter.setCircuito(filteredList) }
+                reports?.let { reportAdapter.setRecorrido(filteredList) }
             }
     }
 
-    private fun remove(arr: List<Circuito>, target: String): List<Circuito> {
-        val result: MutableList<Circuito> = ArrayList()
+    private fun remove(arr: List<Recorrido>, target: String): List<Recorrido> {
+        val result: MutableList<Recorrido> = ArrayList()
 
         for (report in arr) {
             if (report.fecha == target) {

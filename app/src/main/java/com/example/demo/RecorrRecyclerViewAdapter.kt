@@ -6,20 +6,20 @@ import android.view.ViewGroup
 import android.widget.TextView
 
 import com.example.demo.placeholder.PlaceholderContent.PlaceholderItem
-import com.example.demo.databinding.FragmentCircuitoBinding
+import com.example.demo.databinding.FragmentRecorrBinding
 
 /**
  * [RecyclerView.Adapter] that can display a [PlaceholderItem].
  * TODO: Replace the implementation with code for your data type.
  */
-class CircuitoRecyclerViewAdapter(
+class RecorrRecyclerViewAdapter(
     private val values: List<PlaceholderItem>
-) : RecyclerView.Adapter<CircuitoRecyclerViewAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<RecorrRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         return ViewHolder(
-            FragmentCircuitoBinding.inflate(
+            FragmentRecorrBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -36,7 +36,7 @@ class CircuitoRecyclerViewAdapter(
 
     override fun getItemCount(): Int = values.size
 
-    inner class ViewHolder(binding: FragmentCircuitoBinding) :
+    inner class ViewHolder(binding: FragmentRecorrBinding) :
         RecyclerView.ViewHolder(binding.root) {
         val idView: TextView = binding.itemNumber
         val contentView: TextView = binding.content

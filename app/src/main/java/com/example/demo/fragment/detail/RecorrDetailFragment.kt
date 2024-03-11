@@ -10,24 +10,24 @@ import androidx.annotation.RequiresApi
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.demo.R
-import com.example.demo.databinding.FragmentCircuitoDetailBinding
+import com.example.demo.databinding.FragmentRecorrDetailBinding
 
-class CircuitoDetailFragment : Fragment() {
+class RecorrDetailFragment : Fragment() {
 
-    private var _binding: FragmentCircuitoDetailBinding? = null
+    private var _binding: FragmentRecorrDetailBinding? = null
     private val binding get() = _binding!!
-    private val args: CircuitoDetailFragmentArgs by navArgs()
+    private val args: RecorrDetailFragmentArgs by navArgs()
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentCircuitoDetailBinding.inflate(inflater, container, false)
+        _binding = FragmentRecorrDetailBinding.inflate(inflater, container, false)
 
-        _binding!!.textViewObserv.text = args.currentCircuito.observador
-        _binding!!.textViewMeteo.text = args.currentCircuito.meteo
-        _binding!!.textViewAreaObs.text = args.currentCircuito.areaRecorrida
+        _binding!!.textViewObserv.text = args.recorrActual.observador
+        _binding!!.textViewMeteo.text = args.recorrActual.meteo
+        _binding!!.textViewAreaObs.text = args.recorrActual.areaRecorrida
 
         _binding!!.doneButton.setOnClickListener { goBack() }
         _binding!!.verUnSocButton.setOnClickListener { verUnidadSocial() }
@@ -36,11 +36,11 @@ class CircuitoDetailFragment : Fragment() {
     }
 
     private fun verUnidadSocial() {
-        val action = CircuitoDetailFragmentDirections.goToUnSocListFromCircuitoDetailAction()
+        val action = RecorrDetailFragmentDirections.goToUnSocListFromRecorrDetailAction()
         findNavController().navigate(action)
     }
 
     private fun goBack() {
-        findNavController().navigate(R.id.goToMisCircuitoFromCircuitoDetailAction)
+        findNavController().navigate(R.id.goToRecorrListAction)
     }
 }

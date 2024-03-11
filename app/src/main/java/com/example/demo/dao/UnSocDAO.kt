@@ -6,7 +6,7 @@ import com.example.demo.model.UnidSocial
 
 
 @Dao
-interface ReportDAO {
+interface UnSocDAO {
     @Query("SELECT * from unidad_social_table ORDER BY id DESC")
     fun getAll(): LiveData<List<UnidSocial>>
 

@@ -7,7 +7,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "circuito_table")
-data class Circuito(
+data class Recorrido(
 
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
@@ -73,12 +73,12 @@ data class Circuito(
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<Circuito> {
-        override fun createFromParcel(parcel: Parcel): Circuito {
-            return Circuito(parcel)
+    companion object CREATOR : Parcelable.Creator<Recorrido> {
+        override fun createFromParcel(parcel: Parcel): Recorrido {
+            return Recorrido(parcel)
         }
 
-        override fun newArray(size: Int): Array<Circuito?> {
+        override fun newArray(size: Int): Array<Recorrido?> {
             return arrayOfNulls(size)
         }
     }

@@ -10,7 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.demo.placeholder.PlaceholderContent
 
-class CircuitoFragment : Fragment() {
+class RecorrFragment : Fragment() {
 
     private var columnCount = 1
 
@@ -26,7 +26,7 @@ class CircuitoFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_circuito_list, container, false)
+        val view = inflater.inflate(R.layout.fragment_recorr_list, container, false)
 
         // Set the adapter
         if (view is RecyclerView) {
@@ -35,7 +35,7 @@ class CircuitoFragment : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                adapter = CircuitoRecyclerViewAdapter(PlaceholderContent.ITEMS)
+                adapter = RecorrRecyclerViewAdapter(PlaceholderContent.ITEMS)
             }
         }
         return view
@@ -49,7 +49,7 @@ class CircuitoFragment : Fragment() {
         // TODO: Customize parameter initialization
         @JvmStatic
         fun newInstance(columnCount: Int) =
-            CircuitoFragment().apply {
+            RecorrFragment().apply {
                 arguments = Bundle().apply {
                     putInt(ARG_COLUMN_COUNT, columnCount)
                 }

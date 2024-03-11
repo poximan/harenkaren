@@ -3,7 +3,7 @@ package com.example.demo.viewModel
 import android.app.Application
 import androidx.lifecycle.*
 import com.example.demo.model.UnidSocial
-import com.example.demo.database.ReportRoomDatabase
+import com.example.demo.database.HarenKarenRoomDatabase
 import com.example.demo.repository.UnSocRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -62,8 +62,8 @@ class UnSocViewModel(application: Application) : AndroidViewModel(application) {
     private val repository: UnSocRepository
     val allUnSoc: LiveData<List<UnidSocial>>
     init {
-        val reportsDao = ReportRoomDatabase
-            .getDatabase(application, viewModelScope).reportDao()
+        val reportsDao = HarenKarenRoomDatabase
+            .getDatabase(application, viewModelScope).unSocDao()
         repository = UnSocRepository(reportsDao)
         allUnSoc = repository.allReports
     }

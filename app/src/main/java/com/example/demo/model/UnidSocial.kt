@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey
 /*
 @Entity(tableName = "unidad_social_table",
     foreignKeys = [ForeignKey(
-        entity = Circuito::class,
+        entity = Recorrido::class,
         parentColumns = ["id"],
         childColumns = ["circuito_id"],
         onDelete = ForeignKey.CASCADE

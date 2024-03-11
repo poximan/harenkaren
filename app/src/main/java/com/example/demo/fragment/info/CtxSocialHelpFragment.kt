@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.demo.Cordinadora
+import com.example.demo.Coordinadora
 import com.example.demo.R
 import com.example.demo.databinding.FragmentCtxSocialBinding
 
@@ -46,7 +46,7 @@ class CtxSocialHelpFragment : Fragment() {
             else -> 0
         }
         val activity = activity
-        if (activity is Cordinadora) {
+        if (activity is Coordinadora) {
             activity.onChangeOpciones(index)
         }
     }

@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.example.demo.R
@@ -13,11 +12,12 @@ import com.example.demo.adapter.UnSocListAdapter
 import com.example.demo.viewModel.UnSocViewModel
 import com.example.demo.model.UnidSocial
 
-import com.example.demo.databinding.FragmentMainBinding
+import com.example.demo.databinding.FragmentInicioBinding
 
-class MainFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
+class InicioFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
+
     private val unSocViewModel: UnSocViewModel by navGraphViewModels(R.id.app_navigation)
-    private var _binding: FragmentMainBinding? = null
+    private var _binding: FragmentInicioBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -25,20 +25,19 @@ class MainFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
         savedInstanceState: Bundle?
     ): View {
 
-        _binding = FragmentMainBinding.inflate(inflater, container, false)
+        _binding = FragmentInicioBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        _binding!!.loginButton.setOnClickListener{ loginApp() }
-        _binding!!.registerTextView.setOnClickListener{ registerApp() }
+        _binding!!.loginButton.setOnClickListener { loginApp() }
+        _binding!!.registerTextView.setOnClickListener { registerApp() }
 
         val reportAdapter = UnSocListAdapter(this)
         unSocViewModel.allUnSoc
             .observe(
-                viewLifecycleOwner,
-                Observer { reports ->
-                    reports?.let { reportAdapter.setUnSoc(it) }
-                }
-            )
+                viewLifecycleOwner
+            ) { reports ->
+                reports?.let { reportAdapter.setUnSoc(it) }
+            }
         return view
     }
 
@@ -50,9 +49,11 @@ class MainFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
     private fun loginApp() {
         findNavController().navigate(R.id.loginAction)
     }
+
     private fun registerApp() {
         findNavController().navigate(R.id.registerAction)
     }
+
     override fun onItemClick(unidSocial: UnidSocial) {
 
     }

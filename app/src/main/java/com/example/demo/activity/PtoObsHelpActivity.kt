@@ -2,11 +2,11 @@ package com.example.demo.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.demo.Cordinadora
+import com.example.demo.Coordinadora
 import com.example.demo.R
 import com.example.demo.fragment.info.PtoObsHelpDescripFragment
 
-class PtoObsHelpActivity : AppCompatActivity(), Cordinadora {
+class PtoObsHelpActivity : AppCompatActivity(), Coordinadora {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pto_obs_unsoc)

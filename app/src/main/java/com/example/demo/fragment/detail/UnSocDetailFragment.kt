@@ -59,7 +59,7 @@ class UnSocDetailFragment : Fragment() {
     }
 
     private fun goBack() {
-        findNavController().navigate(R.id.goToUnSocListFragmentFromUnSocDetailAction)
+        findNavController().navigate(R.id.goToUnSocListFromUnSocDetailAction)
     }
 
     private fun rotateImage(bitmap: Bitmap) {

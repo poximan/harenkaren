@@ -7,15 +7,15 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
-import com.example.demo.model.Circuito
+import com.example.demo.model.Recorrido
 
 @Dao
-interface CircuitoDAO {
+interface RecorrDAO {
     @Query("SELECT * from circuito_table ORDER BY id DESC")
-    fun getAll(): LiveData<List<Circuito>>
+    fun getAll(): LiveData<List<Recorrido>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(circuito: Circuito)
+    fun insert(recorrido: Recorrido)
 
     @Query("DELETE FROM circuito_table")
     fun deleteAll()
@@ -25,6 +25,6 @@ interface CircuitoDAO {
 
     @Transaction
     @Update
-    fun update(circuito: Circuito)
+    fun update(recorrido: Recorrido)
 }
 

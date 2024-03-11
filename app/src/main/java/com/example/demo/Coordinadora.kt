@@ -1,6 +1,6 @@
 package com.example.demo
 
-interface Cordinadora {
+interface Coordinadora {
 
     fun onChangeOpciones(index:Int)
 }
