@@ -9,10 +9,6 @@
         android:id="@+id/regulations_fragment"
         android:icon="@android:drawable/ic_menu_zoom"
         android:title="Reglamentaciones" />
-    <item
-        android:id="@+id/contest_fragment"
-        android:icon="@android:drawable/ic_menu_today"
-        android:title="Concursos" />
 
     <item
         android:id="@+id/about_fragment"

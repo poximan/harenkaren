@@ -36,11 +36,7 @@ class TopicsFragment : Fragment() {
     private fun saveTopics() {
         val selectedTopics = mutableListOf<String>()
         val unselectedTopics = mutableListOf<String>()
-        if (binding.contestCheckBox.isChecked) {
-            selectedTopics.add("Contest")
-        } else {
-            unselectedTopics.add("Contest")
-        }
+
         if (binding.regulationCheckBox.isChecked) {
             selectedTopics.add("Regulation")
         } else {
@@ -94,7 +90,6 @@ class TopicsFragment : Fragment() {
     private fun loadTopicSubscriptions() {
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
 
-        binding.contestCheckBox.isChecked = preferences.getBoolean("Contest", false)
         binding.regulationCheckBox.isChecked = preferences.getBoolean("Regulation", false)
         binding.newsCheckBox.isChecked = preferences.getBoolean("News", false)
     }
