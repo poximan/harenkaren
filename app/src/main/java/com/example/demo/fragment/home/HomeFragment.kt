@@ -21,7 +21,7 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        _binding!!.censosButton.setOnClickListener { showMyReports() }
+        _binding!!.censosButton.setOnClickListener { gotoCensos() }
         _binding!!.topicosButton.setOnClickListener { goToMyTopics() }
         _binding!!.regulationsButton.setOnClickListener { showRegulations() }
         _binding!!.goToStatisticsButton.setOnClickListener { goToStatistics() }
@@ -30,7 +30,7 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
-    private fun showMyReports() {
+    private fun gotoCensos() {
         findNavController().navigate(R.id.goToMyCircuitosFromHomeAction)
     }
 

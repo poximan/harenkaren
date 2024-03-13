@@ -46,14 +46,14 @@ class RecorrAddFragment : Fragment() {
         model = ViewModelProvider(this)[RecorrViewModel::class.java]
 
         binding.getPosicion.setOnClickListener { getPosicionActual() }
-        binding.confirmarCircuitoButton.setOnClickListener { confirmarRecorrido() }
+        binding.confirmarRecorridoButton.setOnClickListener { confirmarRecorrido() }
         return view
     }
 
     private fun confirmarRecorrido() {
 
-        val circuito = dataDesdeIU()
-        model.insert(circuito)
+        val recorrido = dataDesdeIU()
+        model.insert(recorrido)
 
         Toast.makeText(activity, "Recorrido agregado correctamente", Toast.LENGTH_LONG).show()
         findNavController().navigate(R.id.recorr_list_fragment)

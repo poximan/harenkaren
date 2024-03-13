@@ -18,7 +18,7 @@ import androidx.room.PrimaryKey
 data class UnidSocial(
 
     @PrimaryKey(autoGenerate = true)
-    var id: Int = 0,
+    var id: Int,
 
     @ColumnInfo(name = "id_recorrido")
     var recorrId: Int,
@@ -87,7 +87,10 @@ data class UnidSocial(
 
     // ----- otros datos ----- //
     @ColumnInfo(name = "photo_path")
-    var photoPath: String?
+    var photoPath: String?,
+
+    @ColumnInfo(name = "comentario")
+    var comentario: String?
 
 ):Parcelable {
     constructor(parcel: Parcel) : this(
@@ -112,6 +115,7 @@ data class UnidSocial(
         parcel.readString(),
         parcel.readDouble(),
         parcel.readDouble(),
+        parcel.readString(),
         parcel.readString()
     )
 
@@ -143,7 +147,8 @@ data class UnidSocial(
         null,
         latitude,
         longitude,
-        photoPath
+        photoPath,
+        null
     )
 
     @Ignore
@@ -168,7 +173,8 @@ data class UnidSocial(
         date: String,
         latitude: Double,
         longitude: Double,
-        photoPath: String
+        photoPath: String,
+        comentario: String
     ) : this(
         0, // Id con valor predeterminado
         circuitoId,
@@ -191,7 +197,8 @@ data class UnidSocial(
         date,
         latitude,
         longitude,
-        photoPath
+        photoPath,
+        comentario
     )
 
     override fun describeContents(): Int {
@@ -231,10 +238,6 @@ data class UnidSocial(
         override fun newArray(size: Int): Array<UnidSocial?> {
             return arrayOfNulls(size)
         }
-    }
-
-    fun setRecorrActual(id: Int) {
-        recorrId = id
     }
 }
 

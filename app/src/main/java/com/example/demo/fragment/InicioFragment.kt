@@ -9,14 +9,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.example.demo.R
 import com.example.demo.adapter.UnSocListAdapter
-import com.example.demo.viewModel.UnSocViewModel
-import com.example.demo.model.UnidSocial
-
 import com.example.demo.databinding.FragmentInicioBinding
+import com.example.demo.viewModel.UnSocViewModel
 
-class InicioFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
+class InicioFragment : Fragment() {
 
-    private val unSocViewModel: UnSocViewModel by navGraphViewModels(R.id.app_navigation)
     private var _binding: FragmentInicioBinding? = null
     private val binding get() = _binding!!
 
@@ -31,13 +28,6 @@ class InicioFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
         _binding!!.loginButton.setOnClickListener { loginApp() }
         _binding!!.registerTextView.setOnClickListener { registerApp() }
 
-        val unSocListAdapter = UnSocListAdapter(this)
-        unSocViewModel.allUnSoc
-            .observe(
-                viewLifecycleOwner
-            ) { reports ->
-                reports?.let { unSocListAdapter.setUnSoc(it) }
-            }
         return view
     }
 
@@ -53,9 +43,4 @@ class InicioFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
     private fun registerApp() {
         findNavController().navigate(R.id.registerAction)
     }
-
-    override fun onItemClick(unidSocial: UnidSocial) {
-
-    }
-
 }

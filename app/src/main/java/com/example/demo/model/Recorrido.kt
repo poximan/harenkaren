@@ -10,7 +10,7 @@ import androidx.room.PrimaryKey
 data class Recorrido(
 
     @PrimaryKey(autoGenerate = true)
-    var id: Int = 0,
+    var id: Int,
 
     // ----- entorno ----- //
     @ColumnInfo(name = "observador")

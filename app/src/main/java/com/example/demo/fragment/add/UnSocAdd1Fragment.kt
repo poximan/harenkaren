@@ -28,6 +28,7 @@ import androidx.exifinterface.media.ExifInterface
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.demo.R
@@ -50,7 +51,8 @@ class UnSocAdd1Fragment : Fragment() {
         const val PERMISSION_REQUEST_CAMERA = 3
         const val PERMISSION_REQUEST_LOCATION = 4
     }
-    
+    private val args: UnSocAdd1FragmentArgs by navArgs()
+
     private var _binding: FragmentUnsocAdd1Binding? = null
     private val binding get() = _binding!!
 
@@ -88,28 +90,6 @@ class UnSocAdd1Fragment : Fragment() {
         return view
     }
 
-    private fun continuarReporte() {
-
-        val lat = binding.latitud.text.toString().toDouble()
-        val lon = binding.longitud.text.toString().toDouble()
-
-        try {
-
-            if (currentPhotoPath.isEmpty() && false)    // TODO ver condicion de entrada
-                throw UninitializedPropertyAccessException()
-
-            val action = UnSocAdd1FragmentDirections.goToAdd2FragmentAction(LatLong(lat , lon), currentPhotoPath)
-            findNavController().navigate(action)
-
-        } catch (e: UninitializedPropertyAccessException) {
-            Toast.makeText(
-                requireContext(),
-                "Debe tomar una foto primero",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
-    }
-
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -119,6 +99,29 @@ class UnSocAdd1Fragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun continuarReporte() {
+
+        val lat = binding.latitud.text.toString().toDouble()
+        val lon = binding.longitud.text.toString().toDouble()
+        val comentario = binding.unSocComentario.text.toString()
+
+        try {
+
+            if (currentPhotoPath.isEmpty() && false)    // TODO ver condicion de entrada
+                throw UninitializedPropertyAccessException()
+
+            val action = UnSocAdd1FragmentDirections.goToAdd2FragmentAction(args.idRecorrido, LatLong(lat , lon), currentPhotoPath, comentario)
+            findNavController().navigate(action)
+
+        } catch (e: UninitializedPropertyAccessException) {
+            Toast.makeText(
+                requireContext(),
+                "Debe tomar una foto primero",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.N)

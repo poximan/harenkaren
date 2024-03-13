@@ -12,19 +12,24 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.example.demo.R
 import com.example.demo.adapter.UnSocListAdapter
 import com.example.demo.databinding.FragmentUnsocListBinding
+import com.example.demo.fragment.detail.RecorrDetailFragmentArgs
 import com.example.demo.model.UnidSocial
 import com.example.demo.viewModel.UnSocViewModel
 
 class UnSocListFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
 
     private val reportViewModel: UnSocViewModel by navGraphViewModels(R.id.app_navigation)
+    private val args: UnSocListFragmentArgs by navArgs()
+
     private var _binding: FragmentUnsocListBinding? = null
     private val binding get() = _binding!!
+    private lateinit var unSocList: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,6 +41,7 @@ class UnSocListFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
 
         _binding!!.newUnsocButton.setOnClickListener{ nuevaUnidadSocial() }
 
+        unSocList = binding.list
         loadFullList()
 
         return binding.root
@@ -51,7 +57,8 @@ class UnSocListFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
     }
 
     private fun nuevaUnidadSocial() {
-        findNavController().navigate(R.id.goToNewUnSocFromUnSocListAction)
+        val action = UnSocListFragmentDirections.goToNewUnSocFromUnSocListAction(args.idRecorrido)
+        findNavController().navigate(action)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -68,7 +75,7 @@ class UnSocListFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
 
             val dpd = DatePickerDialog(
                 activity!!,
-                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                { _, year, monthOfYear, dayOfMonth ->
                     val dateSelected = "" + dayOfMonth + "/" + (monthOfYear + 1)  + "/" + year
                     loadListWithDate(dateSelected)
                 }, year, month, day
@@ -84,33 +91,30 @@ class UnSocListFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
     }
 
     private fun loadFullList() {
-        val unSocList: RecyclerView = binding.list
+
         val unSocAdapter = UnSocListAdapter(this)
         unSocList.adapter = unSocAdapter
 
-        reportViewModel.allUnSoc
+        reportViewModel.joinRecorrUnSoc
             .observe(
-                viewLifecycleOwner,
-                Observer { reports ->
-                    reports?.let { unSocAdapter.setUnSoc(it) }
-                }
-            )
-
+                viewLifecycleOwner
+            ) { unSocList ->
+                unSocList?.let { unSocAdapter.setUnSoc(it) }
+            }
     }
 
     private fun loadListWithDate(date: String) {
-        val reportList: RecyclerView = binding.list
-        val reportAdapter = UnSocListAdapter(this)
-        reportList.adapter = reportAdapter
 
-        reportViewModel.allUnSoc
+        val unSocAdapter = UnSocListAdapter(this)
+        unSocList.adapter = unSocAdapter
+
+        reportViewModel.joinRecorrUnSoc
             .observe(
-                viewLifecycleOwner,
-                Observer { reports ->
-                    val filteredList = remove(reports, date)
-                    reports?.let { reportAdapter.setUnSoc(filteredList) }
-                }
-            )
+                viewLifecycleOwner
+            ) { unSocList ->
+                val filteredList = remove(unSocList, date)
+                unSocList?.let { unSocAdapter.setUnSoc(filteredList) }
+            }
     }
 
     private fun remove(arr: List<UnidSocial>, target: String): List<UnidSocial> {

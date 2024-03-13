@@ -24,7 +24,7 @@
                 android:layout_marginBottom="10px"
                 android:text="Comentarios:"/>
             <EditText
-                android:id="@+id/editTextObservador"
+                android:id="@+id/unSocComentario"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textMultiLine" />

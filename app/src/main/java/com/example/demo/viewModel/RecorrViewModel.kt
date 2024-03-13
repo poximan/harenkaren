@@ -23,9 +23,9 @@ class RecorrViewModel(application: Application) : AndroidViewModel(application) 
     val recorrList: LiveData<List<Recorrido>>
 
     init {
-        val circuitosDAO = HarenKarenRoomDatabase
+        val recorrDAO = HarenKarenRoomDatabase
             .getDatabase(application, viewModelScope).recorrDao()
-        repository = RecorrRepository(circuitosDAO)
+        repository = RecorrRepository(recorrDAO)
         recorrList = repository.recorrList
     }
 

@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.example.demo.model.UnidSocial
 import com.example.demo.database.HarenKarenRoomDatabase
+import com.example.demo.model.RecorrConUnSoc
 import com.example.demo.repository.UnSocRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -16,12 +17,17 @@ class UnSocViewModel(application: Application) : AndroidViewModel(application) {
         get() = _date
 
     private val repository: UnSocRepository
+
     val allUnSoc: LiveData<List<UnidSocial>>
+    val joinRecorrUnSoc: LiveData<List<UnidSocial>>
+
     init {
         val reportsDao = HarenKarenRoomDatabase
             .getDatabase(application, viewModelScope).unSocDao()
         repository = UnSocRepository(reportsDao)
-        allUnSoc = repository.unSocList
+
+        allUnSoc = repository.unSocListAll
+        joinRecorrUnSoc = repository.unSocList
     }
     fun insert(unidSocial: UnidSocial) = CoroutineScope(Dispatchers.IO).launch(Dispatchers.IO) {
         repository.insert(unidSocial)

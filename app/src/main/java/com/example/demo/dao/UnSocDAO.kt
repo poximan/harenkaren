@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
+import com.example.demo.model.RecorrConUnSoc
 
 import com.example.demo.model.UnidSocial
 
@@ -17,8 +18,8 @@ interface UnSocDAO {
     fun getAll(): LiveData<List<UnidSocial>>
 
     @Transaction
-    @Query("SELECT * FROM unidSocial")
-    fun getRecorrConUnSocList(): LiveData<List<UnidSocial>>
+    @Query("SELECT * FROM unidsocial JOIN recorrido WHERE recorrido.id = id_recorrido")
+    fun getRecorrConUnSocList(): LiveData<List<RecorrConUnSoc>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(unidSocial: UnidSocial)

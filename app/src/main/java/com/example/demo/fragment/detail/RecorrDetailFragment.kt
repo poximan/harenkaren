@@ -36,7 +36,7 @@ class RecorrDetailFragment : Fragment() {
     }
 
     private fun verUnidadSocial() {
-        val action = RecorrDetailFragmentDirections.goToUnSocListFromRecorrDetailAction()
+        val action = RecorrDetailFragmentDirections.goToUnSocListFromRecorrDetailAction(args.recorrActual.id)
         findNavController().navigate(action)
     }
 

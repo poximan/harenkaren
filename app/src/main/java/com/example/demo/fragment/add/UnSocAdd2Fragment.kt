@@ -140,12 +140,13 @@ class UnSocAdd2Fragment : Fragment() {
         val timeStamp = SimpleDateFormat("yyyy/MM/dd-HH:mm:ss").format(Date())
 
         return UnidSocial(
-                0, 0,
+                args.idRecorrido,
                 ptoObsUnSoc, ctxSocial, tpoSustrato,
                 alfaS4Ad, alfaOtrosSA, hembrasAd, criasVivas,
                 criasMuertas, destetados, juveniles, s4AdPerif,
                 s4AdCerca, s4AdLejos, otrosSAPerif, otrosSACerca, otrosSALejos,
-                timeStamp, args.coordenadas.lat, args.coordenadas.lon, args.photoPath
+                timeStamp, args.coordenadas.lat, args.coordenadas.lon,
+                args.photoPath, args.comentario
             )
     }
 

@@ -45,8 +45,8 @@ class UnSocListAdapter(
 
         fun bind(unidSocial: UnidSocial) {
             itemView.setOnClickListener { itemClickListener.onItemClick(unidSocial) }
-            reporte_resumen.text = "Pto.obs.: " + unidSocial.ptoObsUnSoc + " - Ctx.social: " + unidSocial.ctxSocial + "Tpo.sust.: " + unidSocial.tpoSustrato +
-                    " / AlfaS4/Ad: " + unidSocial.alfaS4Ad + " - OtrosSA: " + unidSocial.alfaOtrosSA
+            reporte_resumen.text = "*Pto.obs.: " + unidSocial.ptoObsUnSoc + " *Ctx.social: " + unidSocial.ctxSocial + " *Tpo.sust.: " + unidSocial.tpoSustrato +
+                    " *AlfaS4/Ad: " + unidSocial.alfaS4Ad + " *OtrosSA: " + unidSocial.alfaOtrosSA + " *Coment.: " + unidSocial.comentario
             date.text = unidSocial.date
 
             val file = File(unidSocial.photoPath)
