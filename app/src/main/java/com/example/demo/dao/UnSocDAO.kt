@@ -17,6 +17,12 @@ interface UnSocDAO {
     @Query("SELECT * from unidsocial ORDER BY id DESC")
     fun getAll(): LiveData<List<UnidSocial>>
 
+    /*
+    @Transaction
+    @Query("SELECT * FROM unidsocial JOIN recorrido ON id_recorrido = recorrido.id AND id_recorrido = :idRecorrido")
+    fun getRecorrConUnSocList(idRecorrido: Int): LiveData<List<RecorrConUnSoc>>
+    */
+
     @Transaction
     @Query("SELECT * FROM unidsocial JOIN recorrido WHERE recorrido.id = id_recorrido")
     fun getRecorrConUnSocList(): LiveData<List<RecorrConUnSoc>>

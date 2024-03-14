@@ -11,6 +11,7 @@ class UnSocRepository(private val unSocDao: UnSocDAO) {
     val unSocListAll: LiveData<List<UnidSocial>> = unSocDao.getAll()
 
     private val unSocListJoin: LiveData<List<RecorrConUnSoc>> = unSocDao.getRecorrConUnSocList()
+
     val unSocList: LiveData<List<UnidSocial>> = unSocListJoin.map { list ->
         list.flatMap { recorrConUnSoc -> recorrConUnSoc.listaUnidSociales }
     }

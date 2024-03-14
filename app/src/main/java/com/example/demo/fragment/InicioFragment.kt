@@ -6,11 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.navGraphViewModels
 import com.example.demo.R
-import com.example.demo.adapter.UnSocListAdapter
 import com.example.demo.databinding.FragmentInicioBinding
-import com.example.demo.viewModel.UnSocViewModel
 
 class InicioFragment : Fragment() {
 

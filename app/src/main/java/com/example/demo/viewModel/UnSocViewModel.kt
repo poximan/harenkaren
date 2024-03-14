@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.example.demo.model.UnidSocial
 import com.example.demo.database.HarenKarenRoomDatabase
-import com.example.demo.model.RecorrConUnSoc
 import com.example.demo.repository.UnSocRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

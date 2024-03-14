@@ -162,7 +162,6 @@
                     app:exitAnim="@android:anim/fade_out"
                     app:popEnterAnim="@android:anim/fade_in"
                     app:popExitAnim="@android:anim/fade_out" />
-
                 <action
                     android:id="@+id/goToAdd2FragmentAction"
                     app:destination="@id/unsoc_add2_fragment"
@@ -190,6 +189,9 @@
                 <argument
                     android:name="comentario"
                     app:argType="string" />
+                <action
+                    android:id="@+id/goToUnSocListFromUnSocAddAction"
+                    app:destination="@id/unsoc_list_fragment" />
                 <action
                     android:id="@+id/ptoObsUnSocAction"
                     app:destination="@id/ptoObsUnSoc_activity" />

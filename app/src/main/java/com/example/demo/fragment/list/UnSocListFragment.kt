@@ -10,7 +10,6 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.navGraphViewModels
@@ -18,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.demo.R
 import com.example.demo.adapter.UnSocListAdapter
 import com.example.demo.databinding.FragmentUnsocListBinding
-import com.example.demo.fragment.detail.RecorrDetailFragmentArgs
 import com.example.demo.model.UnidSocial
 import com.example.demo.viewModel.UnSocViewModel
 
@@ -57,7 +55,8 @@ class UnSocListFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
     }
 
     private fun nuevaUnidadSocial() {
-        val action = UnSocListFragmentDirections.goToNewUnSocFromUnSocListAction(args.idRecorrido)
+
+        var action = UnSocListFragmentDirections.goToNewUnSocFromUnSocListAction(args.idRecorrido)
         findNavController().navigate(action)
     }
 

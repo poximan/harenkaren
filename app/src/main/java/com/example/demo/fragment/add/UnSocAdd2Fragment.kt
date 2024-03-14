@@ -17,6 +17,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.demo.R
 import com.example.demo.databinding.FragmentUnsocAdd2Binding
+import com.example.demo.fragment.detail.RecorrDetailFragmentDirections
+import com.example.demo.model.LatLong
 import com.example.demo.model.UnidSocial
 import com.example.demo.viewModel.UnSocViewModel
 import java.text.SimpleDateFormat
@@ -111,7 +113,9 @@ class UnSocAdd2Fragment : Fragment() {
         model.insert(unidSocial)
 
         Toast.makeText(activity, "Reporte agregado correctamente", Toast.LENGTH_LONG).show()
-        findNavController().navigate(R.id.unsoc_list_fragment)
+
+        val action = UnSocAdd2FragmentDirections.goToUnSocListFromUnSocAddAction(args.idRecorrido)
+        findNavController().navigate(action)
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
