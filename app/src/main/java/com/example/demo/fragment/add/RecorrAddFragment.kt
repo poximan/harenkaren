@@ -17,6 +17,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.demo.R
 import com.example.demo.databinding.FragmentRecorrAddBinding
 import com.example.demo.model.Recorrido
@@ -25,6 +26,8 @@ import java.text.SimpleDateFormat
 import java.util.Date
 
 class RecorrAddFragment : Fragment() {
+
+    private val args: RecorrAddFragmentArgs by navArgs()
 
     private var _binding: FragmentRecorrAddBinding? = null
     private val binding get() = _binding!!
@@ -56,7 +59,9 @@ class RecorrAddFragment : Fragment() {
         model.insert(recorrido)
 
         Toast.makeText(activity, "Recorrido agregado correctamente", Toast.LENGTH_LONG).show()
-        findNavController().navigate(R.id.recorr_list_fragment)
+
+        val action = RecorrAddFragmentDirections.goToRecorrListAction(args.idDia)
+        findNavController().navigate(action)
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -80,9 +85,9 @@ class RecorrAddFragment : Fragment() {
         val lat = binding.latitud.text.toString().toDouble()
         val lon = binding.longitud.text.toString().toDouble()
 
-        val timeStamp = SimpleDateFormat("yyyy/MM/dd-HH:mm:ss").format(Date())
+        val timeStamp = SimpleDateFormat("yyyy/MM/dd - HH:mm:ss").format(Date())
 
-        return Recorrido(0,observador, timeStamp,lat,lon,1.0,2.0,areaRecorrida,meteo)
+        return Recorrido(0, args.idDia, observador, timeStamp,lat,lon,1.0,2.0,areaRecorrida,meteo)
     }
 
     @RequiresApi(Build.VERSION_CODES.R)
@@ -93,20 +98,6 @@ class RecorrAddFragment : Fragment() {
         if (checkLocationPermission()) {
             indicatorLight?.setImageResource(R.drawable.indicator_off)
 
-            /*
-            val proveedores : MutableList<String> = locationManager.allProviders
-            val indiceGps = proveedores.indexOf("gps")
-            val provGps : String = proveedores[indiceGps]
-
-            locationManager.getCurrentLocation(provGps,null, Executors.newSingleThreadExecutor()) { location: Location? ->
-                // Manejar la ubicación obtenida
-                location?.let {
-                    // Hacer algo con la ubicación (por ejemplo, mostrarla en un TextView)
-                    indicatorLight?.setImageResource(R.drawable.indicator_on)
-                    updateLocationViews(location.latitude, location.longitude)
-                }
-            }
-            */
             locationManager.requestSingleUpdate(
                 LocationManager.GPS_PROVIDER,
                 object : LocationListener {

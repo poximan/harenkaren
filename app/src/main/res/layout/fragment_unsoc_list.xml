@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list"
+        android:id="@+id/listUnSoc"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -25,7 +25,7 @@
         android:clickable="true"
         app:backgroundTint="@android:color/background_light"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/list"
+        app:layout_constraintStart_toStartOf="@+id/listUnSoc"
         app:maxImageSize="35dp"
         app:srcCompat="@drawable/ic_home"
         tools:ignore="SpeakableTextPresentCheck" />
@@ -39,7 +39,7 @@
         android:clickable="true"
         app:backgroundTint="@android:color/background_light"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/list"
+        app:layout_constraintEnd_toEndOf="@+id/listUnSoc"
         app:maxImageSize="35dp"
         app:srcCompat="@drawable/ic_add"
         tools:ignore="SpeakableTextPresentCheck" />

@@ -39,11 +39,11 @@ class UnSocListFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
     ): View {
         setHasOptionsMenu(true)
         _binding = FragmentUnsocListBinding.inflate(inflater, container, false)
-        _binding!!.homeActionButton.setOnClickListener { goHome() }
 
+        _binding!!.homeActionButton.setOnClickListener { goHome() }
         _binding!!.newUnsocButton.setOnClickListener { nuevaUnidadSocial() }
 
-        unSocList = binding.list
+        unSocList = binding.listUnSoc
         loadFullList()
 
         return binding.root
@@ -102,8 +102,8 @@ class UnSocListFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
             withContext(Dispatchers.Main) {
                 unSocListAsync.observe(
                     viewLifecycleOwner
-                ) { unSocList ->
-                    unSocList?.let { unSocAdapter.setUnSoc(it) }
+                ) { elem ->
+                    elem?.let { unSocAdapter.setUnSoc(it) }
                 }
             }
         }
@@ -130,9 +130,9 @@ class UnSocListFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
     private fun remove(arr: List<UnidSocial>, target: String): List<UnidSocial> {
         val result: MutableList<UnidSocial> = ArrayList()
 
-        for (report in arr) {
-            if (report.date == target) {
-                result.add(report)
+        for (elem in arr) {
+            if (elem.date == target) {
+                result.add(elem)
             }
         }
         return result

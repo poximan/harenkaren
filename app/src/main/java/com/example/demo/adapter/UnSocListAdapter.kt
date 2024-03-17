@@ -93,6 +93,6 @@ class UnSocListAdapter(
     override fun getItemCount() = unidSocialList.size
 
     interface OnUnSocClickListener {
-        fun onItemClick(unidSocial: UnidSocial)
+        fun onItemClick(elem: UnidSocial)
     }
 }

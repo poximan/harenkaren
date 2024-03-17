@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/listCircuito"
+        android:id="@+id/listRecorr"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -25,13 +25,13 @@
         android:clickable="true"
         app:backgroundTint="@android:color/background_light"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/listCircuito"
+        app:layout_constraintStart_toStartOf="@id/listRecorr"
         app:maxImageSize="35dp"
         app:srcCompat="@drawable/ic_home"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/new_unsoc_button"
+        android:id="@+id/nvo_recorr_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="57dp"
@@ -39,7 +39,7 @@
         android:clickable="true"
         app:backgroundTint="@android:color/background_light"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/listCircuito"
+        app:layout_constraintEnd_toEndOf="@id/listRecorr"
         app:maxImageSize="35dp"
         app:srcCompat="@drawable/ic_add"
         tools:ignore="SpeakableTextPresentCheck" />

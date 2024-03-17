@@ -17,7 +17,7 @@ class UnSocRepository(private val unSocDao: UnSocDAO) {
     }
 
     fun read(idRecorrido: Int): LiveData<List<UnidSocial>> {
-        val listaIntermedia = unSocDao.getUnidSocialByRecorridoId(idRecorrido)
+        val listaIntermedia = unSocDao.getUnSocByRecorrId(idRecorrido)
         return convertirAData(listaIntermedia)
     }
 

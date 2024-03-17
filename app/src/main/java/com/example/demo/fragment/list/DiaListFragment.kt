@@ -13,46 +13,37 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.example.demo.R
-import com.example.demo.adapter.RecorrListAdapter
-import com.example.demo.databinding.FragmentRecorrListBinding
-import com.example.demo.model.Recorrido
-import com.example.demo.viewModel.RecorrViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import com.example.demo.adapter.DiaListAdapter
+import com.example.demo.databinding.FragmentDiaListBinding
+import com.example.demo.model.Dia
+import com.example.demo.viewModel.DiaViewModel
 
-class RecorrListFragment : Fragment(), RecorrListAdapter.OnRecorrClickListener {
+class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
 
-    private val recorrViewModel: RecorrViewModel by navGraphViewModels(R.id.app_navigation)
-    private val args: RecorrListFragmentArgs by navArgs()
-
-    private var _binding: FragmentRecorrListBinding? = null
+    private val diaViewModel: DiaViewModel by navGraphViewModels(R.id.app_navigation)
+    private var _binding: FragmentDiaListBinding? = null
     private val binding get() = _binding!!
-    private lateinit var recorrList: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         setHasOptionsMenu(true)
-        _binding = FragmentRecorrListBinding.inflate(inflater, container, false)
+        _binding = FragmentDiaListBinding.inflate(inflater, container, false)
 
         _binding!!.homeActionButton.setOnClickListener { goHome() }
-        _binding!!.nvoRecorrButton.setOnClickListener{ nvoRecorrido() }
+        _binding!!.newRecorrButton.setOnClickListener{ nvoDia() }
 
-        recorrList = binding.listRecorr
         loadFullList()
 
         return binding.root
     }
 
-    override fun onItemClick(recorrido: Recorrido) {
-        val action = RecorrListFragmentDirections.goToRecorrDetailAction(recorrido)
+    override fun onItemClick(dia: Dia) {
+        val action = DiaListFragmentDirections.goToDiaDetailAction(dia)
         findNavController().navigate(action)
     }
 
@@ -60,9 +51,8 @@ class RecorrListFragment : Fragment(), RecorrListAdapter.OnRecorrClickListener {
         findNavController().navigate(R.id.home_fragment)
     }
 
-    private fun nvoRecorrido() {
-        var action = RecorrListFragmentDirections.goToNewRecorrAction(args.idDia)
-        findNavController().navigate(action)
+    private fun nvoDia() {
+        findNavController().navigate(R.id.goToNvoDiaAction)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -96,42 +86,35 @@ class RecorrListFragment : Fragment(), RecorrListAdapter.OnRecorrClickListener {
     }
 
     private fun loadFullList() {
+        val diaList: RecyclerView = binding.listDia
+        val diaAdapter = DiaListAdapter(this)
+        diaList.adapter = diaAdapter
 
-        val recorrAdapter = RecorrListAdapter(this)
-        recorrList.adapter = recorrAdapter
-
-        CoroutineScope(Dispatchers.IO).launch {
-            val recorrListAsync = recorrViewModel.read(args.idDia)
-            withContext(Dispatchers.Main) {
-                recorrListAsync.observe(
-                    viewLifecycleOwner
-                ) { elem ->
-                    elem?.let { recorrAdapter.setRecorrido(it) }
-                }
+        diaViewModel.diaList
+            .observe(
+                viewLifecycleOwner
+            ) { elem ->
+                elem?.let { diaAdapter.setDia(it) }
             }
-        }
+
     }
 
     private fun loadListWithDate(date: String) {
+        val diaList: RecyclerView = binding.listDia
+        val diaAdapter = DiaListAdapter(this)
+        diaList.adapter = diaAdapter
 
-        val recorrAdapter = RecorrListAdapter(this)
-        recorrList.adapter = recorrAdapter
-
-        CoroutineScope(Dispatchers.IO).launch {
-            val unSocListAsync = recorrViewModel.read(args.idDia)
-            withContext(Dispatchers.Main) {
-                unSocListAsync.observe(
-                    viewLifecycleOwner
-                ) { unSocList ->
-                    val filteredList = remove(unSocList, date)
-                    unSocList?.let { recorrAdapter.setRecorrido(filteredList) }
-                }
+        diaViewModel.diaList
+            .observe(
+                viewLifecycleOwner
+            ) { elem ->
+                val filteredList = remove(elem, date)
+                elem?.let { diaAdapter.setDia(filteredList) }
             }
-        }
     }
 
-    private fun remove(arr: List<Recorrido>, target: String): List<Recorrido> {
-        val result: MutableList<Recorrido> = ArrayList()
+    private fun remove(arr: List<Dia>, target: String): List<Dia> {
+        val result: MutableList<Dia> = ArrayList()
 
         for (elem in arr) {
             if (elem.fecha == target) {

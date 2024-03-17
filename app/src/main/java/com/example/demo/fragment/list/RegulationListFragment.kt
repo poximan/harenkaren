@@ -40,10 +40,10 @@ class RegulationListFragment : Fragment() {
         if (findNavController().previousBackStackEntry?.destination?.displayName!! == "com.example.demo:id/main_fragment") {
             _binding!!.homeActionButton.hide()
         }
-        newArrayList = arrayListOf<Regulation>()
-        tempArrayList = arrayListOf<Regulation>()
+        newArrayList = arrayListOf()
+        tempArrayList = arrayListOf()
 
-        regulationList = binding.list
+        regulationList = binding.listUnSoc
         regulationList.adapter = regulationListAdapter
         regulationListAdapter.regulations = Regulation.data
 
@@ -51,8 +51,7 @@ class RegulationListFragment : Fragment() {
         newArrayList.addAll(regulationListAdapter.regulations)
         tempArrayList.addAll(newArrayList)
 
-        val view = binding.root
-        return view
+        return binding.root
     }
 
     private fun goHome() {

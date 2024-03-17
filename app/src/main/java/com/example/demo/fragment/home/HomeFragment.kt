@@ -31,19 +31,15 @@ class HomeFragment : Fragment() {
     }
 
     private fun gotoCensos() {
-        findNavController().navigate(R.id.goToMyCircuitosFromHomeAction)
+        findNavController().navigate(R.id.goToDiaAction)
     }
 
     private fun goToMyTopics() {
-        findNavController().navigate(R.id.goToTopicsFragmentFromHomeAction)
+        findNavController().navigate(R.id.goToTopicsAction)
     }
 
     private fun goToStatistics() {
-        findNavController().navigate(R.id.goToStatisticsFragmentFromHomeAction)
-    }
-
-    private fun newReport() {
-        findNavController().navigate(R.id.goToNewUnSocFromUnSocListAction)
+        findNavController().navigate(R.id.goToStatisticsAction)
     }
 
     private fun showRegulations() {

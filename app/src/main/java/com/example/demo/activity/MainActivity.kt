@@ -18,6 +18,8 @@ private lateinit var drawerLayout: DrawerLayout
 
 class MainActivity : AppCompatActivity() {
 
+    private val mapaParesOrigenDestino: MutableMap<Int, Int> = mutableMapOf()
+
     override fun onSaveInstanceState(savedInstanceState: Bundle) {
         super.onSaveInstanceState(savedInstanceState)
         val latitudTextView = findViewById<TextView>(R.id.latitud)
@@ -65,9 +67,43 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph)
         NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
         setContentView(view)
+
+        agregarParOrigenDestino(R.id.dia_list_fragment,R.id.home_fragment)
+        agregarParOrigenDestino(R.id.recorr_list_fragment,R.id.dia_detail_fragment)
+        agregarParOrigenDestino(R.id.unsoc_list_fragment,R.id.recorr_detail_fragment)
     }
 
     override fun onSupportNavigateUp(): Boolean {
+
+        val navController = this.findNavController(R.id.theNavHostFragment)
+        var fragActual = navController.currentDestination?.id
+
+        /*
+         Verifica si el fragmento actual tiene un destino particular
+         si no lo tiene, sale por else y ejecuta comportamiento default
+         */
+        val fragDestino = mapaParesOrigenDestino[fragActual]
+
+        return if (fragDestino != null) {
+            // Desapila hasta que alcances el fragmento de destino
+            while (fragActual != fragDestino) {
+                navController.popBackStack()
+
+                val nuevoFragActual = navController.currentDestination?.id
+                if (nuevoFragActual == fragActual) break // Salir si no se ha movido a un nuevo fragmento
+
+                fragActual = nuevoFragActual
+            }
+            true
+        } else {
+            NavigationUI.navigateUp(navController, drawerLayout)
+        }
+    }
+    fun agregarParOrigenDestino(idOrigen: Int, idDestino: Int) {
+        mapaParesOrigenDestino[idOrigen] = idDestino
+    }
+
+    fun onSupportNavigateUp2(): Boolean {
 
         val navController = this.findNavController(R.id.theNavHostFragment)
 
@@ -79,9 +115,6 @@ class MainActivity : AppCompatActivity() {
             while (fragActual != fragObjetivo) {
                 navController.popBackStack()    // Desapilar una vez
                 fragActual = navController.currentDestination?.id   // ID del nuevo destino
-
-                // Verificar si se alcanzó el fragmento objetivo
-                if (fragActual == fragObjetivo) break
             }
             true
         } else

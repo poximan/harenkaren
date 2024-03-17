@@ -4,13 +4,25 @@ import android.os.Parcel
 import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(
+    tableName = "recorrido",
+    foreignKeys = [ForeignKey(
+        entity = Dia::class,
+        parentColumns = ["id"],
+        childColumns = ["id_dia"],
+        onDelete = ForeignKey.CASCADE
+    )]
+)
 data class Recorrido(
 
     @PrimaryKey(autoGenerate = true)
     var id: Int,
+
+    @ColumnInfo(name = "id_dia")
+    var diaId: Int,
 
     // ----- entorno ----- //
     @ColumnInfo(name = "observador")
@@ -41,6 +53,7 @@ data class Recorrido(
 
 ):Parcelable {
     constructor(parcel: Parcel) : this(
+        parcel.readInt(),
         parcel.readInt(),
         // ----- entorno ----- //
         parcel.readString().toString(),

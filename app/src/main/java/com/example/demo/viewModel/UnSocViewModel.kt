@@ -19,7 +19,6 @@ class UnSocViewModel(application: Application) : AndroidViewModel(application) {
         get() = _date
 
     private val repository: UnSocRepository
-
     val allUnSoc: LiveData<List<UnidSocial>>
 
     init {

@@ -326,20 +326,6 @@ class UnSocAdd1Fragment : Fragment() {
         if (checkLocationPermission()) {
             indicatorLight?.setImageResource(R.drawable.indicator_off)
 
-            /*
-            val proveedores : MutableList<String> = locationManager.allProviders
-            val indiceGps = proveedores.indexOf("gps")
-            val provGps : String = proveedores[indiceGps]
-
-            locationManager.getCurrentLocation(provGps,null, Executors.newSingleThreadExecutor()) { location: Location? ->
-                // Manejar la ubicación obtenida
-                location?.let {
-                    // Hacer algo con la ubicación (por ejemplo, mostrarla en un TextView)
-                    indicatorLight?.setImageResource(R.drawable.indicator_on)
-                    updateLocationViews(location.latitude, location.longitude)
-                }
-            }
-            */
             locationManager.requestSingleUpdate(
                 LocationManager.GPS_PROVIDER,
                 object : LocationListener {

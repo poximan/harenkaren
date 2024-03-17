@@ -48,6 +48,6 @@ class RecorrListAdapter(
     override fun getItemCount() = recorridoList.size
 
     interface OnRecorrClickListener {
-        fun onItemClick(circuitos: Recorrido)
+        fun onItemClick(elem: Recorrido)
     }
 }

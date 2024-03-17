@@ -7,7 +7,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
-import com.example.demo.model.Recorrido
 
 import com.example.demo.model.UnidSocial
 
@@ -27,7 +26,7 @@ interface UnSocDAO {
     */
     @Transaction
     @Query("SELECT * FROM unidsocial WHERE unidsocial.id_recorrido = :idRecorrido")
-    fun getUnidSocialByRecorridoId(idRecorrido: Int): List<UnidSocial>
+    fun getUnSocByRecorrId(idRecorrido: Int): List<UnidSocial>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(unidSocial: UnidSocial)

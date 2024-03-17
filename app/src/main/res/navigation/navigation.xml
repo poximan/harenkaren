@@ -47,8 +47,8 @@
         android:label="Inicio"
         tools:layout="@layout/fragment_home">
         <action
-            android:id="@+id/goToMyCircuitosFromHomeAction"
-            app:destination="@id/recorrido"
+            android:id="@+id/goToDiaAction"
+            app:destination="@id/dia"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out"
             app:popEnterAnim="@android:anim/fade_in"
@@ -61,221 +61,281 @@
             app:popEnterAnim="@android:anim/fade_in"
             app:popExitAnim="@android:anim/fade_out" />
         <action
-            android:id="@+id/goToTopicsFragmentFromHomeAction"
+            android:id="@+id/goToTopicsAction"
             app:destination="@id/topics_fragment"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out"
             app:popEnterAnim="@android:anim/fade_in"
             app:popExitAnim="@android:anim/fade_out" />
         <action
-            android:id="@+id/goToStatisticsFragmentFromHomeAction"
+            android:id="@+id/goToStatisticsAction"
             app:destination="@id/statistics_fragment"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out"
             app:popEnterAnim="@android:anim/fade_in"
             app:popExitAnim="@android:anim/fade_out" />
     </fragment>
-
     <navigation
-        android:id="@+id/recorrido"
-        app:startDestination="@id/recorr_list_fragment">
+        android:id="@+id/dia"
+        app:startDestination="@id/dia_list_fragment">
 
         <fragment
-            android:id="@+id/recorr_list_fragment"
-            android:name="com.example.demo.fragment.list.RecorrListFragment"
-            android:label="Recorridos"
-            tools:layout="@layout/fragment_recorr_list">
+            android:id="@+id/dia_list_fragment"
+            android:name="com.example.demo.fragment.list.DiaListFragment"
+            android:label="Dias"
+            tools:layout="@layout/fragment_dia_list">
             <action
-                android:id="@+id/goToRecorrDetailAction"
-                app:destination="@id/recorr_detail_fragment" />
+                android:id="@+id/goToDiaDetailAction"
+                app:destination="@id/dia_detail_fragment" />
             <action
-                android:id="@+id/goToNewRecorrAction"
-                app:destination="@id/recorr_add_fragment" />
+                android:id="@+id/goToNvoDiaAction"
+                app:destination="@id/dia_add_fragment" />
         </fragment>
         <fragment
-            android:id="@+id/recorr_add_fragment"
-            android:name="com.example.demo.fragment.add.RecorrAddFragment"
-            android:label="Nuevo recorrido"
-            tools:layout="@layout/fragment_recorr_add">
+            android:id="@+id/dia_add_fragment"
+            android:name="com.example.demo.fragment.add.DiaAddFragment"
+            android:label="Nuevo dia"
+            tools:layout="@layout/fragment_dia_add">
         </fragment>
         <fragment
-            android:id="@+id/recorr_detail_fragment"
-            android:name="com.example.demo.fragment.detail.RecorrDetailFragment"
-            android:label="Detalle recorrido"
-            tools:layout="@layout/fragment_recorr_detail">
+            android:id="@+id/dia_detail_fragment"
+            android:name="com.example.demo.fragment.detail.DiaDetailFragment"
+            android:label="Detalle dia"
+            tools:layout="@layout/fragment_dia_detail">
 
             <argument
-                android:name="recorrActual"
-                app:argType="com.example.demo.model.Recorrido" />
+                android:name="diaActual"
+                app:argType="com.example.demo.model.Dia" />
 
             <action
-                android:id="@+id/goToRecorrListAction"
-                app:destination="@id/recorr_list_fragment"
+                android:id="@+id/goToDiaListAction"
+                app:destination="@id/dia_list_fragment"
                 app:enterAnim="@android:anim/fade_in"
                 app:exitAnim="@android:anim/fade_out"
                 app:popEnterAnim="@android:anim/fade_in"
                 app:popExitAnim="@android:anim/fade_out" />
 
             <action
-                android:id="@+id/goToUnSocListFromRecorrDetailAction"
-                app:destination="@id/unidad_social"
+                android:id="@+id/goToRecorrListFromDiaDetailAction"
+                app:destination="@id/recorrido"
                 app:enterAnim="@android:anim/fade_in"
                 app:exitAnim="@android:anim/fade_out"
                 app:popEnterAnim="@android:anim/fade_in"
                 app:popExitAnim="@android:anim/fade_out" />
         </fragment>
         <navigation
-            android:id="@+id/unidad_social"
-            app:startDestination="@id/unsoc_list_fragment">
+            android:id="@+id/recorrido"
+            app:startDestination="@id/recorr_list_fragment">
             <argument
-                android:name="idRecorrido"
+                android:name="idDia"
                 app:argType="integer" />
-
             <fragment
-                android:id="@+id/unsoc_list_fragment"
-                android:name="com.example.demo.fragment.list.UnSocListFragment"
-                android:label="Unidades sociales"
-                tools:layout="@layout/fragment_unsoc_list">
+                android:id="@+id/recorr_list_fragment"
+                android:name="com.example.demo.fragment.list.RecorrListFragment"
+                android:label="Recorridos"
+                tools:layout="@layout/fragment_recorr_list">
+                <argument
+                    android:name="idDia"
+                    app:argType="integer" />
+                <action
+                    android:id="@+id/goToRecorrDetailAction"
+                    app:destination="@id/recorr_detail_fragment" />
+                <action
+                    android:id="@+id/goToNewRecorrAction"
+                    app:destination="@id/recorr_add_fragment" />
+            </fragment>
+            <fragment
+                android:id="@+id/recorr_add_fragment"
+                android:name="com.example.demo.fragment.add.RecorrAddFragment"
+                android:label="Nuevo recorrido"
+                tools:layout="@layout/fragment_recorr_add">
+                <argument
+                    android:name="idDia"
+                    app:argType="integer" />
+                <action
+                    android:id="@+id/goToRecorrListAction"
+                    app:destination="@id/recorr_list_fragment" />
+            </fragment>
+            <fragment
+                android:id="@+id/recorr_detail_fragment"
+                android:name="com.example.demo.fragment.detail.RecorrDetailFragment"
+                android:label="Detalle recorrido"
+                tools:layout="@layout/fragment_recorr_detail">
+
+                <argument
+                    android:name="recorrActual"
+                    app:argType="com.example.demo.model.Recorrido" />
+
+                <action
+                    android:id="@+id/goToRecorrListAction"
+                    app:destination="@id/recorr_list_fragment"
+                    app:enterAnim="@android:anim/fade_in"
+                    app:exitAnim="@android:anim/fade_out"
+                    app:popEnterAnim="@android:anim/fade_in"
+                    app:popExitAnim="@android:anim/fade_out" />
+
+                <action
+                    android:id="@+id/goToUnSocListFromRecorrDetailAction"
+                    app:destination="@id/unidad_social"
+                    app:enterAnim="@android:anim/fade_in"
+                    app:exitAnim="@android:anim/fade_out"
+                    app:popEnterAnim="@android:anim/fade_in"
+                    app:popExitAnim="@android:anim/fade_out" />
+            </fragment>
+            <navigation
+                android:id="@+id/unidad_social"
+                app:startDestination="@id/unsoc_list_fragment">
                 <argument
                     android:name="idRecorrido"
                     app:argType="integer" />
-                <action
-                    android:id="@+id/goToUnSocDetailFromUnSocListAction"
-                    app:destination="@id/unsoc_detail_fragment" />
-                <action
-                    android:id="@+id/goToNewUnSocFromUnSocListAction"
-                    app:destination="@id/unsoc_add1_fragment" />
-            </fragment>
-            <fragment
-                android:id="@+id/unsoc_add1_fragment"
-                android:name="com.example.demo.fragment.add.UnSocAdd1Fragment"
-                android:label="Nueva unidad social"
-                tools:layout="@layout/fragment_unsoc_add1">
 
-                <argument
-                    android:name="idRecorrido"
-                    app:argType="integer" />
-                <action
-                    android:id="@+id/goToMapsFragmentAction"
-                    app:destination="@id/maps_fragment"
-                    app:enterAnim="@android:anim/fade_in"
-                    app:exitAnim="@android:anim/fade_out"
-                    app:popEnterAnim="@android:anim/fade_in"
-                    app:popExitAnim="@android:anim/fade_out" />
-                <action
-                    android:id="@+id/goToAdd2FragmentAction"
-                    app:destination="@id/unsoc_add2_fragment"
-                    app:enterAnim="@android:anim/fade_in"
-                    app:exitAnim="@android:anim/fade_out"
-                    app:popEnterAnim="@android:anim/fade_in"
-                    app:popExitAnim="@android:anim/fade_out" />
+                <fragment
+                    android:id="@+id/unsoc_list_fragment"
+                    android:name="com.example.demo.fragment.list.UnSocListFragment"
+                    android:label="Unidades sociales"
+                    tools:layout="@layout/fragment_unsoc_list">
+                    <argument
+                        android:name="idRecorrido"
+                        app:argType="integer" />
+                    <action
+                        android:id="@+id/goToUnSocDetailFromUnSocListAction"
+                        app:destination="@id/unsoc_detail_fragment" />
+                    <action
+                        android:id="@+id/goToNewUnSocFromUnSocListAction"
+                        app:destination="@id/unsoc_add1_fragment" />
+                </fragment>
+                <fragment
+                    android:id="@+id/unsoc_add1_fragment"
+                    android:name="com.example.demo.fragment.add.UnSocAdd1Fragment"
+                    android:label="Nueva unidad social"
+                    tools:layout="@layout/fragment_unsoc_add1">
 
-            </fragment>
-            <fragment
-                android:id="@+id/unsoc_add2_fragment"
-                android:name="com.example.demo.fragment.add.UnSocAdd2Fragment"
-                android:label="Nueva unidad social"
-                tools:layout="@layout/fragment_unsoc_add2">
+                    <argument
+                        android:name="idRecorrido"
+                        app:argType="integer" />
+                    <action
+                        android:id="@+id/goToMapsFragmentAction"
+                        app:destination="@id/maps_fragment"
+                        app:enterAnim="@android:anim/fade_in"
+                        app:exitAnim="@android:anim/fade_out"
+                        app:popEnterAnim="@android:anim/fade_in"
+                        app:popExitAnim="@android:anim/fade_out" />
+                    <action
+                        android:id="@+id/goToAdd2FragmentAction"
+                        app:destination="@id/unsoc_add2_fragment"
+                        app:enterAnim="@android:anim/fade_in"
+                        app:exitAnim="@android:anim/fade_out"
+                        app:popEnterAnim="@android:anim/fade_in"
+                        app:popExitAnim="@android:anim/fade_out" />
 
-                <argument
-                    android:name="idRecorrido"
-                    app:argType="integer" />
-                <argument
-                    android:name="coordenadas"
-                    app:argType="com.example.demo.model.LatLong" />
-                <argument
-                    android:name="photoPath"
-                    app:argType="string" />
-                <argument
-                    android:name="comentario"
-                    app:argType="string" />
-                <action
-                    android:id="@+id/goToUnSocListFromUnSocAddAction"
-                    app:destination="@id/unsoc_list_fragment" />
-                <action
-                    android:id="@+id/ptoObsUnSocAction"
-                    app:destination="@id/ptoObsUnSoc_activity" />
-                <action
-                    android:id="@+id/ctxSocialAction"
-                    app:destination="@id/ctxSocial_activity" />
-                <action
-                    android:id="@+id/tpoSustratoAction"
-                    app:destination="@id/tpoSustrato_activity" />
-            </fragment>
-            <fragment
-                android:id="@+id/unsoc_detail_fragment"
-                android:name="com.example.demo.fragment.detail.UnSocDetailFragment"
-                android:label="Detalle unidad social"
-                tools:layout="@layout/fragment_unsoc_detail">
+                </fragment>
+                <fragment
+                    android:id="@+id/unsoc_add2_fragment"
+                    android:name="com.example.demo.fragment.add.UnSocAdd2Fragment"
+                    android:label="Nueva unidad social"
+                    tools:layout="@layout/fragment_unsoc_add2">
 
-                <argument
-                    android:name="currentReport"
-                    app:argType="com.example.demo.model.UnidSocial" />
+                    <argument
+                        android:name="idRecorrido"
+                        app:argType="integer" />
+                    <argument
+                        android:name="coordenadas"
+                        app:argType="com.example.demo.model.LatLong" />
+                    <argument
+                        android:name="photoPath"
+                        app:argType="string" />
+                    <argument
+                        android:name="comentario"
+                        app:argType="string" />
+                    <action
+                        android:id="@+id/goToUnSocListFromUnSocAddAction"
+                        app:destination="@id/unsoc_list_fragment" />
+                    <action
+                        android:id="@+id/ptoObsUnSocAction"
+                        app:destination="@id/ptoObsUnSoc_activity" />
+                    <action
+                        android:id="@+id/ctxSocialAction"
+                        app:destination="@id/ctxSocial_activity" />
+                    <action
+                        android:id="@+id/tpoSustratoAction"
+                        app:destination="@id/tpoSustrato_activity" />
+                </fragment>
+                <fragment
+                    android:id="@+id/unsoc_detail_fragment"
+                    android:name="com.example.demo.fragment.detail.UnSocDetailFragment"
+                    android:label="Detalle unidad social"
+                    tools:layout="@layout/fragment_unsoc_detail">
 
-                <action
-                    android:id="@+id/goToUnSocUpdateAction"
-                    app:destination="@id/unsoc_update_fragment"
-                    app:enterAnim="@android:anim/fade_in"
-                    app:exitAnim="@android:anim/fade_out"
-                    app:popEnterAnim="@android:anim/fade_in"
-                    app:popExitAnim="@android:anim/fade_out" />
+                    <argument
+                        android:name="currentReport"
+                        app:argType="com.example.demo.model.UnidSocial" />
 
-                <action
-                    android:id="@+id/goToMapsFragmentFromUnSocDetailAction"
-                    app:destination="@id/maps_fragment" />
+                    <action
+                        android:id="@+id/goToUnSocUpdateAction"
+                        app:destination="@id/unsoc_update_fragment"
+                        app:enterAnim="@android:anim/fade_in"
+                        app:exitAnim="@android:anim/fade_out"
+                        app:popEnterAnim="@android:anim/fade_in"
+                        app:popExitAnim="@android:anim/fade_out" />
 
-                <action
-                    android:id="@+id/goToUnSocListFromUnSocDetailAction"
-                    app:destination="@id/unsoc_list_fragment"
-                    app:enterAnim="@android:anim/fade_in"
-                    app:exitAnim="@android:anim/fade_out"
-                    app:popEnterAnim="@android:anim/fade_in"
-                    app:popExitAnim="@android:anim/fade_out" />
-            </fragment>
-            <fragment
-                android:id="@+id/unsoc_update_fragment"
-                android:name="com.example.demo.fragment.update.UnSocUpdateFragment"
-                android:label="Editar unidad social"
-                tools:layout="@layout/fragment_unsoc_update">
-                <action
-                    android:id="@+id/goToUnSocDetailFromUnSocUpdateAction"
-                    app:destination="@id/unsoc_detail_fragment"
-                    app:enterAnim="@android:anim/fade_in"
-                    app:exitAnim="@android:anim/fade_out"
-                    app:popEnterAnim="@android:anim/fade_in"
-                    app:popExitAnim="@android:anim/fade_out" />
-                <argument
-                    android:name="currentReport"
-                    app:argType="com.example.demo.model.UnidSocial" />
-                <action
-                    android:id="@+id/goToMapsFragmentFromUnSocUpdateAction"
-                    app:destination="@id/maps_fragment" />
-            </fragment>
-            <fragment
-                android:id="@+id/maps_fragment"
-                android:name="com.example.demo.fragment.maps.MapsFragment"
-                android:label="Mapa de captura"
-                tools:layout="@layout/fragment_maps">
+                    <action
+                        android:id="@+id/goToMapsFragmentFromUnSocDetailAction"
+                        app:destination="@id/maps_fragment" />
 
-                <argument
-                    android:name="currentReport"
-                    app:argType="com.example.demo.model.UnidSocial" />
-            </fragment>
+                    <action
+                        android:id="@+id/goToUnSocListFromUnSocDetailAction"
+                        app:destination="@id/unsoc_list_fragment"
+                        app:enterAnim="@android:anim/fade_in"
+                        app:exitAnim="@android:anim/fade_out"
+                        app:popEnterAnim="@android:anim/fade_in"
+                        app:popExitAnim="@android:anim/fade_out" />
+                </fragment>
+                <fragment
+                    android:id="@+id/unsoc_update_fragment"
+                    android:name="com.example.demo.fragment.update.UnSocUpdateFragment"
+                    android:label="Editar unidad social"
+                    tools:layout="@layout/fragment_unsoc_update">
+                    <action
+                        android:id="@+id/goToUnSocDetailFromUnSocUpdateAction"
+                        app:destination="@id/unsoc_detail_fragment"
+                        app:enterAnim="@android:anim/fade_in"
+                        app:exitAnim="@android:anim/fade_out"
+                        app:popEnterAnim="@android:anim/fade_in"
+                        app:popExitAnim="@android:anim/fade_out" />
+                    <argument
+                        android:name="currentReport"
+                        app:argType="com.example.demo.model.UnidSocial" />
+                    <action
+                        android:id="@+id/goToMapsFragmentFromUnSocUpdateAction"
+                        app:destination="@id/maps_fragment" />
+                </fragment>
+                <fragment
+                    android:id="@+id/maps_fragment"
+                    android:name="com.example.demo.fragment.maps.MapsFragment"
+                    android:label="Mapa de captura"
+                    tools:layout="@layout/fragment_maps">
 
-            <activity
-                android:id="@+id/ptoObsUnSoc_activity"
-                android:name="com.example.demo.activity.PtoObsHelpActivity"
-                tools:layout="@layout/activity_pto_obs_unsoc" />
-            <activity
-                android:id="@+id/ctxSocial_activity"
-                android:name="com.example.demo.activity.CtxSocialHelpActivity"
-                tools:layout="@layout/activity_ctx_social_info" />
-            <activity
-                android:id="@+id/tpoSustrato_activity"
-                android:name="com.example.demo.activity.TipoSustratoHelpActivity"
-                tools:layout="@layout/activity_tpo_sustrato_info" />
+                    <argument
+                        android:name="currentReport"
+                        app:argType="com.example.demo.model.UnidSocial" />
+                </fragment>
+
+                <activity
+                    android:id="@+id/ptoObsUnSoc_activity"
+                    android:name="com.example.demo.activity.PtoObsHelpActivity"
+                    tools:layout="@layout/activity_pto_obs_unsoc" />
+                <activity
+                    android:id="@+id/ctxSocial_activity"
+                    android:name="com.example.demo.activity.CtxSocialHelpActivity"
+                    tools:layout="@layout/activity_ctx_social_info" />
+                <activity
+                    android:id="@+id/tpoSustrato_activity"
+                    android:name="com.example.demo.activity.TipoSustratoHelpActivity"
+                    tools:layout="@layout/activity_tpo_sustrato_info" />
+            </navigation>
         </navigation>
     </navigation>
+
     <fragment
         android:id="@+id/statistics_fragment"
         android:name="com.example.demo.fragment.statistics.StatisticsFragment"

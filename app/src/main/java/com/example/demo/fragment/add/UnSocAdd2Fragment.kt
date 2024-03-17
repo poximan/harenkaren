@@ -141,7 +141,7 @@ class UnSocAdd2Fragment : Fragment() {
         val otrosSACerca = binding.editTextOtroSACerca.text.toString().toInt()
         val otrosSALejos = binding.editTextOtroSALejos.text.toString().toInt()
 
-        val timeStamp = SimpleDateFormat("yyyy/MM/dd-HH:mm:ss").format(Date())
+        val timeStamp = SimpleDateFormat("yyyy/MM/dd - HH:mm:ss").format(Date())
 
         return UnidSocial(
                 args.idRecorrido,
