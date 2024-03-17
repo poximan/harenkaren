@@ -19,10 +19,14 @@ import com.example.demo.adapter.UnSocListAdapter
 import com.example.demo.databinding.FragmentUnsocListBinding
 import com.example.demo.model.UnidSocial
 import com.example.demo.viewModel.UnSocViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class UnSocListFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
 
-    private val reportViewModel: UnSocViewModel by navGraphViewModels(R.id.app_navigation)
+    private val unSocViewModel: UnSocViewModel by navGraphViewModels(R.id.app_navigation)
     private val args: UnSocListFragmentArgs by navArgs()
 
     private var _binding: FragmentUnsocListBinding? = null
@@ -37,7 +41,7 @@ class UnSocListFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
         _binding = FragmentUnsocListBinding.inflate(inflater, container, false)
         _binding!!.homeActionButton.setOnClickListener { goHome() }
 
-        _binding!!.newUnsocButton.setOnClickListener{ nuevaUnidadSocial() }
+        _binding!!.newUnsocButton.setOnClickListener { nuevaUnidadSocial() }
 
         unSocList = binding.list
         loadFullList()
@@ -45,8 +49,8 @@ class UnSocListFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
         return binding.root
     }
 
-    override fun onItemClick(report: UnidSocial) {
-        val action = UnSocListFragmentDirections.goToUnSocDetailFromUnSocListAction(report)
+    override fun onItemClick(unSoc: UnidSocial) {
+        val action = UnSocListFragmentDirections.goToUnSocDetailFromUnSocListAction(unSoc)
         findNavController().navigate(action)
     }
 
@@ -75,7 +79,7 @@ class UnSocListFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
             val dpd = DatePickerDialog(
                 activity!!,
                 { _, year, monthOfYear, dayOfMonth ->
-                    val dateSelected = "" + dayOfMonth + "/" + (monthOfYear + 1)  + "/" + year
+                    val dateSelected = "" + dayOfMonth + "/" + (monthOfYear + 1) + "/" + year
                     loadListWithDate(dateSelected)
                 }, year, month, day
             )
@@ -86,7 +90,6 @@ class UnSocListFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
             loadFullList()
             true
         } else super.onOptionsItemSelected(item)
-
     }
 
     private fun loadFullList() {
@@ -94,12 +97,16 @@ class UnSocListFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
         val unSocAdapter = UnSocListAdapter(this)
         unSocList.adapter = unSocAdapter
 
-        reportViewModel.joinRecorrUnSoc
-            .observe(
-                viewLifecycleOwner
-            ) { unSocList ->
-                unSocList?.let { unSocAdapter.setUnSoc(it) }
+        CoroutineScope(Dispatchers.IO).launch {
+            val unSocListAsync = unSocViewModel.read(args.idRecorrido)
+            withContext(Dispatchers.Main) {
+                unSocListAsync.observe(
+                    viewLifecycleOwner
+                ) { unSocList ->
+                    unSocList?.let { unSocAdapter.setUnSoc(it) }
+                }
             }
+        }
     }
 
     private fun loadListWithDate(date: String) {
@@ -107,13 +114,17 @@ class UnSocListFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
         val unSocAdapter = UnSocListAdapter(this)
         unSocList.adapter = unSocAdapter
 
-        reportViewModel.joinRecorrUnSoc
-            .observe(
-                viewLifecycleOwner
-            ) { unSocList ->
-                val filteredList = remove(unSocList, date)
-                unSocList?.let { unSocAdapter.setUnSoc(filteredList) }
+        CoroutineScope(Dispatchers.IO).launch {
+            val unSocListAsync = unSocViewModel.read(args.idRecorrido)
+            withContext(Dispatchers.Main) {
+                unSocListAsync.observe(
+                    viewLifecycleOwner
+                ) { unSocList ->
+                    val filteredList = remove(unSocList, date)
+                    unSocList?.let { unSocAdapter.setUnSoc(filteredList) }
+                }
             }
+        }
     }
 
     private fun remove(arr: List<UnidSocial>, target: String): List<UnidSocial> {

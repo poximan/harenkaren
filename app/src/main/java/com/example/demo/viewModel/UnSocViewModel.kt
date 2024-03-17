@@ -1,7 +1,10 @@
 package com.example.demo.viewModel
 
 import android.app.Application
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.demo.model.UnidSocial
 import com.example.demo.database.HarenKarenRoomDatabase
 import com.example.demo.repository.UnSocRepository
@@ -18,7 +21,6 @@ class UnSocViewModel(application: Application) : AndroidViewModel(application) {
     private val repository: UnSocRepository
 
     val allUnSoc: LiveData<List<UnidSocial>>
-    val joinRecorrUnSoc: LiveData<List<UnidSocial>>
 
     init {
         val reportsDao = HarenKarenRoomDatabase
@@ -26,7 +28,6 @@ class UnSocViewModel(application: Application) : AndroidViewModel(application) {
         repository = UnSocRepository(reportsDao)
 
         allUnSoc = repository.unSocListAll
-        joinRecorrUnSoc = repository.unSocList
     }
     fun insert(unidSocial: UnidSocial) = CoroutineScope(Dispatchers.IO).launch(Dispatchers.IO) {
         repository.insert(unidSocial)
@@ -34,6 +35,10 @@ class UnSocViewModel(application: Application) : AndroidViewModel(application) {
 
     fun update(unidSocial: UnidSocial) = CoroutineScope(Dispatchers.IO).launch {
         repository.update(unidSocial)
+    }
+
+    fun read(idRecorrido: Int) : LiveData<List<UnidSocial>> {
+        return repository.read(idRecorrido)
     }
 }
 

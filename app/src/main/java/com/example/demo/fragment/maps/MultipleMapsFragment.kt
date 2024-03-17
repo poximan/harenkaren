@@ -19,7 +19,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
-import java.util.*
+import java.util.Locale
 
 class MultipleMapsFragment : Fragment() {
 
@@ -42,7 +42,7 @@ class MultipleMapsFragment : Fragment() {
         val reportList = unSocViewModel.allUnSoc.value!!
 
         for (report in reportList) {
-            val pos = LatLng(report.latitude!!, report.longitude!!)
+            val pos = LatLng(report.latitude, report.longitude)
             val snippet = String.format(
                 Locale.getDefault(),
                 "Tipo: %1$.15s - Especie: %2$.15s - Fecha: %3$.15s",

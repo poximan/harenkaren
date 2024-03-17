@@ -14,7 +14,8 @@ import com.example.demo.R
 import com.example.demo.databinding.FragmentStatisticsBinding
 import com.example.demo.model.UnidSocial
 import com.example.demo.viewModel.UnSocViewModel
-import java.util.*
+import java.util.Calendar
+import java.util.Date
 
 class StatisticsFragment : Fragment() {
 

@@ -2,7 +2,11 @@ package com.example.demo.fragment.list
 
 import android.os.Bundle
 import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -11,7 +15,7 @@ import com.example.demo.R
 import com.example.demo.model.Regulation
 import com.example.demo.adapter.RegulationListAdapter
 import com.example.demo.databinding.FragmentRegulationListBinding
-import java.util.*
+import java.util.Locale
 import kotlin.collections.ArrayList
 
 class RegulationListFragment : Fragment() {

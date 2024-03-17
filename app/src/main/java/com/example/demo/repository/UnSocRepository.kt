@@ -1,26 +1,30 @@
 package com.example.demo.repository
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.map
+import androidx.lifecycle.MutableLiveData
 import com.example.demo.dao.UnSocDAO
-import com.example.demo.model.RecorrConUnSoc
 import com.example.demo.model.UnidSocial
 
 class UnSocRepository(private val unSocDao: UnSocDAO) {
 
     val unSocListAll: LiveData<List<UnidSocial>> = unSocDao.getAll()
 
-    private val unSocListJoin: LiveData<List<RecorrConUnSoc>> = unSocDao.getRecorrConUnSocList()
-
-    val unSocList: LiveData<List<UnidSocial>> = unSocListJoin.map { list ->
-        list.flatMap { recorrConUnSoc -> recorrConUnSoc.listaUnidSociales }
-    }
-
     fun insert(unidSocial: UnidSocial) {
         unSocDao.insert(unidSocial)
     }
     fun update(unidSocial: UnidSocial) {
         unSocDao.update(unidSocial)
+    }
+
+    fun read(idRecorrido: Int): LiveData<List<UnidSocial>> {
+        val listaIntermedia = unSocDao.getUnidSocialByRecorridoId(idRecorrido)
+        return convertirAData(listaIntermedia)
+    }
+
+    private fun convertirAData(list: List<UnidSocial>): LiveData<List<UnidSocial>> {
+        val liveData = MutableLiveData<List<UnidSocial>>()
+        liveData.postValue(list)
+        return liveData
     }
 }
 

@@ -123,7 +123,7 @@ class MapsFragment : Fragment() {
         Log.i("argumento", args.currentReport.toString())
 
         if (args.currentReport.latitude != null && args.currentReport.longitude != null) {
-            val pos = LatLng(args.currentReport.latitude!!, args.currentReport.longitude!!)
+            val pos = LatLng(args.currentReport.latitude, args.currentReport.longitude)
             val snippet = String.format(
                 Locale.getDefault(),
                 "Tipo: %1$.15s - Especie: %2$.15s - Fecha: %3$.15s",

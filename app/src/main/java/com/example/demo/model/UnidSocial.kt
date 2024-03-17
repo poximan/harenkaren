@@ -8,7 +8,9 @@ import androidx.room.Ignore
 import androidx.room.PrimaryKey
 
 
-@Entity(foreignKeys = [ForeignKey(
+@Entity(
+    tableName = "unidsocial",
+    foreignKeys = [ForeignKey(
         entity = Recorrido::class,
         parentColumns = ["id"],
         childColumns = ["id_recorrido"],
