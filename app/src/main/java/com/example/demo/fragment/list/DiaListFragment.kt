@@ -1,5 +1,6 @@
 package com.example.demo.fragment.list
 
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.icu.util.Calendar
 import android.os.Build
@@ -20,6 +21,8 @@ import com.example.demo.adapter.DiaListAdapter
 import com.example.demo.databinding.FragmentDiaListBinding
 import com.example.demo.model.Dia
 import com.example.demo.viewModel.DiaViewModel
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
 
@@ -52,7 +55,35 @@ class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
     }
 
     private fun nvoDia() {
-        findNavController().navigate(R.id.goToNvoDiaAction)
+        val currentDate = getCurrentDate()
+
+        diaViewModel.diaList.observe(viewLifecycleOwner) { elem ->
+            val entryExists = elem.any { it.fecha == currentDate }
+
+            if (entryExists) {
+                // Si se encuentra una entrada con la fecha actual, mostrar un AlertDialog
+                val builder = AlertDialog.Builder(requireContext())
+                builder.setTitle("Dia en curso")
+                builder.setMessage("Ya existe una entrada para este dia. ¿Desea continuar de todos modos?")
+
+                builder.setPositiveButton("Sí") { _, _ ->
+                    findNavController().navigate(R.id.goToNvoDiaAction)
+                }
+                builder.setNegativeButton("No") { _, _ -> } // no hacer nada
+
+                val dialog = builder.create()
+                dialog.show()
+            } else {
+                // Si no se encuentra ninguna entrada con la fecha actual, crear
+                findNavController().navigate(R.id.goToNvoDiaAction)
+            }
+        }
+    }
+
+    private fun getCurrentDate(): String {
+        val dateFormat = SimpleDateFormat("yyyy/MM/dd", Locale.getDefault())
+        val currentDate = Calendar.getInstance().time
+        return dateFormat.format(currentDate)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -96,7 +127,6 @@ class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
             ) { elem ->
                 elem?.let { diaAdapter.setDia(it) }
             }
-
     }
 
     private fun loadListWithDate(date: String) {

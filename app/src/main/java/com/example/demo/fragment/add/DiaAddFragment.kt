@@ -60,7 +60,7 @@ class DiaAddFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun dataDesdeIU(): Dia {
 
-        val timeStamp = SimpleDateFormat("yyyy/MM/dd - HH:mm:ss").format(Date())
+        val timeStamp = SimpleDateFormat("yyyy/MM/dd").format(Date())
         val meteo = binding.editTextMeteo.text.toString()
 
         return Dia(0, timeStamp,meteo)

@@ -99,25 +99,8 @@ class MainActivity : AppCompatActivity() {
             NavigationUI.navigateUp(navController, drawerLayout)
         }
     }
-    fun agregarParOrigenDestino(idOrigen: Int, idDestino: Int) {
+
+    private fun agregarParOrigenDestino(idOrigen: Int, idDestino: Int) {
         mapaParesOrigenDestino[idOrigen] = idDestino
-    }
-
-    fun onSupportNavigateUp2(): Boolean {
-
-        val navController = this.findNavController(R.id.theNavHostFragment)
-
-        var fragActual = navController.currentDestination?.id
-        val fragObservado = R.id.unsoc_list_fragment
-        val fragObjetivo = R.id.recorr_detail_fragment
-
-        return if(fragActual == fragObservado) {
-            while (fragActual != fragObjetivo) {
-                navController.popBackStack()    // Desapilar una vez
-                fragActual = navController.currentDestination?.id   // ID del nuevo destino
-            }
-            true
-        } else
-            NavigationUI.navigateUp(navController, drawerLayout)
     }
 }
