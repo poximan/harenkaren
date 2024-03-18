@@ -46,10 +46,7 @@ data class Recorrido(
 
     // ----- espacio ----- //
     @ColumnInfo(name = "area_recorrida")
-    var areaRecorrida: String,
-
-    @ColumnInfo(name = "meteo")
-    var meteo: String
+    var areaRecorrida: String
 
 ):Parcelable {
     constructor(parcel: Parcel) : this(
@@ -64,7 +61,6 @@ data class Recorrido(
         parcel.readValue(Double::class.java.classLoader) as? Double,
         parcel.readValue(Double::class.java.classLoader) as? Double,
         // ----- espacio ----- //
-        parcel.readString().toString(),
         parcel.readString().toString()
     )
 
@@ -77,7 +73,6 @@ data class Recorrido(
         parcel.writeValue(latitudFin)
         parcel.writeValue(longitudFin)
         parcel.writeString(areaRecorrida)
-        parcel.writeString(meteo)
     }
 
     override fun describeContents(): Int {

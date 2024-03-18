@@ -79,15 +79,14 @@ class RecorrAddFragment : Fragment() {
     private fun dataDesdeIU(): Recorrido {
 
         val observador = binding.editTextObservador.text.toString()
-        val areaRecorrida = binding.editTextAreaRecorrida.text.toString()
-        val meteo = binding.editTextMeteo.text.toString()
+        val areaRecorrida = binding.textSubareaRecorr.text.toString()
 
         val lat = binding.latitud.text.toString().toDouble()
         val lon = binding.longitud.text.toString().toDouble()
 
         val timeStamp = SimpleDateFormat("yyyy/MM/dd - HH:mm:ss").format(Date())
 
-        return Recorrido(0, args.idDia, observador, timeStamp,lat,lon,1.0,2.0,areaRecorrida,meteo)
+        return Recorrido(0, args.idDia, observador, timeStamp,lat,lon,1.0,2.0,areaRecorrida)
     }
 
     @RequiresApi(Build.VERSION_CODES.R)

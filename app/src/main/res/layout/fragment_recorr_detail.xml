@@ -21,19 +21,14 @@
             android:gravity="right"
             android:layout_marginRight="5dp"
             android:layout_weight="1.5">
-
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Subarea observada:" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Observador:" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="Area observada:" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="Meteorologia:" />
 
         </LinearLayout>
 
@@ -44,17 +39,12 @@
             android:orientation="vertical"
             android:gravity="left"
             android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/textViewObserv"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
             <TextView
                 android:id="@+id/textViewAreaObs"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
             <TextView
-                android:id="@+id/textViewMeteo"
+                android:id="@+id/textViewObserv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
         </LinearLayout>

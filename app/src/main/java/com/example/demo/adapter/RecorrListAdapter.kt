@@ -32,15 +32,15 @@ class RecorrListAdapter(
     }
 
     inner class RecorrViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val titulo: TextView = view.findViewById(R.id.textViewCirArea)
-        private val resumen: TextView = view.findViewById(R.id.textViewCirObsMeteo)
+        private val subArea: TextView = view.findViewById(R.id.text_subarea)
+        private val observador: TextView = view.findViewById(R.id.text_observador)
         private val fecha: TextView = view.findViewById(R.id.textViewTimestamp)
 
         fun bind(recorrido: Recorrido) {
             itemView.setOnClickListener { itemClickListener.onItemClick(recorrido) }
 
-            titulo.text = "Area: " + recorrido.areaRecorrida
-            resumen.text = "Observador: " + recorrido.observador + "\n" + "Meteo: " + recorrido.meteo
+            subArea.text = "Subarea: " + recorrido.areaRecorrida
+            observador.text = "Observador: " + recorrido.observador
             fecha.text = recorrido.fecha
         }
     }

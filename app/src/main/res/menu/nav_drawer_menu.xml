@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/ptoObsUnSoc_activity"
+        android:id="@+id/btn_exportar"
         android:icon="@android:drawable/ic_menu_help"
-        android:title="Punto de observacion" />
+        android:title="Exportar" />
     <item
         android:id="@+id/regulations_fragment"
         android:icon="@android:drawable/ic_menu_zoom"

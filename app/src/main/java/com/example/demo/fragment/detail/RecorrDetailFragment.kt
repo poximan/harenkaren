@@ -26,7 +26,6 @@ class RecorrDetailFragment : Fragment() {
         _binding = FragmentRecorrDetailBinding.inflate(inflater, container, false)
 
         _binding!!.textViewObserv.text = args.recorrActual.observador
-        _binding!!.textViewMeteo.text = args.recorrActual.meteo
         _binding!!.textViewAreaObs.text = args.recorrActual.areaRecorrida
 
         _binding!!.doneButton.setOnClickListener { goBack() }
