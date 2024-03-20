@@ -28,7 +28,7 @@ class RecorrDetailFragment : Fragment() {
         _binding!!.textViewObserv.text = args.recorrActual.observador
         _binding!!.textViewAreaObs.text = args.recorrActual.areaRecorrida
 
-        _binding!!.doneButton.setOnClickListener { goBack() }
+        _binding!!.volverButton.setOnClickListener { goBack() }
         _binding!!.verUnSocButton.setOnClickListener { verUnidadSocial() }
 
         return binding.root

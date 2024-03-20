@@ -65,7 +65,7 @@ class UnSocListFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.report_filter_menu, menu)
+        inflater.inflate(R.menu.filter_menu, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -74,7 +74,7 @@ class UnSocListFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
         val year = c.get(Calendar.YEAR)
         val month = c.get(Calendar.MONTH)
         val day = c.get(Calendar.DAY_OF_MONTH)
-        return if (id == R.id.report_action_filter) {
+        return if (id == R.id.filtro_ejecutar) {
 
             val dpd = DatePickerDialog(
                 activity!!,
@@ -86,7 +86,7 @@ class UnSocListFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
             dpd.show()
 
             true
-        } else return if (id == R.id.report_action_clear_filter) {
+        } else return if (id == R.id.filtro_limpiar) {
             loadFullList()
             true
         } else super.onOptionsItemSelected(item)

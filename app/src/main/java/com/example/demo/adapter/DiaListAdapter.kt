@@ -22,8 +22,8 @@ class DiaListAdapter(
     }
 
     override fun onBindViewHolder(holder: DiaViewHolder, position: Int) {
-        val report = diaList[position]
-        holder.bind(report)
+        val dia = diaList[position]
+        holder.bind(dia)
     }
 
     internal fun setDia(diaList: List<Dia>) {

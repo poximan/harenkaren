@@ -31,30 +31,30 @@ class UnSocDetailFragment : Fragment() {
     ): View {
         _binding = FragmentUnsocDetailBinding.inflate(inflater, container, false)
 
-        _binding!!.fishingTypeTextView.text = args.currentReport.ptoObsUnSoc
-        _binding!!.specieTextView.text = args.currentReport.ctxSocial
-        _binding!!.dateTextView.text = args.currentReport.date
+        _binding!!.ptoObservacion.text = args.unSocActual.ptoObsUnSoc
+        _binding!!.ctxSocial.text = args.unSocActual.ctxSocial
+        _binding!!.fechaObserv.text = args.unSocActual.date
 
-        val file = File(args.currentReport.photoPath)
+        val file = File(args.unSocActual.photoPath)
         if (file.exists()) {
-            val imageBitmap: Bitmap? = BitmapFactory.decodeFile(args.currentReport.photoPath)
+            val imageBitmap: Bitmap? = BitmapFactory.decodeFile(args.unSocActual.photoPath)
             rotateImage(imageBitmap!!)
         }
 
-        _binding!!.doneButton.setOnClickListener { goBack() }
-        _binding!!.updateButton.setOnClickListener { updateReport() }
+        _binding!!.volverButton.setOnClickListener { goBack() }
+        _binding!!.editarButton.setOnClickListener { editar() }
         _binding!!.mapButton.setOnClickListener { goMap() }
 
         return binding.root
     }
 
     private fun goMap() {
-        val action = UnSocDetailFragmentDirections.goToMapsFragmentFromUnSocDetailAction(args.currentReport)
+        val action = UnSocDetailFragmentDirections.goToMapsFragmentFromUnSocDetailAction(args.unSocActual)
         findNavController().navigate(action)
     }
 
-    private fun updateReport() {
-        val action = UnSocDetailFragmentDirections.goToUnSocUpdateAction(args.currentReport)
+    private fun editar() {
+        val action = UnSocDetailFragmentDirections.goToUnSocUpdateAction(args.unSocActual)
         findNavController().navigate(action)
     }
 
@@ -64,7 +64,7 @@ class UnSocDetailFragment : Fragment() {
 
     private fun rotateImage(bitmap: Bitmap) {
 
-        val exif = ExifInterface(args.currentReport.photoPath!!)
+        val exif = ExifInterface(args.unSocActual.photoPath!!)
         val orientation: Int =
             exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
         Log.i("orientation", orientation.toString())

@@ -58,20 +58,20 @@ class UnSocUpdateFragment : Fragment() {
         val fishTypeArrayAdapter = ArrayAdapter(view.context, R.layout.dropdown_item, ptObservacion)
         val speciesArrayAdapter = ArrayAdapter(view.context, R.layout.dropdown_item, ctxSocial)
 
-        currentPhotoPath = args.currentReport.photoPath!!
+        currentPhotoPath = args.unSocActual.photoPath!!
         _binding!!.spinnerUpdPtoObs.adapter = fishTypeArrayAdapter
         _binding!!.spinnerUpdCtxSocial.adapter = speciesArrayAdapter
         _binding!!.photoButton.setOnClickListener { takePhoto() }
         _binding!!.continueButton.setOnClickListener { continueToMap() }
-        val fishTypeArrayPosition = fishTypeArrayAdapter.getPosition(args.currentReport.ptoObsUnSoc)
+        val fishTypeArrayPosition = fishTypeArrayAdapter.getPosition(args.unSocActual.ptoObsUnSoc)
         _binding!!.spinnerUpdPtoObs.setSelection(fishTypeArrayPosition)
 
-        val fishSpecieArrayPosition = speciesArrayAdapter.getPosition(args.currentReport.ctxSocial)
+        val fishSpecieArrayPosition = speciesArrayAdapter.getPosition(args.unSocActual.ctxSocial)
         _binding!!.spinnerUpdCtxSocial.setSelection(fishSpecieArrayPosition)
 
-        val file = File(args.currentReport.photoPath)
+        val file = File(args.unSocActual.photoPath)
         if (file.exists()) {
-            val imageBitmap: Bitmap? = BitmapFactory.decodeFile(args.currentReport.photoPath)
+            val imageBitmap: Bitmap? = BitmapFactory.decodeFile(args.unSocActual.photoPath)
             rotateImage(imageBitmap!!)
         }
         return view
@@ -127,7 +127,6 @@ class UnSocUpdateFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == AppCompatActivity.RESULT_OK) {
             rotateImage(reduceBitmap())
-
         }
     }
 
@@ -181,7 +180,7 @@ class UnSocUpdateFragment : Fragment() {
     }
 
     private fun continueToMap() {
-        val action = UnSocUpdateFragmentDirections.goToMapsFragmentFromUnSocUpdateAction(args.currentReport)
+        val action = UnSocUpdateFragmentDirections.goToMapsFragmentFromUnSocUpdateAction(args.unSocActual)
         findNavController().navigate(action)
     }
 }

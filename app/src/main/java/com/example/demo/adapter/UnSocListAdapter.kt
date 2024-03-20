@@ -29,8 +29,8 @@ class UnSocListAdapter(
     }
 
     override fun onBindViewHolder(holder: UnSocViewHolder, position: Int) {
-        val report = unidSocialList[position]
-        holder.bind(report)
+        val unSoc = unidSocialList[position]
+        holder.bind(unSoc)
     }
 
     internal fun setUnSoc(unidSocialList: List<UnidSocial>) {
@@ -39,13 +39,13 @@ class UnSocListAdapter(
     }
 
     inner class UnSocViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val reporte_resumen: TextView = view.findViewById(R.id.report_resumen)
-        private val date: TextView = view.findViewById(R.id.report_timestamp)
-        private val image: ImageView = view.findViewById(R.id.report_imageView)
+        private val unSocResumen: TextView = view.findViewById(R.id.unsoc_resumen)
+        private val date: TextView = view.findViewById(R.id.unsoc_timestamp)
+        private val image: ImageView = view.findViewById(R.id.unsoc_imageView)
 
         fun bind(unidSocial: UnidSocial) {
             itemView.setOnClickListener { itemClickListener.onItemClick(unidSocial) }
-            reporte_resumen.text = "*Pto.obs.: " + unidSocial.ptoObsUnSoc + " *Ctx.social: " + unidSocial.ctxSocial + " *Tpo.sust.: " + unidSocial.tpoSustrato +
+            unSocResumen.text = "*Pto.obs.: " + unidSocial.ptoObsUnSoc + " *Ctx.social: " + unidSocial.ctxSocial + " *Tpo.sust.: " + unidSocial.tpoSustrato +
                     " *AlfaS4/Ad: " + unidSocial.alfaS4Ad + " *OtrosSA: " + unidSocial.alfaOtrosSA + " *Coment.: " + unidSocial.comentario
             date.text = unidSocial.date
 

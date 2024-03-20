@@ -85,7 +85,7 @@ class UnSocAdd1Fragment : Fragment() {
         binding.getPosicion.setOnClickListener { getPosicionActual() }
         binding.photoButton.setOnClickListener { takePhoto() }
         binding.mapButton.setOnClickListener { continueToMap() }
-        binding.continueReportButton.setOnClickListener { continuarReporte() }
+        binding.contarAnimales.setOnClickListener { contarAnimales() }
 
         return view
     }
@@ -101,7 +101,7 @@ class UnSocAdd1Fragment : Fragment() {
         _binding = null
     }
 
-    private fun continuarReporte() {
+    private fun contarAnimales() {
 
         val lat = binding.latitud.text.toString().toDouble()
         val lon = binding.longitud.text.toString().toDouble()

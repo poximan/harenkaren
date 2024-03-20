@@ -267,7 +267,7 @@
                     tools:layout="@layout/fragment_unsoc_detail">
 
                     <argument
-                        android:name="currentReport"
+                        android:name="unSocActual"
                         app:argType="com.example.demo.model.UnidSocial" />
 
                     <action
@@ -303,7 +303,7 @@
                         app:popEnterAnim="@android:anim/fade_in"
                         app:popExitAnim="@android:anim/fade_out" />
                     <argument
-                        android:name="currentReport"
+                        android:name="unSocActual"
                         app:argType="com.example.demo.model.UnidSocial" />
                     <action
                         android:id="@+id/goToMapsFragmentFromUnSocUpdateAction"
@@ -316,7 +316,7 @@
                     tools:layout="@layout/fragment_maps">
 
                     <argument
-                        android:name="currentReport"
+                        android:name="unSocActual"
                         app:argType="com.example.demo.model.UnidSocial" />
                 </fragment>
 

@@ -65,7 +65,7 @@ class UnSocAdd2Fragment : Fragment() {
         binding.spinnerAddTpoSustrato.adapter = tpoSustratoArrayAdapter
         binding.helpTpoSustrato.setOnClickListener { tpoSustratoInfo() }
 
-        binding.sendReportActionButton.setOnClickListener { confirmarUnidadSocial() }
+        binding.confirmarUnsoc.setOnClickListener { confirmarUnidadSocial() }
 
         return view
     }

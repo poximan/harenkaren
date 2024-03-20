@@ -17,14 +17,13 @@
         tools:layout_editor_absoluteX="0dp">
 
         <TextView
-            android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="@string/punto_obs_unsoc" />
 
         <TextView
-            android:id="@+id/fishingTypeTextView"
+            android:id="@+id/pto_observacion"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"/>
@@ -39,14 +38,13 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout1">
 
         <TextView
-            android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="@string/contexto_social" />
 
         <TextView
-            android:id="@+id/specieTextView"
+            android:id="@+id/ctx_social"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center" />
@@ -62,14 +60,13 @@
         tools:layout_editor_absoluteX="0dp">
 
         <TextView
-            android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="@string/fecha_unsoc" />
 
         <TextView
-            android:id="@+id/dateTextView"
+            android:id="@+id/fecha_observ"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center" />
@@ -103,7 +100,7 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <Button
-            android:id="@+id/doneButton"
+            android:id="@+id/volver_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -112,7 +109,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/updateButton"
+            android:id="@+id/editar_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

@@ -40,14 +40,14 @@ abstract class HarenKarenRoomDatabase : RoomDatabase() {
                     HarenKarenRoomDatabase::class.java,
                     "haren_database"
                 )
-                    .addCallback(ReportDatabaseCallback(viewModelScope))
+                    .addCallback(DatabaseCallback(viewModelScope))
                     .build()
                 INSTANCIA = instancia
                 return instancia
             }
         }
 
-        private class ReportDatabaseCallback(
+        private class DatabaseCallback(
             private val scope: CoroutineScope
         ) : Callback()
     }

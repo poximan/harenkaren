@@ -22,9 +22,9 @@ class UnSocViewModel(application: Application) : AndroidViewModel(application) {
     val allUnSoc: LiveData<List<UnidSocial>>
 
     init {
-        val reportsDao = HarenKarenRoomDatabase
+        val unSocDao = HarenKarenRoomDatabase
             .getDatabase(application, viewModelScope).unSocDao()
-        repository = UnSocRepository(reportsDao)
+        repository = UnSocRepository(unSocDao)
 
         allUnSoc = repository.unSocListAll
     }

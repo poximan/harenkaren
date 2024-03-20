@@ -22,8 +22,8 @@ class RecorrListAdapter(
     }
 
     override fun onBindViewHolder(holder: RecorrViewHolder, position: Int) {
-        val report = recorridoList[position]
-        holder.bind(report)
+        val recorr = recorridoList[position]
+        holder.bind(recorr)
     }
 
     internal fun setRecorrido(recorridoList: List<Recorrido>) {

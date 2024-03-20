@@ -27,7 +27,7 @@ class DiaDetailFragment : Fragment() {
 
         _binding!!.textViewMeteo.text = args.diaActual.meteo
 
-        _binding!!.doneButton.setOnClickListener { goBack() }
+        _binding!!.volverButton.setOnClickListener { goBack() }
         _binding!!.verRecorrButton.setOnClickListener { verRecorrido() }
 
         return binding.root

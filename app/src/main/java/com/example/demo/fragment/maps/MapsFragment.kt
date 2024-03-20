@@ -65,9 +65,9 @@ class MapsFragment : Fragment() {
 
         _binding!!.goBackActionButton.setOnClickListener { goBack() }
         if (findNavController().previousBackStackEntry?.destination?.displayName!! == "com.example.demo:id/unsoc_update_fragment") {
-            _binding!!.sendReportActionButton.setOnClickListener { updateReport() }
+            _binding!!.confirmarUnsoc.setOnClickListener { updateReport() }
         } else {
-            _binding!!.sendReportActionButton.setOnClickListener { sendReport() }
+            _binding!!.confirmarUnsoc.setOnClickListener { sendReport() }
         }
         return view
     }
@@ -120,16 +120,16 @@ class MapsFragment : Fragment() {
                 Log.e("Location", "Error al obtener la ubicación: ${e.message}")
             }
 
-        Log.i("argumento", args.currentReport.toString())
+        Log.i("argumento", args.unSocActual.toString())
 
-        if (args.currentReport.latitude != null && args.currentReport.longitude != null) {
-            val pos = LatLng(args.currentReport.latitude, args.currentReport.longitude)
+        if (args.unSocActual.latitude != null && args.unSocActual.longitude != null) {
+            val pos = LatLng(args.unSocActual.latitude, args.unSocActual.longitude)
             val snippet = String.format(
                 Locale.getDefault(),
                 "Tipo: %1$.15s - Especie: %2$.15s - Fecha: %3$.15s",
-                args.currentReport.ptoObsUnSoc,
-                args.currentReport.ctxSocial,
-                args.currentReport.date
+                args.unSocActual.ptoObsUnSoc,
+                args.unSocActual.ctxSocial,
+                args.unSocActual.date
             )
             marker = googleMap.addMarker(
                 MarkerOptions()
@@ -139,11 +139,11 @@ class MapsFragment : Fragment() {
             )
             marker!!.showInfoWindow()
             if (findNavController().previousBackStackEntry?.destination?.displayName!! == "com.example.demo:id/unsoc_update_fragment") {
-                _binding!!.sendReportActionButton.show()
+                _binding!!.confirmarUnsoc.show()
                 setMapLongClick(googleMap)
             }
         } else {
-            _binding!!.sendReportActionButton.show()
+            _binding!!.confirmarUnsoc.show()
             setMapLongClick(googleMap)
         }
     }
@@ -166,15 +166,15 @@ class MapsFragment : Fragment() {
                         .snippet(snippet)
                         .icon(BitmapDescriptorFactory.fromBitmap(smallMarker!!))
                 )
-                args.currentReport.latitude = latLng.latitude
-                args.currentReport.longitude = latLng.longitude
+                args.unSocActual.latitude = latLng.latitude
+                args.unSocActual.longitude = latLng.longitude
                 marker!!.showInfoWindow()
             } else {
                 marker!!.hideInfoWindow()
                 marker!!.position = latLng
                 marker!!.snippet = snippet
-                args.currentReport.latitude = latLng.latitude
-                args.currentReport.longitude = latLng.longitude
+                args.unSocActual.latitude = latLng.latitude
+                args.unSocActual.longitude = latLng.longitude
                 marker!!.showInfoWindow()
             }
         }
@@ -188,22 +188,22 @@ class MapsFragment : Fragment() {
         if (checkCoords()) {
             db.collection("reports").document().set(
                 hashMapOf(
-                    "ptoObs" to args.currentReport.ptoObsUnSoc,
-                    "ctxSoc" to args.currentReport.ctxSocial,
-                    "date" to args.currentReport.date,
-                    "photo_path" to args.currentReport.photoPath,
-                    "latitude" to args.currentReport.latitude,
-                    "longitude" to args.currentReport.longitude
+                    "ptoObs" to args.unSocActual.ptoObsUnSoc,
+                    "ctxSoc" to args.unSocActual.ctxSocial,
+                    "date" to args.unSocActual.date,
+                    "photo_path" to args.unSocActual.photoPath,
+                    "latitude" to args.unSocActual.latitude,
+                    "longitude" to args.unSocActual.longitude
                 )
             )
-            model.insert(args.currentReport)
+            model.insert(args.unSocActual)
             Toast.makeText(activity, "Reporte agregado correctamente", Toast.LENGTH_LONG).show()
             findNavController().navigate(R.id.unsoc_list_fragment)
         }
     }
 
     private fun checkCoords(): Boolean {
-        if (args.currentReport.latitude == null && args.currentReport.longitude == null) {
+        if (args.unSocActual.latitude == null && args.unSocActual.longitude == null) {
             Toast.makeText(activity, "Seleccione una ubicación en el mapa", Toast.LENGTH_LONG)
                 .show()
             return false
@@ -218,16 +218,16 @@ class MapsFragment : Fragment() {
          Tampoco se actualizan en la bd local si se hace desde la nube.
          Esto habría que verlo en el futuro si el proyecto prospera
         */
-        db.collection("reports").document(args.currentReport.id.toString()).update(
-            "pto_observacion", args.currentReport.ptoObsUnSoc,
-            "ctx_social", args.currentReport.ctxSocial,
-            "date", args.currentReport.date,
-            "photo_path", args.currentReport.photoPath,
-            "latitude", args.currentReport.latitude,
-            "longitude", args.currentReport.longitude
+        db.collection("reports").document(args.unSocActual.id.toString()).update(
+            "pto_observacion", args.unSocActual.ptoObsUnSoc,
+            "ctx_social", args.unSocActual.ctxSocial,
+            "date", args.unSocActual.date,
+            "photo_path", args.unSocActual.photoPath,
+            "latitude", args.unSocActual.latitude,
+            "longitude", args.unSocActual.longitude
         )
 
-        model.update(args.currentReport)
+        model.update(args.unSocActual)
         Toast.makeText(activity, "Reporte editado correctamente", Toast.LENGTH_LONG).show()
         findNavController().navigate(R.id.unsoc_list_fragment)
     }

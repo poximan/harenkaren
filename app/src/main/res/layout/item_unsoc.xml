@@ -12,7 +12,7 @@
         android:background="@drawable/border_background">
 
         <ImageView
-            android:id="@+id/report_imageView"
+            android:id="@+id/unsoc_imageView"
             android:layout_width="80dp"
             android:layout_height="match_parent"
             android:layout_margin="3dp"
@@ -26,13 +26,13 @@
             android:layout_marginLeft="5dp">
 
             <TextView
-                android:id="@+id/report_resumen"
+                android:id="@+id/unsoc_resumen"
                 android:layout_width="match_parent"
                 android:layout_height="75sp"
                 android:hint="resumen unidad social"/>
 
             <TextView
-                android:id="@+id/report_timestamp"
+                android:id="@+id/unsoc_timestamp"
                 android:layout_width="match_parent"
                 android:layout_height="20sp"
                 android:hint="dd/mm/aa HH:mm:ss"/>

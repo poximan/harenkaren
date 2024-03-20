@@ -87,7 +87,7 @@ class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.report_filter_menu, menu)
+        inflater.inflate(R.menu.filter_menu, menu)
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -97,7 +97,7 @@ class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
         val year = c.get(Calendar.YEAR)
         val month = c.get(Calendar.MONTH)
         val day = c.get(Calendar.DAY_OF_MONTH)
-        return if (id == R.id.report_action_filter) {
+        return if (id == R.id.filtro_ejecutar) {
 
             val dpd = DatePickerDialog(
                 activity!!,
@@ -109,7 +109,7 @@ class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
             dpd.show()
 
             true
-        } else return if (id == R.id.report_action_clear_filter) {
+        } else return if (id == R.id.filtro_limpiar) {
             loadFullList()
             true
         } else super.onOptionsItemSelected(item)
