@@ -16,18 +16,13 @@ import com.example.demo.model.UnidSocial
 import com.example.demo.viewModel.UnSocViewModel
 import org.eazegraph.lib.charts.PieChart
 import org.eazegraph.lib.models.PieModel
-import java.util.Calendar
 import java.util.Date
-
 
 class StatisticsFragment : Fragment() {
 
     private val unSocViewModel: UnSocViewModel by navGraphViewModels(R.id.app_navigation)
     private var _binding: FragmentStatisticsBinding? = null
     private val binding get() = _binding!!
-
-    private val currentMonth = Calendar.getInstance().get(Calendar.MONTH) + 1
-    private val currentYear = Calendar.getInstance().get(Calendar.YEAR)
 
     private var pieChart: PieChart? = null
 
@@ -44,7 +39,6 @@ class StatisticsFragment : Fragment() {
         }
 
         _binding!!.goBackButton.setOnClickListener { goBack() }
-        _binding!!.goToMultipleMapsButton.setOnClickListener { goToMultipleMaps() }
         return binding.root
     }
 
@@ -56,32 +50,33 @@ class StatisticsFragment : Fragment() {
         _binding!!.tvCPP.text = Integer.toString(20)
         _binding!!.tvJava.text = Integer.toString(8)
 
-        pieChart = view.findViewById(R.id.piechart);
-        pieChart.addPieSlice(
+        pieChart = view.findViewById(R.id.piechart)
+
+        pieChart?.addPieSlice(
             PieModel(
                 "R", _binding!!.tvR.text.toString().toFloat(),
                 Color.parseColor("#FFA726")
             )
         )
-        pieChart.addPieSlice(
+        pieChart?.addPieSlice(
             PieModel(
                 "Python", _binding!!.tvPython.text.toString().toFloat(),
                 Color.parseColor("#66BB6A")
             )
         )
-        pieChart.addPieSlice(
+        pieChart?.addPieSlice(
             PieModel(
                 "C++", _binding!!.tvCPP.text.toString().toFloat(),
                 Color.parseColor("#EF5350")
             )
         )
-        pieChart.addPieSlice(
+        pieChart?.addPieSlice(
             PieModel(
                 "Java", _binding!!.tvJava.text.toString().toFloat(),
                 Color.parseColor("#29B6F6")
             )
         )
-        pieChart.startAnimation();
+        pieChart?.startAnimation();
     }
 
     private fun fillLabels(unidSocialList: List<UnidSocial>) {
@@ -107,9 +102,6 @@ class StatisticsFragment : Fragment() {
         return unidSocialList.last().date!!
     }
 
-    private fun goToMultipleMaps() {
-        findNavController().navigate(R.id.goToMultipleMapsFragmentFromStatisticsAction)
-    }
     private fun goBack() {
         findNavController().popBackStack()
     }

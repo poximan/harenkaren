@@ -20,8 +20,13 @@
     <color name="color_white">#ededf2</color>
     <color name="color_two">#E3E0E0</color>
 
-    <color name="R">#FFA726</color>
-    <color name="Python">#66BB6A</color>
-    <color name="CPP">#EF5350</color>
-    <color name="Java">#29B6F6</color>
+    <color name="graf_color01">#FFA726</color>
+    <color name="graf_color02">#66BB6A</color>
+    <color name="graf_color03">#EF5350</color>
+    <color name="graf_color04">#29B6F6</color>
+    <color name="graf_color05">#CB3234</color>
+    <color name="graf_color06">#FF7514</color>
+    <color name="graf_color07">#20214F</color>
+    <color name="graf_color08">#D95030</color>
+    <color name="graf_color09">#3F888F</color>
 </resources>

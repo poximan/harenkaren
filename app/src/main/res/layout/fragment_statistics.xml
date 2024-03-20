@@ -26,8 +26,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:weightSum="2">
+                android:orientation="horizontal">
 
                 <!-- Pie chart to display the data -->
 
@@ -52,8 +51,7 @@
                     android:layout_weight="1"
                     android:layout_marginLeft="20dp"
                     android:orientation="vertical"
-                    android:gravity="center_vertical"
-                    >
+                    android:gravity="center_vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -64,18 +62,16 @@
                         <View
                             android:layout_width="15dp"
                             android:layout_height="match_parent"
-                            android:background="@color/R"/>
+                            android:background="@color/graf_color01"/>
 
                         <!--Text view to display R -->
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="R"
+                            android:text="alfa S4/Ad"
                             android:paddingLeft="10dp"/>
 
                     </LinearLayout>
-
-                    <!--Linear layout to display Python-->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="15dp"
@@ -86,18 +82,16 @@
                         <View
                             android:layout_width="15dp"
                             android:layout_height="match_parent"
-                            android:background="@color/Python"/>
+                            android:background="@color/graf_color02"/>
 
                         <!--Text view to display python text -->
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Python"
+                            android:text="alfa otros SA"
                             android:paddingLeft="10dp"/>
 
                     </LinearLayout>
-
-                    <!--Linear layout to display C++-->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="15dp"
@@ -108,18 +102,16 @@
                         <View
                             android:layout_width="15dp"
                             android:layout_height="match_parent"
-                            android:background="@color/CPP"/>
+                            android:background="@color/graf_color03"/>
 
                         <!--Text view to display C++ text -->
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="C++"
+                            android:text="hembra Ad"
                             android:paddingLeft="10dp"/>
 
                     </LinearLayout>
-
-                    <!--Linear layout to display Java-->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="15dp"
@@ -130,13 +122,73 @@
                         <View
                             android:layout_width="15dp"
                             android:layout_height="match_parent"
-                            android:background="@color/Java"/>
+                            android:background="@color/graf_color04"/>
 
                         <!--Text view to display Java text -->
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Java"
+                            android:text="cria viva"
+                            android:paddingLeft="10dp"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="15dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginTop="5dp">
+
+                        <!--View to display the blue color icon-->
+                        <View
+                            android:layout_width="15dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/graf_color05"/>
+
+                        <!--Text view to display Java text -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="cria muerta"
+                            android:paddingLeft="10dp"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="15dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginTop="5dp">
+
+                        <!--View to display the blue color icon-->
+                        <View
+                            android:layout_width="15dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/graf_color06"/>
+
+                        <!--Text view to display Java text -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="cria viva"
+                            android:paddingLeft="10dp"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="15dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginTop="5dp">
+
+                        <!--View to display the blue color icon-->
+                        <View
+                            android:layout_width="15dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/graf_color07"/>
+
+                        <!--Text view to display Java text -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="cria viva"
                             android:paddingLeft="10dp"/>
 
                     </LinearLayout>
@@ -337,15 +389,5 @@
         android:text="Volver"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/goToMultipleMapsButton"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="57dp"
-        android:layout_marginBottom="44dp"
-        android:text="Ver mapa"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
