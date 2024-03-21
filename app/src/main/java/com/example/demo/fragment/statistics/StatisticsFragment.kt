@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
@@ -45,38 +46,71 @@ class StatisticsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        _binding!!.tvR.text = Integer.toString(40)
-        _binding!!.tvPython.text = Integer.toString(60)
-        _binding!!.tvCPP.text = Integer.toString(20)
-        _binding!!.tvJava.text = Integer.toString(8)
+        _binding!!.grafText01.text = Integer.toString(40)
+        _binding!!.grafText02.text = Integer.toString(60)
+        _binding!!.grafText03.text = Integer.toString(20)
+        _binding!!.grafText04.text = Integer.toString(8)
+        _binding!!.grafText05.text = Integer.toString(17)
+        _binding!!.grafText06.text = Integer.toString(35)
+        _binding!!.grafText07.text = Integer.toString(3)
 
         pieChart = view.findViewById(R.id.piechart)
 
-        pieChart?.addPieSlice(
-            PieModel(
-                "R", _binding!!.tvR.text.toString().toFloat(),
-                Color.parseColor("#FFA726")
-            )
-        )
-        pieChart?.addPieSlice(
-            PieModel(
-                "Python", _binding!!.tvPython.text.toString().toFloat(),
-                Color.parseColor("#66BB6A")
-            )
-        )
-        pieChart?.addPieSlice(
-            PieModel(
-                "C++", _binding!!.tvCPP.text.toString().toFloat(),
-                Color.parseColor("#EF5350")
-            )
-        )
-        pieChart?.addPieSlice(
-            PieModel(
-                "Java", _binding!!.tvJava.text.toString().toFloat(),
-                Color.parseColor("#29B6F6")
-            )
-        )
+        setData(pieChart)
         pieChart?.startAnimation();
+    }
+
+    private fun setData(pieChart: PieChart?) {
+
+        var color = ContextCompat.getColor(requireContext(), R.color.graf_color01)
+        pieChart?.addPieSlice(
+            PieModel(
+                "graf1", _binding!!.grafText01.text.toString().toFloat(),
+                Color.parseColor(String.format("#%06X", 0xFFFFFF and color))
+            )
+        )
+        color = ContextCompat.getColor(requireContext(), R.color.graf_color02)
+        pieChart?.addPieSlice(
+            PieModel(
+                "graf2", _binding!!.grafText02.text.toString().toFloat(),
+                Color.parseColor(String.format("#%06X", 0xFFFFFF and color))
+            )
+        )
+        color = ContextCompat.getColor(requireContext(), R.color.graf_color03)
+        pieChart?.addPieSlice(
+            PieModel(
+                "graf3", _binding!!.grafText03.text.toString().toFloat(),
+                Color.parseColor(String.format("#%06X", 0xFFFFFF and color))
+            )
+        )
+        color = ContextCompat.getColor(requireContext(), R.color.graf_color04)
+        pieChart?.addPieSlice(
+            PieModel(
+                "graf4", _binding!!.grafText04.text.toString().toFloat(),
+                Color.parseColor(String.format("#%06X", 0xFFFFFF and color))
+            )
+        )
+        color = ContextCompat.getColor(requireContext(), R.color.graf_color05)
+        pieChart?.addPieSlice(
+            PieModel(
+                "graf5", _binding!!.grafText05.text.toString().toFloat(),
+                Color.parseColor(String.format("#%06X", 0xFFFFFF and color))
+            )
+        )
+        color = ContextCompat.getColor(requireContext(), R.color.graf_color06)
+        pieChart?.addPieSlice(
+            PieModel(
+                "graf6", _binding!!.grafText06.text.toString().toFloat(),
+                Color.parseColor(String.format("#%06X", 0xFFFFFF and color))
+            )
+        )
+        color = ContextCompat.getColor(requireContext(), R.color.graf_color07)
+        pieChart?.addPieSlice(
+            PieModel(
+                "graf7", _binding!!.grafText07.text.toString().toFloat(),
+                Color.parseColor(String.format("#%06X", 0xFFFFFF and color))
+            )
+        )
     }
 
     private fun fillLabels(unidSocialList: List<UnidSocial>) {
