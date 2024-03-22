@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -39,7 +40,25 @@ class StatisticsFragment : Fragment() {
             fillLabels(reportList)
         }
 
-        _binding!!.goBackButton.setOnClickListener { goBack() }
+        binding!!.goBackButton.setOnClickListener { goBack() }
+
+        val spinner = binding.granularidad
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+
+                if (position in 0..2) {
+                    binding.granulOrden.visibility = View.VISIBLE
+                    binding.granulOrden.text.clear()
+                } else {
+                    binding.granulOrden.visibility = View.GONE
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                binding.granulOrden.visibility = View.GONE
+            }
+        }
+
         return binding.root
     }
 

@@ -2,8 +2,8 @@
 <resources>
     <string-array name="opciones_granularidad">
         <item>Unidad Social {#}</item>
-        <item>Todas las UnSoc del recorrido {#}</item>
-        <item>Todos los recorridos del dia {#}</item>
+        <item>Unidades.Soc. del recorrido {#}</item>
+        <item>Recorridos del dia {#}</item>
         <item>Todos los dias</item>
     </string-array>
 </resources>
