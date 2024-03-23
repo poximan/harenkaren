@@ -3,7 +3,6 @@ package com.example.demo.viewModel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.demo.model.UnidSocial
 import com.example.demo.database.HarenKarenRoomDatabase
@@ -13,10 +12,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class UnSocViewModel(application: Application) : AndroidViewModel(application) {
-
-    private val _date = MutableLiveData<String>()
-    val date: LiveData<String>
-        get() = _date
 
     private val repository: UnSocRepository
     val allUnSoc: LiveData<List<UnidSocial>>

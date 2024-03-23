@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.demo.dao.RecorrDAO
 import com.example.demo.model.Recorrido
-import com.example.demo.model.UnidSocial
 
 class RecorrRepository(private val recorrDao: RecorrDAO) {
 

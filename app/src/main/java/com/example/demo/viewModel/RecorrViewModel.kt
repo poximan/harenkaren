@@ -3,21 +3,15 @@ package com.example.demo.viewModel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.demo.database.HarenKarenRoomDatabase
 import com.example.demo.model.Recorrido
-import com.example.demo.model.UnidSocial
 import com.example.demo.repository.RecorrRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class RecorrViewModel(application: Application) : AndroidViewModel(application) {
-
-    private val _date = MutableLiveData<String>()
-    val date: LiveData<String>
-        get() = _date
 
     private val repository: RecorrRepository
     private val allRecorr: LiveData<List<Recorrido>>
