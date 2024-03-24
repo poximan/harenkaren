@@ -14,14 +14,16 @@ import android.widget.Spinner
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.navGraphViewModels
 import com.example.demo.R
 import com.example.demo.databinding.FragmentStatisticsBinding
-import com.example.demo.viewModel.DiaViewModel
+import com.example.demo.model.UnidSocial
 import com.example.demo.viewModel.RecorrViewModel
 import com.example.demo.viewModel.UnSocViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.eazegraph.lib.charts.PieChart
 import org.eazegraph.lib.models.PieModel
 
@@ -59,44 +61,59 @@ class StatisticsFragment : Fragment() {
 
     private fun tomarDatos() {
 
-        Log.i("info", "aca tengo que tomar datos")
-
-        val reflecViewModelClass = when (binding.granularidad.selectedItemPosition) {
-            0 -> UnSocViewModel::class
-            1 -> UnSocViewModel::class
-            2 -> RecorrViewModel::class
-            else -> RecorrViewModel::class
+        val superViewModel = when (binding.granularidad.selectedItemPosition) {
+            0, 1 -> UnSocViewModel(requireActivity().application)
+            2, 3 -> RecorrViewModel(requireActivity().application)
+            else -> throw IllegalArgumentException("Posición de ítem no válida")
         }
 
-        try {
-            val constructor = reflecViewModelClass.constructors.first()
-            val res = reflecViewModelClass::class.members.firstOrNull { it.name == "read" }?.call(1)
+        CoroutineScope(Dispatchers.IO).launch {
+            val resultado = if (superViewModel is UnSocViewModel) {
+                superViewModel.read(binding.granulOrden.text.toString().toInt())
+            } else {
+                null    // Manejar otro tipo de ViewModel
+            }
 
-            Log.i("info", "ccontrolar que trajo")
-        } catch (e: Exception) {
-            e.printStackTrace()
+            withContext(Dispatchers.Main) {
+                resultado?.let { listaResultado ->
+                    listaResultado.value?.forEach { resultado : UnidSocial ->
+                        // Haz lo que necesites con cada resultado
+                        view?.let {
+                            graficar(it,
+                                resultado.alfaS4Ad, resultado.alfaOtrosSA, resultado.hembrasAd,
+                                resultado.criasVivas, resultado.criasMuertas, resultado.destetados,
+                                resultado.juveniles) }
+                    }
+                }
+            }
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        graficar(view)
+        graficar(view,0,0,0,0,0,0,0)
     }
 
-    private fun graficar(view : View) {
+    private fun graficar(
+        view : View,
+        grafText01 : Int, grafText02 : Int, grafText03 : Int,
+        grafText04 : Int, grafText05 : Int, grafText06 : Int,
+        grafText07 : Int
+    ) {
 
-        _binding!!.grafText01.text = Integer.toString(0)
-        _binding!!.grafText02.text = Integer.toString(0)
-        _binding!!.grafText03.text = Integer.toString(0)
-        _binding!!.grafText04.text = Integer.toString(0)
-        _binding!!.grafText05.text = Integer.toString(0)
-        _binding!!.grafText06.text = Integer.toString(0)
-        _binding!!.grafText07.text = Integer.toString(0)
+        _binding!!.grafText01.text = grafText01.toString()
+        _binding!!.grafText02.text = grafText02.toString()
+        _binding!!.grafText03.text = grafText03.toString()
+        _binding!!.grafText04.text = grafText04.toString()
+        _binding!!.grafText05.text = grafText05.toString()
+        _binding!!.grafText06.text = grafText06.toString()
+        _binding!!.grafText07.text = grafText07.toString()
 
         pieChart = view.findViewById(R.id.piechart)
+
+        pieChart?.clearChart()
         setData(pieChart)
-        pieChart?.startAnimation();
+        pieChart?.startAnimation()
     }
 
     private fun setData(pieChart: PieChart?) {

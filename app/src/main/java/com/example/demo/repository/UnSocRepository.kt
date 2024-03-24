@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.demo.dao.UnSocDAO
 import com.example.demo.model.UnidSocial
 
-class UnSocRepository(private val unSocDao: UnSocDAO) {
+class UnSocRepository(private val unSocDao: UnSocDAO) : RepositoryCRUD<UnidSocial> {
 
     val unSocListAll: LiveData<List<UnidSocial>> = unSocDao.getAll()
 
@@ -16,7 +16,7 @@ class UnSocRepository(private val unSocDao: UnSocDAO) {
         unSocDao.update(unidSocial)
     }
 
-    fun read(idRecorrido: Int): LiveData<List<UnidSocial>> {
+    override fun read(idRecorrido: Int): LiveData<List<UnidSocial>> {
         val listaIntermedia = unSocDao.getUnSocByRecorrId(idRecorrido)
         return convertirAData(listaIntermedia)
     }

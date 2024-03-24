@@ -6,15 +6,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.example.demo.model.UnidSocial
 import com.example.demo.database.HarenKarenRoomDatabase
+import com.example.demo.repository.RepositoryCRUD
 import com.example.demo.repository.UnSocRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class UnSocViewModel(application: Application) : AndroidViewModel(application) {
+class UnSocViewModel(application: Application) : AndroidViewModel(application), RepositoryCRUD<UnidSocial> {
 
     private val repository: UnSocRepository
-    val allUnSoc: LiveData<List<UnidSocial>>
+    private val allUnSoc: LiveData<List<UnidSocial>>
 
     init {
         val unSocDao = HarenKarenRoomDatabase
@@ -31,7 +32,7 @@ class UnSocViewModel(application: Application) : AndroidViewModel(application) {
         repository.update(unidSocial)
     }
 
-    fun read(idRecorrido: Int) : LiveData<List<UnidSocial>> {
+    override fun read(idRecorrido: Int): LiveData<List<UnidSocial>> {
         return repository.read(idRecorrido)
     }
 }

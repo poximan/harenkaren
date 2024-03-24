@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.demo.dao.RecorrDAO
 import com.example.demo.model.Recorrido
 
-class RecorrRepository(private val recorrDao: RecorrDAO) {
+class RecorrRepository(private val recorrDao: RecorrDAO) : RepositoryCRUD<Recorrido> {
 
     val recorrListAll: LiveData<List<Recorrido>> = recorrDao.getAll()
 
@@ -16,7 +16,7 @@ class RecorrRepository(private val recorrDao: RecorrDAO) {
         recorrDao.update(recorrido)
     }
 
-    fun read(idDia: Int): LiveData<List<Recorrido>> {
+    override fun read(idDia: Int): LiveData<List<Recorrido>> {
         val listaIntermedia = recorrDao.getRecorrByDiaId(idDia)
         return convertirAData(listaIntermedia)
     }
