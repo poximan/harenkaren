@@ -1,12 +1,11 @@
 package com.example.demo.model
+
 import android.os.Parcel
 import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
-import androidx.room.Ignore
 import androidx.room.PrimaryKey
-
 
 @Entity(
     tableName = "unidsocial",
@@ -93,8 +92,15 @@ data class UnidSocial(
 
     @ColumnInfo(name = "comentario")
     var comentario: String?
+) : Parcelable
+/*
+Parcelable es una interfaz para serializar objetos. util para transferirlos entre actividades y fragmentos,
+o entre aplicaciones a través de Intent o Bundle. Es un objeto enviado como flujo de bytes.
 
-):Parcelable {
+La interfaz requiere writeToParcel() para escribir el estado de un objeto en un Parcel,
+y createFromParcel() para crear una nueva instancia del objeto a partir de un Parcel.
+ */
+{
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
         parcel.readInt(),
@@ -119,43 +125,16 @@ data class UnidSocial(
         parcel.readDouble(),
         parcel.readString(),
         parcel.readString()
-    )
+    ) {
+    }
 
-    @Ignore
-    constructor(
-        circuitoId: Int,
-        latitude: Double,
-        longitude: Double,
-        photoPath: String
-    ) : this(
-        0, // Id con valor predeterminado
-        circuitoId,
-        null,
-        null,
-        null,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        null,
-        latitude,
-        longitude,
-        photoPath,
-        null
-    )
+    constructor(latitud: Double, longitud: Double, photoPath: String) : this(
+        1,1,"","","",1,1,1,1,1,
+        1,1,1,1,1,1,1,1,"",
+        latitud, longitud, photoPath,"")
 
-    @Ignore
     constructor(
-        circuitoId: Int,
+        idRecorrido: Int,
         ptoObsUnSoc: String,
         ctxSocial: String,
         tpoSustrato: String,
@@ -172,40 +151,14 @@ data class UnidSocial(
         otrosSAPerif: Int,
         otrosSACerca: Int,
         otrosSALejos: Int,
-        date: String,
-        latitude: Double,
-        longitude: Double,
+        timeStamp: String,
+        latitud: Double,
+        longitud: Double,
         photoPath: String,
         comentario: String
-    ) : this(
-        0, // Id con valor predeterminado
-        circuitoId,
-        ptoObsUnSoc,
-        ctxSocial,
-        tpoSustrato,
-        alfaS4Ad,
-        alfaOtrosSA,
-        hembrasAd,
-        criasVivas,
-        criasMuertas,
-        destetados,
-        juveniles,
-        s4AdPerif,
-        s4AdCerca,
-        s4AdLejos,
-        otrosSAPerif,
-        otrosSACerca,
-        otrosSALejos,
-        date,
-        latitude,
-        longitude,
-        photoPath,
-        comentario
-    )
-
-    override fun describeContents(): Int {
-        return 0
-    }
+    ) : this(0,idRecorrido,ptoObsUnSoc, ctxSocial, tpoSustrato, alfaS4Ad, alfaOtrosSA, hembrasAd,
+        criasVivas, criasMuertas, destetados, juveniles, s4AdPerif, s4AdCerca, s4AdLejos,
+        otrosSAPerif, otrosSACerca, otrosSALejos, timeStamp, latitud, longitud, photoPath, comentario)
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(id)
@@ -230,6 +183,11 @@ data class UnidSocial(
         parcel.writeDouble(latitude)
         parcel.writeDouble(longitude)
         parcel.writeString(photoPath)
+        parcel.writeString(comentario)
+    }
+
+    override fun describeContents(): Int {
+        return 0
     }
 
     companion object CREATOR : Parcelable.Creator<UnidSocial> {
@@ -242,4 +200,3 @@ data class UnidSocial(
         }
     }
 }
-

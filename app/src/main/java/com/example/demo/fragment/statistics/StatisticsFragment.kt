@@ -3,7 +3,6 @@ package com.example.demo.fragment.statistics
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,14 +10,13 @@ import android.view.inputmethod.EditorInfo
 import android.widget.AdapterView
 import android.widget.EditText
 import android.widget.Spinner
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.demo.R
 import com.example.demo.databinding.FragmentStatisticsBinding
-import com.example.demo.model.UnidSocial
-import com.example.demo.viewModel.RecorrViewModel
 import com.example.demo.viewModel.UnSocViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -48,57 +46,111 @@ class StatisticsFragment : Fragment() {
         return binding.root
     }
 
-    private fun contextoItemElegido(posicion : Int) {
+    private fun contextoItemElegido(posicion: Int) {
 
         if (posicion in 0..2) {
             binding.granulOrden.visibility = View.VISIBLE
             binding.granulOrden.text.clear()
         } else {
-            tomarDatos()
+            todosLosDias(UnSocViewModel(requireActivity().application))
             binding.granulOrden.visibility = View.GONE
         }
     }
 
     private fun tomarDatos() {
 
-        val superViewModel = when (binding.granularidad.selectedItemPosition) {
-            0, 1 -> UnSocViewModel(requireActivity().application)
-            2, 3 -> RecorrViewModel(requireActivity().application)
-            else -> throw IllegalArgumentException("Posición de ítem no válida")
-        }
+        val viewModel = UnSocViewModel(requireActivity().application)
+
+        if (binding.granularidad.selectedItemPosition == 0)
+            unaUnidadSocial(viewModel)
+
+        if (binding.granularidad.selectedItemPosition == 1)
+            unRecorrido(viewModel)
+
+        if (binding.granularidad.selectedItemPosition == 2)
+            unDia(viewModel)
+    }
+
+    private fun unaUnidadSocial(viewModel: UnSocViewModel) {
 
         CoroutineScope(Dispatchers.IO).launch {
-            val resultado = if (superViewModel is UnSocViewModel) {
-                superViewModel.read(binding.granulOrden.text.toString().toInt())
-            } else {
-                null    // Manejar otro tipo de ViewModel
-            }
-
+            val resultado = viewModel.readUnico(binding.granulOrden.text.toString().toInt())
             withContext(Dispatchers.Main) {
-                resultado?.let { listaResultado ->
-                    listaResultado.value?.forEach { resultado : UnidSocial ->
-                        // Haz lo que necesites con cada resultado
-                        view?.let {
-                            graficar(it,
-                                resultado.alfaS4Ad, resultado.alfaOtrosSA, resultado.hembrasAd,
-                                resultado.criasVivas, resultado.criasMuertas, resultado.destetados,
-                                resultado.juveniles) }
+                try {
+                    view?.let {
+                        graficar(
+                            it,
+                            resultado.alfaS4Ad, resultado.alfaOtrosSA, resultado.hembrasAd,
+                            resultado.criasVivas, resultado.criasMuertas, resultado.destetados,
+                            resultado.juveniles
+                        )
                     }
+                } catch (e: NullPointerException) {
+                    Toast.makeText(activity, "No existe unidad social, verificar {#}", Toast.LENGTH_LONG).show()
                 }
             }
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        graficar(view,0,0,0,0,0,0,0)
+    private fun unRecorrido(viewModel: UnSocViewModel)  {
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val resultado = viewModel.readSumRecorr(binding.granulOrden.text.toString().toInt())
+            withContext(Dispatchers.Main) {
+
+                view?.let {
+                    graficar(
+                        it,
+                        resultado.alfaS4Ad, resultado.alfaOtrosSA, resultado.hembrasAd,
+                        resultado.criasVivas, resultado.criasMuertas, resultado.destetados,
+                        resultado.juveniles
+                    )
+                }
+            }
+        }
+    }
+
+    private fun unDia(viewModel: UnSocViewModel)  {
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val resultado = viewModel.readSumDia(binding.granulOrden.text.toString().toInt())
+            withContext(Dispatchers.Main) {
+
+                view?.let {
+                    graficar(
+                        it,
+                        resultado.alfaS4Ad, resultado.alfaOtrosSA, resultado.hembrasAd,
+                        resultado.criasVivas, resultado.criasMuertas, resultado.destetados,
+                        resultado.juveniles
+                    )
+                }
+            }
+        }
+    }
+
+    private fun todosLosDias(viewModel: UnSocViewModel)  {
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val resultado = viewModel.readSumTotal()
+            withContext(Dispatchers.Main) {
+
+                view?.let {
+                    graficar(
+                        it,
+                        resultado.alfaS4Ad, resultado.alfaOtrosSA, resultado.hembrasAd,
+                        resultado.criasVivas, resultado.criasMuertas, resultado.destetados,
+                        resultado.juveniles
+                    )
+                }
+            }
+        }
     }
 
     private fun graficar(
-        view : View,
-        grafText01 : Int, grafText02 : Int, grafText03 : Int,
-        grafText04 : Int, grafText05 : Int, grafText06 : Int,
-        grafText07 : Int
+        view: View,
+        grafText01: Int, grafText02: Int, grafText03: Int,
+        grafText04: Int, grafText05: Int, grafText06: Int,
+        grafText07: Int
     ) {
 
         _binding!!.grafText01.text = grafText01.toString()
@@ -120,49 +172,56 @@ class StatisticsFragment : Fragment() {
 
         var color = ContextCompat.getColor(requireContext(), R.color.graf_color01)
         pieChart?.addPieSlice(
-            PieModel(_binding!!.grafText01.text.toString().toFloat(),
+            PieModel(
+                _binding!!.grafText01.text.toString().toFloat(),
                 Color.parseColor(String.format("#%06X", 0xFFFFFF and color))
             )
         )
 
         color = ContextCompat.getColor(requireContext(), R.color.graf_color02)
         pieChart?.addPieSlice(
-            PieModel(_binding!!.grafText02.text.toString().toFloat(),
+            PieModel(
+                _binding!!.grafText02.text.toString().toFloat(),
                 Color.parseColor(String.format("#%06X", 0xFFFFFF and color))
             )
         )
 
         color = ContextCompat.getColor(requireContext(), R.color.graf_color03)
         pieChart?.addPieSlice(
-            PieModel(_binding!!.grafText03.text.toString().toFloat(),
+            PieModel(
+                _binding!!.grafText03.text.toString().toFloat(),
                 Color.parseColor(String.format("#%06X", 0xFFFFFF and color))
             )
         )
 
         color = ContextCompat.getColor(requireContext(), R.color.graf_color04)
         pieChart?.addPieSlice(
-            PieModel(_binding!!.grafText04.text.toString().toFloat(),
+            PieModel(
+                _binding!!.grafText04.text.toString().toFloat(),
                 Color.parseColor(String.format("#%06X", 0xFFFFFF and color))
             )
         )
 
         color = ContextCompat.getColor(requireContext(), R.color.graf_color05)
         pieChart?.addPieSlice(
-            PieModel(_binding!!.grafText05.text.toString().toFloat(),
+            PieModel(
+                _binding!!.grafText05.text.toString().toFloat(),
                 Color.parseColor(String.format("#%06X", 0xFFFFFF and color))
             )
         )
 
         color = ContextCompat.getColor(requireContext(), R.color.graf_color06)
         pieChart?.addPieSlice(
-            PieModel(_binding!!.grafText06.text.toString().toFloat(),
+            PieModel(
+                _binding!!.grafText06.text.toString().toFloat(),
                 Color.parseColor(String.format("#%06X", 0xFFFFFF and color))
             )
         )
 
         color = ContextCompat.getColor(requireContext(), R.color.graf_color07)
         pieChart?.addPieSlice(
-            PieModel(_binding!!.grafText07.text.toString().toFloat(),
+            PieModel(
+                _binding!!.grafText07.text.toString().toFloat(),
                 Color.parseColor(String.format("#%06X", 0xFFFFFF and color))
             )
         )
@@ -185,9 +244,15 @@ class StatisticsFragment : Fragment() {
 
     private fun Spinner.setOnItemSelectedListener(action: (position: Int) -> Unit) {
         this.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 action.invoke(position)
             }
+
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 binding.granulOrden.visibility = View.GONE
             }

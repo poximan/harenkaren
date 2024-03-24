@@ -101,7 +101,7 @@ class RecorrListFragment : Fragment(), RecorrListAdapter.OnRecorrClickListener {
         recorrList.adapter = recorrAdapter
 
         CoroutineScope(Dispatchers.IO).launch {
-            val recorrListAsync = recorrViewModel.read(args.idDia)
+            val recorrListAsync = recorrViewModel.readConFK(args.idDia)
             withContext(Dispatchers.Main) {
                 recorrListAsync.observe(
                     viewLifecycleOwner
@@ -118,7 +118,7 @@ class RecorrListFragment : Fragment(), RecorrListAdapter.OnRecorrClickListener {
         recorrList.adapter = recorrAdapter
 
         CoroutineScope(Dispatchers.IO).launch {
-            val unSocListAsync = recorrViewModel.read(args.idDia)
+            val unSocListAsync = recorrViewModel.readConFK(args.idDia)
             withContext(Dispatchers.Main) {
                 unSocListAsync.observe(
                     viewLifecycleOwner

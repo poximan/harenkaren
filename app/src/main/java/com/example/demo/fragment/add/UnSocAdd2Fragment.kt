@@ -17,8 +17,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.demo.R
 import com.example.demo.databinding.FragmentUnsocAdd2Binding
-import com.example.demo.fragment.detail.RecorrDetailFragmentDirections
-import com.example.demo.model.LatLong
 import com.example.demo.model.UnidSocial
 import com.example.demo.viewModel.UnSocViewModel
 import java.text.SimpleDateFormat

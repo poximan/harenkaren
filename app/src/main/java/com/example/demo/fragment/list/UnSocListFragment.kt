@@ -78,7 +78,7 @@ class UnSocListFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
 
             val dpd = DatePickerDialog(
                 activity!!,
-                { _, year, monthOfYear, dayOfMonth ->
+                { _, _, monthOfYear, dayOfMonth ->
                     val dateSelected = "" + dayOfMonth + "/" + (monthOfYear + 1) + "/" + year
                     loadListWithDate(dateSelected)
                 }, year, month, day
@@ -98,7 +98,7 @@ class UnSocListFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
         unSocList.adapter = unSocAdapter
 
         CoroutineScope(Dispatchers.IO).launch {
-            val unSocListAsync = unSocViewModel.read(args.idRecorrido)
+            val unSocListAsync = unSocViewModel.readConFK(args.idRecorrido)
             withContext(Dispatchers.Main) {
                 unSocListAsync.observe(
                     viewLifecycleOwner
@@ -115,7 +115,7 @@ class UnSocListFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
         unSocList.adapter = unSocAdapter
 
         CoroutineScope(Dispatchers.IO).launch {
-            val unSocListAsync = unSocViewModel.read(args.idRecorrido)
+            val unSocListAsync = unSocViewModel.readConFK(args.idRecorrido)
             withContext(Dispatchers.Main) {
                 unSocListAsync.observe(
                     viewLifecycleOwner

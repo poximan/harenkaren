@@ -264,7 +264,7 @@ class UnSocAdd1Fragment : Fragment() {
             val lat = binding.latitud.text.toString().toDouble()
             val lon = binding.longitud.text.toString().toDouble()
 
-            val action = UnSocAdd1FragmentDirections.goToMapsFragmentAction(UnidSocial(1,lat,lon,currentPhotoPath))
+            val action = UnSocAdd1FragmentDirections.goToMapsFragmentAction(UnidSocial(lat,lon,currentPhotoPath))
             findNavController().navigate(action)
 
         } catch (e: UninitializedPropertyAccessException) {

@@ -43,7 +43,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun showRegulations() {
-        findNavController().navigate(R.id.goToRegulationsAction)
+        findNavController().navigate(R.id.goToDevAction)
     }
 
     private fun logOut() {

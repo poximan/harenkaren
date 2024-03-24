@@ -7,12 +7,12 @@ import androidx.lifecycle.viewModelScope
 import com.example.demo.database.HarenKarenRoomDatabase
 import com.example.demo.model.Recorrido
 import com.example.demo.repository.RecorrRepository
-import com.example.demo.repository.RepositoryCRUD
+import com.example.demo.repository.Consultable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class RecorrViewModel(application: Application) : AndroidViewModel(application), RepositoryCRUD<Recorrido> {
+class RecorrViewModel(application: Application) : AndroidViewModel(application), Consultable<Recorrido> {
 
     private val repository: RecorrRepository
     private val allRecorr: LiveData<List<Recorrido>>
@@ -32,8 +32,8 @@ class RecorrViewModel(application: Application) : AndroidViewModel(application),
         repository.update(recorrido)
     }
 
-    override fun read(idDia: Int) : LiveData<List<Recorrido>> {
-        return repository.read(idDia)
+    override fun readConFK(idDia: Int) : LiveData<List<Recorrido>> {
+        return repository.readConFK(idDia)
     }
 }
 

@@ -6,9 +6,9 @@
         android:icon="@android:drawable/ic_menu_help"
         android:title="Exportar" />
     <item
-        android:id="@id/regulations_fragment"
+        android:id="@id/dev_fragment"
         android:icon="@android:drawable/ic_menu_zoom"
-        android:title="Reglamentaciones" />
+        android:title="@string/para_desarrollador" />
 
     <item
         android:id="@id/about_fragment"

@@ -8,7 +8,6 @@ import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
 import com.example.demo.model.Recorrido
-import com.example.demo.model.UnidSocial
 
 @Dao
 interface RecorrDAO {

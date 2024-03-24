@@ -1,7 +1,6 @@
 package com.example.demo.activity
 
 import android.os.Bundle
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -22,23 +21,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(savedInstanceState: Bundle) {
         super.onSaveInstanceState(savedInstanceState)
-        val latitudTextView = findViewById<TextView>(R.id.latitud)
-        try {
-            savedInstanceState.putString("latAnterior", latitudTextView.text.toString())
-        }
-        catch (nulo : NullPointerException){
-            savedInstanceState.putString("latAnterior", "0.0")
-        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-
-        if (savedInstanceState != null) {
-            val latitud: TextView? = findViewById(R.id.latitud)
-            latitud?.text = savedInstanceState.getString("latAnterior")
-        }
 
         FirebaseApp.initializeApp(this)
         binding = ActivityMainBinding.inflate(layoutInflater)

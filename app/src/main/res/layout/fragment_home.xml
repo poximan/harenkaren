@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="40dp"
+    android:layout_margin="20dp"
     tools:context=".fragment.home.HomeFragment">
 
     <Button
@@ -23,16 +23,16 @@
         android:text="Mis tópicos"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/censos_button" />
+        app:layout_constraintTop_toBottomOf="@id/censos_button" />
 
     <Button
         android:id="@+id/regulationsButton"
         android:layout_width="262dp"
         android:layout_height="55dp"
-        android:text="Reglamentaciones"
+        android:text="@string/para_desarrollador"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/topicos_button" />
+        app:layout_constraintTop_toBottomOf="@id/topicos_button" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -42,7 +42,7 @@
         android:scaleX="-1"
         android:src="@mipmap/elephant_adobenidae"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/regulationsButton" />
+        app:layout_constraintTop_toBottomOf="@id/regulationsButton" />
 
     <Button
         android:id="@+id/logOutButton"
