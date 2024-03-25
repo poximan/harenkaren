@@ -1,14 +1,8 @@
 package com.example.demo.adapter
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Matrix
-import android.media.ExifInterface
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.demo.R
@@ -39,17 +33,22 @@ class UnSocListAdapter(
     }
 
     inner class UnSocViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+
+        private val id: TextView = view.findViewById(R.id.num_unsoc)
         private val unSocResumen: TextView = view.findViewById(R.id.unsoc_resumen)
         private val date: TextView = view.findViewById(R.id.unsoc_timestamp)
-        private val image: ImageView = view.findViewById(R.id.unsoc_imageView)
 
         fun bind(unidSocial: UnidSocial) {
             itemView.setOnClickListener { itemClickListener.onItemClick(unidSocial) }
+
+            id.text = unidSocial.id.toString()
             unSocResumen.text = "*Pto.obs.: " + unidSocial.ptoObsUnSoc + " *Ctx.social: " + unidSocial.ctxSocial + " *Tpo.sust.: " + unidSocial.tpoSustrato +
                     " *AlfaS4/Ad: " + unidSocial.alfaS4Ad + " *OtrosSA: " + unidSocial.alfaOtrosSA + " *Coment.: " + unidSocial.comentario
             date.text = unidSocial.date
 
+
             val file = File(unidSocial.photoPath)
+            /*
             if (file.exists()) {
 
                 val imageBitmap: Bitmap = BitmapFactory.decodeFile(unidSocial.photoPath)
@@ -87,6 +86,7 @@ class UnSocListAdapter(
 
                 image.setImageBitmap(rotatedBitmap)
             }
+             */
         }
     }
 

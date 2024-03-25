@@ -32,12 +32,12 @@ class DiaListAdapter(
     }
 
     inner class DiaViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val numDia: TextView = view.findViewById(R.id.textViewDia)
+        private val numDia: TextView = view.findViewById(R.id.num_dia)
         private val fecha: TextView = view.findViewById(R.id.textViewTimestamp)
 
         fun bind(dia: Dia) {
             itemView.setOnClickListener { itemClickListener.onItemClick(dia) }
-            numDia.text = (adapterPosition + 1).toString()
+            numDia.text = dia.id.toString()
             fecha.text = dia.fecha
         }
     }

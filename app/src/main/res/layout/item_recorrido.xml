@@ -7,29 +7,43 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:orientation="vertical">
+        android:layout_margin="10dp">
 
         <TextView
-            android:id="@+id/text_subarea"
+            android:id="@+id/num_recorr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="60dp"
+            android:minHeight="60dp"
+            android:hint="1"
+            android:textSize="20dp"
+            android:gravity="center"/>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Subarea observada"
-            android:textStyle="bold" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/text_observador"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="Observador"
-            android:inputType="textMultiLine" />
+            <TextView
+                android:id="@+id/text_subarea"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Subarea observada"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/textViewTimestamp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="dd/mm/aa HH:mm:ss" />
+            <TextView
+                android:id="@+id/text_observador"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Observador"
+                android:inputType="textMultiLine" />
 
+            <TextView
+                android:id="@+id/textViewTimestamp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="dd/mm/aa HH:mm:ss" />
+
+        </LinearLayout>
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

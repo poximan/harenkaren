@@ -1,40 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="120dp"
+    android:layout_height="100dp"
     android:background="?attr/selectableItemBackground">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:background="@drawable/border_background">
+        android:layout_marginBottom="10dp">
 
-        <ImageView
-            android:id="@+id/unsoc_imageView"
-            android:layout_width="80dp"
+        <TextView
+            android:id="@+id/num_unsoc"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_margin="3dp"
-            android:scaleType="centerCrop"
-            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+            android:minWidth="60dp"
+            android:minHeight="60dp"
+            android:hint="1"
+            android:textSize="20dp"
+            android:gravity="center"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_marginLeft="5dp">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/unsoc_resumen"
                 android:layout_width="match_parent"
-                android:layout_height="75sp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:hint="resumen unidad social"/>
 
             <TextView
                 android:id="@+id/unsoc_timestamp"
                 android:layout_width="match_parent"
-                android:layout_height="20sp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
                 android:hint="dd/mm/aa HH:mm:ss"/>
 
         </LinearLayout>
