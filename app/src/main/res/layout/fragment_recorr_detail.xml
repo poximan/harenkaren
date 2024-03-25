@@ -20,15 +20,17 @@
             android:orientation="vertical"
             android:gravity="right"
             android:layout_marginRight="5dp"
-            android:layout_weight="1.5">
+            android:layout_weight="1">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Subarea observada:" />
+                android:text="Subarea observada:"
+                android:textStyle="bold" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Observador:" />
+                android:text="Observador:"
+                android:textStyle="bold" />
 
         </LinearLayout>
 

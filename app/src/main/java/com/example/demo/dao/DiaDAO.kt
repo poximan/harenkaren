@@ -11,7 +11,7 @@ import com.example.demo.model.Dia
 
 @Dao
 interface DiaDAO {
-    @Query("SELECT * from dia ORDER BY id DESC")
+    @Query("SELECT * from dia ORDER BY id ASC")
     fun getAll(): LiveData<List<Dia>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
