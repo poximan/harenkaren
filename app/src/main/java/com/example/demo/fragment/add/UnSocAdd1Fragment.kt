@@ -34,7 +34,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.demo.R
 import com.example.demo.adapter.PhotoAdapter
 import com.example.demo.databinding.FragmentUnsocAdd1Binding
-import com.example.demo.model.UnidSocial
 import com.example.demo.model.LatLong
 import com.example.demo.viewModel.UnSocViewModel
 import java.io.File
@@ -83,8 +82,9 @@ class UnSocAdd1Fragment : Fragment() {
         photoRecyclerView.adapter = adapter
 
         binding.getPosicion.setOnClickListener { getPosicionActual() }
+
         binding.photoButton.setOnClickListener { takePhoto() }
-        binding.mapButton.setOnClickListener { continueToMap() }
+        binding.mapOsm.setOnClickListener { usarMapaOSM() }
         binding.contarAnimales.setOnClickListener { contarAnimales() }
 
         return view
@@ -253,27 +253,13 @@ class UnSocAdd1Fragment : Fragment() {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
-    private fun continueToMap() {
+    private fun usarMapaOSM() {
+        val lat = binding.latitud.text.toString().toDouble()
+        val lon = binding.longitud.text.toString().toDouble()
 
-        try {
-
-            if (currentPhotoPath.isEmpty())
-                throw UninitializedPropertyAccessException()
-
-            val lat = binding.latitud.text.toString().toDouble()
-            val lon = binding.longitud.text.toString().toDouble()
-
-            val action = UnSocAdd1FragmentDirections.goToMapsFragmentAction(UnidSocial(lat,lon,currentPhotoPath))
-            findNavController().navigate(action)
-
-        } catch (e: UninitializedPropertyAccessException) {
-            Toast.makeText(
-                requireContext(),
-                "Debe tomar una foto primero",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
+        val puntoGps = LatLong(lat, lon)
+        val action = UnSocAdd1FragmentDirections.goToOSMFragmentAction(puntoGps)
+        findNavController().navigate(action)
     }
 
     private fun reduceBitmap(): Bitmap {

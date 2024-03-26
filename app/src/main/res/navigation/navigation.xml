@@ -214,8 +214,8 @@
                         android:name="idRecorrido"
                         app:argType="integer" />
                     <action
-                        android:id="@+id/goToMapsFragmentAction"
-                        app:destination="@id/maps_fragment"
+                        android:id="@+id/goToOSMFragmentAction"
+                        app:destination="@id/osm_fragment"
                         app:enterAnim="@android:anim/fade_in"
                         app:exitAnim="@android:anim/fade_out"
                         app:popEnterAnim="@android:anim/fade_in"
@@ -279,8 +279,8 @@
                         app:popExitAnim="@android:anim/fade_out" />
 
                     <action
-                        android:id="@+id/goToMapsFragmentFromUnSocDetailAction"
-                        app:destination="@id/maps_fragment" />
+                        android:id="@+id/goToOSMFragmentFromUnSocDetailAction"
+                        app:destination="@id/osm_fragment" />
 
                     <action
                         android:id="@+id/goToUnSocListFromUnSocDetailAction"
@@ -295,6 +295,10 @@
                     android:name="com.example.demo.fragment.update.UnSocUpdateFragment"
                     android:label="Editar unidad social"
                     tools:layout="@layout/fragment_unsoc_update">
+
+                    <argument
+                        android:name="unSocActual"
+                        app:argType="com.example.demo.model.UnidSocial" />
                     <action
                         android:id="@+id/goToUnSocDetailFromUnSocUpdateAction"
                         app:destination="@id/unsoc_detail_fragment"
@@ -302,22 +306,15 @@
                         app:exitAnim="@android:anim/fade_out"
                         app:popEnterAnim="@android:anim/fade_in"
                         app:popExitAnim="@android:anim/fade_out" />
-                    <argument
-                        android:name="unSocActual"
-                        app:argType="com.example.demo.model.UnidSocial" />
-                    <action
-                        android:id="@+id/goToMapsFragmentFromUnSocUpdateAction"
-                        app:destination="@id/maps_fragment" />
                 </fragment>
                 <fragment
-                    android:id="@+id/maps_fragment"
-                    android:name="com.example.demo.fragment.maps.MapsFragment"
-                    android:label="Mapa de captura"
-                    tools:layout="@layout/fragment_maps">
-
+                    android:id="@+id/osm_fragment"
+                    android:name="com.example.demo.fragment.maps.OSMFragment"
+                    android:label="Mapa OSM"
+                    tools:layout="@layout/fragment_osm">
                     <argument
-                        android:name="unSocActual"
-                        app:argType="com.example.demo.model.UnidSocial" />
+                        android:name="coordenadas"
+                        app:argType="com.example.demo.model.LatLong" />
                 </fragment>
 
                 <activity

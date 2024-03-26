@@ -73,23 +73,13 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/mapButton"
-        android:layout_width="56dp"
-        android:layout_height="64dp"
-        android:drawableLeft="@drawable/ic_location"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
-        tools:ignore="SpeakableTextPresentCheck" />
-
     <ImageView
         android:id="@+id/captureImageView"
         android:layout_width="345dp"
         android:layout_height="251dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mapButton"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout3"
         tools:srcCompat="@tools:sample/avatars" />
 
     <LinearLayout

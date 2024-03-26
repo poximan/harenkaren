@@ -22,7 +22,6 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.demo.R
 import com.example.demo.databinding.FragmentUnsocUpdateBinding
@@ -59,10 +58,11 @@ class UnSocUpdateFragment : Fragment() {
         val speciesArrayAdapter = ArrayAdapter(view.context, R.layout.dropdown_item, ctxSocial)
 
         currentPhotoPath = args.unSocActual.photoPath!!
+
         _binding!!.spinnerUpdPtoObs.adapter = fishTypeArrayAdapter
         _binding!!.spinnerUpdCtxSocial.adapter = speciesArrayAdapter
         _binding!!.photoButton.setOnClickListener { takePhoto() }
-        _binding!!.continueButton.setOnClickListener { continueToMap() }
+
         val fishTypeArrayPosition = fishTypeArrayAdapter.getPosition(args.unSocActual.ptoObsUnSoc)
         _binding!!.spinnerUpdPtoObs.setSelection(fishTypeArrayPosition)
 
@@ -177,10 +177,5 @@ class UnSocUpdateFragment : Fragment() {
             outputStream
         )
         _binding!!.updateCaptureImageView.setImageBitmap(rotatedBitmap)
-    }
-
-    private fun continueToMap() {
-        val action = UnSocUpdateFragmentDirections.goToMapsFragmentFromUnSocUpdateAction(args.unSocActual)
-        findNavController().navigate(action)
     }
 }

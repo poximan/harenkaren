@@ -43,14 +43,8 @@ class UnSocDetailFragment : Fragment() {
 
         _binding!!.volverButton.setOnClickListener { goBack() }
         _binding!!.editarButton.setOnClickListener { editar() }
-        _binding!!.mapButton.setOnClickListener { goMap() }
 
         return binding.root
-    }
-
-    private fun goMap() {
-        val action = UnSocDetailFragmentDirections.goToMapsFragmentFromUnSocDetailAction(args.unSocActual)
-        findNavController().navigate(action)
     }
 
     private fun editar() {
