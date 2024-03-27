@@ -64,6 +64,8 @@ class UnSocAdd1Fragment : Fragment() {
     private lateinit var locationManager: LocationManager
     private var indicatorLight: ImageView? = null
 
+    private var latLon = LatLong()
+
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -107,21 +109,8 @@ class UnSocAdd1Fragment : Fragment() {
         val lon = binding.longitud.text.toString().toDouble()
         val comentario = binding.unSocComentario.text.toString()
 
-        try {
-
-            if (currentPhotoPath.isEmpty() && false)    // TODO ver condicion de entrada
-                throw UninitializedPropertyAccessException()
-
-            val action = UnSocAdd1FragmentDirections.goToAdd2FragmentAction(args.idRecorrido, LatLong(lat , lon), currentPhotoPath, comentario)
-            findNavController().navigate(action)
-
-        } catch (e: UninitializedPropertyAccessException) {
-            Toast.makeText(
-                requireContext(),
-                "Debe tomar una foto primero",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
+        val action = UnSocAdd1FragmentDirections.goToAdd2FragmentAction(args.idRecorrido, LatLong(lat , lon), currentPhotoPath, comentario)
+        findNavController().navigate(action)
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -254,11 +243,7 @@ class UnSocAdd1Fragment : Fragment() {
     }
 
     private fun usarMapaOSM() {
-        val lat = binding.latitud.text.toString().toDouble()
-        val lon = binding.longitud.text.toString().toDouble()
-
-        val puntoGps = LatLong(lat, lon)
-        val action = UnSocAdd1FragmentDirections.goToOSMFragmentAction(puntoGps)
+        val action = UnSocAdd1FragmentDirections.goToOSMFragmentAction(latLon)
         findNavController().navigate(action)
     }
 
@@ -355,8 +340,13 @@ class UnSocAdd1Fragment : Fragment() {
     }
 
     private fun updateLocationViews(latitude: Double, longitude: Double) {
-        binding.latitud.text = latitude.toString()
-        binding.longitud.text = longitude.toString()
+        latLon = LatLong(latitude, longitude)
+
+        val lat = String.format("%.6f", latitude)
+        val lon = String.format("%.6f", longitude)
+
+        binding.latitud.text = lat
+        binding.longitud.text = lon
     }
 
     private fun requestLocationPermission() {

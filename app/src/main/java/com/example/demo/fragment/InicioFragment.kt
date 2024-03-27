@@ -20,12 +20,10 @@ class InicioFragment : Fragment() {
     ): View {
 
         _binding = FragmentInicioBinding.inflate(inflater, container, false)
-        val view = binding.root
-
         _binding!!.loginButton.setOnClickListener { loginApp() }
         _binding!!.registerTextView.setOnClickListener { registerApp() }
 
-        return view
+        return binding.root
     }
 
     override fun onDestroyView() {

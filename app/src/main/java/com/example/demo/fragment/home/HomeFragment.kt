@@ -47,6 +47,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun logOut() {
+
         var builder = AlertDialog.Builder(activity)
         builder.setTitle("Salir")
         builder.setMessage("¿Confirma salir?")
@@ -59,5 +60,4 @@ class HomeFragment : Fragment() {
         var alert: AlertDialog = builder.create()
         alert.show()
     }
-
 }

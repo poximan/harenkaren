@@ -1,10 +1,8 @@
 package com.example.demo.fragment.login
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.text.TextUtils
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
@@ -17,36 +15,33 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.demo.R
 import com.example.demo.databinding.FragmentLoginBinding
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.ktx.Firebase
+import com.example.demo.viewModel.UsuarioViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-private var visible: Boolean = false
-private lateinit var database: FirebaseDatabase
-private lateinit var auth: FirebaseAuth
-
-class LoginFragment : Fragment() {
+class LoginFragment : Fragment(), UsuarioCallback {
 
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
 
-    @SuppressLint("ClickableViewAccessibility")
+    private lateinit var usuarioViewModel: UsuarioViewModel
+    private var visible: Boolean = false
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
-        val view = binding.root
-        database = FirebaseDatabase.getInstance()
-        auth = Firebase.auth
         _binding!!.loginButton.setOnClickListener { checkLogin() }
         _binding!!.cancelButton.setOnClickListener { goBack() }
 
-        _binding!!.editTextPassword.setOnTouchListener(OnTouchListener { v, event ->
+        // visibilidad de la contraseña
+        _binding!!.pass.setOnTouchListener(OnTouchListener { _, event ->
             val DRAWABLE_RIGHT = 2
             if (event.action == MotionEvent.ACTION_UP) {
-                if (event.rawX >= _binding!!.editTextPassword.right - _binding!!.editTextPassword.compoundDrawables
+                if (event.rawX >= _binding!!.pass.right - _binding!!.pass.compoundDrawables
                         .get(DRAWABLE_RIGHT).bounds.width()
                 ) {
                     turnVisibility()
@@ -55,13 +50,15 @@ class LoginFragment : Fragment() {
             }
             false
         })
-        return view
+
+        usuarioViewModel = UsuarioViewModel(requireActivity().application)
+        return binding.root
     }
 
     private fun turnVisibility() {
         if (!visible) {
-            _binding!!.editTextPassword.transformationMethod = PasswordTransformationMethod.getInstance()
-            _binding!!.editTextPassword.setCompoundDrawablesWithIntrinsicBounds(
+            _binding!!.pass.transformationMethod = PasswordTransformationMethod.getInstance()
+            _binding!!.pass.setCompoundDrawablesWithIntrinsicBounds(
                 0,
                 0,
                 R.drawable.visible_on,
@@ -69,8 +66,8 @@ class LoginFragment : Fragment() {
             )
             visible = true
         } else {
-            _binding!!.editTextPassword.transformationMethod = HideReturnsTransformationMethod.getInstance()
-            _binding!!.editTextPassword.setCompoundDrawablesWithIntrinsicBounds(
+            _binding!!.pass.transformationMethod = HideReturnsTransformationMethod.getInstance()
+            _binding!!.pass.setCompoundDrawablesWithIntrinsicBounds(
                 0,
                 0,
                 R.drawable.visible_off,
@@ -81,22 +78,28 @@ class LoginFragment : Fragment() {
     }
 
     private fun checkLogin() {
-        val email = _binding!!.editTextEmail.text.toString()
-        val password = _binding!!.editTextPassword.text.toString()
-        if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
+
+        val email = _binding!!.email.text.toString()
+        val password = _binding!!.pass.text.toString()
+
+        if (email.isEmpty() || password.isEmpty()) {
             showErrorMsg("Complete los campos")
         } else {
-            auth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(requireActivity()) { task ->
-                    if (task.isSuccessful) {
-                        // Sign in success, update UI with the signed-in user's information
-                        findNavController().navigate(R.id.goToHomeFragment)
-                    } else {
-                        // If sign in fails, display a message to the user.
-                        showErrorMsg("Email y/o contraseña incorrectos")
-                    }
-                }
+            CoroutineScope(Dispatchers.IO).launch {
+                // this@LoginFragment almacena la referencia antes de cambiar de contexto
+                usuarioViewModel.loginConEmailPass(email, password, this@LoginFragment)
+            }
         }
+    }
+
+    override fun onLoginSuccess() {
+        CoroutineScope(Dispatchers.Main).launch {
+            findNavController().navigate(R.id.goToHomeFragment)
+        }
+    }
+
+    override fun onLoginFailure(errorMessage: String) {
+        showErrorMsg(errorMessage)
     }
 
     private fun goBack() {
@@ -104,15 +107,17 @@ class LoginFragment : Fragment() {
     }
 
     private fun showErrorMsg(message: String) {
-        _binding?.loginFailedTextView?.text = message
-        _binding?.loginFailedTextView?.visibility = View.VISIBLE
 
-        var fadeOutAnimationObject = AlphaAnimation(1f, 0f)
-        fadeOutAnimationObject.duration = 2000
-        Handler(Looper.getMainLooper()).postDelayed({
-            _binding?.loginFailedTextView?.startAnimation(fadeOutAnimationObject)
-            _binding?.loginFailedTextView?.visibility = View.INVISIBLE
-        }, 1000)
+        CoroutineScope(Dispatchers.Main).launch {
+            binding.loginFailedTextView.text = message
+            binding.loginFailedTextView.visibility = View.VISIBLE
 
+            var fadeOutAnimationObject = AlphaAnimation(1f, 0f)
+            fadeOutAnimationObject.duration = 3000
+            Handler(Looper.getMainLooper()).postDelayed({
+                _binding?.loginFailedTextView?.startAnimation(fadeOutAnimationObject)
+                _binding?.loginFailedTextView?.visibility = View.INVISIBLE
+            }, 1000)
+        }
     }
 }

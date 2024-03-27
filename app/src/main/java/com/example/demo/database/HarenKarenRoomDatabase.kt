@@ -8,18 +8,21 @@ import androidx.room.TypeConverters
 import com.example.demo.dao.DiaDAO
 import com.example.demo.dao.RecorrDAO
 import com.example.demo.dao.UnSocDAO
+import com.example.demo.dao.UsuarioDAO
 import com.example.demo.model.Dia
 import com.example.demo.model.UnidSocial
 import com.example.demo.model.Recorrido
+import com.example.demo.model.Usuario
 import kotlinx.coroutines.CoroutineScope
 
-@Database(entities = [Dia::class, Recorrido::class, UnidSocial::class], version = 1, exportSchema = false)
+@Database(entities = [Dia::class, Recorrido::class, UnidSocial::class, Usuario::class], version = 1, exportSchema = false)
 @TypeConverters(Converter::class)
 abstract class HarenKarenRoomDatabase : RoomDatabase() {
 
     abstract fun diaDao(): DiaDAO
     abstract fun recorrDao(): RecorrDAO
     abstract fun unSocDao(): UnSocDAO
+    abstract fun usuarioDao(): UsuarioDAO
 
     companion object {
 

@@ -19,9 +19,6 @@ class MainActivity : AppCompatActivity() {
 
     private val mapaParesOrigenDestino: MutableMap<Int, Int> = mutableMapOf()
 
-    override fun onSaveInstanceState(savedInstanceState: Bundle) {
-        super.onSaveInstanceState(savedInstanceState)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -55,6 +52,7 @@ class MainActivity : AppCompatActivity() {
         NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
         setContentView(view)
 
+        agregarParOrigenDestino(R.id.home_fragment, R.id.login_fragment,)
         agregarParOrigenDestino(R.id.dia_list_fragment,R.id.home_fragment)
         agregarParOrigenDestino(R.id.recorr_list_fragment,R.id.dia_detail_fragment)
         agregarParOrigenDestino(R.id.unsoc_list_fragment,R.id.recorr_detail_fragment)
