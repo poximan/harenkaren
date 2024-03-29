@@ -54,6 +54,13 @@
             app:popEnterAnim="@android:anim/fade_in"
             app:popExitAnim="@android:anim/fade_out" />
         <action
+            android:id="@+id/goToTopicsAction"
+            app:destination="@id/topics_fragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
+        <action
             android:id="@+id/goToDevAction"
             app:destination="@id/dev_fragment"
             app:enterAnim="@android:anim/fade_in"
@@ -61,8 +68,8 @@
             app:popEnterAnim="@android:anim/fade_in"
             app:popExitAnim="@android:anim/fade_out" />
         <action
-            android:id="@+id/goToTopicsAction"
-            app:destination="@id/topics_fragment"
+            android:id="@+id/goToSolapas"
+            app:destination="@id/solapas_fragment"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out"
             app:popEnterAnim="@android:anim/fade_in"
@@ -355,6 +362,11 @@
         android:name="com.example.demo.DevFragment"
         android:label="Para desarrollador"
         tools:layout="@layout/fragment_dev" />
+    <fragment
+        android:id="@+id/solapas_fragment"
+        android:name="com.example.demo.fragment.add.SolapaFragment"
+        android:label="Add en solapas"
+        tools:layout="@layout/fragment_solapa" />
 
     <fragment
         android:id="@+id/about_fragment"

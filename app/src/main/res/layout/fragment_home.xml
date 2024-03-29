@@ -60,5 +60,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <Button
+        android:id="@+id/solapas_boton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="solapas"
+        tools:layout_editor_absoluteX="70dp"
+        tools:layout_editor_absoluteY="199dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 

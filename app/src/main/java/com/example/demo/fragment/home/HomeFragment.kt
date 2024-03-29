@@ -13,8 +13,10 @@ import com.example.demo.databinding.FragmentHomeBinding
 import kotlin.system.exitProcess
 
 class HomeFragment : Fragment() {
+
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -26,8 +28,13 @@ class HomeFragment : Fragment() {
         _binding!!.regulationsButton.setOnClickListener { showRegulations() }
         _binding!!.goToStatisticsButton.setOnClickListener { goToStatistics() }
         _binding!!.logOutButton.setOnClickListener { logOut() }
+        _binding!!.solapasBoton.setOnClickListener { gotoSolapas() }
 
         return binding.root
+    }
+
+    private fun gotoSolapas() {
+        findNavController().navigate(R.id.goToSolapas)
     }
 
     private fun gotoCensos() {

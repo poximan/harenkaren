@@ -123,29 +123,28 @@ class UnSocAdd2Fragment : Fragment() {
         val ctxSocial = binding.spinnerAddCtxSocial.selectedItem.toString()
         val tpoSustrato = binding.spinnerAddTpoSustrato.selectedItem.toString()
         // ----- dominante ----- //
-        val alfaS4Ad = binding.editTextMachoAdS4.text.toString().toInt()
-        val alfaOtrosSA = binding.editTextMachoAdS4.text.toString().toInt()
+        val alfaS4Ad = binding.vMachoAdS4.text.toString().toInt()
+        val alfaOtrosSA = binding.vMachoAdS4.text.toString().toInt()
         // ----- hembras y crias ----- //
-        val hembrasAd = binding.editTextHembrasAd.text.toString().toInt()
-        val criasVivas = binding.editTextCriasVivas.text.toString().toInt()
-        val criasMuertas = binding.editTextCriasMuertas.text.toString().toInt()
-        val destetados = binding.editTextDestetados.text.toString().toInt()
-        val juveniles = binding.editTextJuveniles.text.toString().toInt()
+        val hembrasAd = binding.vHembrasAd.text.toString().toInt()
+        val crias = binding.vCrias.text.toString().toInt()
+        val destetados = binding.vDestetados.text.toString().toInt()
+        val juveniles = binding.vJuveniles.text.toString().toInt()
         // ----- Ad/SA proximos ----- //
-        val s4AdPerif = binding.editTextS4AdPerif.text.toString().toInt()
-        val s4AdCerca = binding.editTextS4AdCerca.text.toString().toInt()
-        val s4AdLejos = binding.editTextS4AdLejos.text.toString().toInt()
-        val otrosSAPerif = binding.editTextOtroSAPerif.text.toString().toInt()
-        val otrosSACerca = binding.editTextOtroSACerca.text.toString().toInt()
-        val otrosSALejos = binding.editTextOtroSALejos.text.toString().toInt()
+        val s4AdPerif = binding.vS4AdPerif.text.toString().toInt()
+        val s4AdCerca = binding.vS4AdCerca.text.toString().toInt()
+        val s4AdLejos = binding.vS4AdLejos.text.toString().toInt()
+        val otrosSAPerif = binding.vOtroSAPerif.text.toString().toInt()
+        val otrosSACerca = binding.vOtroSACerca.text.toString().toInt()
+        val otrosSALejos = binding.vOtroSALejos.text.toString().toInt()
 
         val timeStamp = SimpleDateFormat("yyyy/MM/dd - HH:mm:ss").format(Date())
 
         return UnidSocial(
                 args.idRecorrido,
                 ptoObsUnSoc, ctxSocial, tpoSustrato,
-                alfaS4Ad, alfaOtrosSA, hembrasAd, criasVivas,
-                criasMuertas, destetados, juveniles, s4AdPerif,
+                alfaS4Ad, alfaOtrosSA, hembrasAd, crias,
+                crias, destetados, juveniles, s4AdPerif,
                 s4AdCerca, s4AdLejos, otrosSAPerif, otrosSACerca, otrosSALejos,
                 timeStamp, args.coordenadas.lat, args.coordenadas.lon,
                 args.photoPath, args.comentario
