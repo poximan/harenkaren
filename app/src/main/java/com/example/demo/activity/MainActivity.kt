@@ -9,7 +9,6 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.example.demo.R
 import com.example.demo.databinding.ActivityMainBinding
-import com.google.firebase.FirebaseApp
 
 private lateinit var binding: ActivityMainBinding
 private lateinit var appBarConfiguration: AppBarConfiguration
@@ -24,7 +23,6 @@ class MainActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
 
-        FirebaseApp.initializeApp(this)
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         drawerLayout = binding.drawerLayout

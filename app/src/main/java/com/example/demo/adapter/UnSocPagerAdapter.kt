@@ -3,11 +3,12 @@ package com.example.demo.adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.example.demo.fragment.add.Solapa1Fragment
-import com.example.demo.fragment.add.Solapa2Fragment
-import com.example.demo.fragment.add.Solapa3Fragment
+import com.example.demo.fragment.add.UnSocGralFragment
+import com.example.demo.fragment.add.UnSocVivosFragment
+import com.example.demo.fragment.add.UnSocMuertosFragment
+import com.example.demo.model.UnidSocial
 
-class UnSocPagerAdapter (fm: FragmentManager) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+class UnSocPagerAdapter(fm: FragmentManager, private val unidSocial: UnidSocial) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     // Lista de títulos para cada pestaña
     private val tabTitles = arrayOf("General", "Indiv. vivos", "Indiv. muertos")
@@ -15,9 +16,9 @@ class UnSocPagerAdapter (fm: FragmentManager) : FragmentPagerAdapter(fm, BEHAVIO
     override fun getItem(position: Int): Fragment {
         // Retorna un nuevo fragmento para cada posición
         return when (position) {
-            0 -> Solapa1Fragment()
-            1 -> Solapa2Fragment()
-            2 -> Solapa3Fragment()
+            0 -> UnSocGralFragment(unidSocial)
+            1 -> UnSocVivosFragment(unidSocial)
+            2 -> UnSocMuertosFragment(unidSocial)
             else -> throw IllegalStateException("Unexpected position $position")
         }
     }

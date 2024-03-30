@@ -3,7 +3,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt' /* procesador de anotaciones */
 apply plugin: "androidx.navigation.safeargs"
 apply plugin: 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
-apply plugin: 'com.google.gms.google-services'  // Google Services plugin
 
 android {
     namespace 'com.example.demo'

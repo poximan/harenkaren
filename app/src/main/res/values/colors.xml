@@ -27,6 +27,9 @@
     <color name="graf_color05">#FFC0CB</color>
     <color name="graf_color06">#FAD201</color>
     <color name="graf_color07">#20214F</color>
-    <color name="graf_color08">#D95030</color>
-    <color name="graf_color09">#3F888F</color>
+    <color name="graf_color08">#FF5733</color>
+    <color name="graf_color09">#33FF57</color>
+    <color name="graf_color10">#5733FF</color>
+    <color name="graf_color11">#33FFEC</color>
+    <color name="graf_color12">#FF3333</color>
 </resources>

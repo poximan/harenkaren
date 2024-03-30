@@ -117,7 +117,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="cria viva"
+                        android:text="cria"
                         android:paddingHorizontal="10dp"/>
                 </LinearLayout>
                 <LinearLayout
@@ -130,7 +130,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="cria muerta"
+                        android:text="destetado"
                         android:paddingHorizontal="10dp"/>
                 </LinearLayout>
                 <LinearLayout
@@ -143,7 +143,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="destetado"
+                        android:text="juvenil"
                         android:paddingHorizontal="10dp"/>
                 </LinearLayout>
                 <LinearLayout
@@ -156,7 +156,72 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="juvenil"
+                        android:text="S4/Ad Perif"
+                        android:paddingHorizontal="10dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <View
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/graf_color08"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="S4/Ad Cerca"
+                        android:paddingHorizontal="10dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <View
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/graf_color09"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="S4/Ad Lejos"
+                        android:paddingHorizontal="10dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <View
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/graf_color10"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="otros SA Perif"
+                        android:paddingHorizontal="10dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <View
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/graf_color11"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="otros SA Cerca"
+                        android:paddingHorizontal="10dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <View
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/graf_color12"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="otros SA Lejos"
                         android:paddingHorizontal="10dp"/>
                 </LinearLayout>
             </LinearLayout>
@@ -224,6 +289,46 @@
                     android:layout_height="wrap_content">
                     <TextView
                         android:id="@+id/graf_text07"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/graf_text08"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/graf_text09"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/graf_text10"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/graf_text11"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/graf_text12"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 </LinearLayout>

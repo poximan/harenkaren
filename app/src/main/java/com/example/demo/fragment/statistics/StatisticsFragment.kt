@@ -80,9 +80,10 @@ class StatisticsFragment : Fragment() {
                     view?.let {
                         graficar(
                             it,
-                            resultado.alfaS4Ad, resultado.alfaOtrosSA, resultado.hembrasAd,
-                            resultado.criasVivas, resultado.criasMuertas, resultado.destetados,
-                            resultado.juveniles
+                            resultado.vAlfaS4Ad, resultado.vAlfaOtrosSA, resultado.vHembrasAd,
+                            resultado.vCrias, resultado.vDestetados, resultado.vJuveniles,
+                            resultado.vS4AdPerif, resultado.vS4AdCerca, resultado.vS4AdLejos,
+                            resultado.vOtrosSAPerif, resultado.vOtrosSACerca, resultado.vOtrosSALejos
                         )
                     }
                 } catch (e: NullPointerException) {
@@ -97,13 +98,13 @@ class StatisticsFragment : Fragment() {
         CoroutineScope(Dispatchers.IO).launch {
             val resultado = viewModel.readSumRecorr(binding.granulOrden.text.toString().toInt())
             withContext(Dispatchers.Main) {
-
                 view?.let {
                     graficar(
                         it,
-                        resultado.alfaS4Ad, resultado.alfaOtrosSA, resultado.hembrasAd,
-                        resultado.criasVivas, resultado.criasMuertas, resultado.destetados,
-                        resultado.juveniles
+                        resultado.vAlfaS4Ad, resultado.vAlfaOtrosSA, resultado.vHembrasAd,
+                        resultado.vCrias, resultado.vDestetados, resultado.vJuveniles,
+                        resultado.vS4AdPerif, resultado.vS4AdCerca, resultado.vS4AdLejos,
+                        resultado.vOtrosSAPerif, resultado.vOtrosSACerca, resultado.vOtrosSALejos
                     )
                 }
             }
@@ -115,13 +116,13 @@ class StatisticsFragment : Fragment() {
         CoroutineScope(Dispatchers.IO).launch {
             val resultado = viewModel.readSumDia(binding.granulOrden.text.toString().toInt())
             withContext(Dispatchers.Main) {
-
                 view?.let {
                     graficar(
                         it,
-                        resultado.alfaS4Ad, resultado.alfaOtrosSA, resultado.hembrasAd,
-                        resultado.criasVivas, resultado.criasMuertas, resultado.destetados,
-                        resultado.juveniles
+                        resultado.vAlfaS4Ad, resultado.vAlfaOtrosSA, resultado.vHembrasAd,
+                        resultado.vCrias, resultado.vDestetados, resultado.vJuveniles,
+                        resultado.vS4AdPerif, resultado.vS4AdCerca, resultado.vS4AdLejos,
+                        resultado.vOtrosSAPerif, resultado.vOtrosSACerca, resultado.vOtrosSALejos
                     )
                 }
             }
@@ -133,13 +134,13 @@ class StatisticsFragment : Fragment() {
         CoroutineScope(Dispatchers.IO).launch {
             val resultado = viewModel.readSumTotal()
             withContext(Dispatchers.Main) {
-
                 view?.let {
                     graficar(
                         it,
-                        resultado.alfaS4Ad, resultado.alfaOtrosSA, resultado.hembrasAd,
-                        resultado.criasVivas, resultado.criasMuertas, resultado.destetados,
-                        resultado.juveniles
+                        resultado.vAlfaS4Ad, resultado.vAlfaOtrosSA, resultado.vHembrasAd,
+                        resultado.vCrias, resultado.vDestetados, resultado.vJuveniles,
+                        resultado.vS4AdPerif, resultado.vS4AdCerca, resultado.vS4AdLejos,
+                        resultado.vOtrosSAPerif, resultado.vOtrosSACerca, resultado.vOtrosSALejos
                     )
                 }
             }
@@ -148,9 +149,9 @@ class StatisticsFragment : Fragment() {
 
     private fun graficar(
         view: View,
-        grafText01: Int, grafText02: Int, grafText03: Int,
-        grafText04: Int, grafText05: Int, grafText06: Int,
-        grafText07: Int
+        grafText01: Int, grafText02: Int, grafText03: Int, grafText04: Int,
+        grafText05: Int, grafText06: Int, grafText07: Int, grafText08: Int,
+        grafText09: Int, grafText10: Int, grafText11: Int, grafText12: Int
     ) {
 
         _binding!!.grafText01.text = grafText01.toString()
@@ -160,6 +161,11 @@ class StatisticsFragment : Fragment() {
         _binding!!.grafText05.text = grafText05.toString()
         _binding!!.grafText06.text = grafText06.toString()
         _binding!!.grafText07.text = grafText07.toString()
+        _binding!!.grafText08.text = grafText08.toString()
+        _binding!!.grafText09.text = grafText09.toString()
+        _binding!!.grafText10.text = grafText10.toString()
+        _binding!!.grafText11.text = grafText11.toString()
+        _binding!!.grafText12.text = grafText12.toString()
 
         pieChart = view.findViewById(R.id.piechart)
 
@@ -222,6 +228,46 @@ class StatisticsFragment : Fragment() {
         pieChart?.addPieSlice(
             PieModel(
                 _binding!!.grafText07.text.toString().toFloat(),
+                Color.parseColor(String.format("#%06X", 0xFFFFFF and color))
+            )
+        )
+
+        color = ContextCompat.getColor(requireContext(), R.color.graf_color08)
+        pieChart?.addPieSlice(
+            PieModel(
+                _binding!!.grafText08.text.toString().toFloat(),
+                Color.parseColor(String.format("#%06X", 0xFFFFFF and color))
+            )
+        )
+
+        color = ContextCompat.getColor(requireContext(), R.color.graf_color09)
+        pieChart?.addPieSlice(
+            PieModel(
+                _binding!!.grafText09.text.toString().toFloat(),
+                Color.parseColor(String.format("#%06X", 0xFFFFFF and color))
+            )
+        )
+
+        color = ContextCompat.getColor(requireContext(), R.color.graf_color10)
+        pieChart?.addPieSlice(
+            PieModel(
+                _binding!!.grafText10.text.toString().toFloat(),
+                Color.parseColor(String.format("#%06X", 0xFFFFFF and color))
+            )
+        )
+
+        color = ContextCompat.getColor(requireContext(), R.color.graf_color11)
+        pieChart?.addPieSlice(
+            PieModel(
+                _binding!!.grafText11.text.toString().toFloat(),
+                Color.parseColor(String.format("#%06X", 0xFFFFFF and color))
+            )
+        )
+
+        color = ContextCompat.getColor(requireContext(), R.color.graf_color12)
+        pieChart?.addPieSlice(
+            PieModel(
+                _binding!!.grafText12.text.toString().toFloat(),
                 Color.parseColor(String.format("#%06X", 0xFFFFFF and color))
             )
         )

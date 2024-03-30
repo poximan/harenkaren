@@ -5,6 +5,7 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 
 @Entity(
@@ -19,7 +20,7 @@ import androidx.room.PrimaryKey
 data class UnidSocial(
 
     @PrimaryKey(autoGenerate = true)
-    var id: Int,
+    var id: Int?,
 
     @ColumnInfo(name = "id_recorrido")
     var recorrId: Int,
@@ -34,57 +35,101 @@ data class UnidSocial(
     @ColumnInfo(name = "tpo_sustrato")
     var tpoSustrato: String?,
 
+    /* =========================================
+    ================== VIVIOS ==================
+    ========================================= */
+    
     // ----- dominante ----- //
-    @ColumnInfo(name = "alfa_s4ad")
-    var alfaS4Ad: Int,
+    @ColumnInfo(name = "v_alfa_s4ad")
+    var vAlfaS4Ad: Int,
 
-    @ColumnInfo(name = "alfa_otros_sa")
-    var alfaOtrosSA: Int,
+    @ColumnInfo(name = "v_alfa_otros_sa")
+    var vAlfaOtrosSA: Int,
 
     // ----- hembras y crias ----- //
-    @ColumnInfo(name = "hembras_ad")
-    var hembrasAd: Int,
+    @ColumnInfo(name = "v_hembras_ad")
+    var vHembrasAd: Int,
 
-    @ColumnInfo(name = "crias_vivas")
-    var criasVivas: Int,
+    @ColumnInfo(name = "v_crias")
+    var vCrias: Int,
 
-    @ColumnInfo(name = "crias_muertas")
-    var criasMuertas: Int,
+    @ColumnInfo(name = "v_destetados")
+    var vDestetados: Int,
 
-    @ColumnInfo(name = "destetados")
-    var destetados: Int,
-
-    @ColumnInfo(name = "juveniles")
-    var juveniles: Int,
+    @ColumnInfo(name = "v_juveniles")
+    var vJuveniles: Int,
 
     // ----- Ad/SA proximos ----- //
-    @ColumnInfo(name = "s4ad_perif")
-    var s4AdPerif: Int,
+    @ColumnInfo(name = "v_s4ad_perif")
+    var vS4AdPerif: Int,
 
-    @ColumnInfo(name = "s4ad_cerca")
-    var s4AdCerca: Int,
+    @ColumnInfo(name = "v_s4ad_cerca")
+    var vS4AdCerca: Int,
 
-    @ColumnInfo(name = "s4ad_lejos")
-    var s4AdLejos: Int,
+    @ColumnInfo(name = "v_s4ad_lejos")
+    var vS4AdLejos: Int,
 
-    @ColumnInfo(name = "otros_sa_perif")
-    var otrosSAPerif: Int,
+    @ColumnInfo(name = "v_otros_sa_perif")
+    var vOtrosSAPerif: Int,
 
-    @ColumnInfo(name = "otros_sa_cerca")
-    var otrosSACerca: Int,
+    @ColumnInfo(name = "v_otros_sa_cerca")
+    var vOtrosSACerca: Int,
 
-    @ColumnInfo(name = "otros_sa_lejos")
-    var otrosSALejos: Int,
+    @ColumnInfo(name = "v_otros_sa_lejos")
+    var vOtrosSALejos: Int,
+
+    /* =========================================
+   ================== MUERTOS ==================
+   ========================================= */
+
+    // ----- dominante ----- //
+    @ColumnInfo(name = "m_alfa_s4ad")
+    var mAlfaS4Ad: Int,
+
+    @ColumnInfo(name = "m_alfa_otros_sa")
+    var mAlfaOtrosSA: Int,
+
+    // ----- hembras y crias ----- //
+    @ColumnInfo(name = "m_hembras_ad")
+    var mHembrasAd: Int,
+
+    @ColumnInfo(name = "m_crias")
+    var mCrias: Int,
+
+    @ColumnInfo(name = "m_destetados")
+    var mDestetados: Int,
+
+    @ColumnInfo(name = "m_juveniles")
+    var mJuveniles: Int,
+
+    // ----- Ad/SA proximos ----- //
+    @ColumnInfo(name = "m_s4ad_perif")
+    var mS4AdPerif: Int,
+
+    @ColumnInfo(name = "m_s4ad_cerca")
+    var mS4AdCerca: Int,
+
+    @ColumnInfo(name = "m_s4ad_lejos")
+    var mS4AdLejos: Int,
+
+    @ColumnInfo(name = "m_otros_sa_perif")
+    var mOtrosSAPerif: Int,
+
+    @ColumnInfo(name = "m_otros_sa_cerca")
+    var mOtrosSACerca: Int,
+
+    @ColumnInfo(name = "m_otros_sa_lejos")
+    var mOtrosSALejos: Int,
 
     // ----- tiempo/espacio ----- //
     @ColumnInfo(name = "date")
     var date: String?,
 
-    @ColumnInfo(name="latitude")
-    var latitude: Double,
+    @ColumnInfo(name="latitud")
+    var latitud: Double,
 
-    @ColumnInfo(name="longitude")
-    var longitude: Double,
+    @ColumnInfo(name="longitud")
+    var longitud: Double,
 
     // ----- otros datos ----- //
     @ColumnInfo(name = "photo_path")
@@ -101,12 +146,24 @@ La interfaz requiere writeToParcel() para escribir el estado de un objeto en un 
 y createFromParcel() para crear una nueva instancia del objeto a partir de un Parcel.
  */
 {
+    @Ignore
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
         parcel.readInt(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
+        parcel.readInt(),
+        parcel.readInt(),
+        parcel.readInt(),
+        parcel.readInt(),
+        parcel.readInt(),
+        parcel.readInt(),
+        parcel.readInt(),
+        parcel.readInt(),
+        parcel.readInt(),
+        parcel.readInt(),
+        parcel.readInt(),
         parcel.readInt(),
         parcel.readInt(),
         parcel.readInt(),
@@ -128,66 +185,74 @@ y createFromParcel() para crear una nueva instancia del objeto a partir de un Pa
     ) {
     }
 
-    constructor(latitud: Double, longitud: Double, photoPath: String) : this(
-        1,1,"","","",1,1,1,1,1,
-        1,1,1,1,1,1,1,1,"",
-        latitud, longitud, photoPath,"")
+    @Ignore
+    constructor(idRecorrido: Int, estampatiempo: String) : this(
+        null,idRecorrido,null, null, null,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, /* vivos */
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, /* muertos */
+        estampatiempo, 0.0, 0.0, "","")
 
     constructor(
         idRecorrido: Int,
-        ptoObsUnSoc: String,
-        ctxSocial: String,
-        tpoSustrato: String,
-        alfaS4Ad: Int,
-        alfaOtrosSA: Int,
-        hembrasAd: Int,
-        criasVivas: Int,
-        criasMuertas: Int,
-        destetados: Int,
-        juveniles: Int,
-        s4AdPerif: Int,
-        s4AdCerca: Int,
-        s4AdLejos: Int,
-        otrosSAPerif: Int,
-        otrosSACerca: Int,
-        otrosSALejos: Int,
+        ptoObsUnSoc: String, ctxSocial: String, tpoSustrato: String,
+        vAlfaS4Ad: Int, vAlfaOtrosSA: Int, vHembrasAd: Int, vCrias: Int,
+        vDestetados: Int, vJuveniles: Int, vS4AdPerif: Int, vS4AdCerca: Int,
+        vS4AdLejos: Int, vOtrosSAPerif: Int, vOtrosSACerca: Int, vOtrosSALejos: Int,
+        mAlfaS4Ad: Int, mAlfaOtrosSA: Int, mHembrasAd: Int, mCrias: Int,
+        mDestetados: Int, mJuveniles: Int, mS4AdPerif: Int, mS4AdCerca: Int,
+        mS4AdLejos: Int, mOtrosSAPerif: Int, mOtrosSACerca: Int, mOtrosSALejos: Int,
         timeStamp: String,
-        latitud: Double,
-        longitud: Double,
+        latitud: Double, longitud: Double,
         photoPath: String,
         comentario: String
-    ) : this(0,idRecorrido,ptoObsUnSoc, ctxSocial, tpoSustrato, alfaS4Ad, alfaOtrosSA, hembrasAd,
-        criasVivas, criasMuertas, destetados, juveniles, s4AdPerif, s4AdCerca, s4AdLejos,
-        otrosSAPerif, otrosSACerca, otrosSALejos, timeStamp, latitud, longitud, photoPath, comentario)
+    ) : this(null, idRecorrido, ptoObsUnSoc, ctxSocial, tpoSustrato,
+        vAlfaS4Ad, vAlfaOtrosSA, vHembrasAd, vCrias, vDestetados, vJuveniles,
+        vS4AdPerif, vS4AdCerca, vS4AdLejos, vOtrosSAPerif, vOtrosSACerca, vOtrosSALejos,
+        mAlfaS4Ad, mAlfaOtrosSA, mHembrasAd, mCrias, mDestetados, mJuveniles,
+        mS4AdPerif, mS4AdCerca, mS4AdLejos, mOtrosSAPerif, mOtrosSACerca, mOtrosSALejos,
+        timeStamp, latitud, longitud, photoPath, comentario)
+
+    override fun describeContents(): Int {
+        return Parcelable.CONTENTS_FILE_DESCRIPTOR
+    }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeInt(id)
+        id?.let { parcel.writeInt(it) }
         parcel.writeInt(recorrId)
         parcel.writeString(ptoObsUnSoc)
         parcel.writeString(ctxSocial)
         parcel.writeString(tpoSustrato)
-        parcel.writeInt(alfaS4Ad)
-        parcel.writeInt(alfaOtrosSA)
-        parcel.writeInt(hembrasAd)
-        parcel.writeInt(criasVivas)
-        parcel.writeInt(criasMuertas)
-        parcel.writeInt(destetados)
-        parcel.writeInt(juveniles)
-        parcel.writeInt(s4AdPerif)
-        parcel.writeInt(s4AdCerca)
-        parcel.writeInt(s4AdLejos)
-        parcel.writeInt(otrosSAPerif)
-        parcel.writeInt(otrosSACerca)
-        parcel.writeInt(otrosSALejos)
+        /* VIVAS */
+        parcel.writeInt(vAlfaS4Ad)
+        parcel.writeInt(vAlfaOtrosSA)
+        parcel.writeInt(vHembrasAd)
+        parcel.writeInt(vCrias)
+        parcel.writeInt(vDestetados)
+        parcel.writeInt(vJuveniles)
+        parcel.writeInt(vS4AdPerif)
+        parcel.writeInt(vS4AdCerca)
+        parcel.writeInt(vS4AdLejos)
+        parcel.writeInt(vOtrosSAPerif)
+        parcel.writeInt(vOtrosSACerca)
+        parcel.writeInt(vOtrosSALejos)
+        /* MUERTAS */
+        parcel.writeInt(mAlfaS4Ad)
+        parcel.writeInt(mAlfaOtrosSA)
+        parcel.writeInt(mHembrasAd)
+        parcel.writeInt(mCrias)
+        parcel.writeInt(mDestetados)
+        parcel.writeInt(mJuveniles)
+        parcel.writeInt(mS4AdPerif)
+        parcel.writeInt(mS4AdCerca)
+        parcel.writeInt(mS4AdLejos)
+        parcel.writeInt(mOtrosSAPerif)
+        parcel.writeInt(mOtrosSACerca)
+        parcel.writeInt(mOtrosSALejos)
         parcel.writeString(date)
-        parcel.writeDouble(latitude)
-        parcel.writeDouble(longitude)
+        parcel.writeDouble(latitud)
+        parcel.writeDouble(longitud)
         parcel.writeString(photoPath)
         parcel.writeString(comentario)
-    }
-
-    override fun describeContents(): Int {
-        return 0
     }
 
     companion object CREATOR : Parcelable.Creator<UnidSocial> {

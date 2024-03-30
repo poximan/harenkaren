@@ -180,7 +180,7 @@
             android:text="mapa OSM" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/contar_animales"
+            android:id="@+id/crear_unsoc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"

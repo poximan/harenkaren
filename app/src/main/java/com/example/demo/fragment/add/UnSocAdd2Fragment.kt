@@ -141,14 +141,15 @@ class UnSocAdd2Fragment : Fragment() {
         val timeStamp = SimpleDateFormat("yyyy/MM/dd - HH:mm:ss").format(Date())
 
         return UnidSocial(
-                args.idRecorrido,
-                ptoObsUnSoc, ctxSocial, tpoSustrato,
-                alfaS4Ad, alfaOtrosSA, hembrasAd, crias,
-                crias, destetados, juveniles, s4AdPerif,
-                s4AdCerca, s4AdLejos, otrosSAPerif, otrosSACerca, otrosSALejos,
-                timeStamp, args.coordenadas.lat, args.coordenadas.lon,
-                args.photoPath, args.comentario
-            )
+            args.idRecorrido,
+            ptoObsUnSoc, ctxSocial, tpoSustrato,
+            alfaS4Ad, alfaOtrosSA, hembrasAd, crias, destetados, juveniles,
+            s4AdPerif, s4AdCerca, s4AdLejos, otrosSAPerif, otrosSACerca, otrosSALejos,
+            alfaS4Ad, alfaOtrosSA, hembrasAd, crias, destetados, juveniles,
+            s4AdPerif, s4AdCerca, s4AdLejos, otrosSAPerif, otrosSACerca, otrosSALejos,
+            timeStamp, args.coordenadas.lat, args.coordenadas.lon,
+            args.photoPath, args.comentario
+        )
     }
 
     private fun ptoObsUnidadSocialInfo() {

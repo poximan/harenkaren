@@ -47,20 +47,31 @@ interface UnSocDAO {
     @Query("SELECT \n" +
             "   id, id_recorrido,\n" +
             "   pto_observacion, ctx_social, tpo_sustrato ,\n" +
-            "   SUM(alfa_s4ad) AS alfa_s4ad,\n" +
-            "   SUM(alfa_otros_sa) AS alfa_otros_sa,\n" +
-            "   SUM(hembras_ad) AS hembras_ad,\n" +
-            "   SUM(crias_vivas) AS crias_vivas,\n" +
-            "   SUM(crias_muertas) AS crias_muertas,\n" +
-            "   SUM(destetados) AS destetados,\n" +
-            "   SUM(juveniles) AS juveniles,\n" +
-            "   SUM(s4ad_perif) AS s4ad_perif,\n" +
-            "   SUM(s4ad_cerca) AS s4ad_cerca,\n" +
-            "   SUM(s4ad_lejos) AS s4ad_lejos,\n" +
-            "   SUM(otros_sa_perif) AS otros_sa_perif,\n" +
-            "   SUM(otros_sa_cerca) AS otros_sa_cerca,\n" +
-            "   SUM(otros_sa_lejos) AS otros_sa_lejos,\n" +
-            "   date, latitude, longitude, photo_path, comentario \n" +
+            "   SUM(v_alfa_s4ad) AS v_alfa_s4ad,\n" +
+            "   SUM(v_alfa_otros_sa) AS v_alfa_otros_sa,\n" +
+            "   SUM(v_hembras_ad) AS v_hembras_ad,\n" +
+            "   SUM(v_crias) AS v_crias,\n" +
+            "   SUM(v_destetados) AS v_destetados,\n" +
+            "   SUM(v_juveniles) AS v_juveniles,\n" +
+            "   SUM(v_s4ad_perif) AS v_s4ad_perif,\n" +
+            "   SUM(v_s4ad_cerca) AS v_s4ad_cerca,\n" +
+            "   SUM(v_s4ad_lejos) AS v_s4ad_lejos,\n" +
+            "   SUM(v_otros_sa_perif) AS v_otros_sa_perif,\n" +
+            "   SUM(v_otros_sa_cerca) AS v_otros_sa_cerca,\n" +
+            "   SUM(v_otros_sa_lejos) AS v_otros_sa_lejos,\n" +
+            "   SUM(m_alfa_s4ad) AS m_alfa_s4ad,\n" +
+            "   SUM(m_alfa_otros_sa) AS m_alfa_otros_sa,\n" +
+            "   SUM(m_hembras_ad) AS m_hembras_ad,\n" +
+            "   SUM(m_crias) AS m_crias,\n" +
+            "   SUM(m_destetados) AS m_destetados,\n" +
+            "   SUM(m_juveniles) AS m_juveniles,\n" +
+            "   SUM(m_s4ad_perif) AS m_s4ad_perif,\n" +
+            "   SUM(m_s4ad_cerca) AS m_s4ad_cerca,\n" +
+            "   SUM(m_s4ad_lejos) AS m_s4ad_lejos,\n" +
+            "   SUM(m_otros_sa_perif) AS m_otros_sa_perif,\n" +
+            "   SUM(m_otros_sa_cerca) AS m_otros_sa_cerca,\n" +
+            "   SUM(m_otros_sa_lejos) AS m_otros_sa_lejos,\n" +
+            "   date, latitud, longitud, photo_path, comentario \n" +
             "FROM unidsocial\n" +
             "WHERE id_recorrido = :idRecorr;\n")
     fun getSumUnSocByRecorrId(idRecorr: Int): UnidSocial
@@ -68,20 +79,31 @@ interface UnSocDAO {
     @Query("SELECT \n" +
             "   id, id_recorrido,\n" +
             "   pto_observacion, ctx_social, tpo_sustrato ,\n" +
-            "   SUM(alfa_s4ad) AS alfa_s4ad,\n" +
-            "   SUM(alfa_otros_sa) AS alfa_otros_sa,\n" +
-            "   SUM(hembras_ad) AS hembras_ad,\n" +
-            "   SUM(crias_vivas) AS crias_vivas,\n" +
-            "   SUM(crias_muertas) AS crias_muertas,\n" +
-            "   SUM(destetados) AS destetados,\n" +
-            "   SUM(juveniles) AS juveniles,\n" +
-            "   SUM(s4ad_perif) AS s4ad_perif,\n" +
-            "   SUM(s4ad_cerca) AS s4ad_cerca,\n" +
-            "   SUM(s4ad_lejos) AS s4ad_lejos,\n" +
-            "   SUM(otros_sa_perif) AS otros_sa_perif,\n" +
-            "   SUM(otros_sa_cerca) AS otros_sa_cerca,\n" +
-            "   SUM(otros_sa_lejos) AS otros_sa_lejos,\n" +
-            "   date, latitude, longitude, photo_path, comentario \n" +
+            "   SUM(v_alfa_s4ad) AS v_alfa_s4ad,\n" +
+            "   SUM(v_alfa_otros_sa) AS v_alfa_otros_sa,\n" +
+            "   SUM(v_hembras_ad) AS v_hembras_ad,\n" +
+            "   SUM(v_crias) AS v_crias,\n" +
+            "   SUM(v_destetados) AS v_destetados,\n" +
+            "   SUM(v_juveniles) AS v_juveniles,\n" +
+            "   SUM(v_s4ad_perif) AS v_s4ad_perif,\n" +
+            "   SUM(v_s4ad_cerca) AS v_s4ad_cerca,\n" +
+            "   SUM(v_s4ad_lejos) AS v_s4ad_lejos,\n" +
+            "   SUM(v_otros_sa_perif) AS v_otros_sa_perif,\n" +
+            "   SUM(v_otros_sa_cerca) AS v_otros_sa_cerca,\n" +
+            "   SUM(v_otros_sa_lejos) AS v_otros_sa_lejos,\n" +
+            "   SUM(m_alfa_s4ad) AS m_alfa_s4ad,\n" +
+            "   SUM(m_alfa_otros_sa) AS m_alfa_otros_sa,\n" +
+            "   SUM(m_hembras_ad) AS m_hembras_ad,\n" +
+            "   SUM(m_crias) AS m_crias,\n" +
+            "   SUM(m_destetados) AS m_destetados,\n" +
+            "   SUM(m_juveniles) AS m_juveniles,\n" +
+            "   SUM(m_s4ad_perif) AS m_s4ad_perif,\n" +
+            "   SUM(m_s4ad_cerca) AS m_s4ad_cerca,\n" +
+            "   SUM(m_s4ad_lejos) AS m_s4ad_lejos,\n" +
+            "   SUM(m_otros_sa_perif) AS m_otros_sa_perif,\n" +
+            "   SUM(m_otros_sa_cerca) AS m_otros_sa_cerca,\n" +
+            "   SUM(m_otros_sa_lejos) AS m_otros_sa_lejos,\n" +
+            "   date, latitud, longitud, photo_path, comentario \n" +
             "FROM \n" +
             "    unidsocial\n" +
             "WHERE \n" +
@@ -91,20 +113,31 @@ interface UnSocDAO {
     @Query("SELECT \n" +
             "   id, id_recorrido,\n" +
             "   pto_observacion, ctx_social, tpo_sustrato ,\n" +
-            "   SUM(alfa_s4ad) AS alfa_s4ad,\n" +
-            "   SUM(alfa_otros_sa) AS alfa_otros_sa,\n" +
-            "   SUM(hembras_ad) AS hembras_ad,\n" +
-            "   SUM(crias_vivas) AS crias_vivas,\n" +
-            "   SUM(crias_muertas) AS crias_muertas,\n" +
-            "   SUM(destetados) AS destetados,\n" +
-            "   SUM(juveniles) AS juveniles,\n" +
-            "   SUM(s4ad_perif) AS s4ad_perif,\n" +
-            "   SUM(s4ad_cerca) AS s4ad_cerca,\n" +
-            "   SUM(s4ad_lejos) AS s4ad_lejos,\n" +
-            "   SUM(otros_sa_perif) AS otros_sa_perif,\n" +
-            "   SUM(otros_sa_cerca) AS otros_sa_cerca,\n" +
-            "   SUM(otros_sa_lejos) AS otros_sa_lejos,\n" +
-            "   date, latitude, longitude, photo_path, comentario \n" +
+            "   SUM(v_alfa_s4ad) AS v_alfa_s4ad,\n" +
+            "   SUM(v_alfa_otros_sa) AS v_alfa_otros_sa,\n" +
+            "   SUM(v_hembras_ad) AS v_hembras_ad,\n" +
+            "   SUM(v_crias) AS v_crias,\n" +
+            "   SUM(v_destetados) AS v_destetados,\n" +
+            "   SUM(v_juveniles) AS v_juveniles,\n" +
+            "   SUM(v_s4ad_perif) AS v_s4ad_perif,\n" +
+            "   SUM(v_s4ad_cerca) AS v_s4ad_cerca,\n" +
+            "   SUM(v_s4ad_lejos) AS v_s4ad_lejos,\n" +
+            "   SUM(v_otros_sa_perif) AS v_otros_sa_perif,\n" +
+            "   SUM(v_otros_sa_cerca) AS v_otros_sa_cerca,\n" +
+            "   SUM(v_otros_sa_lejos) AS v_otros_sa_lejos,\n" +
+            "   SUM(m_alfa_s4ad) AS m_alfa_s4ad,\n" +
+            "   SUM(m_alfa_otros_sa) AS m_alfa_otros_sa,\n" +
+            "   SUM(m_hembras_ad) AS m_hembras_ad,\n" +
+            "   SUM(m_crias) AS m_crias,\n" +
+            "   SUM(m_destetados) AS m_destetados,\n" +
+            "   SUM(m_juveniles) AS m_juveniles,\n" +
+            "   SUM(m_s4ad_perif) AS m_s4ad_perif,\n" +
+            "   SUM(m_s4ad_cerca) AS m_s4ad_cerca,\n" +
+            "   SUM(m_s4ad_lejos) AS m_s4ad_lejos,\n" +
+            "   SUM(m_otros_sa_perif) AS m_otros_sa_perif,\n" +
+            "   SUM(m_otros_sa_cerca) AS m_otros_sa_cerca,\n" +
+            "   SUM(m_otros_sa_lejos) AS m_otros_sa_lejos,\n" +
+            "   date, latitud, longitud, photo_path, comentario \n" +
             "FROM \n" +
             "    unidsocial\n")
     fun getSumTotal(): UnidSocial

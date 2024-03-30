@@ -130,7 +130,7 @@
                         android:text="crias" />
 
                     <EditText
-                        android:id="@+id/mCriasVivas"
+                        android:id="@+id/mCrias"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"

@@ -10,6 +10,8 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.demo.R
 import com.example.demo.databinding.FragmentHomeBinding
+import java.text.SimpleDateFormat
+import java.util.Date
 import kotlin.system.exitProcess
 
 class HomeFragment : Fragment() {
@@ -34,7 +36,9 @@ class HomeFragment : Fragment() {
     }
 
     private fun gotoSolapas() {
-        findNavController().navigate(R.id.goToSolapas)
+        val estampatiempo = SimpleDateFormat("yyyy/MM/dd - HH:mm:ss").format(Date())
+        val action = HomeFragmentDirections.goToSolapas(1, estampatiempo)
+        findNavController().navigate(action)
     }
 
     private fun gotoCensos() {

@@ -69,7 +69,7 @@
             app:popExitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/goToSolapas"
-            app:destination="@id/solapas_fragment"
+            app:destination="@id/solapa_fragment"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out"
             app:popEnterAnim="@android:anim/fade_in"
@@ -363,11 +363,36 @@
         android:label="Para desarrollador"
         tools:layout="@layout/fragment_dev" />
     <fragment
-        android:id="@+id/solapas_fragment"
+        android:id="@+id/solapa_fragment"
         android:name="com.example.demo.fragment.add.SolapaFragment"
         android:label="Add en solapas"
-        tools:layout="@layout/fragment_solapa" />
-
+        tools:layout="@layout/fragment_solapa">
+        <argument
+            android:name="idRecorrido"
+            app:argType="integer"/>
+        <argument
+            android:name="estampatiempo"
+            app:argType="string"/>
+        <action
+            android:id="@+id/goToOSMFragmentFromSolapaAction"
+            app:destination="@id/osmnuevo_fragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_solapa_fragment_self"
+            app:destination="@id/solapa_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/osmnuevo_fragment"
+        android:name="com.example.demo.fragment.maps.OSMFragment"
+        android:label="Mapa OSM"
+        tools:layout="@layout/fragment_osm">
+        <argument
+            android:name="coordenadas"
+            app:argType="com.example.demo.model.LatLong" />
+    </fragment>
     <fragment
         android:id="@+id/about_fragment"
         android:name="com.example.demo.fragment.info.AboutFragment"

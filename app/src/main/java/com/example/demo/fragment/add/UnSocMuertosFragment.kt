@@ -5,17 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.demo.databinding.FragmentSolapa2Binding
+import com.example.demo.databinding.FragmentUnsocMuertosBinding
+import com.example.demo.model.UnidSocial
 
-class Solapa2Fragment : Fragment() {
+class UnSocMuertosFragment(unidSocial: UnidSocial) : Fragment() {
 
-    private lateinit var binding: FragmentSolapa2Binding
+    private lateinit var binding: FragmentUnsocMuertosBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentSolapa2Binding.inflate(inflater, container, false)
+        binding = FragmentUnsocMuertosBinding.inflate(inflater, container, false)
         // Aquí configura la vista de tu primer fragmento
         return binding.root
     }
