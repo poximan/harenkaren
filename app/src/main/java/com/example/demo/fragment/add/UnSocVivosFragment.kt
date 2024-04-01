@@ -5,43 +5,62 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
-import com.example.demo.R
 import com.example.demo.databinding.FragmentUnsocVivosBinding
-import com.example.demo.model.UnidSocial
-import com.example.demo.viewModel.UnSocViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlin.reflect.KFunction2
 
-class UnSocVivosFragment(unSoc: UnidSocial) : Fragment() {
+class UnSocVivosFragment() : Fragment() {
+
+    companion object {
+        private lateinit var funColectar: (Int, Map<String, Any>) -> Unit
+    }
+    private val map: MutableMap<String, Any> = mutableMapOf()
 
     private var _binding: FragmentUnsocVivosBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var model: UnSocViewModel
-
-    private val unSoc = unSoc
+    fun newInstance(colectar: KFunction2<Int, Map<String, Any>, Unit>): UnSocVivosFragment {
+        funColectar = colectar
+        return UnSocVivosFragment()
+    }
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentUnsocVivosBinding.inflate(inflater, container, false)
-        val view = binding.root
+        cargarMap()
 
-        model = ViewModelProvider(this)[UnSocViewModel::class.java]
+        return binding.root
+    }
 
-        binding.confirmarUnsoc.setOnClickListener { crear() }
+    override fun onPause() {
+        super.onPause()
+        cargarMap()
+    }
 
-        return view
+    private fun cargarMap() {
+        // ----- dominante ----- //
+        map["v_alfa_s4ad"] = safeStringToInt(binding.vAlfaS4Ad.text.toString())
+        map["v_alfa_otros_sa"] = safeStringToInt(binding.vAlfaOtrosSA.text.toString())
+
+        // ----- hembras y crias ----- //
+        map["v_hembras_ad"] = safeStringToInt(binding.vHembrasAd.text.toString())
+        map["v_crias"] = safeStringToInt(binding.vCrias.text.toString())
+        map["v_destetados"] = safeStringToInt(binding.vDestetados.text.toString())
+        map["v_juveniles"] = safeStringToInt(binding.vJuveniles.text.toString())
+
+        // ----- Ad/SA proximos ----- //
+        map["v_s4ad_perif"] = safeStringToInt(binding.vS4AdPerif.text.toString())
+        map["v_s4ad_cerca"] = safeStringToInt(binding.vS4AdCerca.text.toString())
+        map["v_s4ad_lejos"] = safeStringToInt(binding.vS4AdLejos.text.toString())
+        map["v_otros_sa_perif"] = safeStringToInt(binding.vOtroSAPerif.text.toString())
+        map["v_otros_sa_cerca"] = safeStringToInt(binding.vOtroSACerca.text.toString())
+        map["v_otros_sa_lejos"] = safeStringToInt(binding.vOtroSALejos.text.toString())
+
+        funColectar(1,map)
     }
 
     override fun onDestroyView() {
@@ -49,35 +68,15 @@ class UnSocVivosFragment(unSoc: UnidSocial) : Fragment() {
         _binding = null
     }
 
-    private fun crear() {
-
-        // ----- dominante ----- //
-        unSoc.vAlfaS4Ad = binding.vMachoAdS4.text.toString().toInt()
-        unSoc.vAlfaOtrosSA = binding.vMachoAdS4.text.toString().toInt()
-        // ----- hembras y crias ----- //
-        unSoc.vHembrasAd = binding.vHembrasAd.text.toString().toInt()
-        unSoc.vCrias = binding.vCrias.text.toString().toInt()
-        unSoc.vDestetados = binding.vDestetados.text.toString().toInt()
-        unSoc.vJuveniles = binding.vJuveniles.text.toString().toInt()
-        // ----- Ad/SA proximos ----- //
-        unSoc.vS4AdPerif = binding.vS4AdPerif.text.toString().toInt()
-        unSoc.vS4AdCerca = binding.vS4AdCerca.text.toString().toInt()
-        unSoc.vS4AdLejos = binding.vS4AdLejos.text.toString().toInt()
-        unSoc.vOtrosSAPerif = binding.vOtroSAPerif.text.toString().toInt()
-        unSoc.vOtrosSACerca = binding.vOtroSACerca.text.toString().toInt()
-        unSoc.vOtrosSALejos = binding.vOtroSALejos.text.toString().toInt()
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            withContext(Dispatchers.IO) {// Dispatchers.IO es el hilo background
-                val unSocBD = unSoc.id?.let { model.readUnico(it) }
-                if(unSocBD == null)
-                    model.insert(unSoc)
-                else
-                    model.update(unSoc)
-            }
+    private fun safeStringToInt(value: String): Int {
+        return try {
+            value.toInt()
+        } catch (e: NumberFormatException) {
+            0
         }
+    }
 
-        Toast.makeText(activity, "Unidad social agregada correctamente", Toast.LENGTH_LONG).show()
-        findNavController().navigate(R.id.unsoc_list_fragment)
+    override fun toString(): String {
+        return "Vivos"
     }
 }

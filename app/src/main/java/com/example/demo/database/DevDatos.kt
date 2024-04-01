@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.demo.dao.DiaDAO
 import com.example.demo.dao.RecorrDAO
 import com.example.demo.dao.UnSocDAO
+import com.example.demo.dao.UsuarioDAO
 import com.example.demo.model.Dia
 import com.example.demo.model.Recorrido
 import com.example.demo.model.UnidSocial
@@ -142,6 +143,10 @@ class DevDatos {
             unsocDAO.insert(unsoc)
         }
         Log.d("DATOS DB", "se agregaron unidades sociales")
+    }
+
+    fun generarUsuario(dao: UsuarioDAO) {
+        dao.create("hdonato@donato.com","hdonato",true)
     }
 
     fun vaciarDias(diaDAO: DiaDAO) {

@@ -51,8 +51,8 @@ class RecorrListFragment : Fragment(), RecorrListAdapter.OnRecorrClickListener {
         return binding.root
     }
 
-    override fun onItemClick(recorrido: Recorrido) {
-        val action = RecorrListFragmentDirections.goToRecorrDetailAction(recorrido)
+    override fun onItemClick(elem: Recorrido) {
+        val action = RecorrListFragmentDirections.goToRecorrDetailAction(elem)
         findNavController().navigate(action)
     }
 

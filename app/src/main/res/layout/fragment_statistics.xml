@@ -3,11 +3,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
-    tools:context=".fragment.statistics.StatisticsFragment">
+    android:layout_margin="20dp">
 
     <LinearLayout
         android:id="@+id/linearLayout1"

@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".fragment.add.UnSocAdd2Fragment">
+    android:layout_height="match_parent">
 
         <LinearLayout
             android:id="@+id/linearLayout4"
@@ -35,10 +33,9 @@
                     android:text="@string/s4_ad" />
 
                 <EditText
-                    android:id="@+id/mMachoAdS4"
+                    android:id="@+id/mAlfaS4Ad"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0"
                     android:inputType="number" />
 
             </LinearLayout>
@@ -56,10 +53,9 @@
                     android:text="@string/otros_ad" />
 
                 <EditText
-                    android:id="@+id/mMachoSA"
+                    android:id="@+id/mAlfaOtrosSA"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0"
                     android:inputType="number" />
 
             </LinearLayout>
@@ -102,7 +98,6 @@
                     android:id="@+id/mHembrasAd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0"
                     android:inputType="number" />
             </LinearLayout>
             <View
@@ -133,7 +128,6 @@
                         android:id="@+id/mCrias"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0"
                         android:inputType="number" />
 
                 </LinearLayout>
@@ -160,7 +154,6 @@
                     android:id="@+id/mDestetados"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0"
                     android:inputType="number" />
 
             </LinearLayout>
@@ -181,7 +174,6 @@
                     android:id="@+id/mJuveniles"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0"
                     android:inputType="number" />
 
             </LinearLayout>
@@ -242,7 +234,6 @@
                             android:id="@+id/mS4AdPerif"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0"
                             android:inputType="number" />
 
                     </LinearLayout>
@@ -267,7 +258,6 @@
                             android:id="@+id/mS4AdCerca"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0"
                             android:inputType="number" />
 
                     </LinearLayout>
@@ -292,7 +282,6 @@
                             android:id="@+id/mS4AdLejos"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0"
                             android:inputType="number" />
 
                     </LinearLayout>
@@ -356,7 +345,6 @@
                             android:id="@+id/mOtroSAPerif"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0"
                             android:inputType="number" />
 
                     </LinearLayout>
@@ -383,7 +371,6 @@
                             android:id="@+id/mOtroSACerca"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0"
                             android:inputType="number" />
 
                     </LinearLayout>
@@ -407,21 +394,10 @@
                             android:id="@+id/mOtroSALejos"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0"
                             android:inputType="number" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/confirmar_unsoc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            app:layout_constraintTop_toBottomOf="@id/linearLayout10"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginRight="30dp"
-            app:srcCompat="@drawable/ic_check" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

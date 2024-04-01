@@ -151,7 +151,7 @@ class RecorrAddFragment : Fragment() {
                     Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.ACCESS_COARSE_LOCATION
                 ),
-                UnSocAdd1Fragment.DbConstants.PERMISSION_REQUEST_LOCATION
+                UnSocGralFragment.DbConstants.PERMISSION_REQUEST_LOCATION
             )
         }
     }

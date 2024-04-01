@@ -1,13 +1,13 @@
 <resources>
     <string name="app_name">Haren Karen</string>
 
-    <string name="punto_obs_unsoc">Punto de observacion:</string>
+    <string name="punto_obs_unsoc">Punto observ.:</string>
     <string-array name="op_punto_obs_unsoc">
         <item id="alto">Alto</item>
         <item id="bajo">Bajo</item>
     </string-array>
 
-    <string name="contexto_social">Ctx social (Ref):</string>
+    <string name="contexto_social">Ctx.soc. (Ref):</string>
     <string-array name="op_contexto_social">
         <item id="H">haren(H)</item>
         <item id="GH">gpo harenes(GH)</item>
@@ -15,7 +15,7 @@
         <item id="S">indiv solo(S)</item>
     </string-array>
 
-    <string name="tipo_sustrato">Tipo sustrato (Pya)</string>
+    <string name="tipo_sustrato">Sustrato (Pya)</string>
     <string-array name="op_tipo_sustrato">
         <item id="A">arena(A)</item>
         <item id="CR">canto rodado(CR)</item>

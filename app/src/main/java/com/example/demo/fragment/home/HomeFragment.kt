@@ -30,15 +30,8 @@ class HomeFragment : Fragment() {
         _binding!!.regulationsButton.setOnClickListener { showRegulations() }
         _binding!!.goToStatisticsButton.setOnClickListener { goToStatistics() }
         _binding!!.logOutButton.setOnClickListener { logOut() }
-        _binding!!.solapasBoton.setOnClickListener { gotoSolapas() }
 
         return binding.root
-    }
-
-    private fun gotoSolapas() {
-        val estampatiempo = SimpleDateFormat("yyyy/MM/dd - HH:mm:ss").format(Date())
-        val action = HomeFragmentDirections.goToSolapas(1, estampatiempo)
-        findNavController().navigate(action)
     }
 
     private fun gotoCensos() {

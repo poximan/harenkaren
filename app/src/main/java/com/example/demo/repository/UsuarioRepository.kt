@@ -3,16 +3,14 @@ package com.example.demo.repository
 import com.example.demo.dao.UsuarioDAO
 import com.example.demo.exception.MultipleUsuarioException
 import com.example.demo.exception.NoExiteUsuarioException
-import com.example.demo.model.Dia
 import com.example.demo.model.Usuario
-
 
 class UsuarioRepository(private val dao: UsuarioDAO) {
 
-    fun insert(elem: Dia) {
+    fun insert(elem: Usuario) {
         dao.insert(elem)
     }
-    fun update(elem: Dia) {
+    fun update(elem: Usuario) {
         dao.update(elem)
     }
 

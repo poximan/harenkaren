@@ -209,17 +209,17 @@
                         app:destination="@id/unsoc_detail_fragment" />
                     <action
                         android:id="@+id/goToNewUnSocFromUnSocListAction"
-                        app:destination="@id/unsoc_add1_fragment" />
+                        app:destination="@id/solapa_fragment" />
                 </fragment>
-                <fragment
-                    android:id="@+id/unsoc_add1_fragment"
-                    android:name="com.example.demo.fragment.add.UnSocAdd1Fragment"
-                    android:label="Nueva unidad social"
-                    tools:layout="@layout/fragment_unsoc_add1">
 
+                <fragment
+                    android:id="@+id/solapa_fragment"
+                    android:name="com.example.demo.fragment.add.SolapaFragment"
+                    android:label="Nueva unidad social"
+                    tools:layout="@layout/fragment_solapa">
                     <argument
                         android:name="idRecorrido"
-                        app:argType="integer" />
+                        app:argType="integer"/>
                     <action
                         android:id="@+id/goToOSMFragmentAction"
                         app:destination="@id/osm_fragment"
@@ -228,45 +228,10 @@
                         app:popEnterAnim="@android:anim/fade_in"
                         app:popExitAnim="@android:anim/fade_out" />
                     <action
-                        android:id="@+id/goToAdd2FragmentAction"
-                        app:destination="@id/unsoc_add2_fragment"
-                        app:enterAnim="@android:anim/fade_in"
-                        app:exitAnim="@android:anim/fade_out"
-                        app:popEnterAnim="@android:anim/fade_in"
-                        app:popExitAnim="@android:anim/fade_out" />
-
-                </fragment>
-                <fragment
-                    android:id="@+id/unsoc_add2_fragment"
-                    android:name="com.example.demo.fragment.add.UnSocAdd2Fragment"
-                    android:label="Nueva unidad social"
-                    tools:layout="@layout/fragment_unsoc_add2">
-
-                    <argument
-                        android:name="idRecorrido"
-                        app:argType="integer" />
-                    <argument
-                        android:name="coordenadas"
-                        app:argType="com.example.demo.model.LatLong" />
-                    <argument
-                        android:name="photoPath"
-                        app:argType="string" />
-                    <argument
-                        android:name="comentario"
-                        app:argType="string" />
-                    <action
-                        android:id="@+id/goToUnSocListFromUnSocAddAction"
+                        android:id="@+id/goToUnSocListFromSolapaAction"
                         app:destination="@id/unsoc_list_fragment" />
-                    <action
-                        android:id="@+id/ptoObsUnSocAction"
-                        app:destination="@id/ptoObsUnSoc_activity" />
-                    <action
-                        android:id="@+id/ctxSocialAction"
-                        app:destination="@id/ctxSocial_activity" />
-                    <action
-                        android:id="@+id/tpoSustratoAction"
-                        app:destination="@id/tpoSustrato_activity" />
                 </fragment>
+
                 <fragment
                     android:id="@+id/unsoc_detail_fragment"
                     android:name="com.example.demo.fragment.detail.UnSocDetailFragment"
@@ -297,6 +262,7 @@
                         app:popEnterAnim="@android:anim/fade_in"
                         app:popExitAnim="@android:anim/fade_out" />
                 </fragment>
+
                 <fragment
                     android:id="@+id/unsoc_update_fragment"
                     android:name="com.example.demo.fragment.update.UnSocUpdateFragment"
@@ -362,37 +328,6 @@
         android:name="com.example.demo.DevFragment"
         android:label="Para desarrollador"
         tools:layout="@layout/fragment_dev" />
-    <fragment
-        android:id="@+id/solapa_fragment"
-        android:name="com.example.demo.fragment.add.SolapaFragment"
-        android:label="Add en solapas"
-        tools:layout="@layout/fragment_solapa">
-        <argument
-            android:name="idRecorrido"
-            app:argType="integer"/>
-        <argument
-            android:name="estampatiempo"
-            app:argType="string"/>
-        <action
-            android:id="@+id/goToOSMFragmentFromSolapaAction"
-            app:destination="@id/osmnuevo_fragment"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out"
-            app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/fade_out" />
-        <action
-            android:id="@+id/action_solapa_fragment_self"
-            app:destination="@id/solapa_fragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/osmnuevo_fragment"
-        android:name="com.example.demo.fragment.maps.OSMFragment"
-        android:label="Mapa OSM"
-        tools:layout="@layout/fragment_osm">
-        <argument
-            android:name="coordenadas"
-            app:argType="com.example.demo.model.LatLong" />
-    </fragment>
     <fragment
         android:id="@+id/about_fragment"
         android:name="com.example.demo.fragment.info.AboutFragment"

@@ -25,7 +25,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.example.demo.R
 import com.example.demo.databinding.FragmentUnsocUpdateBinding
-import com.example.demo.fragment.add.UnSocAdd1Fragment.DbConstants.REQUEST_TAKE_PHOTO
+import com.example.demo.fragment.add.UnSocGralFragment
 import com.example.demo.viewModel.UnSocViewModel
 import java.io.File
 import java.io.FileOutputStream
@@ -98,7 +98,7 @@ class UnSocUpdateFragment : Fragment() {
                         photoFile
                     )
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                    startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO)
+                    startActivityForResult(takePictureIntent, UnSocGralFragment.DbConstants.REQUEST_TAKE_PHOTO)
                 }
             }
         }
@@ -125,7 +125,7 @@ class UnSocUpdateFragment : Fragment() {
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == AppCompatActivity.RESULT_OK) {
+        if (requestCode == UnSocGralFragment.DbConstants.REQUEST_TAKE_PHOTO && resultCode == AppCompatActivity.RESULT_OK) {
             rotateImage(reduceBitmap())
         }
     }

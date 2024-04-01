@@ -29,6 +29,8 @@ class DevFragment : Fragment() {
         setHasOptionsMenu(true)
 
         _binding!!.poblarBd.setOnClickListener { poblar() }
+        _binding!!.usuario.setOnClickListener { altaUsuario() }
+
         _binding!!.limpiarDias.setOnClickListener { limpiarDias() }
         _binding!!.limpiarRecorr.setOnClickListener { limpiarRecorr() }
         _binding!!.limpiarUnsoc.setOnClickListener { limpiarUnidSoc() }
@@ -39,6 +41,22 @@ class DevFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.regulation_filter_menu, menu)
         menu.findItem(R.id.regulation_action_filter)
+    }
+
+    private fun altaUsuario() {
+        val viewModelScope = viewLifecycleOwner.lifecycleScope
+
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {// Dispatchers.IO es el hilo background
+                val datos = DevDatos()
+
+                val dao = HarenKarenRoomDatabase
+                    .getDatabase(requireActivity().application, viewModelScope)
+                    .usuarioDao()
+
+                datos.generarUsuario(dao)
+            }
+        }
     }
 
     private fun poblar() {

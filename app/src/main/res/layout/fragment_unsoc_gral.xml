@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".fragment.add.UnSocAdd1Fragment">
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -121,27 +121,45 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/indicator_nof"
                 android:layout_marginHorizontal="10dp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="lat:"/>
-            <TextView
-                android:id="@+id/latitud"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
-                android:text="0.0"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="lon:"
-                android:layout_marginLeft="5pt"/>
-            <TextView
-                android:id="@+id/longitud"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
-                android:text="0.0"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center_vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="latitud:"
+                        android:layout_marginRight="5dp"/>
+                    <TextView
+                        android:id="@+id/latitud"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        android:hint="0.0"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="longitud:"
+                        android:layout_marginRight="5dp"/>
+                    <TextView
+                        android:id="@+id/longitud"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        android:hint="0.0"/>
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
         <LinearLayout
             android:id="@+id/linearLayout6"
@@ -178,16 +196,6 @@
             app:layout_constraintTop_toBottomOf="@id/linearLayout6"
             app:layout_constraintRight_toRightOf="parent"
             android:text="mapa OSM" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/crear_unsoc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            app:layout_constraintTop_toBottomOf="@id/map_osm"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginRight="30dp"
-            app:srcCompat="@drawable/ic_check" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

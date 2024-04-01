@@ -14,6 +14,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,8 +28,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.exifinterface.media.ExifInterface
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -36,18 +35,19 @@ import com.example.demo.R
 import com.example.demo.adapter.PhotoAdapter
 import com.example.demo.databinding.FragmentUnsocGralBinding
 import com.example.demo.model.LatLong
-import com.example.demo.model.UnidSocial
-import com.example.demo.viewModel.UnSocViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
+import kotlin.reflect.KFunction2
 
-class UnSocGralFragment(unSoc: UnidSocial) : Fragment() {
+class UnSocGralFragment() : Fragment() {
+
+    companion object {
+        private lateinit var funColectar: (Int, Map<String, Any>) -> Unit
+    }
+    private val map: MutableMap<String, Any> = mutableMapOf()
 
     object DbConstants {
         const val REQUEST_TAKE_PHOTO = 2
@@ -58,27 +58,27 @@ class UnSocGralFragment(unSoc: UnidSocial) : Fragment() {
     private var _binding: FragmentUnsocGralBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var model: UnSocViewModel
-
     private val photoPaths = mutableListOf<String>()
-    private var currentPhotoPath: String = ""
     private val adapter = PhotoAdapter(photoPaths)
+    private var currentPhotoPath: String = ""
 
     private lateinit var locationManager: LocationManager
     private var indicatorLight: ImageView? = null
-
-    private val unSoc = unSoc
     private val latLon = LatLong()
+
+    fun newInstance(colectar: KFunction2<Int, Map<String, Any>, Unit>): UnSocGralFragment {
+        funColectar = colectar
+        return UnSocGralFragment()
+    }
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         _binding = FragmentUnsocGralBinding.inflate(inflater, container, false)
         val view = binding.root
-
-        model = ViewModelProvider(this)[UnSocViewModel::class.java]
 
         val photoRecyclerView: RecyclerView = binding.photoRecyclerView
         val layoutManager =
@@ -111,9 +111,8 @@ class UnSocGralFragment(unSoc: UnidSocial) : Fragment() {
         binding.getPosicion.setOnClickListener { getPosicionActual() }
         binding.photoButton.setOnClickListener { takePhoto() }
         binding.mapOsm.setOnClickListener { usarMapaOSM() }
-        binding.crearUnsoc.setOnClickListener { crear() }
 
-        return binding.root
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -121,37 +120,49 @@ class UnSocGralFragment(unSoc: UnidSocial) : Fragment() {
         indicatorLight = view.findViewById(R.id.gpsLightUnSoc)
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        try{
+            latLon.lat = arguments?.getDouble("lat")!!
+            latLon.lon = arguments?.getDouble("lon")!!
+        }
+        catch(e: NullPointerException){
+        }
+
+        mostrarEnPantalla()
+        Log.i("ESTADOS", "primer plano")
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        val bundle = Bundle().apply {
+            putDouble("lat", latLon.lat)
+            putDouble("lon", latLon.lon)
+        }
+        arguments = bundle
+        Log.i("ESTADOS", "en pausa")
+        
+        map["pto_observacion"] = binding.spinnerAddPtoObs.selectedItem.toString()
+        map["ctx_social"] = binding.spinnerAddCtxSocial.selectedItem.toString()
+        map["tpo_sustrato"] =  binding.spinnerAddTpoSustrato.selectedItem.toString()
+        map["latitud"] = latLon.lat
+        map["longitud"] = latLon.lon
+        map["photo_path"] = currentPhotoPath
+        map["comentario"] = binding.unSocComentario.text.toString()
+
+        funColectar(0,map)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    private fun crear() {
-
-        unSoc.ptoObsUnSoc = binding.spinnerAddPtoObs.selectedItem.toString()
-        unSoc.ctxSocial = binding.spinnerAddCtxSocial.selectedItem.toString()
-        unSoc.tpoSustrato= binding.spinnerAddTpoSustrato.selectedItem.toString()
-        unSoc.comentario = binding.unSocComentario.text.toString()
-        unSoc.latitud = latLon.lat
-        unSoc.longitud = latLon.lon
-        unSoc.photoPath = currentPhotoPath
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            withContext(Dispatchers.IO) {// Dispatchers.IO es el hilo background
-                val unSocBD = unSoc.id?.let { model.readUnico(it) }
-                if(unSocBD == null)
-                    model.insert(unSoc)
-                else
-                    model.update(unSoc)
-            }
-        }
-
-        Toast.makeText(activity, "Unidad social agregada correctamente", Toast.LENGTH_LONG).show()
-        findNavController().navigate(R.id.unsoc_list_fragment)
+        Log.i("ESTADOS", "se destruye")
     }
 
     private fun usarMapaOSM() {
-        val action = SolapaFragmentDirections.goToOSMFragmentFromSolapaAction(latLon)
+        val action = SolapaFragmentDirections.goToOSMFragmentAction(latLon)
         findNavController().navigate(action)
     }
 
@@ -166,6 +177,68 @@ class UnSocGralFragment(unSoc: UnidSocial) : Fragment() {
             requestCameraPermission()
         }
     }
+
+    private fun updateLocationViews(latitud: Double, longitud: Double) {
+        latLon.lat = latitud
+        latLon.lon = longitud
+
+        mostrarEnPantalla()
+    }
+
+    private fun mostrarEnPantalla() {
+        val lat = String.format("%.6f", latLon.lat)
+        val lon = String.format("%.6f", latLon.lon)
+
+        binding.latitud.text = lat
+        binding.longitud.text = lon
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun getPosicionActual() {
+
+        locationManager = requireActivity().getSystemService(LocationManager::class.java)
+
+        if (checkLocationPermission()) {
+            indicatorLight?.setImageResource(R.drawable.indicator_off)
+
+            locationManager.requestSingleUpdate(
+                LocationManager.GPS_PROVIDER,
+                object : LocationListener {
+                    override fun onLocationChanged(location: Location) {
+                        indicatorLight?.setImageResource(R.drawable.indicator_on)
+                        updateLocationViews(location.latitude, location.longitude)
+                    }
+
+                    override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {}
+                    override fun onProviderEnabled(provider: String) {}
+                    override fun onProviderDisabled(provider: String) {
+                        val message =
+                            "GPS deshabilitado. Habilítar en Configuraciones."
+                        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                    }
+                },
+                null
+            )
+        } else {
+            requestLocationPermission()
+        }
+    }
+
+    private fun ptoObsUnidadSocialInfo() {
+        findNavController().navigate(R.id.ptoObsUnSoc_activity)
+    }
+
+    private fun ctxSocialInfo() {
+        findNavController().navigate(R.id.ctxSocial_activity)
+    }
+
+    private fun tpoSustratoInfo() {
+        findNavController().navigate(R.id.tpoSustrato_activity)
+    }
+
+    /*
+    RELACIONADAS CON PERMISOS DE CAMARA, ALMACENAMIENTO EXTERNO Y GPS
+     */
 
     private fun checkCameraPermission(): Boolean {
         return ContextCompat.checkSelfPermission(
@@ -326,37 +399,6 @@ class UnSocGralFragment(unSoc: UnidSocial) : Fragment() {
         binding.captureImageView.setImageBitmap(rotatedBitmap)
     }
 
-    @RequiresApi(Build.VERSION_CODES.M)
-    private fun getPosicionActual() {
-
-        locationManager = requireActivity().getSystemService(LocationManager::class.java)
-
-        if (checkLocationPermission()) {
-            indicatorLight?.setImageResource(R.drawable.indicator_off)
-
-            locationManager.requestSingleUpdate(
-                LocationManager.GPS_PROVIDER,
-                object : LocationListener {
-                    override fun onLocationChanged(location: Location) {
-                        indicatorLight?.setImageResource(R.drawable.indicator_on)
-                        updateLocationViews(location.latitude, location.longitude)
-                    }
-
-                    override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {}
-                    override fun onProviderEnabled(provider: String) {}
-                    override fun onProviderDisabled(provider: String) {
-                        val message =
-                            "GPS deshabilitado. Habilítar en Configuraciones."
-                        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-                    }
-                },
-                null
-            )
-        } else {
-            requestLocationPermission()
-        }
-    }
-
     private fun checkLocationPermission(): Boolean {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val fineLocationPermission =
@@ -376,17 +418,6 @@ class UnSocGralFragment(unSoc: UnidSocial) : Fragment() {
         }
     }
 
-    private fun updateLocationViews(latitud: Double, longitud: Double) {
-        latLon.lat = latitud
-        latLon.lon = longitud
-
-        val lat = String.format("%.6f", latitud)
-        val lon = String.format("%.6f", longitud)
-
-        binding.latitud.text = lat
-        binding.longitud.text = lon
-    }
-
     private fun requestLocationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(
@@ -399,15 +430,7 @@ class UnSocGralFragment(unSoc: UnidSocial) : Fragment() {
         }
     }
 
-    private fun ptoObsUnidadSocialInfo() {
-        findNavController().navigate(R.id.ptoObsUnSoc_activity)
-    }
-
-    private fun ctxSocialInfo() {
-        findNavController().navigate(R.id.ctxSocial_activity)
-    }
-
-    private fun tpoSustratoInfo() {
-        findNavController().navigate(R.id.tpoSustrato_activity)
+    override fun toString(): String {
+        return "Gral"
     }
 }

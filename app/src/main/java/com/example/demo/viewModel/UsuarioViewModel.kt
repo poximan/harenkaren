@@ -7,7 +7,7 @@ import com.example.demo.database.HarenKarenRoomDatabase
 import com.example.demo.exception.MultipleUsuarioException
 import com.example.demo.exception.NoExiteUsuarioException
 import com.example.demo.fragment.login.UsuarioCallback
-import com.example.demo.model.Dia
+import com.example.demo.model.Usuario
 import com.example.demo.repository.UsuarioRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -23,12 +23,12 @@ class UsuarioViewModel(application: Application) : AndroidViewModel(application)
         repository = UsuarioRepository(dao)
     }
 
-    fun insert(dia: Dia) = CoroutineScope(Dispatchers.IO).launch(Dispatchers.IO) {
-        repository.insert(dia)
+    fun insert(elem: Usuario) = CoroutineScope(Dispatchers.IO).launch(Dispatchers.IO) {
+        repository.insert(elem)
     }
 
-    fun update(dia: Dia) = CoroutineScope(Dispatchers.IO).launch {
-        repository.update(dia)
+    fun update(elem: Usuario) = CoroutineScope(Dispatchers.IO).launch {
+        repository.update(elem)
     }
 
     fun loginConEmailPass(email: String, password: String, callback: UsuarioCallback) {

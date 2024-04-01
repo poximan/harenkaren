@@ -37,6 +37,7 @@ class UnSocListFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         setHasOptionsMenu(true)
         _binding = FragmentUnsocListBinding.inflate(inflater, container, false)
 
@@ -49,8 +50,8 @@ class UnSocListFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
         return binding.root
     }
 
-    override fun onItemClick(unSoc: UnidSocial) {
-        val action = UnSocListFragmentDirections.goToUnSocDetailFromUnSocListAction(unSoc)
+    override fun onItemClick(elem: UnidSocial) {
+        val action = UnSocListFragmentDirections.goToUnSocDetailFromUnSocListAction(elem)
         findNavController().navigate(action)
     }
 

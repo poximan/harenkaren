@@ -42,18 +42,19 @@ class UnSocListAdapter(
             itemView.setOnClickListener { itemClickListener.onItemClick(unidSocial) }
 
             id.text = unidSocial.id.toString()
-            unSocResumen.text = "*Pto.obs.: " + unidSocial.ptoObsUnSoc + " *Ctx.social: " + unidSocial.ctxSocial + " *Tpo.sust.: " + unidSocial.tpoSustrato + "\n" +
-
-                    " vivos --> *AlfaS4/Ad: " + unidSocial.vAlfaS4Ad + " *AlfaOtrosSA: " + unidSocial.vAlfaOtrosSA + " *Hembras Ad.: " + unidSocial.vHembrasAd + "\n" +
-                    " *Crias: " + unidSocial.vCrias + " *Destetados: " + unidSocial.vDestetados + " *Juveniles: " + unidSocial.vJuveniles + "\n" +
-                    " *S4/Ad Perif.: " + unidSocial.vS4AdPerif + " *S4/Ad Cerca: " + unidSocial.vS4AdCerca + " *S4/Ad Lejos: " + unidSocial.vS4AdLejos + "\n" +
-                    " *Otros SA Perif.: " + unidSocial.vOtrosSAPerif + " *Otros SA Cerca: " + unidSocial.vOtrosSACerca + " *Otros SA Lejos: " + unidSocial.vOtrosSALejos + "\n\n" +
-
-                    " muertos --> *AlfaS4/Ad: " + unidSocial.mAlfaS4Ad + " *AlfaOtrosSA: " + unidSocial.mAlfaOtrosSA + " *Hembras Ad.: " + unidSocial.mHembrasAd + "\n" +
-                    " *Crias: " + unidSocial.mCrias + " *Destetados: " + unidSocial.mDestetados + " *Juveniles: " + unidSocial.mJuveniles + "\n" +
-                    " *S4/Ad Perif.: " + unidSocial.mS4AdPerif + " *S4/Ad Cerca: " + unidSocial.mS4AdCerca + " *S4/Ad Lejos: " + unidSocial.mS4AdLejos + "\n" +
-                    " *Otros SA Perif.: " + unidSocial.mOtrosSAPerif + " *Otros SA Cerca: " + unidSocial.mOtrosSACerca + " *Otros SA Lejos: " + unidSocial.mOtrosSALejos + "\n\n" +
-                    " *Fecha: " + unidSocial.date + " *Comentario: " + unidSocial.comentario
+            unSocResumen.text =
+                        " vivos --> *AlfaS4/Ad: " + unidSocial.vAlfaS4Ad + " *AlfaOt.SA: " + unidSocial.vAlfaOtrosSA +
+                        " *Hem.Ad.: " + unidSocial.vHembrasAd + " *Crias: " + unidSocial.vCrias + " *Dest.: " + unidSocial.vDestetados +
+                        " *Juv: " + unidSocial.vJuveniles + " *S4/Ad Perif.: " + unidSocial.vS4AdPerif + " *S4/Ad Cerca: " + unidSocial.vS4AdCerca +
+                        " *S4/Ad Lejos: " + unidSocial.vS4AdLejos + " *Ot.SA Perif.: " + unidSocial.vOtrosSAPerif +
+                        " *Ot.SA Cerca: " + unidSocial.vOtrosSACerca + " *Ot.SA Lejos: " + unidSocial.vOtrosSALejos +
+                        "\n" +
+                        " muertos --> *AlfaS4/Ad: " + unidSocial.mAlfaS4Ad + " *AlfaOt.SA: " + unidSocial.mAlfaOtrosSA +
+                        " *Hem.Ad.: " + unidSocial.mHembrasAd + " *Crias: " + unidSocial.mCrias + " *Dest.: " + unidSocial.mDestetados +
+                        " *Juv.: " + unidSocial.mJuveniles + " *S4/Ad Perif.: " + unidSocial.mS4AdPerif + " *S4/Ad Cerca: " + unidSocial.mS4AdCerca +
+                        " *S4/Ad Lejos: " + unidSocial.mS4AdLejos + " *Ot.SA Perif.: " + unidSocial.mOtrosSAPerif +
+                        " *Ot.SA Cerca: " + unidSocial.mOtrosSACerca + " *Ot.SA Lejos: " + unidSocial.mOtrosSALejos +
+                        "\n\n" + " *Comentario: " + unidSocial.comentario
 
             date.text = unidSocial.date
 
