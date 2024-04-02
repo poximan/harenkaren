@@ -2,6 +2,8 @@ package com.example.demo.fragment.add
 
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,15 +15,15 @@ import kotlin.reflect.KFunction2
 class UnSocVivosFragment() : Fragment() {
 
     companion object {
-        private lateinit var funColectar: (Int, Map<String, Any>) -> Unit
+        private lateinit var colectar: (Int, Map<String, Any>) -> Unit
     }
     private val map: MutableMap<String, Any> = mutableMapOf()
 
     private var _binding: FragmentUnsocVivosBinding? = null
     private val binding get() = _binding!!
 
-    fun newInstance(colectar: KFunction2<Int, Map<String, Any>, Unit>): UnSocVivosFragment {
-        funColectar = colectar
+    fun newInstance(funcColectar: KFunction2<Int, Map<String, Any>, Unit>): UnSocVivosFragment {
+        colectar = funcColectar
         return UnSocVivosFragment()
     }
 
@@ -31,14 +33,36 @@ class UnSocVivosFragment() : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentUnsocVivosBinding.inflate(inflater, container, false)
-        cargarMap()
+
+        binding.vAlfaS4Ad.addTextChangedListener(textWatcher)
+        binding.vAlfaOtrosSA.addTextChangedListener(textWatcher)
+        binding.vHembrasAd.addTextChangedListener(textWatcher)
+        binding.vCrias.addTextChangedListener(textWatcher)
+        binding.vDestetados.addTextChangedListener(textWatcher)
+        binding.vJuveniles.addTextChangedListener(textWatcher)
+        binding.vS4AdPerif.addTextChangedListener(textWatcher)
+        binding.vS4AdCerca.addTextChangedListener(textWatcher)
+        binding.vS4AdLejos.addTextChangedListener(textWatcher)
+        binding.vOtroSAPerif.addTextChangedListener(textWatcher)
+        binding.vOtroSACerca.addTextChangedListener(textWatcher)
+        binding.vOtroSALejos.addTextChangedListener(textWatcher)
 
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        cargarMap()
     }
 
     override fun onPause() {
         super.onPause()
         cargarMap()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun cargarMap() {
@@ -60,12 +84,7 @@ class UnSocVivosFragment() : Fragment() {
         map["v_otros_sa_cerca"] = safeStringToInt(binding.vOtroSACerca.text.toString())
         map["v_otros_sa_lejos"] = safeStringToInt(binding.vOtroSALejos.text.toString())
 
-        funColectar(1,map)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        colectar(1,map)
     }
 
     private fun safeStringToInt(value: String): Int {
@@ -73,6 +92,14 @@ class UnSocVivosFragment() : Fragment() {
             value.toInt()
         } catch (e: NumberFormatException) {
             0
+        }
+    }
+
+    private val textWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        override fun afterTextChanged(s: Editable?) {
+            cargarMap()
         }
     }
 

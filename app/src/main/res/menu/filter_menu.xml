@@ -1,13 +1,22 @@
-<?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/filtro_ejecutar"
-        android:title="Filtrar por fecha"
-        app:showAsAction="never" />
+        android:id="@+id/menu_group"
+        app:showAsAction="ifRoom"
+        android:title="Filtrar">
+        <menu>
+            <item
+                android:id="@+id/filtro_ejecutar"
+                android:title="Filtrar por fecha" />
+            <item
+                android:id="@+id/filtro_limpiar"
+                android:title="Limpiar filtro" />
+        </menu>
+    </item>
+
     <item
-        android:id="@+id/filtro_limpiar"
-        android:title="Limpiar filtro"
-        app:showAsAction="never" />
+        android:id="@+id/ayuda"
+        android:icon="@android:drawable/ic_menu_help"
+        app:showAsAction="ifRoom" />
 </menu>

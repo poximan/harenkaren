@@ -6,7 +6,6 @@ import android.graphics.Matrix
 import android.media.ExifInterface
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -61,7 +60,6 @@ class UnSocDetailFragment : Fragment() {
         val exif = ExifInterface(args.unSocActual.photoPath!!)
         val orientation: Int =
             exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
-        Log.i("orientation", orientation.toString())
 
         val matrix = Matrix()
         when (orientation) {

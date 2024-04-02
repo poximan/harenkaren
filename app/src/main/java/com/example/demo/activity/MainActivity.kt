@@ -18,7 +18,6 @@ class MainActivity : AppCompatActivity() {
 
     private val mapaParesOrigenDestino: MutableMap<Int, Int> = mutableMapOf()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)

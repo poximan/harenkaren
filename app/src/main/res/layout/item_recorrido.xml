@@ -25,11 +25,10 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/text_subarea"
+                android:id="@+id/area_recorrida"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Subarea observada"
-                android:textStyle="bold" />
+                android:hint="Area recorrida" />
 
             <TextView
                 android:id="@+id/text_observador"

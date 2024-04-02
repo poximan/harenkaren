@@ -38,9 +38,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10px"
-                android:text="Subarea recorrida:"/>
+                android:text="Area recorrida:"/>
             <EditText
-                android:id="@+id/text_subarea_recorr"
+                android:id="@+id/text_area_recorrida"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textMultiLine" />
@@ -55,13 +55,13 @@
             app:layout_constraintTop_toBottomOf="@id/linearLayout2">
 
             <Button
-                android:id="@+id/getPosicion"
+                android:id="@+id/getPosicionIni"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="gps"/>
+                android:text="gps inicio"/>
 
             <ImageView
-                android:id="@+id/gpsLightCircuito"
+                android:id="@+id/gpsLightIni"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/indicator_nof"
@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:text="lat:"/>
             <TextView
-                android:id="@+id/latitud"
+                android:id="@+id/latitud_ini"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="numberSigned"
@@ -82,7 +82,49 @@
                 android:text="lon:"
                 android:layout_marginLeft="5pt"/>
             <TextView
-                android:id="@+id/longitud"
+                android:id="@+id/longitud_ini"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="numberSigned"
+                android:text="0.0"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/linearLayout6"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            app:layout_constraintTop_toBottomOf="@id/linearLayout5">
+
+            <Button
+                android:id="@+id/getPosicionFin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="gps fin"/>
+
+            <ImageView
+                android:id="@+id/gpsLightFin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/indicator_nof"
+                android:layout_marginHorizontal="10dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="lat:"/>
+            <TextView
+                android:id="@+id/latitud_fin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="numberSigned"
+                android:text="0.0"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="lon:"
+                android:layout_marginLeft="5pt"/>
+            <TextView
+                android:id="@+id/longitud_fin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="numberSigned"
@@ -94,7 +136,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
-            app:layout_constraintTop_toBottomOf="@id/linearLayout5"
+            app:layout_constraintTop_toBottomOf="@id/linearLayout6"
             app:layout_constraintRight_toRightOf="parent"
             android:layout_marginRight="30dp"
             app:srcCompat="@drawable/ic_check" />

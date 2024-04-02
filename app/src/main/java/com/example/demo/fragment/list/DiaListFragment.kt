@@ -12,6 +12,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
@@ -92,28 +93,62 @@ class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
+
+        return when (item.itemId) {
+            R.id.filtro_ejecutar -> {
+                filtrar()
+                true
+            }
+            R.id.filtro_limpiar -> {
+                loadFullList()
+                true
+            }
+            R.id.ayuda -> {
+                mostrarAyuda()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+
+    }
+
+    private fun mostrarAyuda() {
+
+        val texto: String = when (diaViewModel.diaList.value?.size){
+            0 -> "Aun no has agregado ningun dia, y por lo tanto la lista esta vacia. Hacé click en (+) para agregarlo"
+            1 -> "Ahora hay un solo dia dado de alta. Cuando agregues mas, notaras la lista. Hace click en el dia" +
+                    "agregado para administrar los recorridos"
+            else -> { "Hace click en la fila que representa el dia de interes, para poder continuar a su detalle. " +
+                    "Allí podrás adminstrar los recorridos asociados a la fecha que seleccionaste"}
+        }
+
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Pantalla de fechas")
+        builder.setMessage("Esta pantalla representa una lista de dias, en donde cada dia es una fila.\n$texto")
+
+        builder.setPositiveButton("OK") { dialog, _ ->
+            dialog.dismiss()
+        }
+
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+    private fun filtrar() {
+
         val c = Calendar.getInstance()
         val year = c.get(Calendar.YEAR)
         val month = c.get(Calendar.MONTH)
         val day = c.get(Calendar.DAY_OF_MONTH)
-        return if (id == R.id.filtro_ejecutar) {
 
-            val dpd = DatePickerDialog(
-                activity!!,
-                { _, year, monthOfYear, dayOfMonth ->
-                    val dateSelected = "" + dayOfMonth + "/" + (monthOfYear + 1)  + "/" + year
-                    loadListWithDate(dateSelected)
-                }, year, month, day
-            )
-            dpd.show()
-
-            true
-        } else return if (id == R.id.filtro_limpiar) {
-            loadFullList()
-            true
-        } else super.onOptionsItemSelected(item)
-
+        val dpd = DatePickerDialog(
+            activity!!,
+            { _, year, monthOfYear, dayOfMonth ->
+                val dateSelected = "" + dayOfMonth + "/" + (monthOfYear + 1)  + "/" + year
+                loadListWithDate(dateSelected)
+            }, year, month, day
+        )
+        dpd.show()
     }
 
     private fun loadFullList() {

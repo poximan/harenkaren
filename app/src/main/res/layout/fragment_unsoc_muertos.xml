@@ -36,6 +36,7 @@
                     android:id="@+id/mAlfaS4Ad"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
                     android:inputType="number" />
 
             </LinearLayout>
@@ -56,6 +57,7 @@
                     android:id="@+id/mAlfaOtrosSA"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
                     android:inputType="number" />
 
             </LinearLayout>
@@ -98,6 +100,7 @@
                     android:id="@+id/mHembrasAd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
                     android:inputType="number" />
             </LinearLayout>
             <View
@@ -128,6 +131,7 @@
                         android:id="@+id/mCrias"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:imeOptions="actionNext"
                         android:inputType="number" />
 
                 </LinearLayout>
@@ -154,6 +158,7 @@
                     android:id="@+id/mDestetados"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
                     android:inputType="number" />
 
             </LinearLayout>
@@ -174,6 +179,7 @@
                     android:id="@+id/mJuveniles"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
                     android:inputType="number" />
 
             </LinearLayout>
@@ -234,6 +240,7 @@
                             android:id="@+id/mS4AdPerif"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:imeOptions="actionNext"
                             android:inputType="number" />
 
                     </LinearLayout>
@@ -258,6 +265,7 @@
                             android:id="@+id/mS4AdCerca"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:imeOptions="actionNext"
                             android:inputType="number" />
 
                     </LinearLayout>
@@ -282,6 +290,7 @@
                             android:id="@+id/mS4AdLejos"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:imeOptions="actionNext"
                             android:inputType="number" />
 
                     </LinearLayout>
@@ -345,6 +354,7 @@
                             android:id="@+id/mOtroSAPerif"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:imeOptions="actionNext"
                             android:inputType="number" />
 
                     </LinearLayout>
@@ -371,6 +381,7 @@
                             android:id="@+id/mOtroSACerca"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:imeOptions="actionNext"
                             android:inputType="number" />
 
                     </LinearLayout>
@@ -394,6 +405,7 @@
                             android:id="@+id/mOtroSALejos"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:imeOptions="actionDone"
                             android:inputType="number" />
                     </LinearLayout>
                 </LinearLayout>

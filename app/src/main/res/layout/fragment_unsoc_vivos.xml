@@ -37,7 +37,7 @@
                 android:id="@+id/vAlfaS4Ad"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:nextFocusForward="@id/vAlfaOtrosSA"
+                android:imeOptions="actionNext"
                 android:inputType="number" />
 
         </LinearLayout>
@@ -59,9 +59,8 @@
                 android:id="@+id/vAlfaOtrosSA"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:nextFocusForward="@id/vHembrasAd"
-                android:inputType="number"
-                 />
+                android:imeOptions="actionNext"
+                android:inputType="number" />
 
         </LinearLayout>
     </LinearLayout>
@@ -103,7 +102,7 @@
                 android:id="@+id/vHembrasAd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:nextFocusForward="@id/vCrias"
+                android:imeOptions="actionNext"
                 android:inputType="number" />
         </LinearLayout>
 
@@ -136,11 +135,9 @@
                     android:id="@+id/vCrias"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:nextFocusForward="@id/vDestetados"
+                    android:imeOptions="actionNext"
                     android:inputType="number" />
-
             </LinearLayout>
-
         </LinearLayout>
 
         <View
@@ -165,7 +162,7 @@
                 android:id="@+id/vDestetados"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:nextFocusForward="@id/vJuveniles"
+                android:imeOptions="actionNext"
                 android:inputType="number" />
 
         </LinearLayout>
@@ -187,7 +184,7 @@
                 android:id="@+id/vJuveniles"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:nextFocusForward="@id/vS4AdPerif"
+                android:imeOptions="actionNext"
                 android:inputType="number" />
 
         </LinearLayout>
@@ -249,7 +246,7 @@
                         android:id="@+id/vS4AdPerif"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:nextFocusForward="@id/vS4AdCerca"
+                        android:imeOptions="actionNext"
                         android:inputType="number" />
 
                 </LinearLayout>
@@ -276,7 +273,7 @@
                         android:id="@+id/vS4AdCerca"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:nextFocusForward="@id/vS4AdLejos"
+                        android:imeOptions="actionNext"
                         android:inputType="number" />
 
                 </LinearLayout>
@@ -303,7 +300,7 @@
                         android:id="@+id/vS4AdLejos"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:nextFocusForward="@id/vOtroSAPerif"
+                        android:imeOptions="actionNext"
                         android:inputType="number" />
 
                 </LinearLayout>
@@ -368,7 +365,7 @@
                         android:id="@+id/vOtroSAPerif"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:nextFocusForward="@id/vOtroSACerca"
+                        android:imeOptions="actionNext"
                         android:inputType="number"/>
 
                 </LinearLayout>
@@ -395,7 +392,7 @@
                         android:id="@+id/vOtroSACerca"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:nextFocusForward="@id/vOtroSALejos"
+                        android:imeOptions="actionNext"
                         android:inputType="number" />
 
                 </LinearLayout>
@@ -422,6 +419,7 @@
                         android:id="@+id/vOtroSALejos"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:imeOptions="actionDone"
                         android:inputType="number"/>
                 </LinearLayout>
             </LinearLayout>

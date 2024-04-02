@@ -89,7 +89,7 @@
         <fragment
             android:id="@+id/dia_list_fragment"
             android:name="com.example.demo.fragment.list.DiaListFragment"
-            android:label="Dias"
+            android:label="Fecha"
             tools:layout="@layout/fragment_dia_list">
             <action
                 android:id="@+id/goToDiaDetailAction"

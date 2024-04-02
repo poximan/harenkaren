@@ -1,6 +1,5 @@
 package com.example.demo.database
 
-import android.util.Log
 import com.example.demo.dao.DiaDAO
 import com.example.demo.dao.RecorrDAO
 import com.example.demo.dao.UnSocDAO
@@ -20,7 +19,6 @@ class DevDatos {
         diaList.forEach { dia ->
             diaDAO.insert(dia)
         }
-        Log.d("DATOS DB", "se agregaron dias")
     }
 
     fun generarRecorridos(recorrDAO: RecorrDAO) {
@@ -42,7 +40,6 @@ class DevDatos {
         recorrList.forEach { recorr ->
             recorrDAO.insert(recorr)
         }
-        Log.d("DATOS DB", "se agregaron recorridos")
     }
 
     fun generarUnidadesSociales(unsocDAO: UnSocDAO) {
@@ -142,7 +139,6 @@ class DevDatos {
         unSocList.forEach { unsoc ->
             unsocDAO.insert(unsoc)
         }
-        Log.d("DATOS DB", "se agregaron unidades sociales")
     }
 
     fun generarUsuario(dao: UsuarioDAO) {
@@ -151,16 +147,13 @@ class DevDatos {
 
     fun vaciarDias(diaDAO: DiaDAO) {
         diaDAO.deleteAll()
-        Log.d("DATOS DB", "se borraron los dias")
     }
 
     fun vaciarRecorridos(recorrDAO: RecorrDAO) {
         recorrDAO.deleteAll()
-        Log.d("DATOS DB", "se borraron los recorridos")
     }
 
     fun vaciarUnidadesSociales(unsocDAO: UnSocDAO) {
         unsocDAO.deleteAll()
-        Log.d("DATOS DB", "se borraron las unidades sociales")
     }
 }

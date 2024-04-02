@@ -14,10 +14,12 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.util.Log
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.Toast
@@ -45,7 +47,7 @@ import kotlin.reflect.KFunction2
 class UnSocGralFragment() : Fragment() {
 
     companion object {
-        private lateinit var funColectar: (Int, Map<String, Any>) -> Unit
+        private lateinit var colectar: (Int, Map<String, Any>) -> Unit
     }
     private val map: MutableMap<String, Any> = mutableMapOf()
 
@@ -56,7 +58,7 @@ class UnSocGralFragment() : Fragment() {
     }
 
     private var _binding: FragmentUnsocGralBinding? = null
-    private val binding get() = _binding!!
+    val binding get() = _binding!!
 
     private val photoPaths = mutableListOf<String>()
     private val adapter = PhotoAdapter(photoPaths)
@@ -66,8 +68,8 @@ class UnSocGralFragment() : Fragment() {
     private var indicatorLight: ImageView? = null
     private val latLon = LatLong()
 
-    fun newInstance(colectar: KFunction2<Int, Map<String, Any>, Unit>): UnSocGralFragment {
-        funColectar = colectar
+    fun newInstance(colectarFunc: KFunction2<Int, Map<String, Any>, Unit>): UnSocGralFragment {
+        colectar = colectarFunc
         return UnSocGralFragment()
     }
 
@@ -112,6 +114,11 @@ class UnSocGralFragment() : Fragment() {
         binding.photoButton.setOnClickListener { takePhoto() }
         binding.mapOsm.setOnClickListener { usarMapaOSM() }
 
+        binding.spinnerAddPtoObs.onItemSelectedListener = onItemSelectedListener
+        binding.spinnerAddCtxSocial.onItemSelectedListener = onItemSelectedListener
+        binding.spinnerAddTpoSustrato.onItemSelectedListener = onItemSelectedListener
+        binding.unSocComentario.addTextChangedListener(textWatcher)
+
         return view
     }
 
@@ -129,9 +136,8 @@ class UnSocGralFragment() : Fragment() {
         }
         catch(e: NullPointerException){
         }
-
+        cargarMap()
         mostrarEnPantalla()
-        Log.i("ESTADOS", "primer plano")
     }
 
     override fun onPause() {
@@ -142,8 +148,17 @@ class UnSocGralFragment() : Fragment() {
             putDouble("lon", latLon.lon)
         }
         arguments = bundle
-        Log.i("ESTADOS", "en pausa")
-        
+        cargarMap()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+
+    private fun cargarMap() {
+
         map["pto_observacion"] = binding.spinnerAddPtoObs.selectedItem.toString()
         map["ctx_social"] = binding.spinnerAddCtxSocial.selectedItem.toString()
         map["tpo_sustrato"] =  binding.spinnerAddTpoSustrato.selectedItem.toString()
@@ -152,13 +167,22 @@ class UnSocGralFragment() : Fragment() {
         map["photo_path"] = currentPhotoPath
         map["comentario"] = binding.unSocComentario.text.toString()
 
-        funColectar(0,map)
+        colectar(0,map)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-        Log.i("ESTADOS", "se destruye")
+    private val onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            cargarMap()
+        }
+        override fun onNothingSelected(parent: AdapterView<*>?) {}
+    }
+
+    private val textWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        override fun afterTextChanged(s: Editable?) {
+            cargarMap()
+        }
     }
 
     private fun usarMapaOSM() {
@@ -183,6 +207,7 @@ class UnSocGralFragment() : Fragment() {
         latLon.lon = longitud
 
         mostrarEnPantalla()
+        cargarMap()
     }
 
     private fun mostrarEnPantalla() {

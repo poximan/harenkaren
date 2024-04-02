@@ -1,26 +1,64 @@
 package com.example.demo.adapter
 
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.example.demo.fragment.add.UnSocGralFragment
 import com.example.demo.fragment.add.UnSocVivosFragment
 import com.example.demo.fragment.add.UnSocMuertosFragment
-import com.example.demo.model.UnidSocial
+import java.util.Calendar
 
 class UnSocPagerAdapter(
-    fm: FragmentManager,
-    private val unidSocial: UnidSocial
+    fm: FragmentManager
 ) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
-    private val tabTitles = arrayOf(
+    private val solapas = arrayOf(
         UnSocGralFragment().newInstance(::colectar),
         UnSocVivosFragment().newInstance(::colectar),
         UnSocMuertosFragment().newInstance(::colectar))
 
-    private var map: MutableMap<String, Any> = mutableMapOf()
+    private var map: MutableMap<String, Any?> = mutableMapOf(
+        "pto_observacion" to "",
+        "ctx_social" to "",
+        "tpo_sustrato" to "",
+        "v_alfa_s4ad" to 0,
+        "v_alfa_otros_sa" to 0,
+        "v_hembras_ad" to 0,
+        "v_crias" to 0,
+        "v_destetados" to 0,
+        "v_juveniles" to 0,
+        "v_s4ad_perif" to 0,
+        "v_s4ad_cerca" to 0,
+        "v_s4ad_lejos" to 0,
+        "v_otros_sa_perif" to 0,
+        "v_otros_sa_cerca" to 0,
+        "v_otros_sa_lejos" to 0,
+        "m_alfa_s4ad" to 0,
+        "m_alfa_otros_sa" to 0,
+        "m_hembras_ad" to 0,
+        "m_crias" to 0,
+        "m_destetados" to 0,
+        "m_juveniles" to 0,
+        "m_s4ad_perif" to 0,
+        "m_s4ad_cerca" to 0,
+        "m_s4ad_lejos" to 0,
+        "m_otros_sa_perif" to 0,
+        "m_otros_sa_cerca" to 0,
+        "m_otros_sa_lejos" to 0,
+        "date" to "",
+        "latitud" to 0.0,
+        "longitud" to 0.0,
+        "photo_path" to "",
+        "comentario" to ""
+    )
+
 
     private fun colectar(position: Int, mapaActual: Map<String, Any>) {
+
+        val instante = String.format("%02d", Calendar.getInstance().get(Calendar.SECOND))
+        Log.i("notimap", "${instante}: carga de datos desde solapa ${getPageTitle(position)}")
+
         when (position) {
             0 -> {
                 map["pto_observacion"] = mapaActual["pto_observacion"] as String
@@ -63,18 +101,18 @@ class UnSocPagerAdapter(
     }
 
     override fun getItem(position: Int): Fragment {
-        return tabTitles[position]
+        return solapas[position]
     }
 
     override fun getCount(): Int {
-        return tabTitles.size
+        return solapas.size
     }
 
     override fun getPageTitle(position: Int): CharSequence? {
-        return tabTitles[position].toString()
+        return solapas[position].toString()
     }
 
-    fun transferirDatos(): Map<String, Any> {
+    fun transferirDatos(): MutableMap<String, Any?> {
         return map
     }
 }

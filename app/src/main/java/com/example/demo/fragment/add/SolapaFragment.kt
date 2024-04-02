@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment;
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -33,7 +33,7 @@ class SolapaFragment: Fragment() {
         val estampatiempo = SimpleDateFormat("yyyy/MM/dd - HH:mm:ss").format(Date())
 
         unSoc = UnidSocial(args.idRecorrido, estampatiempo)
-        adapter = UnSocPagerAdapter(childFragmentManager, unSoc)
+        adapter = UnSocPagerAdapter(childFragmentManager)
 
         binding.viewPager.adapter = adapter
         binding.tabLayout.setupWithViewPager(binding.viewPager)
@@ -45,7 +45,7 @@ class SolapaFragment: Fragment() {
     private fun confirmarAlta(){
 
         val model: UnSocViewModel = ViewModelProvider(this)[UnSocViewModel::class.java]
-        val map: Map<String, Any> = adapter.transferirDatos()
+        val map: MutableMap<String, Any?> = adapter.transferirDatos()
 
         unSoc.apply {
             ptoObsUnSoc = map["pto_observacion"] as String
@@ -84,34 +84,11 @@ class SolapaFragment: Fragment() {
             photoPath = map["photo_path"] as String
             comentario = map["comentario"] as String
         }
-        val unSocBD = unSoc.id?.let { model.readUnico(it) }
-        if(unSocBD == null)
-            model.insert(unSoc)
-        else
-            model.update(unSoc)
-/*
-        viewLifecycleOwner.lifecycleScope.launch {
-            withContext(Dispatchers.IO) {// Dispatchers.IO es el hilo background
-                val unSocBD = unSoc.id?.let { model.readUnico(it) }
-                if(unSocBD == null)
-                    model.insert(unSoc)
-                else
-                    model.update(unSoc)
-            }
-        }
-  */
+
+        model.insert(unSoc)
+
         Toast.makeText(activity, "Unidad social agregada correctamente", Toast.LENGTH_LONG).show()
         val action = SolapaFragmentDirections.goToUnSocListFromSolapaAction(unSoc.recorrId)
         findNavController().navigate(action)
-    }
-
-    private fun safeStringToInt(value: String): Int {
-        return try {
-            value.toInt()
-        } catch (e: NumberFormatException) {
-            0
-        } catch (e: NullPointerException) {
-            0
-        }
     }
 }

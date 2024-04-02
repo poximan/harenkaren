@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
@@ -20,6 +21,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.demo.R
 import com.example.demo.databinding.FragmentRecorrAddBinding
+import com.example.demo.model.LatLong
 import com.example.demo.model.Recorrido
 import com.example.demo.viewModel.RecorrViewModel
 import java.text.SimpleDateFormat
@@ -35,7 +37,10 @@ class RecorrAddFragment : Fragment() {
     private lateinit var model: RecorrViewModel
 
     private lateinit var locationManager: LocationManager
+
     private var indicatorLight: ImageView? = null
+    private val latLonIni = LatLong()
+    private val latLonFin = LatLong()
 
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreateView(
@@ -48,8 +53,11 @@ class RecorrAddFragment : Fragment() {
 
         model = ViewModelProvider(this)[RecorrViewModel::class.java]
 
-        binding.getPosicion.setOnClickListener { getPosicionActual() }
+        binding.getPosicionIni.setOnClickListener { getPosicionActual(binding.latitudIni, binding.longitudIni, latLonIni) }
+        binding.getPosicionFin.setOnClickListener { getPosicionActual(binding.latitudFin, binding.longitudFin, latLonFin) }
+
         binding.confirmarRecorridoButton.setOnClickListener { confirmarRecorrido() }
+        binding.latitudIni.text
         return view
     }
 
@@ -67,7 +75,7 @@ class RecorrAddFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        indicatorLight = view.findViewById(R.id.gpsLightCircuito)
+        indicatorLight = view.findViewById(R.id.gpsLightIni)
     }
 
     override fun onDestroyView() {
@@ -79,10 +87,10 @@ class RecorrAddFragment : Fragment() {
     private fun dataDesdeIU(): Recorrido {
 
         val observador = binding.editTextObservador.text.toString()
-        val areaRecorrida = binding.textSubareaRecorr.text.toString()
+        val areaRecorrida = binding.textAreaRecorrida.text.toString()
 
-        val lat = binding.latitud.text.toString().toDouble()
-        val lon = binding.longitud.text.toString().toDouble()
+        val lat = binding.latitudIni.text.toString().toDouble()
+        val lon = binding.longitudIni.text.toString().toDouble()
 
         val timeStamp = SimpleDateFormat("yyyy/MM/dd - HH:mm:ss").format(Date())
 
@@ -90,7 +98,7 @@ class RecorrAddFragment : Fragment() {
     }
 
     @RequiresApi(Build.VERSION_CODES.R)
-    private fun getPosicionActual() {
+    private fun getPosicionActual(latDestino: TextView, lonDestino: TextView, latLongDestino:LatLong) {
 
         locationManager = requireActivity().getSystemService(LocationManager::class.java)
 
@@ -102,7 +110,9 @@ class RecorrAddFragment : Fragment() {
                 object : LocationListener {
                     override fun onLocationChanged(location: Location) {
                         indicatorLight?.setImageResource(R.drawable.indicator_on)
-                        updateLocationViews(location.latitude, location.longitude)
+                        updateLocationViews(
+                            latDestino, lonDestino,
+                            location.latitude, location.longitude, latLongDestino)
                     }
 
                     override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {}
@@ -139,9 +149,23 @@ class RecorrAddFragment : Fragment() {
         }
     }
 
-    private fun updateLocationViews(latitude: Double, longitude: Double) {
-        binding.latitud.text = latitude.toString()
-        binding.longitud.text = longitude.toString()
+    private fun updateLocationViews(
+        latDestino: TextView, lonDestino: TextView,
+        latitud: Double, longitud: Double, latLonDestino :LatLong) {
+
+        latLonDestino.lat = latitud
+        latLonDestino.lon = longitud
+
+        mostrarEnPantalla(latDestino, lonDestino, latLonDestino)
+    }
+
+    private fun mostrarEnPantalla(latDestino: TextView, lonDestino: TextView, latLonDestino :LatLong) {
+
+        val lat = String.format("%.6f", latLonDestino.lat)
+        val lon = String.format("%.6f", latLonDestino.lon)
+
+        latDestino.text = lat
+        lonDestino.text = lon
     }
 
     private fun requestLocationPermission() {

@@ -11,7 +11,6 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -152,7 +151,6 @@ class UnSocUpdateFragment : Fragment() {
         val exif = ExifInterface(currentPhotoPath)
         val orientation: Int =
             exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
-        Log.i("orientation", orientation.toString())
 
         val matrix = Matrix()
         when (orientation) {
