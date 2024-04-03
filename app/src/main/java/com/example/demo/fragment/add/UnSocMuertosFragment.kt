@@ -7,7 +7,6 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.example.demo.databinding.FragmentUnsocMuertosBinding
 import kotlin.reflect.KFunction2
@@ -27,7 +26,6 @@ class UnSocMuertosFragment() : Fragment() {
         return UnSocMuertosFragment()
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

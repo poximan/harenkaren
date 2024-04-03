@@ -44,7 +44,7 @@ class RecorrListAdapter(
             id.text = recorrido.id.toString()
             area.text = "Area recorrida: " + recorrido.areaRecorrida
             observador.text = "Observador: " + recorrido.observador
-            fecha.text = recorrido.fecha
+            fecha.text = "Fecha inicio: " + recorrido.fechaIni
         }
     }
 

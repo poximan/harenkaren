@@ -9,12 +9,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.demo.R
 import com.example.demo.adapter.UnSocPagerAdapter
 import com.example.demo.databinding.FragmentSolapaBinding
 import com.example.demo.model.UnidSocial
 import com.example.demo.viewModel.UnSocViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Locale
 
 class SolapaFragment: Fragment() {
 
@@ -30,7 +32,8 @@ class SolapaFragment: Fragment() {
     ): View {
         binding = FragmentSolapaBinding.inflate(inflater, container, false)
 
-        val estampatiempo = SimpleDateFormat("yyyy/MM/dd - HH:mm:ss").format(Date())
+        val formato = requireContext().resources.getString(R.string.formato_fecha)
+        val estampatiempo = SimpleDateFormat(formato).format(Date())
 
         unSoc = UnidSocial(args.idRecorrido, estampatiempo)
         adapter = UnSocPagerAdapter(childFragmentManager)

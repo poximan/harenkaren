@@ -11,8 +11,6 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
-import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
@@ -82,7 +80,10 @@ class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
     }
 
     private fun getCurrentDate(): String {
-        val dateFormat = SimpleDateFormat("yyyy/MM/dd", Locale.getDefault())
+
+        val formato = requireContext().resources.getString(R.string.formato_fecha)
+
+        val dateFormat = SimpleDateFormat(formato, Locale.getDefault())
         val currentDate = Calendar.getInstance().time
         return dateFormat.format(currentDate)
     }
@@ -91,7 +92,6 @@ class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
         inflater.inflate(R.menu.filter_menu, menu)
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         return when (item.itemId) {

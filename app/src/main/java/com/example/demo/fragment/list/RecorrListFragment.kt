@@ -10,7 +10,6 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -69,7 +68,6 @@ class RecorrListFragment : Fragment(), RecorrListAdapter.OnRecorrClickListener {
         inflater.inflate(R.menu.filter_menu, menu)
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
         val c = Calendar.getInstance()
@@ -134,7 +132,7 @@ class RecorrListFragment : Fragment(), RecorrListAdapter.OnRecorrClickListener {
         val result: MutableList<Recorrido> = ArrayList()
 
         for (elem in arr) {
-            if (elem.fecha == target) {
+            if (elem.fechaIni == target) {
                 result.add(elem)
             }
         }

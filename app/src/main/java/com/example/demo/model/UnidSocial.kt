@@ -137,7 +137,7 @@ data class UnidSocial(
 
     @ColumnInfo(name = "comentario")
     var comentario: String?
-) : Parcelable
+) : Parcelable {
 /*
 Parcelable es una interfaz para serializar objetos. util para transferirlos entre actividades y fragmentos,
 o entre aplicaciones a través de Intent o Bundle. Es un objeto enviado como flujo de bytes.
@@ -145,7 +145,6 @@ o entre aplicaciones a través de Intent o Bundle. Es un objeto enviado como flu
 La interfaz requiere writeToParcel() para escribir el estado de un objeto en un Parcel,
 y createFromParcel() para crear una nueva instancia del objeto a partir de un Parcel.
  */
-{
     @Ignore
     constructor(parcel: Parcel) : this(
         parcel.readInt(),

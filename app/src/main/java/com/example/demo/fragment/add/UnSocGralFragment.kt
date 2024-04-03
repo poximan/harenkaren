@@ -23,7 +23,6 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -73,7 +72,6 @@ class UnSocGralFragment() : Fragment() {
         return UnSocGralFragment()
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -190,7 +188,6 @@ class UnSocGralFragment() : Fragment() {
         findNavController().navigate(action)
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
     private fun takePhoto() {
         // Verificar permisos
         if (checkCameraPermission()) {
@@ -218,7 +215,6 @@ class UnSocGralFragment() : Fragment() {
         binding.longitud.text = lon
     }
 
-    @RequiresApi(Build.VERSION_CODES.M)
     private fun getPosicionActual() {
 
         locationManager = requireActivity().getSystemService(LocationManager::class.java)
@@ -287,7 +283,6 @@ class UnSocGralFragment() : Fragment() {
         )
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
     private fun launchCamera() {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             // Ensure that there's a camera activity to handle the intent
@@ -314,7 +309,6 @@ class UnSocGralFragment() : Fragment() {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -354,7 +348,6 @@ class UnSocGralFragment() : Fragment() {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
     @Throws(IOException::class)
     private fun createImageFile(): File? {
         // Create an image file name

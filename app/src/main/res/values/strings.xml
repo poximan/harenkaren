@@ -168,5 +168,6 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="para_desarrollador">Para desarrollador</string>
+    <string name="formato_fecha">yyyy/MM/dd - HH:mm:ss</string>
 
 </resources>

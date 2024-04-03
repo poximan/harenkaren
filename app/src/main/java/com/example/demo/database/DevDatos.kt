@@ -24,17 +24,20 @@ class DevDatos {
     fun generarRecorridos(recorrDAO: RecorrDAO) {
         val recorrList = listOf<Recorrido>(
             Recorrido(
-                id = 1, diaId = 1, observador = "hugo", fecha = "2023/10/19 - 08:20:48",
-                latitudInicio = -42.555, longitudInicio = -65.031,
-                latitudFin = -39.555, longitudFin = -61.031, areaRecorrida = "norte-sur"),
+                id = 1, diaId = 1, observador = "hugo",
+                fechaIni = "2023/10/19 - 08:20:48", fechaFin = "2023/10/19 - 18:07:48",
+                latitudIni = -42.555, longitudIni = -65.031, latitudFin = -39.555, longitudFin = -61.031,
+                areaRecorrida = "norte-sur"),
             Recorrido(
-                id = 2, diaId = 1, observador = "sebastian", fecha = "2023/10/19 - 08:15:48",
-                latitudInicio = -42.555, longitudInicio = -65.031,
-                latitudFin = -38.555, longitudFin = -59.031, areaRecorrida = "suroeste-noroeste"),
+                id = 2, diaId = 1, observador = "sebastian",
+                fechaIni = "2023/10/19 - 08:15:48", fechaFin = "2023/10/19 - 15:23:48",
+                latitudIni = -42.555, longitudIni = -65.031, latitudFin = -38.555, longitudFin = -59.031,
+                areaRecorrida = "suroeste-noroeste"),
             Recorrido(
-                id = 3, diaId = 2, observador = "donato", fecha = "2023/10/21 - 16:15:48",
-                latitudInicio = -42.000, longitudInicio = -62.371,
-                latitudFin = -38.533, longitudFin = -60.311, areaRecorrida = "este-oeste"),
+                id = 3, diaId = 2, observador = "donato",
+                fechaIni = "2023/10/21 - 16:15:48", fechaFin = "2023/10/19 - 14:38:48",
+                latitudIni = -42.000, longitudIni = -62.371, latitudFin = -38.533, longitudFin = -60.311,
+                areaRecorrida = "este-oeste"),
         )
 
         recorrList.forEach { recorr ->
@@ -142,7 +145,8 @@ class DevDatos {
     }
 
     fun generarUsuario(dao: UsuarioDAO) {
-        dao.create("hdonato@donato.com","hdonato",true)
+        if(dao.getUsuario("hdonato@donato.com","hdonato").isEmpty())
+            dao.create("hdonato@donato.com","hdonato",true)
     }
 
     fun vaciarDias(diaDAO: DiaDAO) {

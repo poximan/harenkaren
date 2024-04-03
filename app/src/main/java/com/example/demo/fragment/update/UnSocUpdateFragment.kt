@@ -17,7 +17,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModelProvider
@@ -42,7 +41,6 @@ class UnSocUpdateFragment : Fragment() {
 
     private lateinit var model: UnSocViewModel
 
-    @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -76,7 +74,6 @@ class UnSocUpdateFragment : Fragment() {
         return view
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
     private fun takePhoto() {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             // Ensure that there's a camera activity to handle the intent
@@ -103,7 +100,6 @@ class UnSocUpdateFragment : Fragment() {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
     @Throws(IOException::class)
     private fun createImageFile(): File? {
         // Create an image file name

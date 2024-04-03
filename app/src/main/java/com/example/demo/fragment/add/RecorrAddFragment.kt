@@ -13,7 +13,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -29,10 +28,9 @@ import java.util.Date
 
 class RecorrAddFragment : Fragment() {
 
-    private val args: RecorrAddFragmentArgs by navArgs()
-
     private var _binding: FragmentRecorrAddBinding? = null
     private val binding get() = _binding!!
+    private val args: RecorrAddFragmentArgs by navArgs()
 
     private lateinit var model: RecorrViewModel
 
@@ -40,9 +38,7 @@ class RecorrAddFragment : Fragment() {
 
     private var indicatorLight: ImageView? = null
     private val latLonIni = LatLong()
-    private val latLonFin = LatLong()
 
-    @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,7 +50,6 @@ class RecorrAddFragment : Fragment() {
         model = ViewModelProvider(this)[RecorrViewModel::class.java]
 
         binding.getPosicionIni.setOnClickListener { getPosicionActual(binding.latitudIni, binding.longitudIni, latLonIni) }
-        binding.getPosicionFin.setOnClickListener { getPosicionActual(binding.latitudFin, binding.longitudFin, latLonFin) }
 
         binding.confirmarRecorridoButton.setOnClickListener { confirmarRecorrido() }
         binding.latitudIni.text
@@ -72,7 +67,6 @@ class RecorrAddFragment : Fragment() {
         findNavController().navigate(action)
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         indicatorLight = view.findViewById(R.id.gpsLightIni)
@@ -83,21 +77,20 @@ class RecorrAddFragment : Fragment() {
         _binding = null
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun dataDesdeIU(): Recorrido {
 
-        val observador = binding.editTextObservador.text.toString()
-        val areaRecorrida = binding.textAreaRecorrida.text.toString()
+        val observador = binding.editObservador.text.toString()
+        val areaRecorrida = binding.areaRecorr.text.toString()
 
         val lat = binding.latitudIni.text.toString().toDouble()
         val lon = binding.longitudIni.text.toString().toDouble()
 
-        val timeStamp = SimpleDateFormat("yyyy/MM/dd - HH:mm:ss").format(Date())
+        val formato = requireContext().resources.getString(R.string.formato_fecha)
+        val timeStamp = SimpleDateFormat(formato).format(Date())
 
-        return Recorrido(0, args.idDia, observador, timeStamp,lat,lon,1.0,2.0,areaRecorrida)
+        return Recorrido(args.idDia, observador, timeStamp, lat, lon, areaRecorrida)
     }
 
-    @RequiresApi(Build.VERSION_CODES.R)
     private fun getPosicionActual(latDestino: TextView, lonDestino: TextView, latLongDestino:LatLong) {
 
         locationManager = requireActivity().getSystemService(LocationManager::class.java)

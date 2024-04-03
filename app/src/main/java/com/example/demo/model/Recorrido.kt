@@ -5,6 +5,7 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 
 @Entity(
@@ -19,7 +20,7 @@ import androidx.room.PrimaryKey
 data class Recorrido(
 
     @PrimaryKey(autoGenerate = true)
-    var id: Int,
+    var id: Int?,
 
     @ColumnInfo(name = "id_dia")
     var diaId: Int,
@@ -29,14 +30,18 @@ data class Recorrido(
     var observador: String,
 
     // ----- tiempo ----- //
-    @ColumnInfo(name = "fecha")
-    var fecha : String,
+    @ColumnInfo(name = "fecha_ini")
+    var fechaIni: String,
 
-    @ColumnInfo(name="latitud_inicio")
-    var latitudInicio: Double?,
+    @ColumnInfo(name = "fecha_fin")
+    var fechaFin: String,
 
-    @ColumnInfo(name="longitud_inicio")
-    var longitudInicio: Double?,
+    // ----- espacio ----- //
+    @ColumnInfo(name="latitud_ini")
+    var latitudIni: Double?,
+
+    @ColumnInfo(name="longitud_ini")
+    var longitudIni: Double?,
 
     @ColumnInfo(name="latitud_fin")
     var latitudFin: Double?,
@@ -44,11 +49,12 @@ data class Recorrido(
     @ColumnInfo(name="longitud_fin")
     var longitudFin: Double?,
 
-    // ----- espacio ----- //
     @ColumnInfo(name = "area_recorrida")
     var areaRecorrida: String
 
 ):Parcelable {
+
+    @Ignore
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
         parcel.readInt(),
@@ -56,27 +62,35 @@ data class Recorrido(
         parcel.readString().toString(),
         // ----- tiempo ----- //
         parcel.readString().toString(),
-        parcel.readValue(Double::class.java.classLoader) as? Double,
-        parcel.readValue(Double::class.java.classLoader) as? Double,
-        parcel.readValue(Double::class.java.classLoader) as? Double,
-        parcel.readValue(Double::class.java.classLoader) as? Double,
+        parcel.readString().toString(),
         // ----- espacio ----- //
+        parcel.readValue(Double::class.java.classLoader) as? Double,
+        parcel.readValue(Double::class.java.classLoader) as? Double,
+        parcel.readValue(Double::class.java.classLoader) as? Double,
+        parcel.readValue(Double::class.java.classLoader) as? Double,
         parcel.readString().toString()
     )
 
+    constructor(idDia: Int, observador: String, fechaIni: String,
+                latitudIni: Double, longitudIni: Double, areaRecorrida: String
+    ): this(
+        null, idDia, observador, fechaIni, "",
+        latitudIni, longitudIni, 0.0, 0.0, areaRecorrida)
+
+    override fun describeContents(): Int {
+        return Parcelable.CONTENTS_FILE_DESCRIPTOR
+    }
+
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeInt(id)
+        id?.let { parcel.writeInt(it) }
         parcel.writeString(observador)
-        parcel.writeString(fecha)
-        parcel.writeValue(latitudInicio)
-        parcel.writeValue(longitudInicio)
+        parcel.writeString(fechaIni)
+        parcel.writeString(fechaFin)
+        parcel.writeValue(latitudIni)
+        parcel.writeValue(longitudIni)
         parcel.writeValue(latitudFin)
         parcel.writeValue(longitudFin)
         parcel.writeString(areaRecorrida)
-    }
-
-    override fun describeContents(): Int {
-        return 0
     }
 
     companion object CREATOR : Parcelable.Creator<Recorrido> {

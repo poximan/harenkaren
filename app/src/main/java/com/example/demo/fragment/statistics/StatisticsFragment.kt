@@ -11,7 +11,6 @@ import android.widget.AdapterView
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -32,7 +31,6 @@ class StatisticsFragment : Fragment() {
 
     private var pieChart: PieChart? = null
 
-    @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
