@@ -15,13 +15,13 @@ class DiaViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository: DiaRepository
 
-    val diaList: LiveData<List<Dia>>
+    val allDia: LiveData<List<Dia>>
 
     init {
         val diaDAO = HarenKarenRoomDatabase
             .getDatabase(application, viewModelScope).diaDao()
         repository = DiaRepository(diaDAO)
-        diaList = repository.diaList
+        allDia = repository.diaListAll
     }
 
     fun insert(dia: Dia) = CoroutineScope(Dispatchers.IO).launch(Dispatchers.IO) {

@@ -78,10 +78,10 @@ class StatisticsFragment : Fragment() {
                     view?.let {
                         graficar(
                             it,
-                            resultado.vAlfaS4Ad, resultado.vAlfaOtrosSA, resultado.vHembrasAd,
+                            resultado.vAlfaS4Ad, resultado.vAlfaSams, resultado.vHembrasAd,
                             resultado.vCrias, resultado.vDestetados, resultado.vJuveniles,
                             resultado.vS4AdPerif, resultado.vS4AdCerca, resultado.vS4AdLejos,
-                            resultado.vOtrosSAPerif, resultado.vOtrosSACerca, resultado.vOtrosSALejos
+                            resultado.vOtrosSamsPerif, resultado.vOtrosSamsCerca, resultado.vOtrosSamsLejos
                         )
                     }
                 } catch (e: NullPointerException) {
@@ -99,10 +99,10 @@ class StatisticsFragment : Fragment() {
                 view?.let {
                     graficar(
                         it,
-                        resultado.vAlfaS4Ad, resultado.vAlfaOtrosSA, resultado.vHembrasAd,
+                        resultado.vAlfaS4Ad, resultado.vAlfaSams, resultado.vHembrasAd,
                         resultado.vCrias, resultado.vDestetados, resultado.vJuveniles,
                         resultado.vS4AdPerif, resultado.vS4AdCerca, resultado.vS4AdLejos,
-                        resultado.vOtrosSAPerif, resultado.vOtrosSACerca, resultado.vOtrosSALejos
+                        resultado.vOtrosSamsPerif, resultado.vOtrosSamsCerca, resultado.vOtrosSamsLejos
                     )
                 }
             }
@@ -117,10 +117,10 @@ class StatisticsFragment : Fragment() {
                 view?.let {
                     graficar(
                         it,
-                        resultado.vAlfaS4Ad, resultado.vAlfaOtrosSA, resultado.vHembrasAd,
+                        resultado.vAlfaS4Ad, resultado.vAlfaSams, resultado.vHembrasAd,
                         resultado.vCrias, resultado.vDestetados, resultado.vJuveniles,
                         resultado.vS4AdPerif, resultado.vS4AdCerca, resultado.vS4AdLejos,
-                        resultado.vOtrosSAPerif, resultado.vOtrosSACerca, resultado.vOtrosSALejos
+                        resultado.vOtrosSamsPerif, resultado.vOtrosSamsCerca, resultado.vOtrosSamsLejos
                     )
                 }
             }
@@ -135,10 +135,10 @@ class StatisticsFragment : Fragment() {
                 view?.let {
                     graficar(
                         it,
-                        resultado.vAlfaS4Ad, resultado.vAlfaOtrosSA, resultado.vHembrasAd,
+                        resultado.vAlfaS4Ad, resultado.vAlfaSams, resultado.vHembrasAd,
                         resultado.vCrias, resultado.vDestetados, resultado.vJuveniles,
                         resultado.vS4AdPerif, resultado.vS4AdCerca, resultado.vS4AdLejos,
-                        resultado.vOtrosSAPerif, resultado.vOtrosSACerca, resultado.vOtrosSALejos
+                        resultado.vOtrosSamsPerif, resultado.vOtrosSamsCerca, resultado.vOtrosSamsLejos
                     )
                 }
             }

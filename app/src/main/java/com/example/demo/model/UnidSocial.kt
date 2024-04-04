@@ -43,8 +43,8 @@ data class UnidSocial(
     @ColumnInfo(name = "v_alfa_s4ad")
     var vAlfaS4Ad: Int,
 
-    @ColumnInfo(name = "v_alfa_otros_sa")
-    var vAlfaOtrosSA: Int,
+    @ColumnInfo(name = "v_alfa_sams")
+    var vAlfaSams: Int,
 
     // ----- hembras y crias ----- //
     @ColumnInfo(name = "v_hembras_ad")
@@ -69,14 +69,14 @@ data class UnidSocial(
     @ColumnInfo(name = "v_s4ad_lejos")
     var vS4AdLejos: Int,
 
-    @ColumnInfo(name = "v_otros_sa_perif")
-    var vOtrosSAPerif: Int,
+    @ColumnInfo(name = "v_otros_sams_perif")
+    var vOtrosSamsPerif: Int,
 
-    @ColumnInfo(name = "v_otros_sa_cerca")
-    var vOtrosSACerca: Int,
+    @ColumnInfo(name = "v_otros_sams_cerca")
+    var vOtrosSamsCerca: Int,
 
-    @ColumnInfo(name = "v_otros_sa_lejos")
-    var vOtrosSALejos: Int,
+    @ColumnInfo(name = "v_otros_sams_lejos")
+    var vOtrosSamsLejos: Int,
 
     /* =========================================
    ================== MUERTOS ==================
@@ -86,8 +86,8 @@ data class UnidSocial(
     @ColumnInfo(name = "m_alfa_s4ad")
     var mAlfaS4Ad: Int,
 
-    @ColumnInfo(name = "m_alfa_otros_sa")
-    var mAlfaOtrosSA: Int,
+    @ColumnInfo(name = "m_alfa_sams")
+    var mAlfaSams: Int,
 
     // ----- hembras y crias ----- //
     @ColumnInfo(name = "m_hembras_ad")
@@ -112,14 +112,14 @@ data class UnidSocial(
     @ColumnInfo(name = "m_s4ad_lejos")
     var mS4AdLejos: Int,
 
-    @ColumnInfo(name = "m_otros_sa_perif")
-    var mOtrosSAPerif: Int,
+    @ColumnInfo(name = "m_otros_sams_perif")
+    var mOtrosSamsPerif: Int,
 
-    @ColumnInfo(name = "m_otros_sa_cerca")
-    var mOtrosSACerca: Int,
+    @ColumnInfo(name = "m_otros_sams_cerca")
+    var mOtrosSamsCerca: Int,
 
-    @ColumnInfo(name = "m_otros_sa_lejos")
-    var mOtrosSALejos: Int,
+    @ColumnInfo(name = "m_otros_sams_lejos")
+    var mOtrosSamsLejos: Int,
 
     // ----- tiempo/espacio ----- //
     @ColumnInfo(name = "date")
@@ -194,21 +194,21 @@ y createFromParcel() para crear una nueva instancia del objeto a partir de un Pa
     constructor(
         idRecorrido: Int,
         ptoObsUnSoc: String, ctxSocial: String, tpoSustrato: String,
-        vAlfaS4Ad: Int, vAlfaOtrosSA: Int, vHembrasAd: Int, vCrias: Int,
+        vAlfaS4Ad: Int, vAlfaSams: Int, vHembrasAd: Int, vCrias: Int,
         vDestetados: Int, vJuveniles: Int, vS4AdPerif: Int, vS4AdCerca: Int,
-        vS4AdLejos: Int, vOtrosSAPerif: Int, vOtrosSACerca: Int, vOtrosSALejos: Int,
-        mAlfaS4Ad: Int, mAlfaOtrosSA: Int, mHembrasAd: Int, mCrias: Int,
+        vS4AdLejos: Int, vOtrosSamsPerif: Int, vOtrosSamsCerca: Int, vOtrosSamsLejos: Int,
+        mAlfaS4Ad: Int, mAlfaSams: Int, mHembrasAd: Int, mCrias: Int,
         mDestetados: Int, mJuveniles: Int, mS4AdPerif: Int, mS4AdCerca: Int,
-        mS4AdLejos: Int, mOtrosSAPerif: Int, mOtrosSACerca: Int, mOtrosSALejos: Int,
+        mS4AdLejos: Int, mOtrosSamsPerif: Int, mOtrosSamsCerca: Int, mOtrosSamsLejos: Int,
         timeStamp: String,
         latitud: Double, longitud: Double,
         photoPath: String,
         comentario: String
     ) : this(null, idRecorrido, ptoObsUnSoc, ctxSocial, tpoSustrato,
-        vAlfaS4Ad, vAlfaOtrosSA, vHembrasAd, vCrias, vDestetados, vJuveniles,
-        vS4AdPerif, vS4AdCerca, vS4AdLejos, vOtrosSAPerif, vOtrosSACerca, vOtrosSALejos,
-        mAlfaS4Ad, mAlfaOtrosSA, mHembrasAd, mCrias, mDestetados, mJuveniles,
-        mS4AdPerif, mS4AdCerca, mS4AdLejos, mOtrosSAPerif, mOtrosSACerca, mOtrosSALejos,
+        vAlfaS4Ad, vAlfaSams, vHembrasAd, vCrias, vDestetados, vJuveniles,
+        vS4AdPerif, vS4AdCerca, vS4AdLejos, vOtrosSamsPerif, vOtrosSamsCerca, vOtrosSamsLejos,
+        mAlfaS4Ad, mAlfaSams, mHembrasAd, mCrias, mDestetados, mJuveniles,
+        mS4AdPerif, mS4AdCerca, mS4AdLejos, mOtrosSamsPerif, mOtrosSamsCerca, mOtrosSamsLejos,
         timeStamp, latitud, longitud, photoPath, comentario)
 
     override fun describeContents(): Int {
@@ -223,7 +223,7 @@ y createFromParcel() para crear una nueva instancia del objeto a partir de un Pa
         parcel.writeString(tpoSustrato)
         /* VIVAS */
         parcel.writeInt(vAlfaS4Ad)
-        parcel.writeInt(vAlfaOtrosSA)
+        parcel.writeInt(vAlfaSams)
         parcel.writeInt(vHembrasAd)
         parcel.writeInt(vCrias)
         parcel.writeInt(vDestetados)
@@ -231,12 +231,12 @@ y createFromParcel() para crear una nueva instancia del objeto a partir de un Pa
         parcel.writeInt(vS4AdPerif)
         parcel.writeInt(vS4AdCerca)
         parcel.writeInt(vS4AdLejos)
-        parcel.writeInt(vOtrosSAPerif)
-        parcel.writeInt(vOtrosSACerca)
-        parcel.writeInt(vOtrosSALejos)
+        parcel.writeInt(vOtrosSamsPerif)
+        parcel.writeInt(vOtrosSamsCerca)
+        parcel.writeInt(vOtrosSamsLejos)
         /* MUERTAS */
         parcel.writeInt(mAlfaS4Ad)
-        parcel.writeInt(mAlfaOtrosSA)
+        parcel.writeInt(mAlfaSams)
         parcel.writeInt(mHembrasAd)
         parcel.writeInt(mCrias)
         parcel.writeInt(mDestetados)
@@ -244,9 +244,9 @@ y createFromParcel() para crear una nueva instancia del objeto a partir de un Pa
         parcel.writeInt(mS4AdPerif)
         parcel.writeInt(mS4AdCerca)
         parcel.writeInt(mS4AdLejos)
-        parcel.writeInt(mOtrosSAPerif)
-        parcel.writeInt(mOtrosSACerca)
-        parcel.writeInt(mOtrosSALejos)
+        parcel.writeInt(mOtrosSamsPerif)
+        parcel.writeInt(mOtrosSamsCerca)
+        parcel.writeInt(mOtrosSamsLejos)
         parcel.writeString(date)
         parcel.writeDouble(latitud)
         parcel.writeDouble(longitud)

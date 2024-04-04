@@ -1,6 +1,5 @@
 package com.example.demo.fragment.add
 
-import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -33,7 +32,7 @@ class UnSocVivosFragment() : Fragment() {
         _binding = FragmentUnsocVivosBinding.inflate(inflater, container, false)
 
         binding.vAlfaS4Ad.addTextChangedListener(textWatcher)
-        binding.vAlfaOtrosSA.addTextChangedListener(textWatcher)
+        binding.vAlfaSams.addTextChangedListener(textWatcher)
         binding.vHembrasAd.addTextChangedListener(textWatcher)
         binding.vCrias.addTextChangedListener(textWatcher)
         binding.vDestetados.addTextChangedListener(textWatcher)
@@ -41,9 +40,9 @@ class UnSocVivosFragment() : Fragment() {
         binding.vS4AdPerif.addTextChangedListener(textWatcher)
         binding.vS4AdCerca.addTextChangedListener(textWatcher)
         binding.vS4AdLejos.addTextChangedListener(textWatcher)
-        binding.vOtroSAPerif.addTextChangedListener(textWatcher)
-        binding.vOtroSACerca.addTextChangedListener(textWatcher)
-        binding.vOtroSALejos.addTextChangedListener(textWatcher)
+        binding.vOtrosSamsPerif.addTextChangedListener(textWatcher)
+        binding.vOtrosSamsCerca.addTextChangedListener(textWatcher)
+        binding.vOtrosSamsLejos.addTextChangedListener(textWatcher)
 
         return binding.root
     }
@@ -66,7 +65,7 @@ class UnSocVivosFragment() : Fragment() {
     private fun cargarMap() {
         // ----- dominante ----- //
         map["v_alfa_s4ad"] = safeStringToInt(binding.vAlfaS4Ad.text.toString())
-        map["v_alfa_otros_sa"] = safeStringToInt(binding.vAlfaOtrosSA.text.toString())
+        map["v_alfa_sams"] = safeStringToInt(binding.vAlfaSams.text.toString())
 
         // ----- hembras y crias ----- //
         map["v_hembras_ad"] = safeStringToInt(binding.vHembrasAd.text.toString())
@@ -78,9 +77,9 @@ class UnSocVivosFragment() : Fragment() {
         map["v_s4ad_perif"] = safeStringToInt(binding.vS4AdPerif.text.toString())
         map["v_s4ad_cerca"] = safeStringToInt(binding.vS4AdCerca.text.toString())
         map["v_s4ad_lejos"] = safeStringToInt(binding.vS4AdLejos.text.toString())
-        map["v_otros_sa_perif"] = safeStringToInt(binding.vOtroSAPerif.text.toString())
-        map["v_otros_sa_cerca"] = safeStringToInt(binding.vOtroSACerca.text.toString())
-        map["v_otros_sa_lejos"] = safeStringToInt(binding.vOtroSALejos.text.toString())
+        map["v_otros_sams_perif"] = safeStringToInt(binding.vOtrosSamsPerif.text.toString())
+        map["v_otros_sams_cerca"] = safeStringToInt(binding.vOtrosSamsCerca.text.toString())
+        map["v_otros_sams_lejos"] = safeStringToInt(binding.vOtrosSamsLejos.text.toString())
 
         colectar(1,map)
     }

@@ -9,61 +9,68 @@
         android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="bottom"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="parent">
+        android:orientation="vertical">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10px"
+            android:gravity="center"
             android:text="@string/sub_ad_metodo_seleccion"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:gravity="bottom"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/s4_ad" />
+                android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/vAlfaS4Ad"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/s4_ad" />
+
+                <EditText
+                    android:id="@+id/vAlfaS4Ad"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:inputType="number" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:imeOptions="actionNext"
-                android:inputType="number" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/otros_ad" />
+                android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/vAlfaOtrosSA"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:imeOptions="actionNext"
-                android:inputType="number" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/Sams" />
 
+                <EditText
+                    android:id="@+id/vAlfaSams"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:inputType="number" />
+
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/linearLayout5"
         android:layout_width="match_parent"
@@ -96,7 +103,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="hembra Ad" />
+                android:text="hembra Ad"
+                android:textStyle="bold"/>
 
             <EditText
                 android:id="@+id/vHembrasAd"
@@ -129,7 +137,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="crias" />
+                    android:text="crias"
+                    android:textStyle="bold"/>
 
                 <EditText
                     android:id="@+id/vCrias"
@@ -156,7 +165,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="destet." />
+                android:text="destetado"
+                android:textStyle="bold"/>
 
             <EditText
                 android:id="@+id/vDestetados"
@@ -178,7 +188,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="juvenil" />
+                android:text="juvenil"
+                android:textStyle="bold"/>
 
             <EditText
                 android:id="@+id/vJuveniles"
@@ -222,7 +233,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/s4_ad" />
+                android:text="@string/s4_ad"
+                android:textStyle="bold"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -341,7 +353,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/otros_ad" />
+                android:text="@string/Sams"
+                android:textStyle="bold"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -362,7 +375,7 @@
                         android:text="@string/periferico" />
 
                     <EditText
-                        android:id="@+id/vOtroSAPerif"
+                        android:id="@+id/vOtrosSamsPerif"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:imeOptions="actionNext"
@@ -389,7 +402,7 @@
                         android:text="@string/cercano" />
 
                     <EditText
-                        android:id="@+id/vOtroSACerca"
+                        android:id="@+id/vOtrosSamsCerca"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:imeOptions="actionNext"
@@ -416,7 +429,7 @@
                         android:text="@string/lejos" />
 
                     <EditText
-                        android:id="@+id/vOtroSALejos"
+                        android:id="@+id/vOtrosSamsLejos"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:imeOptions="actionDone"

@@ -6,7 +6,7 @@ import com.example.demo.model.Dia
 
 class DiaRepository(private val diaDao: DiaDAO) {
 
-    val diaList: LiveData<List<Dia>> = diaDao.getAll()
+    val diaListAll: LiveData<List<Dia>> = diaDao.getAll()
 
     fun insert(elem: Dia) {
         diaDao.insert(elem)

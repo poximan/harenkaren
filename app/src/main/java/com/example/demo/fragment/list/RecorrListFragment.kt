@@ -1,8 +1,8 @@
 package com.example.demo.fragment.list
 
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.icu.util.Calendar
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -69,28 +69,70 @@ class RecorrListFragment : Fragment(), RecorrListAdapter.OnRecorrClickListener {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
+
+        return when (item.itemId) {
+            R.id.filtro_ejecutar -> {
+                filtrar()
+                true
+            }
+            R.id.filtro_limpiar -> {
+                loadFullList()
+                true
+            }
+            R.id.ayuda -> {
+                mostrarAyuda()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun mostrarAyuda() {
+
+        recorrViewModel.readAsynConFK(args.idDia) {
+
+            val texto: String = when (it.size) {
+                0 -> "Aun no has agregado ningun recorrido, y por lo tanto la lista esta vacia. Hacé click en (+) para agregarlo"
+                1 -> "Hay un solo recorrido dado de alta. Cuando agregues mas, notaras la lista. Hace click en el recorrido" +
+                        " existente para administrar sus registros (unidades sociales censadas)"
+
+                else -> {
+                    "Hace click en la fila que representa el recorrido de interes, para poder continuar a su detalle. " +
+                            "Allí podrás adminstrar los registros (unidades sociales censadas) asociados al recorrido que seleccionaste"
+                }
+            }
+
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setTitle("Recorridos")
+            builder.setMessage(
+                "Esta pantalla representa una lista de los recorridos realizados durante un unico dia, " +
+                        "en donde cada recorrido esta representado por una fila.\n$texto"
+            )
+
+            builder.setPositiveButton("OK") { dialog, _ ->
+                dialog.dismiss()
+            }
+
+            val dialog = builder.create()
+            dialog.show()
+        }
+    }
+
+    private fun filtrar() {
+
         val c = Calendar.getInstance()
         val year = c.get(Calendar.YEAR)
         val month = c.get(Calendar.MONTH)
         val day = c.get(Calendar.DAY_OF_MONTH)
-        return if (id == R.id.filtro_ejecutar) {
 
-            val dpd = DatePickerDialog(
-                activity!!,
-                { _, year, monthOfYear, dayOfMonth ->
-                    val dateSelected = "" + dayOfMonth + "/" + (monthOfYear + 1)  + "/" + year
-                    loadListWithDate(dateSelected)
-                }, year, month, day
-            )
-            dpd.show()
-
-            true
-        } else return if (id == R.id.filtro_limpiar) {
-            loadFullList()
-            true
-        } else super.onOptionsItemSelected(item)
-
+        val dpd = DatePickerDialog(
+            activity!!,
+            { _, year, monthOfYear, dayOfMonth ->
+                val dateSelected = "" + dayOfMonth + "/" + (monthOfYear + 1)  + "/" + year
+                loadListWithDate(dateSelected)
+            }, year, month, day
+        )
+        dpd.show()
     }
 
     private fun loadFullList() {

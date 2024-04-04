@@ -33,7 +33,7 @@ class UnSocMuertosFragment() : Fragment() {
         _binding = FragmentUnsocMuertosBinding.inflate(inflater, container, false)
 
         binding.mAlfaS4Ad.addTextChangedListener(textWatcher)
-        binding.mAlfaOtrosSA.addTextChangedListener(textWatcher)
+        binding.mAlfaSams.addTextChangedListener(textWatcher)
         binding.mHembrasAd.addTextChangedListener(textWatcher)
         binding.mCrias.addTextChangedListener(textWatcher)
         binding.mDestetados.addTextChangedListener(textWatcher)
@@ -41,9 +41,9 @@ class UnSocMuertosFragment() : Fragment() {
         binding.mS4AdPerif.addTextChangedListener(textWatcher)
         binding.mS4AdCerca.addTextChangedListener(textWatcher)
         binding.mS4AdLejos.addTextChangedListener(textWatcher)
-        binding.mOtroSAPerif.addTextChangedListener(textWatcher)
-        binding.mOtroSACerca.addTextChangedListener(textWatcher)
-        binding.mOtroSALejos.addTextChangedListener(textWatcher)
+        binding.mOtrosSamsPerif.addTextChangedListener(textWatcher)
+        binding.mOtrosSamsCerca.addTextChangedListener(textWatcher)
+        binding.mOtrosSamsLejos.addTextChangedListener(textWatcher)
 
         return binding.root
     }
@@ -66,7 +66,7 @@ class UnSocMuertosFragment() : Fragment() {
 
         // ----- dominante ----- //
         map["m_alfa_s4ad"] = safeStringToInt(binding.mAlfaS4Ad.text.toString())
-        map["m_alfa_otros_sa"] = safeStringToInt(binding.mAlfaOtrosSA.text.toString())
+        map["m_alfa_sams"] = safeStringToInt(binding.mAlfaSams.text.toString())
 
         // ----- hembras y crias ----- //
         map["m_hembras_ad"] = safeStringToInt(binding.mHembrasAd.text.toString())
@@ -78,9 +78,9 @@ class UnSocMuertosFragment() : Fragment() {
         map["m_s4ad_perif"] = safeStringToInt(binding.mS4AdPerif.text.toString())
         map["m_s4ad_cerca"] = safeStringToInt(binding.mS4AdCerca.text.toString())
         map["m_s4ad_lejos"] = safeStringToInt(binding.mS4AdLejos.text.toString())
-        map["m_otros_sa_perif"] = safeStringToInt(binding.mOtroSAPerif.text.toString())
-        map["m_otros_sa_cerca"] = safeStringToInt(binding.mOtroSACerca.text.toString())
-        map["m_otros_sa_lejos"] = safeStringToInt(binding.mOtroSALejos.text.toString())
+        map["m_otros_sams_perif"] = safeStringToInt(binding.mOtrosSamsPerif.text.toString())
+        map["m_otros_sams_cerca"] = safeStringToInt(binding.mOtrosSamsCerca.text.toString())
+        map["m_otros_sams_lejos"] = safeStringToInt(binding.mOtrosSamsLejos.text.toString())
 
         funColectar(2,map)
     }

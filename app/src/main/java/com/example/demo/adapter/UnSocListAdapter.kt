@@ -43,17 +43,17 @@ class UnSocListAdapter(
 
             id.text = unidSocial.id.toString()
             unSocResumen.text =
-                        " vivos --> *AlfaS4/Ad: " + unidSocial.vAlfaS4Ad + " *AlfaOt.SA: " + unidSocial.vAlfaOtrosSA +
+                        " vivos --> *AlfaS4/Ad: " + unidSocial.vAlfaS4Ad + " *AlfaOt.Sams: " + unidSocial.vAlfaSams +
                         " *Hem.Ad.: " + unidSocial.vHembrasAd + " *Crias: " + unidSocial.vCrias + " *Dest.: " + unidSocial.vDestetados +
                         " *Juv: " + unidSocial.vJuveniles + " *S4/Ad Perif.: " + unidSocial.vS4AdPerif + " *S4/Ad Cerca: " + unidSocial.vS4AdCerca +
-                        " *S4/Ad Lejos: " + unidSocial.vS4AdLejos + " *Ot.SA Perif.: " + unidSocial.vOtrosSAPerif +
-                        " *Ot.SA Cerca: " + unidSocial.vOtrosSACerca + " *Ot.SA Lejos: " + unidSocial.vOtrosSALejos +
+                        " *S4/Ad Lejos: " + unidSocial.vS4AdLejos + " *Ot.Sams Perif.: " + unidSocial.vOtrosSamsPerif +
+                        " *Ot.Sams Cerca: " + unidSocial.vOtrosSamsCerca + " *Ot.Sams Lejos: " + unidSocial.vOtrosSamsLejos +
                         "\n" +
-                        " muertos --> *AlfaS4/Ad: " + unidSocial.mAlfaS4Ad + " *AlfaOt.SA: " + unidSocial.mAlfaOtrosSA +
+                        " muertos --> *AlfaS4/Ad: " + unidSocial.mAlfaS4Ad + " *AlfaOt.Sams: " + unidSocial.mAlfaSams +
                         " *Hem.Ad.: " + unidSocial.mHembrasAd + " *Crias: " + unidSocial.mCrias + " *Dest.: " + unidSocial.mDestetados +
                         " *Juv.: " + unidSocial.mJuveniles + " *S4/Ad Perif.: " + unidSocial.mS4AdPerif + " *S4/Ad Cerca: " + unidSocial.mS4AdCerca +
-                        " *S4/Ad Lejos: " + unidSocial.mS4AdLejos + " *Ot.SA Perif.: " + unidSocial.mOtrosSAPerif +
-                        " *Ot.SA Cerca: " + unidSocial.mOtrosSACerca + " *Ot.SA Lejos: " + unidSocial.mOtrosSALejos +
+                        " *S4/Ad Lejos: " + unidSocial.mS4AdLejos + " *Ot.Sams Perif.: " + unidSocial.mOtrosSamsPerif +
+                        " *Ot.Sams Cerca: " + unidSocial.mOtrosSamsCerca + " *Ot.Sams Lejos: " + unidSocial.mOtrosSamsLejos +
                         "\n\n" + " *Comentario: " + unidSocial.comentario
 
             date.text = unidSocial.date

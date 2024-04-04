@@ -54,13 +54,17 @@ class RecorrDetailFragment : Fragment() {
         binding.editObservador.text = args.recorrActual.observador.toEditable()
         binding.areaRecorr.text = args.recorrActual.areaRecorrida.toEditable()
         binding.fechaIni.text = "Fecha inicio: " + args.recorrActual.fechaIni
+        binding.fechaFin.text = "Fecha fin: " + args.recorrActual.fechaFin
 
         latLonIni.lat = args.recorrActual.latitudIni!!
         latLonIni.lon = args.recorrActual.longitudIni!!
-        val lat = String.format("%.6f", latLonIni.lat)
-        val lon = String.format("%.6f", latLonIni.lon)
-        binding.latitudIni.text = lat
-        binding.longitudIni.text = lon
+        binding.latitudIni.text = String.format("%.6f", latLonIni.lat)
+        binding.longitudIni.text = String.format("%.6f", latLonIni.lon)
+
+        latLonFin.lat = args.recorrActual.latitudFin!!
+        latLonFin.lon = args.recorrActual.longitudFin!!
+        binding.latitudFin.text = String.format("%.6f", latLonFin.lat)
+        binding.longitudFin.text = String.format("%.6f", latLonFin.lon)
 
         binding.volverButton.setOnClickListener { goBack() }
         binding.verUnSocButton.setOnClickListener { verUnidadSocial() }
@@ -113,6 +117,11 @@ class RecorrDetailFragment : Fragment() {
         args.recorrActual.areaRecorrida = binding.areaRecorr.text.toString()
 
         model.update(args.recorrActual)
+
+        Toast.makeText(activity, "Recorrido modificado", Toast.LENGTH_LONG).show()
+
+        val action = RecorrDetailFragmentDirections.goToRecorrListAction(args.recorrActual.diaId)
+        findNavController().navigate(action)
     }
 
     private fun verUnidadSocial() {

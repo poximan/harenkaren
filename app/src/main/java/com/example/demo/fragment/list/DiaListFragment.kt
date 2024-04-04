@@ -3,7 +3,6 @@ package com.example.demo.fragment.list
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.icu.util.Calendar
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -26,8 +25,10 @@ import java.util.Locale
 class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
 
     private val diaViewModel: DiaViewModel by navGraphViewModels(R.id.app_navigation)
+
     private var _binding: FragmentDiaListBinding? = null
     private val binding get() = _binding!!
+    private lateinit var diaList: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,6 +40,7 @@ class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
         _binding!!.homeActionButton.setOnClickListener { goHome() }
         _binding!!.newRecorrButton.setOnClickListener{ nvoDia() }
 
+        diaList = binding.listDia
         loadFullList()
 
         return binding.root
@@ -56,7 +58,7 @@ class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
     private fun nvoDia() {
         val currentDate = getCurrentDate()
 
-        diaViewModel.diaList.observe(viewLifecycleOwner) { elem ->
+        diaViewModel.allDia.observe(viewLifecycleOwner) { elem ->
             val entryExists = elem.any { it.fecha == currentDate }
 
             if (entryExists) {
@@ -109,22 +111,22 @@ class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
             }
             else -> super.onOptionsItemSelected(item)
         }
-
     }
 
     private fun mostrarAyuda() {
 
-        val texto: String = when (diaViewModel.diaList.value?.size){
+        val texto: String = when (diaViewModel.allDia.value?.size){
             0 -> "Aun no has agregado ningun dia, y por lo tanto la lista esta vacia. Hacé click en (+) para agregarlo"
             1 -> "Ahora hay un solo dia dado de alta. Cuando agregues mas, notaras la lista. Hace click en el dia" +
-                    "agregado para administrar los recorridos"
+                    "existente para administrar sus recorridos"
             else -> { "Hace click en la fila que representa el dia de interes, para poder continuar a su detalle. " +
                     "Allí podrás adminstrar los recorridos asociados a la fecha que seleccionaste"}
         }
 
         val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle("Pantalla de fechas")
-        builder.setMessage("Esta pantalla representa una lista de dias, en donde cada dia es una fila.\n$texto")
+        builder.setTitle("Fechas")
+        builder.setMessage("Esta pantalla representa una lista de dias, " +
+                "en donde cada dia esta representado por una fila.\n$texto")
 
         builder.setPositiveButton("OK") { dialog, _ ->
             dialog.dismiss()
@@ -152,11 +154,11 @@ class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
     }
 
     private fun loadFullList() {
-        val diaList: RecyclerView = binding.listDia
+
         val diaAdapter = DiaListAdapter(this)
         diaList.adapter = diaAdapter
 
-        diaViewModel.diaList
+        diaViewModel.allDia
             .observe(
                 viewLifecycleOwner
             ) { elem ->
@@ -165,11 +167,11 @@ class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
     }
 
     private fun loadListWithDate(date: String) {
-        val diaList: RecyclerView = binding.listDia
+
         val diaAdapter = DiaListAdapter(this)
         diaList.adapter = diaAdapter
 
-        diaViewModel.diaList
+        diaViewModel.allDia
             .observe(
                 viewLifecycleOwner
             ) { elem ->

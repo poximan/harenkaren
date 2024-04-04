@@ -23,7 +23,7 @@ class UnSocPagerAdapter(
         "ctx_social" to "",
         "tpo_sustrato" to "",
         "v_alfa_s4ad" to 0,
-        "v_alfa_otros_sa" to 0,
+        "v_alfa_sams" to 0,
         "v_hembras_ad" to 0,
         "v_crias" to 0,
         "v_destetados" to 0,
@@ -31,11 +31,11 @@ class UnSocPagerAdapter(
         "v_s4ad_perif" to 0,
         "v_s4ad_cerca" to 0,
         "v_s4ad_lejos" to 0,
-        "v_otros_sa_perif" to 0,
-        "v_otros_sa_cerca" to 0,
-        "v_otros_sa_lejos" to 0,
+        "v_otros_sams_perif" to 0,
+        "v_otros_sams_cerca" to 0,
+        "v_otros_sams_lejos" to 0,
         "m_alfa_s4ad" to 0,
-        "m_alfa_otros_sa" to 0,
+        "m_alfa_sams" to 0,
         "m_hembras_ad" to 0,
         "m_crias" to 0,
         "m_destetados" to 0,
@@ -43,9 +43,9 @@ class UnSocPagerAdapter(
         "m_s4ad_perif" to 0,
         "m_s4ad_cerca" to 0,
         "m_s4ad_lejos" to 0,
-        "m_otros_sa_perif" to 0,
-        "m_otros_sa_cerca" to 0,
-        "m_otros_sa_lejos" to 0,
+        "m_otros_sams_perif" to 0,
+        "m_otros_sams_cerca" to 0,
+        "m_otros_sams_lejos" to 0,
         "date" to "",
         "latitud" to 0.0,
         "longitud" to 0.0,
@@ -71,7 +71,7 @@ class UnSocPagerAdapter(
             }
             1 -> {
                 map["v_alfa_s4ad"] = mapaActual["v_alfa_s4ad"] as Int
-                map["v_alfa_otros_sa"] = mapaActual["v_alfa_otros_sa"] as Int
+                map["v_alfa_sams"] = mapaActual["v_alfa_sams"] as Int
                 map["v_hembras_ad"] = mapaActual["v_hembras_ad"] as Int
                 map["v_crias"] = mapaActual["v_crias"] as Int
                 map["v_destetados"] = mapaActual["v_destetados"] as Int
@@ -79,13 +79,13 @@ class UnSocPagerAdapter(
                 map["v_s4ad_perif"] = mapaActual["v_s4ad_perif"] as Int
                 map["v_s4ad_cerca"] = mapaActual["v_s4ad_cerca"] as Int
                 map["v_s4ad_lejos"] = mapaActual["v_s4ad_lejos"] as Int
-                map["v_otros_sa_perif"] = mapaActual["v_otros_sa_perif"] as Int
-                map["v_otros_sa_cerca"] = mapaActual["v_otros_sa_cerca"] as Int
-                map["v_otros_sa_lejos"] = mapaActual["v_otros_sa_lejos"] as Int
+                map["v_otros_sams_perif"] = mapaActual["v_otros_sams_perif"] as Int
+                map["v_otros_sams_cerca"] = mapaActual["v_otros_sams_cerca"] as Int
+                map["v_otros_sams_lejos"] = mapaActual["v_otros_sams_lejos"] as Int
             }
             2 -> {
                 map["m_alfa_s4ad"] = mapaActual["m_alfa_s4ad"] as Int
-                map["m_alfa_otros_sa"] = mapaActual["m_alfa_otros_sa"] as Int
+                map["m_alfa_sams"] = mapaActual["m_alfa_sams"] as Int
                 map["m_hembras_ad"] = mapaActual["m_hembras_ad"] as Int
                 map["m_crias"] = mapaActual["m_crias"] as Int
                 map["m_destetados"] = mapaActual["m_destetados"] as Int
@@ -93,9 +93,9 @@ class UnSocPagerAdapter(
                 map["m_s4ad_perif"] = mapaActual["m_s4ad_perif"] as Int
                 map["m_s4ad_cerca"] = mapaActual["m_s4ad_cerca"] as Int
                 map["m_s4ad_lejos"] = mapaActual["m_s4ad_lejos"] as Int
-                map["m_otros_sa_perif"] = mapaActual["m_otros_sa_perif"] as Int
-                map["m_otros_sa_cerca"] = mapaActual["m_otros_sa_cerca"] as Int
-                map["m_otros_sa_lejos"] = mapaActual["m_otros_sa_lejos"] as Int
+                map["m_otros_sams_perif"] = mapaActual["m_otros_sams_perif"] as Int
+                map["m_otros_sams_cerca"] = mapaActual["m_otros_sams_cerca"] as Int
+                map["m_otros_sams_lejos"] = mapaActual["m_otros_sams_lejos"] as Int
             }
         }
     }

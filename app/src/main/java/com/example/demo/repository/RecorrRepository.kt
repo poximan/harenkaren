@@ -26,4 +26,8 @@ class RecorrRepository(private val dao: RecorrDAO) : Consultable<Recorrido> {
         liveData.postValue(list)
         return liveData
     }
+
+    fun readAsynConFK(id: Int): List<Recorrido> {
+        return dao.getRecorrByDiaId(id)
+    }
 }

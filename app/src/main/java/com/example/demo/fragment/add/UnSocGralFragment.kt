@@ -102,8 +102,7 @@ class UnSocGralFragment() : Fragment() {
 
         // tipo de sustrato en playa
         val tpoSustrato = resources.getStringArray(R.array.op_tipo_sustrato)
-        val tpoSustratoArrayAdapter =
-            ArrayAdapter(view.context, R.layout.dropdown_item, tpoSustrato)
+        val tpoSustratoArrayAdapter = ArrayAdapter(view.context, R.layout.dropdown_item, tpoSustrato)
 
         binding.spinnerAddTpoSustrato.adapter = tpoSustratoArrayAdapter
         binding.helpTpoSustrato.setOnClickListener { tpoSustratoInfo() }

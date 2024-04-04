@@ -56,7 +56,7 @@ class SolapaFragment: Fragment() {
             tpoSustrato = map["tpo_sustrato"] as String
 
             vAlfaS4Ad = map["v_alfa_s4ad"] as Int
-            vAlfaOtrosSA = map["v_alfa_otros_sa"] as Int
+            vAlfaSams = map["v_alfa_sams"] as Int
             vHembrasAd = map["v_hembras_ad"] as Int
             vCrias = map["v_crias"] as Int
             vDestetados = map["v_destetados"] as Int
@@ -64,12 +64,12 @@ class SolapaFragment: Fragment() {
             vS4AdPerif = map["v_s4ad_perif"] as Int
             vS4AdCerca = map["v_s4ad_cerca"] as Int
             vS4AdLejos = map["v_s4ad_lejos"] as Int
-            vOtrosSAPerif = map["v_otros_sa_perif"] as Int
-            vOtrosSACerca = map["v_otros_sa_cerca"] as Int
-            vOtrosSALejos = map["v_otros_sa_lejos"] as Int
+            vOtrosSamsPerif = map["v_otros_sams_perif"] as Int
+            vOtrosSamsCerca = map["v_otros_sams_cerca"] as Int
+            vOtrosSamsLejos = map["v_otros_sams_lejos"] as Int
 
             mAlfaS4Ad = map["m_alfa_s4ad"] as Int
-            mAlfaOtrosSA = map["m_alfa_otros_sa"] as Int
+            mAlfaSams = map["m_alfa_sams"] as Int
             mHembrasAd = map["m_hembras_ad"] as Int
             mCrias = map["m_crias"] as Int
             mDestetados = map["m_destetados"] as Int
@@ -77,9 +77,9 @@ class SolapaFragment: Fragment() {
             mS4AdPerif = map["m_s4ad_perif"] as Int
             mS4AdCerca = map["m_s4ad_cerca"] as Int
             mS4AdLejos = map["m_s4ad_lejos"] as Int
-            mOtrosSAPerif = map["m_otros_sa_perif"] as Int
-            mOtrosSACerca = map["m_otros_sa_cerca"] as Int
-            mOtrosSALejos = map["m_otros_sa_lejos"] as Int
+            mOtrosSamsPerif = map["m_otros_sams_perif"] as Int
+            mOtrosSamsCerca = map["m_otros_sams_cerca"] as Int
+            mOtrosSamsLejos = map["m_otros_sams_lejos"] as Int
 
             latitud = map["latitud"] as Double
             longitud = map["longitud"] as Double

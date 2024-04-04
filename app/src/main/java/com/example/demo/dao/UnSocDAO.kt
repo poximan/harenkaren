@@ -48,7 +48,7 @@ interface UnSocDAO {
             "   id, id_recorrido,\n" +
             "   pto_observacion, ctx_social, tpo_sustrato ,\n" +
             "   SUM(v_alfa_s4ad) AS v_alfa_s4ad,\n" +
-            "   SUM(v_alfa_otros_sa) AS v_alfa_otros_sa,\n" +
+            "   SUM(v_alfa_sams) AS v_alfa_sams,\n" +
             "   SUM(v_hembras_ad) AS v_hembras_ad,\n" +
             "   SUM(v_crias) AS v_crias,\n" +
             "   SUM(v_destetados) AS v_destetados,\n" +
@@ -56,11 +56,11 @@ interface UnSocDAO {
             "   SUM(v_s4ad_perif) AS v_s4ad_perif,\n" +
             "   SUM(v_s4ad_cerca) AS v_s4ad_cerca,\n" +
             "   SUM(v_s4ad_lejos) AS v_s4ad_lejos,\n" +
-            "   SUM(v_otros_sa_perif) AS v_otros_sa_perif,\n" +
-            "   SUM(v_otros_sa_cerca) AS v_otros_sa_cerca,\n" +
-            "   SUM(v_otros_sa_lejos) AS v_otros_sa_lejos,\n" +
+            "   SUM(v_otros_sams_perif) AS v_otros_sams_perif,\n" +
+            "   SUM(v_otros_sams_cerca) AS v_otros_sams_cerca,\n" +
+            "   SUM(v_otros_sams_lejos) AS v_otros_sams_lejos,\n" +
             "   SUM(m_alfa_s4ad) AS m_alfa_s4ad,\n" +
-            "   SUM(m_alfa_otros_sa) AS m_alfa_otros_sa,\n" +
+            "   SUM(m_alfa_sams) AS m_alfa_sams,\n" +
             "   SUM(m_hembras_ad) AS m_hembras_ad,\n" +
             "   SUM(m_crias) AS m_crias,\n" +
             "   SUM(m_destetados) AS m_destetados,\n" +
@@ -68,9 +68,9 @@ interface UnSocDAO {
             "   SUM(m_s4ad_perif) AS m_s4ad_perif,\n" +
             "   SUM(m_s4ad_cerca) AS m_s4ad_cerca,\n" +
             "   SUM(m_s4ad_lejos) AS m_s4ad_lejos,\n" +
-            "   SUM(m_otros_sa_perif) AS m_otros_sa_perif,\n" +
-            "   SUM(m_otros_sa_cerca) AS m_otros_sa_cerca,\n" +
-            "   SUM(m_otros_sa_lejos) AS m_otros_sa_lejos,\n" +
+            "   SUM(m_otros_sams_perif) AS m_otros_sams_perif,\n" +
+            "   SUM(m_otros_sams_cerca) AS m_otros_sams_cerca,\n" +
+            "   SUM(m_otros_sams_lejos) AS m_otros_sams_lejos,\n" +
             "   date, latitud, longitud, photo_path, comentario \n" +
             "FROM unidsocial\n" +
             "WHERE id_recorrido = :idRecorr;\n")
@@ -80,7 +80,7 @@ interface UnSocDAO {
             "   id, id_recorrido,\n" +
             "   pto_observacion, ctx_social, tpo_sustrato ,\n" +
             "   SUM(v_alfa_s4ad) AS v_alfa_s4ad,\n" +
-            "   SUM(v_alfa_otros_sa) AS v_alfa_otros_sa,\n" +
+            "   SUM(v_alfa_sams) AS v_alfa_sams,\n" +
             "   SUM(v_hembras_ad) AS v_hembras_ad,\n" +
             "   SUM(v_crias) AS v_crias,\n" +
             "   SUM(v_destetados) AS v_destetados,\n" +
@@ -88,11 +88,11 @@ interface UnSocDAO {
             "   SUM(v_s4ad_perif) AS v_s4ad_perif,\n" +
             "   SUM(v_s4ad_cerca) AS v_s4ad_cerca,\n" +
             "   SUM(v_s4ad_lejos) AS v_s4ad_lejos,\n" +
-            "   SUM(v_otros_sa_perif) AS v_otros_sa_perif,\n" +
-            "   SUM(v_otros_sa_cerca) AS v_otros_sa_cerca,\n" +
-            "   SUM(v_otros_sa_lejos) AS v_otros_sa_lejos,\n" +
+            "   SUM(v_otros_sams_perif) AS v_otros_sams_perif,\n" +
+            "   SUM(v_otros_sams_cerca) AS v_otros_sams_cerca,\n" +
+            "   SUM(v_otros_sams_lejos) AS v_otros_sams_lejos,\n" +
             "   SUM(m_alfa_s4ad) AS m_alfa_s4ad,\n" +
-            "   SUM(m_alfa_otros_sa) AS m_alfa_otros_sa,\n" +
+            "   SUM(m_alfa_sams) AS m_alfa_sams,\n" +
             "   SUM(m_hembras_ad) AS m_hembras_ad,\n" +
             "   SUM(m_crias) AS m_crias,\n" +
             "   SUM(m_destetados) AS m_destetados,\n" +
@@ -100,9 +100,9 @@ interface UnSocDAO {
             "   SUM(m_s4ad_perif) AS m_s4ad_perif,\n" +
             "   SUM(m_s4ad_cerca) AS m_s4ad_cerca,\n" +
             "   SUM(m_s4ad_lejos) AS m_s4ad_lejos,\n" +
-            "   SUM(m_otros_sa_perif) AS m_otros_sa_perif,\n" +
-            "   SUM(m_otros_sa_cerca) AS m_otros_sa_cerca,\n" +
-            "   SUM(m_otros_sa_lejos) AS m_otros_sa_lejos,\n" +
+            "   SUM(m_otros_sams_perif) AS m_otros_sams_perif,\n" +
+            "   SUM(m_otros_sams_cerca) AS m_otros_sams_cerca,\n" +
+            "   SUM(m_otros_sams_lejos) AS m_otros_sams_lejos,\n" +
             "   date, latitud, longitud, photo_path, comentario \n" +
             "FROM \n" +
             "    unidsocial\n" +
@@ -114,7 +114,7 @@ interface UnSocDAO {
             "   id, id_recorrido,\n" +
             "   pto_observacion, ctx_social, tpo_sustrato ,\n" +
             "   SUM(v_alfa_s4ad) AS v_alfa_s4ad,\n" +
-            "   SUM(v_alfa_otros_sa) AS v_alfa_otros_sa,\n" +
+            "   SUM(v_alfa_sams) AS v_alfa_sams,\n" +
             "   SUM(v_hembras_ad) AS v_hembras_ad,\n" +
             "   SUM(v_crias) AS v_crias,\n" +
             "   SUM(v_destetados) AS v_destetados,\n" +
@@ -122,11 +122,11 @@ interface UnSocDAO {
             "   SUM(v_s4ad_perif) AS v_s4ad_perif,\n" +
             "   SUM(v_s4ad_cerca) AS v_s4ad_cerca,\n" +
             "   SUM(v_s4ad_lejos) AS v_s4ad_lejos,\n" +
-            "   SUM(v_otros_sa_perif) AS v_otros_sa_perif,\n" +
-            "   SUM(v_otros_sa_cerca) AS v_otros_sa_cerca,\n" +
-            "   SUM(v_otros_sa_lejos) AS v_otros_sa_lejos,\n" +
+            "   SUM(v_otros_sams_perif) AS v_otros_sams_perif,\n" +
+            "   SUM(v_otros_sams_cerca) AS v_otros_sams_cerca,\n" +
+            "   SUM(v_otros_sams_lejos) AS v_otros_sams_lejos,\n" +
             "   SUM(m_alfa_s4ad) AS m_alfa_s4ad,\n" +
-            "   SUM(m_alfa_otros_sa) AS m_alfa_otros_sa,\n" +
+            "   SUM(m_alfa_sams) AS m_alfa_sams,\n" +
             "   SUM(m_hembras_ad) AS m_hembras_ad,\n" +
             "   SUM(m_crias) AS m_crias,\n" +
             "   SUM(m_destetados) AS m_destetados,\n" +
@@ -134,9 +134,9 @@ interface UnSocDAO {
             "   SUM(m_s4ad_perif) AS m_s4ad_perif,\n" +
             "   SUM(m_s4ad_cerca) AS m_s4ad_cerca,\n" +
             "   SUM(m_s4ad_lejos) AS m_s4ad_lejos,\n" +
-            "   SUM(m_otros_sa_perif) AS m_otros_sa_perif,\n" +
-            "   SUM(m_otros_sa_cerca) AS m_otros_sa_cerca,\n" +
-            "   SUM(m_otros_sa_lejos) AS m_otros_sa_lejos,\n" +
+            "   SUM(m_otros_sams_perif) AS m_otros_sams_perif,\n" +
+            "   SUM(m_otros_sams_cerca) AS m_otros_sams_cerca,\n" +
+            "   SUM(m_otros_sams_lejos) AS m_otros_sams_lejos,\n" +
             "   date, latitud, longitud, photo_path, comentario \n" +
             "FROM \n" +
             "    unidsocial\n")
