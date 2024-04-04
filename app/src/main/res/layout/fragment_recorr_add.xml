@@ -58,35 +58,53 @@
                 android:id="@+id/getPosicionIni"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="gps inicio"/>
+                android:text="gps"/>
 
             <ImageView
-                android:id="@+id/gpsLightIni"
+                android:id="@+id/gpsLightRecorr"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/indicator_nof"
                 android:layout_marginHorizontal="10dp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="lat:"/>
-            <TextView
-                android:id="@+id/latitud_ini"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="numberSigned"
-                android:text="0.0"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="lon:"
-                android:layout_marginLeft="5pt"/>
-            <TextView
-                android:id="@+id/longitud_ini"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="numberSigned"
-                android:text="0.0"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center_vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="latitud:"
+                        android:layout_marginRight="5dp"/>
+                    <TextView
+                        android:id="@+id/latitudIni"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        android:hint="0.0"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="longitud:"
+                        android:layout_marginRight="5dp"/>
+                    <TextView
+                        android:id="@+id/longitudIni"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        android:hint="0.0"/>
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

@@ -5,12 +5,18 @@ apply plugin: "androidx.navigation.safeargs"
 
 android {
     namespace 'com.example.demo'
+
+    /*
+    sdk/api=29(Q) es android 10 -> 84% del mercado
+    sdk/api=30(R) es android 11 -> 75% del mercado
+    sdk/api=31,32(S) es android 12 -> 58% del mercado
+     */
     compileSdk 33
 
     defaultConfig {
         applicationId "com.example.demo"
-        minSdk 24
-        targetSdk 32
+        minSdk 26
+        targetSdk 31
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -29,7 +35,6 @@ android {
     }
 
     /* excluir el modulo de funciones atomicas del paquete y prevenir warnings */
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8

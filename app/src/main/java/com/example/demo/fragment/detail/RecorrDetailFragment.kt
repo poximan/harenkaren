@@ -16,12 +16,16 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.demo.R
 import com.example.demo.databinding.FragmentRecorrDetailBinding
 import com.example.demo.fragment.add.UnSocGralFragment
 import com.example.demo.model.LatLong
+import com.example.demo.viewModel.RecorrViewModel
+import java.text.SimpleDateFormat
+import java.util.Date
 
 class RecorrDetailFragment : Fragment() {
 
@@ -29,9 +33,11 @@ class RecorrDetailFragment : Fragment() {
     private val binding get() = _binding!!
     private val args: RecorrDetailFragmentArgs by navArgs()
 
-    private lateinit var locationManager: LocationManager
+    private lateinit var model: RecorrViewModel
 
-    private var indicatorLight: ImageView? = null
+    private lateinit var locationManager: LocationManager
+    private var indicatorLightIni: ImageView? = null
+    private var indicatorLightFin: ImageView? = null
     private val latLonIni = LatLong()
     private val latLonFin = LatLong()
 
@@ -41,27 +47,72 @@ class RecorrDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        model = ViewModelProvider(this)[RecorrViewModel::class.java]
+
         _binding = FragmentRecorrDetailBinding.inflate(inflater, container, false)
 
-        _binding!!.editObservador.text = args.recorrActual.observador.toEditable()
-        _binding!!.areaRecorr.text = args.recorrActual.areaRecorrida.toEditable()
+        binding.editObservador.text = args.recorrActual.observador.toEditable()
+        binding.areaRecorr.text = args.recorrActual.areaRecorrida.toEditable()
+        binding.fechaIni.text = "Fecha inicio: " + args.recorrActual.fechaIni
 
-        _binding!!.volverButton.setOnClickListener { goBack() }
-        _binding!!.verUnSocButton.setOnClickListener { verUnidadSocial() }
+        latLonIni.lat = args.recorrActual.latitudIni!!
+        latLonIni.lon = args.recorrActual.longitudIni!!
+        val lat = String.format("%.6f", latLonIni.lat)
+        val lon = String.format("%.6f", latLonIni.lon)
+        binding.latitudIni.text = lat
+        binding.longitudIni.text = lon
 
-        binding.getPosicionIni.setOnClickListener { getPosicionActual(binding.latitudIni, binding.longitudIni, latLonIni) }
-        binding.getPosicionFin.setOnClickListener { getPosicionActual(binding.latitudFin, binding.longitudFin, latLonFin) }
+        binding.volverButton.setOnClickListener { goBack() }
+        binding.verUnSocButton.setOnClickListener { verUnidadSocial() }
+        binding.confirmarButton.setOnClickListener { guardarCambios() }
 
-        _binding!!.checkBox.setOnCheckedChangeListener { _, isChecked ->
-            // Habilitar o deshabilitar los componentes según el estado del checkbox
-            _binding!!.editObservador.isEnabled = isChecked
-            _binding!!.areaRecorr.isEnabled = isChecked
+        binding.getPosicionIni.setOnClickListener { indicatorLightIni?.let { it1 ->
+            getPosicionActual(binding.latitudIni, binding.longitudIni, latLonIni,
+                it1
+            )
+        } }
+        binding.getPosicionFin.setOnClickListener { indicatorLightFin?.let { it1 ->
+            getPosicionActual(binding.latitudFin, binding.longitudFin, latLonFin,
+                it1
+            )
+        } }
 
-            _binding!!.getPosicionIni.isEnabled = isChecked
-            _binding!!.getPosicionFin.isEnabled = isChecked
+        // Habilitar o deshabilitar los componentes según el estado del checkbox
+        binding.checkBox.setOnCheckedChangeListener { _, isChecked ->
+            binding.editObservador.isEnabled = isChecked
+            binding.areaRecorr.isEnabled = isChecked
+
+            binding.getPosicionIni.isEnabled = isChecked
+            binding.getPosicionFin.isEnabled = isChecked
+
+            binding.confirmarButton.isEnabled = isChecked
         }
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        indicatorLightIni = view.findViewById(R.id.gpsLightIni)
+        indicatorLightFin = view.findViewById(R.id.gpsLightFin)
+    }
+
+    private fun guardarCambios() {
+
+        val formato = requireContext().resources.getString(R.string.formato_fecha)
+
+        args.recorrActual.observador = binding.editObservador.text.toString()
+
+        args.recorrActual.fechaFin = SimpleDateFormat(formato).format(Date())
+
+        args.recorrActual.latitudIni = latLonIni.lat
+        args.recorrActual.longitudIni = latLonIni.lon
+        args.recorrActual.latitudFin = latLonFin.lat
+        args.recorrActual.longitudFin = latLonFin.lon
+
+        args.recorrActual.areaRecorrida = binding.areaRecorr.text.toString()
+
+        model.update(args.recorrActual)
     }
 
     private fun verUnidadSocial() {
@@ -86,7 +137,7 @@ class RecorrDetailFragment : Fragment() {
         }
     }
 
-    private fun getPosicionActual(latDestino: TextView, lonDestino: TextView, latLongDestino: LatLong) {
+    private fun getPosicionActual(latDestino: TextView, lonDestino: TextView, latLongDestino: LatLong, indicatorLight: ImageView) {
 
         locationManager = requireActivity().getSystemService(LocationManager::class.java)
 
