@@ -58,12 +58,7 @@ class OSMFragment : Fragment(), MapEventsReceiver {
         super.onViewCreated(view, savedInstanceState)
 
         val routePoints = listOf(
-            GeoPoint(args.coordenadas.lat, args.coordenadas.lon),
-            GeoPoint(-42.079241, -63.765547),
-            GeoPoint(-42.083023, -63.753115),
-            GeoPoint(-42.096113, -63.740619),
-            GeoPoint(-42.109932, -63.732213),
-            GeoPoint(-42.120723, -63.726459),
+            GeoPoint(args.coordenadas.lat, args.coordenadas.lon)
         )
 
         val startPoint = routePoints.first()

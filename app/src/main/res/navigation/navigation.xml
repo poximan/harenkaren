@@ -340,6 +340,6 @@
     <fragment
         android:id="@+id/export_fragment"
         android:name="com.example.demo.fragment.messaging.ExportFragment"
-        android:label="Notificación recibida"
+        android:label="Exportar registros"
         tools:layout="@layout/fragment_export" />
 </navigation>
