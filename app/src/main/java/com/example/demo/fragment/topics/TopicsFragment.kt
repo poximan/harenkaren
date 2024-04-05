@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.example.demo.databinding.FragmentTopicsBinding
-import com.google.firebase.messaging.FirebaseMessaging
 
 class TopicsFragment : Fragment() {
     private var _binding: FragmentTopicsBinding? = null
@@ -51,6 +50,7 @@ class TopicsFragment : Fragment() {
 
     private fun sendNotifications(selectedTopics: List<String>, unselectedTopics: List<String>) {
         for (topic in selectedTopics) {
+            /* TODO reemplazar mensajeria
             FirebaseMessaging.getInstance().subscribeToTopic(topic)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
@@ -59,10 +59,12 @@ class TopicsFragment : Fragment() {
                         Log.i("SelectedTopics", "Error en la suscripción al tópico: $topic", task.exception)
                     }
                 }
+             */
             saveTopicSubscription(topic, true)
 
         }
         for (topic in unselectedTopics) {
+            /*
             FirebaseMessaging.getInstance().unsubscribeFromTopic(topic)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
@@ -71,6 +73,8 @@ class TopicsFragment : Fragment() {
                         Log.i("SelectedTopics", "Error en la desuscripción al tópico: $topic", task.exception)
                     }
                 }
+
+             */
             saveTopicSubscription(topic, false)
 
         }
