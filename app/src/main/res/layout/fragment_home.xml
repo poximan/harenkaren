@@ -32,16 +32,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/topicos_button" />
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="215dp"
-        android:layout_height="163dp"
-        android:layout_marginTop="80dp"
-        android:scaleX="-1"
-        android:src="@mipmap/elephant_adobenidae"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/regulationsButton" />
-
     <Button
         android:id="@+id/logOutButton"
         android:layout_width="120dp"
