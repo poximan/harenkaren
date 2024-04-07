@@ -14,11 +14,11 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.demo"
         minSdk 26
         targetSdk 31
-        versionCode 2
-        versionName "karen"
+        applicationId "com.example.demo"
+        versionCode 123
+        versionName "tag1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
