@@ -339,7 +339,7 @@
         tools:layout="@layout/fragment_show_message" />
     <fragment
         android:id="@+id/export_fragment"
-        android:name="com.example.demo.fragment.messaging.ExportFragment"
+        android:name="com.example.demo.export.ExportFragment"
         android:label="Exportar registros"
         tools:layout="@layout/fragment_export" />
 </navigation>
