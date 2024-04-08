@@ -1,12 +1,7 @@
 package com.example.demo.export
 
-import BluetoothClient
-import BluetoothServer
-import android.app.Activity
-import android.bluetooth.BluetoothAdapter
-import android.bluetooth.BluetoothDevice
-import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,10 +12,6 @@ class ExportFragment : Fragment() {
 
     private var _binding: FragmentExportBinding? = null
     private val binding get() = _binding!!
-
-    private lateinit var bluetoothAdapter: BluetoothAdapter
-    private lateinit var bluetoothServer: BluetoothServer
-    private lateinit var bluetoothClient: BluetoothClient
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,11 +25,20 @@ class ExportFragment : Fragment() {
         val check = binding.soyConcent
         val bluetoothTxt = binding.bluetoothText
 
+        if(check.isChecked)
+            binding.layMasterBt.visibility = View.GONE
+        else
+            binding.layMasterBt.visibility = View.VISIBLE
+
         check.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 bluetoothTxt.text = "Recibir datos desde otros equipos"
+                binding.layMasterBt.visibility = View.INVISIBLE
+                binding.bluetoothBtn.text = "escuchar por BT"
             } else {
                 bluetoothTxt.text = "Enviar mis datos a un concentrador"
+                binding.layMasterBt.visibility = View.VISIBLE
+                binding.bluetoothBtn.text = "enviar por BT"
             }
         }
 
@@ -53,47 +53,16 @@ class ExportFragment : Fragment() {
     }
 
     private fun recibirDatos() {
-        val bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
-        bluetoothServer = BluetoothServer(requireActivity(), bluetoothAdapter)
-        bluetoothServer.startServer()
+        val comunicacion = BluetoothManager(requireActivity(), requireContext())
+        comunicacion.activarComoMTU()
     }
 
     private fun enviarConcentrador() {
-
-        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
-        bluetoothClient = BluetoothClient(requireActivity(), bluetoothAdapter)
-
-        // Obtener una referencia al dispositivo Bluetooth al que deseas conectarte
-        // Por ejemplo, podrías escanear dispositivos cercanos y seleccionar uno para la conexión
-        // Aquí asumiremos que tienes una referencia al dispositivo Bluetooth deseado
-        val device: BluetoothDevice = obtenerDispositivoBluetooth() { lambda }
-
-        // Intentar conectar al servidor Bluetooth
-        bluetoothClient.connectToServer(device)
+        val comunicacion = BluetoothManager(binding.txtMasterBt.text.toString(), requireActivity(), requireContext())
+        comunicacion.activarComoRTU()
     }
 
     private fun enviarEmail() {
         TODO("Not yet implemented")
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
-        if (binding.soyConcent.isChecked)
-            bluetoothServer.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        else
-            bluetoothClient.onRequestPermissionsResult(requestCode, permissions, grantResults)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        bluetoothServer.onActivityResult(requestCode, resultCode, data)
-    }
-
-    private fun obtenerDispositivoBluetooth(activity: Activity, adapter: BluetoothAdapter, callback: (BluetoothDevice?) -> Unit) {
-        val bluetoothDeviceSelector = BluetoothDeviceSelector(activity, adapter)
-        bluetoothDeviceSelector.startDiscovery { device ->
-            callback(device)
-        }
     }
 }

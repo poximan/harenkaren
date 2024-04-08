@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -14,38 +15,61 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="Enviar mis datos por email"/>
         <Button
             android:id="@+id/email_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="email"/>
+            android:text="enviar por email"/>
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-
-        app:layout_constraintTop_toBottomOf="@id/linearLayout1">
+        app:layout_constraintTop_toBottomOf="@id/linearLayout1"
+        android:layout_marginTop="20dp">
         <TextView
             android:id="@+id/bluetooth_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Enviar mis datos a un concentrador"/>
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="soy/nosoy concentrador"/>
-        <Button
-            android:id="@+id/bluetooth_btn"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/bluetooth_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="enviar por bt"/>
+            <CheckBox
+                android:id="@+id/soy_concent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="soy concentrador"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/lay_master_bt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ID del concentrador"/>
+            <EditText
+                android:id="@+id/txt_master_bt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <EditText
+            android:id="@+id/recepcion_bt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="bluetooth"/>
+            android:inputType="text"/>
     </LinearLayout>
 
-    <CheckBox
-        android:id="@+id/soy_concent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="soy concentrador"
-        app:layout_constraintTop_toBottomOf="@id/linearLayout1"
-        app:layout_constraintStart_toEndOf="@id/linearLayout2"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
