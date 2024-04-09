@@ -12,12 +12,12 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import java.util.UUID
 
-class BluetoothManager(
+class GestorBT(
     private val masterBT: String,
     private val activity: Activity,
     private val context: Context,
     private val callback: MessageReceivedCallback
-) {
+): Comunicable {
 
     constructor(activity: Activity, context: Context, callback: MessageReceivedCallback) : this("", activity, context, callback)
 
@@ -30,24 +30,24 @@ class BluetoothManager(
         const val BLUETOOTH_CONNECT_PERMISSION_CODE = 1
     }
 
-    fun activarComoMTU() {
-        val mtu = obtenerBluetoothAdapter()?.let { BluetoothMTU(it) }
+    override fun activarComoMTU() {
+        val mtu = obtenerBluetoothAdapter()?.let { MTUClienteBT(it) }
         mtu?.startListeningForRTUConnection(callback)
     }
 
-    fun activarComoRTU() {
+    override fun activarComoRTU() {
         var adapter = obtenerBluetoothAdapter() ?.let { it }
 
         val direccionMAC = adapter?.let { obtenerDireccionMAC(it, masterBT) }
 
-        val rtu = adapter?.let { BluetoothRTU(it) }
+        val rtu = adapter?.let { RTUServBT(it) }
         if (direccionMAC != null) {
             rtu?.connectToMTU(direccionMAC)
         }
     }
 
     private fun obtenerBluetoothAdapter(): BluetoothAdapter? {
-        if (!context.packageManager.hasSystemFeature(android.content.pm.PackageManager.FEATURE_BLUETOOTH)) {
+        if (!context.packageManager.hasSystemFeature(PackageManager.FEATURE_BLUETOOTH)) {
             return null
         }
 
@@ -91,15 +91,5 @@ class BluetoothManager(
         }
 
         return bluetoothAdapter.bondedDevices
-    }
-
-    fun onRequestPermissionsResult(requestCode: Int, grantResults: IntArray) {
-        if (requestCode == BLUETOOTH_CONNECT_PERMISSION_CODE) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                obtenerDispositivosEmparejados()
-            } else {
-                // Manejar denegación de permisos
-            }
-        }
     }
 }

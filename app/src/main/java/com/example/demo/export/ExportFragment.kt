@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.demo.databinding.FragmentExportBinding
 
-class ExportFragment : Fragment(), BluetoothManager.MessageReceivedCallback {
+class ExportFragment : Fragment(), GestorBT.MessageReceivedCallback {
 
     private var _binding: FragmentExportBinding? = null
     private val binding get() = _binding!!
@@ -34,16 +34,28 @@ class ExportFragment : Fragment(), BluetoothManager.MessageReceivedCallback {
         check.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 bluetoothTxt.text = "Recibir datos desde otros equipos"
+
                 binding.layMasterBt.visibility = View.INVISIBLE
-                binding.bluetoothBtn.text = "escuchar por BT"
+                if(binding.radioBt.isChecked)
+                    binding.bluetoothBtn.text = "escuchar por BT"
+                if(binding.radioWifi.isChecked)
+                    binding.bluetoothBtn.text = "escuchar por WF"
 
                 binding.recepcionBt.text = "esperando datos desde remotas"
             } else {
                 bluetoothTxt.text = "Enviar mis datos a un concentrador"
-                binding.layMasterBt.visibility = View.VISIBLE
-                binding.bluetoothBtn.text = "enviar por BT"
 
-                val comunicacion = BluetoothManager(binding.txtMasterBt.text.toString(), requireActivity(), requireContext(), this)
+                binding.layMasterBt.visibility = View.VISIBLE
+                if(binding.radioBt.isChecked){
+                    binding.bluetoothBtn.text = "enviar por BT"
+                    binding.idMasterBt.text = "ID del concentrador"
+                }
+                if(binding.radioWifi.isChecked) {
+                    binding.bluetoothBtn.text = "enviar por WF"
+                    binding.idMasterBt.text = "IP del concentrador"
+                }
+
+                val comunicacion = GestorBT(binding.txtMasterBt.text.toString(), requireActivity(), requireContext(), this)
 
                 val datosConcatenados = StringBuilder()
                 for (elemento in comunicacion.obtenerDispositivosEmparejados()) {
@@ -65,14 +77,26 @@ class ExportFragment : Fragment(), BluetoothManager.MessageReceivedCallback {
     }
 
     private fun recibirDatos() {
-        val comunicacion = BluetoothManager(requireActivity(), requireContext(), this)
-        comunicacion.activarComoMTU()
+        if(binding.radioBt.isChecked){
+            val comunicacion = GestorBT(requireActivity(), requireContext(), this)
+            comunicacion.activarComoMTU()
+        }
+        if(binding.radioWifi.isChecked) {
+            val comunicacion = GestorWF()
+            comunicacion.activarComoMTU()
+        }
     }
 
     @SuppressLint("MissingPermission")
     private fun enviarConcentrador() {
-        val comunicacion = BluetoothManager(binding.txtMasterBt.text.toString(), requireActivity(), requireContext(), this)
-        comunicacion.activarComoRTU()
+        if(binding.radioBt.isChecked){
+            val comunicacion = GestorBT(binding.txtMasterBt.text.toString(), requireActivity(), requireContext(), this)
+            comunicacion.activarComoRTU()
+        }
+        if(binding.radioWifi.isChecked){
+            val comunicacion = GestorWF()
+            comunicacion.activarComoRTU(binding.txtMasterBt.text.toString())
+        }
     }
 
     private fun enviarEmail() {
