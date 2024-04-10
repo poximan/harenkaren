@@ -82,6 +82,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        onSupportNavigateUp()
+    }
+
     private fun agregarParOrigenDestino(idOrigen: Int, idDestino: Int) {
         mapaParesOrigenDestino[idOrigen] = idDestino
     }

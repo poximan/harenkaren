@@ -35,5 +35,11 @@ interface UsuarioDAO {
 
     @Query("INSERT INTO usuario (email, pass, esAdmin) VALUES (:email, :pass, :esAdmin)")
     fun create(email: String, pass: String, esAdmin: Boolean = true): Long
+
+    @Query("SELECT * FROM UnidSocial " +
+            "INNER JOIN Recorrido ON UnidSocial.recorrId = Recorrido.id " +
+            "INNER JOIN Dia ON Recorrido.diaId = Dia.id")
+    fun obtenerUnidSocialConDetalles(): List<UnidSocialConDetalles>
+
 }
 
