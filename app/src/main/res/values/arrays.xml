@@ -1,5 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string-array name="op_punto_obs_unsoc">
+        <item>Seleccione...</item>
+        <item id="alto">Alto</item>
+        <item id="bajo">Bajo</item>
+    </string-array>
+
+    <string-array name="op_contexto_social">
+        <item>Seleccione...</item>
+        <item id="H">haren(H)</item>
+        <item id="HsA">haren s/alfa(HsA)</item>
+        <item id="GH">gpo. harenes(GH)</item>
+        <item id="PS">pja. solitaria(PS)</item>
+        <item id="S">indiv. solos(S)</item>
+    </string-array>
+
+    <string-array name="op_tipo_sustrato">
+        <item>Seleccione...</item>
+        <item id="A">arena(A)</item>
+        <item id="CR">canto rodado(CR)</item>
+        <item id="M">mezcla(M)</item>
+        <item id="R">restinga(R)</item>
+    </string-array>
+
     <string-array name="opciones_granularidad">
         <item>Unidad Social {#}</item>
         <item>Unidades.Soc. del recorrido {#}</item>

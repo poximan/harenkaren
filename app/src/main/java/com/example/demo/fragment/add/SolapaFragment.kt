@@ -16,7 +16,6 @@ import com.example.demo.model.UnidSocial
 import com.example.demo.viewModel.UnSocViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
-import java.util.Locale
 
 class SolapaFragment: Fragment() {
 
