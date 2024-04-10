@@ -55,7 +55,7 @@ class DevDatos {
                 mAlfaS4Ad = 1, mAlfaSams = 2, mHembrasAd = 10, mCrias = 8, mDestetados = 1,
                 mJuveniles = 2, mS4AdPerif = 2, mS4AdCerca = 1, mS4AdLejos = 0,
                 mOtrosSamsPerif = 2, mOtrosSamsCerca = 1, mOtrosSamsLejos = 0, date = "2023/10/18 - 17:26:48",
-                latitud = -42.079241, longitud = -63.765547, photoPath = "", comentario = "punta norte 1"),
+                latitud = -42.079241, longitud = -63.765547, photoPath = "", comentario = "comentario 1"),
             UnidSocial(
                 id = 2, recorrId = 1, ptoObsUnSoc = "bajo", ctxSocial = "GH", tpoSustrato = "CR",
                 vAlfaS4Ad = 3, vAlfaSams = 4, vHembrasAd = 15, vCrias = 12, vDestetados = 3,
@@ -64,7 +64,7 @@ class DevDatos {
                 mAlfaS4Ad = 3, mAlfaSams = 4, mHembrasAd = 15, mCrias = 12, mDestetados = 3,
                 mJuveniles = 4, mS4AdPerif = 4, mS4AdCerca = 3, mS4AdLejos = 2,
                 mOtrosSamsPerif = 4, mOtrosSamsCerca = 3, mOtrosSamsLejos = 2, date = "2023/10/18 - 14:26:48",
-                latitud = -42.083023, longitud = -63.753115, photoPath = "", comentario = "punta norte 2"),
+                latitud = -42.083023, longitud = -63.753115, photoPath = "", comentario = "comentario 2"),
             UnidSocial(
                 id = 3, recorrId = 1, ptoObsUnSoc = "alto", ctxSocial = "PS", tpoSustrato = "M",
                 vAlfaS4Ad = 5, vAlfaSams = 6, vHembrasAd = 20, vCrias = 16, vDestetados = 5,
@@ -73,7 +73,7 @@ class DevDatos {
                 mAlfaS4Ad = 5, mAlfaSams = 6, mHembrasAd = 20, mCrias = 16, mDestetados = 5,
                 mJuveniles = 6, mS4AdPerif = 6, mS4AdCerca = 5, mS4AdLejos = 4,
                 mOtrosSamsPerif = 6, mOtrosSamsCerca = 5, mOtrosSamsLejos = 4, date = "2023/10/18 - 18:26:48",
-                latitud = -42.096113, longitud = -63.740619, photoPath = "", comentario = "punta norte 3"),
+                latitud = -42.096113, longitud = -63.740619, photoPath = "", comentario = "comentario 3"),
             UnidSocial(
                 id = 4, recorrId = 1, ptoObsUnSoc = "bajo", ctxSocial = "S", tpoSustrato = "R",
                 vAlfaS4Ad = 7, vAlfaSams = 8, vHembrasAd = 25, vCrias = 20, vDestetados = 7,
@@ -82,7 +82,7 @@ class DevDatos {
                 mAlfaS4Ad = 7, mAlfaSams = 8, mHembrasAd = 25, mCrias = 20, mDestetados = 7,
                 mJuveniles = 8, mS4AdPerif = 8, mS4AdCerca = 7, mS4AdLejos = 6,
                 mOtrosSamsPerif = 8, mOtrosSamsCerca = 7, mOtrosSamsLejos = 6, date = "2023/10/18 - 13:26:48",
-                latitud = -42.109932, longitud = -63.732213, photoPath = "", comentario = "punta norte 4"),
+                latitud = -42.109932, longitud = -63.732213, photoPath = "", comentario = "comentario 4"),
             UnidSocial(
                 id = 5, recorrId = 2, ptoObsUnSoc = "alto", ctxSocial = "H", tpoSustrato = "A",
                 vAlfaS4Ad = 9, vAlfaSams = 10, vHembrasAd = 30, vCrias = 24, vDestetados = 9,
@@ -91,7 +91,7 @@ class DevDatos {
                 mAlfaS4Ad = 9, mAlfaSams = 10, mHembrasAd = 30, mCrias = 24, mDestetados = 9,
                 mJuveniles = 10, mS4AdPerif = 10, mS4AdCerca = 9, mS4AdLejos = 8,
                 mOtrosSamsPerif = 10, mOtrosSamsCerca = 9, mOtrosSamsLejos = 8, date = "2023/10/18 - 12:26:48",
-                latitud = -42.497655, longitud = -63.607295, photoPath = "", comentario = "punta delgada 1"),
+                latitud = -42.497655, longitud = -63.607295, photoPath = "", comentario = "comentario 5"),
             UnidSocial(
                 id = 6, recorrId = 2, ptoObsUnSoc = "bajo", ctxSocial = "GH", tpoSustrato = "CR",
                 vAlfaS4Ad = 11, vAlfaSams = 12, vHembrasAd = 35, vCrias = 28, vDestetados = 11,
@@ -100,7 +100,7 @@ class DevDatos {
                 mAlfaS4Ad = 11, mAlfaSams = 12, mHembrasAd = 35, mCrias = 28, mDestetados = 11,
                 mJuveniles = 12, mS4AdPerif = 12, mS4AdCerca = 11, mS4AdLejos = 10,
                 mOtrosSamsPerif = 12, mOtrosSamsCerca = 11, mOtrosSamsLejos = 10, date = "2023/10/18 - 11:26:48",
-                latitud = -42.501262, longitud = -63.607638, photoPath = "", comentario = "punta delgada 2"),
+                latitud = -42.501262, longitud = -63.607638, photoPath = "", comentario = "comentario 6"),
             UnidSocial(
                 id = 7, recorrId = 2, ptoObsUnSoc = "alto", ctxSocial = "PS", tpoSustrato = "M",
                 vAlfaS4Ad = 13, vAlfaSams = 14, vHembrasAd = 40, vCrias = 32, vDestetados = 13,
@@ -109,7 +109,7 @@ class DevDatos {
                 mAlfaS4Ad = 13, mAlfaSams = 14, mHembrasAd = 40, mCrias = 32, mDestetados = 13,
                 mJuveniles = 14, mS4AdPerif = 14, mS4AdCerca = 13, mS4AdLejos = 12,
                 mOtrosSamsPerif = 14, mOtrosSamsCerca = 13, mOtrosSamsLejos = 12, date = "2023/10/18 - 09:26:48",
-                latitud = -42.506135, longitud = -63.603645, photoPath = "", comentario = "punta delgada 3"),
+                latitud = -42.506135, longitud = -63.603645, photoPath = "", comentario = "comentario 7"),
             UnidSocial(
                 id = 8, recorrId = 3, ptoObsUnSoc = "bajo", ctxSocial = "S", tpoSustrato = "R",
                 vAlfaS4Ad = 15, vAlfaSams = 16, vHembrasAd = 45, vCrias = 36, vDestetados = 15,
@@ -118,7 +118,7 @@ class DevDatos {
                 mAlfaS4Ad = 15, mAlfaSams = 16, mHembrasAd = 45, mCrias = 36, mDestetados = 15,
                 mJuveniles = 16, mS4AdPerif = 16, mS4AdCerca = 15, mS4AdLejos = 14,
                 mOtrosSamsPerif = 16, mOtrosSamsCerca = 15, mOtrosSamsLejos = 14, date = "2023/10/19 - 15:26:48",
-                latitud = -43.664679, longitud = -65.336265, photoPath = "", comentario = "isla escondida 1"),
+                latitud = -43.664679, longitud = -65.336265, photoPath = "", comentario = "comentario 8"),
             UnidSocial(
                 id = 9, recorrId = 3, ptoObsUnSoc = "alto", ctxSocial = "H", tpoSustrato = "A",
                 vAlfaS4Ad = 17, vAlfaSams = 18, vHembrasAd = 50, vCrias = 40, vDestetados = 17,
@@ -127,7 +127,7 @@ class DevDatos {
                 mAlfaS4Ad = 17, mAlfaSams = 18, mHembrasAd = 50, mCrias = 40, mDestetados = 17,
                 mJuveniles = 18, mS4AdPerif = 18, mS4AdCerca = 17, mS4AdLejos = 16,
                 mOtrosSamsPerif = 18, mOtrosSamsCerca = 17, mOtrosSamsLejos = 16, date = "2023/10/19 - 16:26:48",
-                latitud = -43.657476, longitud = -65.332543, photoPath = "", comentario = "isla escondida 2"),
+                latitud = -43.657476, longitud = -65.332543, photoPath = "", comentario = "comentario 9"),
             UnidSocial(
                 id = 10, recorrId = 3, ptoObsUnSoc = "bajo", ctxSocial = "GH", tpoSustrato = "CR",
                 vAlfaS4Ad = 19, vAlfaSams = 20, vHembrasAd = 55, vCrias = 44, vDestetados = 19,
@@ -136,7 +136,7 @@ class DevDatos {
                 mAlfaS4Ad = 19, mAlfaSams = 20, mHembrasAd = 55, mCrias = 44, mDestetados = 19,
                 mJuveniles = 20, mS4AdPerif = 20, mS4AdCerca = 19, mS4AdLejos = 18,
                 mOtrosSamsPerif = 20, mOtrosSamsCerca = 19, mOtrosSamsLejos = 18, date = "2023/10/19 - 13:26:48",
-                latitud = -43.652570, longitud = -65.325500, photoPath = "", comentario = "isla escondida 3")
+                latitud = -43.652570, longitud = -65.325500, photoPath = "", comentario = "comentario 10")
         )
 
         unSocList.forEach { unsoc ->

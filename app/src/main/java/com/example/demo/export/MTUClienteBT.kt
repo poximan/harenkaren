@@ -4,39 +4,59 @@ import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothServerSocket
 import android.bluetooth.BluetoothSocket
-import android.util.Log
+import android.os.Parcelable
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
 import java.io.IOException
+import java.io.ObjectInputStream
 
 class MTUClienteBT(private val bluetoothAdapter: BluetoothAdapter) {
 
     @SuppressLint("MissingPermission")
-    fun startListeningForRTUConnection(callback: GestorBT.MessageReceivedCallback) {
+    fun startListeningForRTUConnection(callback: RegistroDistribuible) {
         val thread = Thread {
+
+            var lista: ArrayList<Parcelable>? = null
+
             try {
                 val serverSocket: BluetoothServerSocket = bluetoothAdapter.listenUsingRfcommWithServiceRecord(
                     "BluetoothMTU", GestorBT.BLUETOOTH_UUID
                 )
-
-                var receivedMessage = ""
-                Log.i("MTU", "escuchando stream entrada")
+                println("Esperando conexión...")
                 val socket: BluetoothSocket = serverSocket.accept()
+                println("Conexión establecida.")
 
-                if (socket.isConnected) {
-                    val inputStream = socket.inputStream
-                    val buffer = ByteArray(1024)
-                    val bytes = inputStream.read(buffer)
-                    receivedMessage = String(buffer, 0, bytes)
-                } else {
-                    Log.e("MTU", "socket desconectado")
+                // Recibir los bytes del socket
+                val inputStream = socket.inputStream
+                val byteArrayOutputStream = ByteArrayOutputStream()
+                var byte: Int
+                while (inputStream.read().also { byte = it } != -1) {
+                    byteArrayOutputStream.write(byte)
                 }
+                val bytes = byteArrayOutputStream.toByteArray()
 
-                callback.onMessageReceived(receivedMessage)
+                // Convertir los bytes en un ArrayList<Parcelable>
+                val byteArrayInputStream = ByteArrayInputStream(bytes)
+                val objectInputStream = ObjectInputStream(byteArrayInputStream)
+                lista = objectInputStream.readObject() as? ArrayList<Parcelable>
+
+                // Cerrar los streams y el socket
+                inputStream.close()
+                byteArrayOutputStream.close()
+                byteArrayInputStream.close()
+                objectInputStream.close()
+                socket.close()
+                serverSocket.close()
+
+                if (lista != null) {
+                    callback.onMessageReceived(lista)
+                }
                 serverSocket.close()
 
             } catch (e: IOException) {
-                Log.d("falla", e.stackTraceToString())
-            } catch (e: Exception) {
-                Log.d("falla general", e.stackTraceToString())
+                e.printStackTrace()
+            } catch (e: ClassNotFoundException) {
+                e.printStackTrace()
             }
         }
         thread.start()

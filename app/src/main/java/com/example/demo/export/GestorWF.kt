@@ -1,21 +1,20 @@
 package com.example.demo.export
 
-class GestorWF {
+import android.os.Parcelable
+
+class GestorWF(private val callback: RegistroDistribuible) {
 
     private var mtuClienteWF: MTUClienteWF? = null
     private var rtuServWF: RTUServWF? = null
 
     fun activarComoMTU() {
-        mtuClienteWF = MTUClienteWF { data ->
-            // Aquí puedes manejar los datos recibidos desde el cliente
-            println("Datos recibidos como MTU: $data")
-        }
+        mtuClienteWF = MTUClienteWF(callback)
         mtuClienteWF?.startListening()
     }
 
-    fun activarComoRTU(ipMTU: String) {
+    fun activarComoRTU(lista: ArrayList<Parcelable>, ipMTU: String) {
 
         rtuServWF = RTUServWF(ipMTU)
-        rtuServWF?.sendData("test")
+        rtuServWF?.sendData(lista)
     }
 }

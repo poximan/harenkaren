@@ -42,22 +42,8 @@ class UnSocListAdapter(
             itemView.setOnClickListener { itemClickListener.onItemClick(unidSocial) }
 
             id.text = unidSocial.id.toString()
-            unSocResumen.text =
-                        " vivos --> *AlfaS4/Ad: " + unidSocial.vAlfaS4Ad + " *AlfaOt.Sams: " + unidSocial.vAlfaSams +
-                        " *Hem.Ad.: " + unidSocial.vHembrasAd + " *Crias: " + unidSocial.vCrias + " *Dest.: " + unidSocial.vDestetados +
-                        " *Juv: " + unidSocial.vJuveniles + " *S4/Ad Perif.: " + unidSocial.vS4AdPerif + " *S4/Ad Cerca: " + unidSocial.vS4AdCerca +
-                        " *S4/Ad Lejos: " + unidSocial.vS4AdLejos + " *Ot.Sams Perif.: " + unidSocial.vOtrosSamsPerif +
-                        " *Ot.Sams Cerca: " + unidSocial.vOtrosSamsCerca + " *Ot.Sams Lejos: " + unidSocial.vOtrosSamsLejos +
-                        "\n" +
-                        " muertos --> *AlfaS4/Ad: " + unidSocial.mAlfaS4Ad + " *AlfaOt.Sams: " + unidSocial.mAlfaSams +
-                        " *Hem.Ad.: " + unidSocial.mHembrasAd + " *Crias: " + unidSocial.mCrias + " *Dest.: " + unidSocial.mDestetados +
-                        " *Juv.: " + unidSocial.mJuveniles + " *S4/Ad Perif.: " + unidSocial.mS4AdPerif + " *S4/Ad Cerca: " + unidSocial.mS4AdCerca +
-                        " *S4/Ad Lejos: " + unidSocial.mS4AdLejos + " *Ot.Sams Perif.: " + unidSocial.mOtrosSamsPerif +
-                        " *Ot.Sams Cerca: " + unidSocial.mOtrosSamsCerca + " *Ot.Sams Lejos: " + unidSocial.mOtrosSamsLejos +
-                        "\n\n" + " *Comentario: " + unidSocial.comentario
-
+            unSocResumen.text = armarResumen(unidSocial)
             date.text = unidSocial.date
-
 
             val file = File(unidSocial.photoPath)
             /*
@@ -106,5 +92,48 @@ class UnSocListAdapter(
 
     interface OnUnSocClickListener {
         fun onItemClick(elem: UnidSocial)
+    }
+
+    fun armarResumen(unidSocial: UnidSocial): String {
+        return buildString {
+            append("Gral --> ")
+
+            if (unidSocial.ptoObsUnSoc?.isNotEmpty() == true) append("*Pto.obs.: ${unidSocial.ptoObsUnSoc} ")
+            if (unidSocial.ctxSocial?.isNotEmpty() == true) append("*Ctx.soc: ${unidSocial.ctxSocial} ")
+            if (unidSocial.tpoSustrato?.isNotEmpty() == true) append("*Pya: ${unidSocial.tpoSustrato} ")
+            append("\n")
+
+            append("vivos --> ")
+            if (unidSocial.vAlfaS4Ad > 0) append("*AlfaS4/Ad: ${unidSocial.vAlfaS4Ad} ")
+            if (unidSocial.vAlfaSams > 0) append("*AlfaOt.Sams: ${unidSocial.vAlfaSams} ")
+            if (unidSocial.vHembrasAd > 0) append("*Hem.Ad.: ${unidSocial.vHembrasAd} ")
+            if (unidSocial.vCrias > 0) append("*Crias: ${unidSocial.vCrias} ")
+            if (unidSocial.vDestetados > 0) append("*Dest.: ${unidSocial.vDestetados} ")
+            if (unidSocial.vJuveniles > 0) append("*Juv: ${unidSocial.vJuveniles} ")
+            if (unidSocial.vS4AdPerif > 0) append("*S4/Ad Perif.: ${unidSocial.vS4AdPerif} ")
+            if (unidSocial.vS4AdCerca > 0) append("*S4/Ad Cerca: ${unidSocial.vS4AdCerca} ")
+            if (unidSocial.vS4AdLejos > 0) append("*S4/Ad Lejos: ${unidSocial.vS4AdLejos} ")
+            if (unidSocial.vOtrosSamsPerif > 0) append("*Ot.Sams Perif.: ${unidSocial.vOtrosSamsPerif} ")
+            if (unidSocial.vOtrosSamsCerca > 0) append("*Ot.Sams Cerca: ${unidSocial.vOtrosSamsCerca} ")
+            if (unidSocial.vOtrosSamsLejos > 0) append("*Ot.Sams Lejos: ${unidSocial.vOtrosSamsLejos} ")
+            append("\n")
+
+            append("muertos --> ")
+            if (unidSocial.mAlfaS4Ad > 0) append("*AlfaS4/Ad: ${unidSocial.mAlfaS4Ad} ")
+            if (unidSocial.mAlfaSams > 0) append("*AlfaOt.Sams: ${unidSocial.mAlfaSams} ")
+            if (unidSocial.mHembrasAd > 0) append("*Hem.Ad.: ${unidSocial.mHembrasAd} ")
+            if (unidSocial.mCrias > 0) append("*Crias: ${unidSocial.mCrias} ")
+            if (unidSocial.mDestetados > 0) append("*Dest.: ${unidSocial.mDestetados} ")
+            if (unidSocial.mJuveniles > 0) append("*Juv.: ${unidSocial.mJuveniles} ")
+            if (unidSocial.mS4AdPerif > 0) append("*S4/Ad Perif.: ${unidSocial.mS4AdPerif} ")
+            if (unidSocial.mS4AdCerca > 0) append("*S4/Ad Cerca: ${unidSocial.mS4AdCerca} ")
+            if (unidSocial.mS4AdLejos > 0) append("*S4/Ad Lejos: ${unidSocial.mS4AdLejos} ")
+            if (unidSocial.mOtrosSamsPerif > 0) append("*Ot.Sams Perif.: ${unidSocial.mOtrosSamsPerif} ")
+            if (unidSocial.mOtrosSamsCerca > 0) append("*Ot.Sams Cerca: ${unidSocial.mOtrosSamsCerca} ")
+            if (unidSocial.mOtrosSamsLejos > 0) append("*Ot.Sams Lejos: ${unidSocial.mOtrosSamsLejos} ")
+            append("\n\n")
+
+            if (unidSocial.comentario?.isNotEmpty() == true) append("*Comentario: ${unidSocial.comentario}")
+        }
     }
 }

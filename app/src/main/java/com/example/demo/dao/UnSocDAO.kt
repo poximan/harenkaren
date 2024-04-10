@@ -1,5 +1,7 @@
 package com.example.demo.dao
 
+import android.os.Parcel
+import android.os.Parcelable
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
@@ -7,6 +9,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
+import com.example.demo.model.EntidadesPlanas
 
 import com.example.demo.model.UnidSocial
 
@@ -141,5 +144,73 @@ interface UnSocDAO {
             "FROM \n" +
             "    unidsocial\n")
     fun getSumTotal(): UnidSocial
-}
 
+    @Query("SELECT \n" +
+            "    dia.id AS dia_id,\n" +
+            "    dia.fecha AS dia_fecha,\n" +
+            "    dia.meteo,\n" +
+            "    recorrido.id AS recorr_id,\n" +
+            "    recorrido.observador,\n" +
+            "    recorrido.fecha_ini AS recorr_fecha_ini,\n" +
+            "    recorrido.fecha_fin AS recorr_fecha_fin,\n" +
+            "    recorrido.latitud_ini AS recorr_latitud_ini,\n" +
+            "    recorrido.longitud_ini AS recorr_longitud_ini,\n" +
+            "    recorrido.latitud_fin AS recorr_latitud_fin,\n" +
+            "    recorrido.longitud_fin AS recorr_longitud_fin,\n" +
+            "    recorrido.area_recorrida,\n" +
+            "    unidsocial.id AS unidsocial_id,\n" +
+            "    unidsocial.pto_observacion,\n" +
+            "    unidsocial.ctx_social,\n" +
+            "    unidsocial.tpo_sustrato,\n" +
+            "    -- Propiedades VIVIOS\n" +
+            "    unidsocial.v_alfa_s4ad,\n" +
+            "    unidsocial.v_alfa_sams,\n" +
+            "    unidsocial.v_hembras_ad,\n" +
+            "    unidsocial.v_crias,\n" +
+            "    unidsocial.v_destetados,\n" +
+            "    unidsocial.v_juveniles,\n" +
+            "    unidsocial.v_s4ad_perif,\n" +
+            "    unidsocial.v_s4ad_cerca,\n" +
+            "    unidsocial.v_s4ad_lejos,\n" +
+            "    unidsocial.v_otros_sams_perif,\n" +
+            "    unidsocial.v_otros_sams_cerca,\n" +
+            "    unidsocial.v_otros_sams_lejos,\n" +
+            "    -- Propiedades MUERTOS\n" +
+            "    unidsocial.m_alfa_s4ad,\n" +
+            "    unidsocial.m_alfa_sams,\n" +
+            "    unidsocial.m_hembras_ad,\n" +
+            "    unidsocial.m_crias,\n" +
+            "    unidsocial.m_destetados,\n" +
+            "    unidsocial.m_juveniles,\n" +
+            "    unidsocial.m_s4ad_perif,\n" +
+            "    unidsocial.m_s4ad_cerca,\n" +
+            "    unidsocial.m_s4ad_lejos,\n" +
+            "    unidsocial.m_otros_sams_perif,\n" +
+            "    unidsocial.m_otros_sams_cerca,\n" +
+            "    unidsocial.m_otros_sams_lejos,\n" +
+            "    -- Propiedades adicionales\n" +
+            "    unidsocial.date AS unidsocial_fecha,\n" +
+            "    unidsocial.latitud AS unidsocial_latitud,\n" +
+            "    unidsocial.longitud AS unidsocial_longitud,\n" +
+            "    unidsocial.photo_path,\n" +
+            "    unidsocial.comentario\n" +
+            "FROM \n" +
+            "    dia\n" +
+            "INNER JOIN \n" +
+            "    recorrido ON dia.id = recorrido.id_dia\n" +
+            "INNER JOIN \n" +
+            "    unidsocial ON recorrido.id = unidSocial.id_recorrido")
+    fun getUnSocDesnormalizado(): List<EntidadesPlanas>
+
+    fun parcelarLista(entidades: List<EntidadesPlanas>): ArrayList<Parcelable> {
+        val listaParcelable = ArrayList<Parcelable>()
+        for (entidad in entidades) {
+            val parcel = Parcel.obtain()
+            entidad.writeToParcel(parcel, 0)
+            parcel.setDataPosition(0)
+            listaParcelable.add(EntidadesPlanas.createFromParcel(parcel))
+            parcel.recycle()
+        }
+        return listaParcelable
+    }
+}

@@ -7,6 +7,7 @@ import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.content.Context
 import android.content.pm.PackageManager
+import android.os.Parcelable
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -16,33 +17,29 @@ class GestorBT(
     private val masterBT: String,
     private val activity: Activity,
     private val context: Context,
-    private val callback: MessageReceivedCallback
-): Comunicable {
+    private val callback: RegistroDistribuible
+) {
 
-    constructor(activity: Activity, context: Context, callback: MessageReceivedCallback) : this("", activity, context, callback)
-
-    interface MessageReceivedCallback {
-        fun onMessageReceived(message: String)
-    }
+    constructor(activity: Activity, context: Context, callback: RegistroDistribuible) : this("", activity, context, callback)
 
     companion object {
         val BLUETOOTH_UUID: UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
         const val BLUETOOTH_CONNECT_PERMISSION_CODE = 1
     }
 
-    override fun activarComoMTU() {
+    fun activarComoMTU() {
         val mtu = obtenerBluetoothAdapter()?.let { MTUClienteBT(it) }
         mtu?.startListeningForRTUConnection(callback)
     }
 
-    override fun activarComoRTU() {
+    fun activarComoRTU(lista: ArrayList<Parcelable>) {
         var adapter = obtenerBluetoothAdapter() ?.let { it }
 
         val direccionMAC = adapter?.let { obtenerDireccionMAC(it, masterBT) }
 
         val rtu = adapter?.let { RTUServBT(it) }
         if (direccionMAC != null) {
-            rtu?.connectToMTU(direccionMAC)
+            rtu?.connectToMTU(lista, direccionMAC)
         }
     }
 

@@ -2,13 +2,20 @@ package com.example.demo.export
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.Parcelable
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
+import com.example.demo.database.HarenKarenRoomDatabase
 import com.example.demo.databinding.FragmentExportBinding
+import com.example.demo.model.EntidadesPlanas
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 
-class ExportFragment : Fragment(), GestorBT.MessageReceivedCallback {
+class ExportFragment : Fragment(), RegistroDistribuible {
 
     private var _binding: FragmentExportBinding? = null
     private val binding get() = _binding!!
@@ -82,28 +89,72 @@ class ExportFragment : Fragment(), GestorBT.MessageReceivedCallback {
             comunicacion.activarComoMTU()
         }
         if(binding.radioWifi.isChecked) {
-            val comunicacion = GestorWF()
+            val comunicacion = GestorWF(this)
             comunicacion.activarComoMTU()
         }
     }
 
     @SuppressLint("MissingPermission")
     private fun enviarConcentrador() {
+
+        val listaParcel = runBlocking {
+            getBD()
+        }
+
         if(binding.radioBt.isChecked){
             val comunicacion = GestorBT(binding.txtMasterBt.text.toString(), requireActivity(), requireContext(), this)
-            comunicacion.activarComoRTU()
+            comunicacion.activarComoRTU(listaParcel)
         }
         if(binding.radioWifi.isChecked){
-            val comunicacion = GestorWF()
-            comunicacion.activarComoRTU(binding.txtMasterBt.text.toString())
+            val comunicacion = GestorWF(this)
+            comunicacion.activarComoRTU(listaParcel, binding.txtMasterBt.text.toString())
         }
     }
 
     private fun enviarEmail() {
-        TODO("Not yet implemented")
+
+        val listaEntidades = runBlocking {
+            getEntidades()
+        }
+        val datosEMAIL = CreadorCSV().empaquetarCSV(listaEntidades)
     }
 
-    override fun onMessageReceived(message: String) {
-        binding.recepcionBt.text = message
+    private suspend fun getEntidades(): List<EntidadesPlanas> {
+        val viewModelScope = viewLifecycleOwner.lifecycleScope
+
+        return withContext(Dispatchers.IO) {// Dispatchers.IO es el hilo background
+            val dao = HarenKarenRoomDatabase
+                .getDatabase(requireActivity().application, viewModelScope)
+                .unSocDao()
+            return@withContext dao.getUnSocDesnormalizado()
+        }
+    }
+
+    private suspend fun getBD(): ArrayList<Parcelable> {
+        val viewModelScope = viewLifecycleOwner.lifecycleScope
+
+        return withContext(Dispatchers.IO) {// Dispatchers.IO es el hilo background
+            val dao = HarenKarenRoomDatabase
+                .getDatabase(requireActivity().application, viewModelScope)
+                .unSocDao()
+            val unsocDesnormalizado = dao.getUnSocDesnormalizado()
+            return@withContext dao.parcelarLista(unsocDesnormalizado)
+        }
+    }
+
+    private fun desparcelarLista(parcelables: ArrayList<Parcelable>): List<EntidadesPlanas> {
+        val listaEntidades = mutableListOf<EntidadesPlanas>()
+        for (parcelable in parcelables) {
+            if (parcelable is EntidadesPlanas) {
+                listaEntidades.add(parcelable)
+            }
+        }
+        return listaEntidades
+    }
+
+    override fun onMessageReceived(lista: ArrayList<Parcelable>) {
+
+        val listaEntidadesPlanas = desparcelarLista(lista)
+        binding.recepcionBt.text = listaEntidadesPlanas.toString()
     }
 }

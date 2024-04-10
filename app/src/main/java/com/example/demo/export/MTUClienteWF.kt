@@ -1,15 +1,15 @@
 package com.example.demo.export
 
 import android.os.AsyncTask
+import android.os.Parcelable
 import android.util.Log
-import com.example.demo.model.UnidSocial
-import java.io.BufferedReader
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
 import java.io.IOException
-import java.io.InputStreamReader
 import java.io.ObjectInputStream
 import java.net.ServerSocket
 
-class MTUClienteWF(private val onDataReceived: (String) -> Unit) {
+class MTUClienteWF(private val callback: RegistroDistribuible) {
 
     companion object {
         private const val TAG = "MTUConcentrator"
@@ -30,34 +30,56 @@ class MTUClienteWF(private val onDataReceived: (String) -> Unit) {
         }
     }
 
-    private inner class ServerTask : AsyncTask<Void, Void, Void>() {
+    private inner class ServerTask() : AsyncTask<Void, ArrayList<Parcelable>, Void>() {
 
         override fun doInBackground(vararg params: Void?): Void? {
+
+            var lista: ArrayList<Parcelable>? = null
             try {
-                serverSocket = ServerSocket(PORT)
-                Log.d(TAG, "ServerSocket started. Listening on port $PORT")
+                val serverSocket = ServerSocket(PORT)
+                println("Esperando conexión...")
+                val socket = serverSocket.accept()
+                println("Conexión establecida.")
 
-                while (true) {
-                    val clientSocket = serverSocket!!.accept()
-                    Log.d(TAG, "Client connected: ${clientSocket.inetAddress}")
-
-                    val input = clientSocket.getInputStream()
-                    val reader = BufferedReader(InputStreamReader(input))
-
-                    // Lee el string enviado por el cliente
-                    val receivedString = reader.readLine()
-
-                    reader.close()
-                    clientSocket.close()
-
-                    onDataReceived(receivedString)
+                // Recibir los bytes del socket
+                val inputStream = socket.inputStream
+                val byteArrayOutputStream = ByteArrayOutputStream()
+                var byte: Int
+                while (inputStream.read().also { byte = it } != -1) {
+                    byteArrayOutputStream.write(byte)
                 }
+                val bytes = byteArrayOutputStream.toByteArray()
+
+                // Convertir los bytes en un ArrayList<Parcelable>
+                val byteArrayInputStream = ByteArrayInputStream(bytes)
+                val objectInputStream = ObjectInputStream(byteArrayInputStream)
+                lista = objectInputStream.readObject() as? ArrayList<Parcelable>
+
+                // Cerrar los streams y el socket
+                inputStream.close()
+                byteArrayOutputStream.close()
+                byteArrayInputStream.close()
+                objectInputStream.close()
+                socket.close()
+                serverSocket.close()
+
             } catch (e: IOException) {
-                Log.e(TAG, "Error creating server socket: ${e.message}")
+                e.printStackTrace()
             } catch (e: ClassNotFoundException) {
-                Log.e(TAG, "Error deserializing object: ${e.message}")
+                e.printStackTrace()
+            }
+
+            if (lista != null) {
+                publishProgress(lista)
             }
             return null
+        }
+
+        override fun onProgressUpdate(vararg values: ArrayList<Parcelable>?) {
+            super.onProgressUpdate(*values)
+            values.firstOrNull()?.let {
+                callback.onMessageReceived(it)
+            }
         }
     }
 }
