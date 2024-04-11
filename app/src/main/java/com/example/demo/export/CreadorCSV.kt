@@ -1,5 +1,6 @@
 package com.example.demo.export
 
+import android.content.Context
 import com.example.demo.model.EntidadesPlanas
 import java.io.File
 
@@ -35,9 +36,9 @@ class CreadorCSV {
         return header + csvRows
     }
 
-    fun empaquetarCSV(entidadesList: List<EntidadesPlanas>): File {
-        val csvData = generarCSV(entidadesList)     // Generar la cadena CSV
-        val archivo = File("datos.csv")
+    fun empaquetarCSV(context: Context, entidadesList: List<EntidadesPlanas>): File {
+        val csvData = generarCSV(entidadesList) // Generar la cadena CSV
+        val archivo = File(context.filesDir, "datos.csv")
         archivo.writeText(csvData) // Escribir la cadena CSV en el archivo
         return archivo
     }

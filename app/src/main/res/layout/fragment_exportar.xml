@@ -31,7 +31,6 @@
         app:layout_constraintTop_toBottomOf="@id/linearLayout1"
         android:orientation="vertical">
         <TextView
-            android:id="@+id/bluetooth_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -61,16 +60,11 @@
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@id/linearLayout2">
 
-        <CheckBox
-            android:id="@+id/soy_concent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="soy concentrador"/>
         <Button
             android:id="@+id/bluetooth_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="enviar por bt"/>
+            android:text="seleccione medio"/>
         <LinearLayout
             android:id="@+id/lay_master_bt"
             android:layout_width="match_parent"
@@ -80,11 +74,12 @@
                 android:id="@+id/id_master_bt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ID del concentrador"/>
+                android:text="ID destino"/>
             <EditText
                 android:id="@+id/txt_master_bt"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:hint="direcicon IP / alias bluetooth"/>
         </LinearLayout>
 
         <TextView

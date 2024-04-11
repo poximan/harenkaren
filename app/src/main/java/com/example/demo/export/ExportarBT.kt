@@ -13,23 +13,14 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import java.util.UUID
 
-class GestorBT(
+class ExportarBT(
     private val masterBT: String,
     private val activity: Activity,
-    private val context: Context,
-    private val callback: RegistroDistribuible
+    private val context: Context
 ) {
-
-    constructor(activity: Activity, context: Context, callback: RegistroDistribuible) : this("", activity, context, callback)
-
     companion object {
         val BLUETOOTH_UUID: UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
         const val BLUETOOTH_CONNECT_PERMISSION_CODE = 1
-    }
-
-    fun activarComoMTU() {
-        val mtu = obtenerBluetoothAdapter()?.let { MTUClienteBT(it) }
-        mtu?.startListeningForRTUConnection(callback)
     }
 
     fun activarComoRTU(lista: ArrayList<Parcelable>) {

@@ -2,8 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@id/import_fragment"
+        android:icon="@drawable/ic_import"
+        android:title="Importar" />
+    <item
         android:id="@id/export_fragment"
-        android:icon="@android:drawable/ic_menu_help"
+        android:icon="@drawable/ic_export"
         android:title="Exportar" />
     <item
         android:id="@id/dev_fragment"
