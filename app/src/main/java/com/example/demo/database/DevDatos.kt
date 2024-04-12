@@ -1,5 +1,7 @@
 package com.example.demo.database
 
+import android.content.Context
+import android.provider.Settings
 import com.example.demo.dao.DiaDAO
 import com.example.demo.dao.RecorrDAO
 import com.example.demo.dao.UnSocDAO
@@ -10,10 +12,17 @@ import com.example.demo.model.UnidSocial
 
 class DevDatos {
 
-    fun generarDias(diaDAO: DiaDAO) {
+    private fun obtenerAndroidID(context: Context): String {
+        return Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
+    }
+
+    fun generarDias(diaDAO: DiaDAO, context: Context) {
+
+        val idUnivoco = obtenerAndroidID(context)
+
         val diaList = listOf<Dia>(
-            Dia(id = 1, fecha = "2023/10/19 - 08:20:48", meteo = "parcialmente nublado"),
-            Dia(id = 2, fecha = "2023/10/20 - 12:17:13", meteo = "despejado")
+            Dia(celularId = idUnivoco, id = 1, fecha = "2023/10/19 - 08:20:48", meteo = "parcialmente nublado"),
+            Dia(celularId = idUnivoco, id = 2, fecha = "2023/10/20 - 12:17:13", meteo = "despejado")
         )
 
         diaList.forEach { dia ->
@@ -36,7 +45,7 @@ class DevDatos {
             Recorrido(
                 id = 3, diaId = 2, observador = "donato",
                 fechaIni = "2024/01/21 - 11:15:48", fechaFin = "2024/01/21 - 18:38:48",
-                latitudIni = -42.000, longitudIni = -62.371, latitudFin = -38.533, longitudFin = -60.311,
+                latitudIni = -42.123, longitudIni = -62.371, latitudFin = -38.533, longitudFin = -60.311,
                 areaRecorrida = "isla escondida"),
         )
 

@@ -5,6 +5,7 @@ import android.os.Parcelable
 import java.io.Serializable
 
 data class EntidadesPlanas(
+    val celular_id: String?,
     val dia_id: Int,
     val dia_fecha: String?,
     val meteo: String?,
@@ -55,6 +56,7 @@ data class EntidadesPlanas(
     val comentario: String?
 ) : Parcelable, Serializable {
     constructor(parcel: Parcel) : this(
+        parcel.readString(),
         parcel.readInt(),
         parcel.readString(),
         parcel.readString(),
@@ -104,6 +106,7 @@ data class EntidadesPlanas(
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(celular_id)
         parcel.writeInt(dia_id)
         parcel.writeString(dia_fecha)
         parcel.writeString(meteo)

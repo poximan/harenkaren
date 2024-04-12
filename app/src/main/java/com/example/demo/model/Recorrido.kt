@@ -6,6 +6,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Ignore
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
 @Entity(
@@ -15,7 +16,8 @@ import androidx.room.PrimaryKey
         parentColumns = ["id"],
         childColumns = ["id_dia"],
         onDelete = ForeignKey.CASCADE
-    )]
+    )],
+    indices = [Index(value = ["id_dia"])]
 )
 data class Recorrido(
 

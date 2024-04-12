@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -11,30 +10,49 @@
         android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="vertical">
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Respaldar mis datos por email"/>
+            android:text="Extraer todos los registros, y compartir fuera de la app"/>
         <Button
             android:id="@+id/email_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="enviar por email"
+            android:text="compartir"
             android:layout_marginBottom="40dp"/>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/linearLayout1"
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout1">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="?android:attr/listDivider" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout2"
         android:orientation="vertical">
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Enviar mis datos a un concentrador"/>
+            android:text="Conectarme a otro celular que tenga esta app\nLa app destino funcionará como concentrador"
+            android:layout_marginBottom="20dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Eliga medio para comunicarse"/>
         <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -44,13 +62,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="usar bluetooth"/>
+                android:text="bluetooth"/>
             <RadioButton
                 android:id="@+id/radio_wifi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="usar wifi"/>
+                android:text="wifi"/>
         </RadioGroup>
 
     </LinearLayout>
@@ -58,12 +76,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/linearLayout2">
+        app:layout_constraintTop_toBottomOf="@id/linearLayout3">
 
         <Button
             android:id="@+id/bluetooth_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="seleccione medio"/>
         <LinearLayout
             android:id="@+id/lay_master_bt"
@@ -79,6 +98,7 @@
                 android:id="@+id/txt_master_bt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="text|number"
                 android:hint="direcicon IP / alias bluetooth"/>
         </LinearLayout>
 

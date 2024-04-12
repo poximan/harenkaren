@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.os.Parcel
 import android.os.Parcelable
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -78,9 +79,11 @@ class ExportarFragment : Fragment() {
     @SuppressLint("MissingPermission")
     private fun enviarConcentrador() {
 
-        val listaParcel = runBlocking {
-            getBD()
+        var listaEntidadesPlanas = runBlocking {
+            getEntidades()
         }
+
+        val listaParcel = parcelarLista(listaEntidadesPlanas)
 
         if(binding.radioBt.isChecked){
             val comunicacion = ExportarBT(binding.txtMasterBt.text.toString(), requireActivity(), requireContext())
@@ -94,16 +97,17 @@ class ExportarFragment : Fragment() {
 
     private fun enviarEmail() {
 
-        val listaEntidades = runBlocking {
+        var listaEntidadesPlanas = runBlocking {
             getEntidades()
         }
-        var datosEMAIL = CreadorCSV().empaquetarCSV(requireContext(),listaEntidades)
+
+        var datosEMAIL = CreadorCSV().empaquetarCSV(requireContext(),listaEntidadesPlanas)
 
         val destinatarios = arrayOf("poxi_man@yahoo.com")
-        val asunto = "Asunto del correo electrónico"
-        val cuerpo = "Este es el contenido del correo electrónico."
+        val asunto = "respaldo censo"
+        val cuerpo = "este es un respaldo de los datos contenidos en la app"
 
-        EmailSender.sendEmail(destinatarios, asunto, cuerpo, requireContext())
+        EmailSender.sendEmail(destinatarios, asunto, cuerpo, datosEMAIL, requireContext())
     }
 
     private suspend fun getEntidades(): List<EntidadesPlanas> {
@@ -117,15 +121,15 @@ class ExportarFragment : Fragment() {
         }
     }
 
-    private suspend fun getBD(): ArrayList<Parcelable> {
-        val viewModelScope = viewLifecycleOwner.lifecycleScope
-
-        return withContext(Dispatchers.IO) {// Dispatchers.IO es el hilo background
-            val dao = HarenKarenRoomDatabase
-                .getDatabase(requireActivity().application, viewModelScope)
-                .unSocDao()
-            val unsocDesnormalizado = dao.getUnSocDesnormalizado()
-            return@withContext dao.parcelarLista(unsocDesnormalizado)
+    private fun parcelarLista(entidades: List<EntidadesPlanas>): ArrayList<Parcelable> {
+        val listaParcelable = ArrayList<Parcelable>()
+        for (entidad in entidades) {
+            val parcel = Parcel.obtain()
+            entidad.writeToParcel(parcel, 0)
+            parcel.setDataPosition(0)
+            listaParcelable.add(EntidadesPlanas.createFromParcel(parcel))
+            parcel.recycle()
         }
+        return listaParcelable
     }
 }

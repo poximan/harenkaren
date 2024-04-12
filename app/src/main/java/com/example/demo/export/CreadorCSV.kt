@@ -1,14 +1,19 @@
 package com.example.demo.export
 
 import android.content.Context
+import android.os.Environment
+import android.util.Log
 import com.example.demo.model.EntidadesPlanas
 import java.io.File
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class CreadorCSV {
 
     // Función para generar una cadena CSV a partir de una lista de EntidadesPlanas
     private fun generarCSV(entidades: List<EntidadesPlanas>): String {
-        val header = "dia_id,dia_fecha,meteo,recorr_id,observador,recorr_fecha_ini,recorr_fecha_fin," +
+        val header = "celular_id,dia_id,dia_fecha,meteo,recorr_id,observador,recorr_fecha_ini,recorr_fecha_fin," +
                 "recorr_latitud_ini,recorr_longitud_ini,recorr_latitud_fin,recorr_longitud_fin," +
                 "area_recorrida,unidsocial_id,pto_observacion,ctx_social,tpo_sustrato," +
                 "v_alfa_s4ad,v_alfa_sams,v_hembras_ad,v_crias,v_destetados,v_juveniles,v_s4ad_perif," +
@@ -18,7 +23,7 @@ class CreadorCSV {
                 "unidsocial_fecha,unidsocial_latitud,unidsocial_longitud,photo_path,comentario\n"
 
         val csvRows = entidades.joinToString("\n") { entidad ->
-            "${entidad.dia_id},${entidad.dia_fecha},${entidad.meteo},${entidad.recorr_id}," +
+            "${entidad.celular_id},${entidad.dia_id},${entidad.dia_fecha},${entidad.meteo},${entidad.recorr_id}," +
                     "${entidad.observador},${entidad.recorr_fecha_ini},${entidad.recorr_fecha_fin}," +
                     "${entidad.recorr_latitud_ini},${entidad.recorr_longitud_ini}," +
                     "${entidad.recorr_latitud_fin},${entidad.recorr_longitud_fin},${entidad.area_recorrida}," +
@@ -37,9 +42,20 @@ class CreadorCSV {
     }
 
     fun empaquetarCSV(context: Context, entidadesList: List<EntidadesPlanas>): File {
-        val csvData = generarCSV(entidadesList) // Generar la cadena CSV
-        val archivo = File(context.filesDir, "datos.csv")
-        archivo.writeText(csvData) // Escribir la cadena CSV en el archivo
+
+        val csvData = generarCSV(entidadesList)
+
+        // Obtener el directorio de archivos privados de la aplicación
+        val directorioArchivos = context.filesDir
+
+        // Crear el archivo CSV
+        val timeStamp = SimpleDateFormat("yyyy-MM-dd_HH:mm:ss", Locale.getDefault()).format(Date())
+        val nombreArchivo = "censos_$timeStamp.csv"
+        val archivo = File(directorioArchivos, nombreArchivo)
+
+        // Escribir los datos CSV en el archivo
+        archivo.writeText(csvData)
+
         return archivo
     }
 }

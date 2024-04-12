@@ -78,7 +78,7 @@ class DevFragment : Fragment() {
                     .getDatabase(requireActivity().application, viewModelScope)
                     .unSocDao()
 
-                datos.generarDias(diaDao)
+                datos.generarDias(diaDao, requireContext())
                 datos.generarRecorridos(recorrDao)
                 datos.generarUnidadesSociales(unSocDao)
             }

@@ -146,6 +146,7 @@ interface UnSocDAO {
     fun getSumTotal(): UnidSocial
 
     @Query("SELECT \n" +
+            "    dia.id_celular AS celular_id,\n" +
             "    dia.id AS dia_id,\n" +
             "    dia.fecha AS dia_fecha,\n" +
             "    dia.meteo,\n" +
@@ -201,16 +202,4 @@ interface UnSocDAO {
             "INNER JOIN \n" +
             "    unidsocial ON recorrido.id = unidSocial.id_recorrido")
     fun getUnSocDesnormalizado(): List<EntidadesPlanas>
-
-    fun parcelarLista(entidades: List<EntidadesPlanas>): ArrayList<Parcelable> {
-        val listaParcelable = ArrayList<Parcelable>()
-        for (entidad in entidades) {
-            val parcel = Parcel.obtain()
-            entidad.writeToParcel(parcel, 0)
-            parcel.setDataPosition(0)
-            listaParcelable.add(EntidadesPlanas.createFromParcel(parcel))
-            parcel.recycle()
-        }
-        return listaParcelable
-    }
 }

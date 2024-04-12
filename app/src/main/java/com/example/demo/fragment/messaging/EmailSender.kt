@@ -2,22 +2,26 @@ package com.example.demo.fragment.messaging
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.widget.Toast
+import androidx.core.content.FileProvider
+import java.io.File
 
 // cienciaycoso
 object EmailSender {
 
-    fun sendEmail(destinatarios: Array<String>, asunto: String, cuerpo: String, context: Context) {
-        // Crear un intent implícito para enviar correo electrónico
-        val intent = Intent(Intent.ACTION_SENDTO).apply {
-            data = Uri.parse("mailto:")  // Se especifica el esquema "mailto:"
-            putExtra(Intent.EXTRA_EMAIL, destinatarios.plus("harenkaren70@gmail.com"))  // Agregar los destinatarios del correo electrónico
+    fun sendEmail(destinatarios: Array<String>, asunto: String, cuerpo: String, archivoAdjunto: File, context: Context) {
+
+        val uri = FileProvider.getUriForFile(context, "com.example.demo.fileprovider", archivoAdjunto)
+
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            type = "message/rfc822"  // Esto asegura que se abran aplicaciones de correo electrónico
+            putExtra(Intent.EXTRA_EMAIL, destinatarios.plus("harenkaren70@gmail.com"))
             putExtra(Intent.EXTRA_SUBJECT, asunto)
             putExtra(Intent.EXTRA_TEXT, cuerpo)
+            putExtra(Intent.EXTRA_STREAM, uri)  // Adjuntar el archivo
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)  // Concede permiso de lectura al destinatario
         }
 
-        // Verificar que exista una aplicación de correo electrónico para manejar el intent
         if (intent.resolveActivity(context.packageManager) != null) {
             context.startActivity(intent)
         } else {

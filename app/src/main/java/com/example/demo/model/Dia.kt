@@ -9,6 +9,9 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "dia")
 data class Dia(
 
+    @ColumnInfo(name = "id_celular")
+    var celularId: String,
+
     @PrimaryKey(autoGenerate = true)
     var id: Int,
 
@@ -22,6 +25,7 @@ data class Dia(
 
 ):Parcelable {
     constructor(parcel: Parcel) : this(
+        parcel.readString().toString(),
         parcel.readInt(),
 
         // ----- tiempo ----- //
@@ -32,6 +36,7 @@ data class Dia(
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(celularId)
         parcel.writeInt(id)
         parcel.writeString(fecha)
         parcel.writeString(meteo)

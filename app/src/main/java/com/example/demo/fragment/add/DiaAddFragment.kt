@@ -1,6 +1,8 @@
 package com.example.demo.fragment.add
 
+import android.content.Context
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.demo.R
 import com.example.demo.databinding.FragmentDiaAddBinding
+import com.example.demo.fragment.InicioFragment
 import com.example.demo.model.Dia
 import com.example.demo.viewModel.DiaViewModel
 import java.text.SimpleDateFormat
@@ -45,10 +48,6 @@ class DiaAddFragment : Fragment() {
         findNavController().navigate(R.id.dia_list_fragment)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -56,12 +55,17 @@ class DiaAddFragment : Fragment() {
 
     private fun dataDesdeIU(): Dia {
 
+        val celularId = obtenerAndroidID()
         val formato = requireContext().resources.getString(R.string.formato_fecha)
         val timeStamp = SimpleDateFormat(formato).format(Date())
 
         val meteo = binding.editTextMeteo.text.toString()
 
-        return Dia(0, timeStamp,meteo)
+        return Dia(celularId, 0, timeStamp,meteo)
+    }
+
+    private fun obtenerAndroidID(): String {
+        return Settings.Secure.getString(requireContext().contentResolver, Settings.Secure.ANDROID_ID)
     }
 }
 

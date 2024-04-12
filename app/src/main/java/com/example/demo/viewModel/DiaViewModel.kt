@@ -1,11 +1,14 @@
 package com.example.demo.viewModel
 
 import android.app.Application
+import android.content.Context
+import android.provider.Settings
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.example.demo.database.HarenKarenRoomDatabase
 import com.example.demo.model.Dia
+import com.example.demo.model.EntidadesPlanas
 import com.example.demo.repository.DiaRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

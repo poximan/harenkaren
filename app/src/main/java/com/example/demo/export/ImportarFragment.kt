@@ -7,12 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.lifecycleScope
-import com.example.demo.database.HarenKarenRoomDatabase
 import com.example.demo.databinding.FragmentImportarBinding
 import com.example.demo.model.EntidadesPlanas
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import java.net.Inet4Address
 import java.net.InetAddress
 import java.net.NetworkInterface
@@ -64,18 +60,6 @@ class ImportarFragment : Fragment(), RegistroDistribuible {
         }
     }
 
-    private suspend fun getBD(): ArrayList<Parcelable> {
-        val viewModelScope = viewLifecycleOwner.lifecycleScope
-
-        return withContext(Dispatchers.IO) {// Dispatchers.IO es el hilo background
-            val dao = HarenKarenRoomDatabase
-                .getDatabase(requireActivity().application, viewModelScope)
-                .unSocDao()
-            val unsocDesnormalizado = dao.getUnSocDesnormalizado()
-            return@withContext dao.parcelarLista(unsocDesnormalizado)
-        }
-    }
-
     private fun desparcelarLista(parcelables: ArrayList<Parcelable>): List<EntidadesPlanas> {
         val listaEntidades = mutableListOf<EntidadesPlanas>()
         for (parcelable in parcelables) {
@@ -110,18 +94,4 @@ class ImportarFragment : Fragment(), RegistroDistribuible {
         }
         return null
     }
-
-    private fun extraerDireccionIPv4(direccion: String): String? {
-        val patron = "(?:[0-9]{1,3}\\.){3}[0-9]{1,3}"
-        val coincidencias = Regex(patron).findAll(direccion)
-        for (coincidencia in coincidencias) {
-            val ip = coincidencia.value
-            // Verificar si es una dirección IPv4 válida
-            if (ip.matches("\b(?:\\d{1,3}\\.){3}\\d{1,3}\b".toRegex())) {
-                return ip
-            }
-        }
-        return null
-    }
-
 }
