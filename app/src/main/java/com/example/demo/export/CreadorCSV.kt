@@ -1,8 +1,12 @@
 package com.example.demo.export
 
+import android.Manifest
+import android.app.Activity
 import android.content.Context
-import android.os.Environment
-import android.util.Log
+import android.content.pm.PackageManager
+import android.os.Build
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.example.demo.model.EntidadesPlanas
 import java.io.File
 import java.text.SimpleDateFormat
@@ -10,6 +14,10 @@ import java.util.Date
 import java.util.Locale
 
 class CreadorCSV {
+
+    companion object {
+        const val REQUEST_CODE_WRITE_EXTERNAL_STORAGE = 5
+    }
 
     // Función para generar una cadena CSV a partir de una lista de EntidadesPlanas
     private fun generarCSV(entidades: List<EntidadesPlanas>): String {
@@ -42,7 +50,6 @@ class CreadorCSV {
     }
 
     fun empaquetarCSV(context: Context, entidadesList: List<EntidadesPlanas>): File {
-
         val csvData = generarCSV(entidadesList)
 
         // Obtener el directorio de archivos privados de la aplicación

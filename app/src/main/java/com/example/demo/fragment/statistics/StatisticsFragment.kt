@@ -10,6 +10,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.AdapterView
 import android.widget.EditText
 import android.widget.Spinner
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -143,6 +144,33 @@ class StatisticsFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun graficar2(view: View, grafTexts: IntArray) {
+
+        if (grafTexts.isEmpty()) {
+            throw IllegalArgumentException("El arreglo no puede estar vacío.")
+        }
+
+        for (i in grafTexts.indices) {
+            // Construir el nombre del componente visual dinámicamente
+            val fieldName = "grafText%02d".format(i + 1)
+            // Obtener el ID del componente visual usando el nombre construido
+            val textViewId = view.resources.getIdentifier(fieldName, "id", view.context.packageName)
+
+            if (textViewId != 0) {
+                val textView = view.findViewById<TextView>(textViewId)
+                textView.text = grafTexts[i].toString()
+            } else {
+                println("No se encontró el ID para el componente visual $fieldName")
+            }
+        }
+
+        // Resto del código para inicializar el pieChart, limpiarlo, establecer datos y animación
+        pieChart = view.findViewById(R.id.piechart)
+        pieChart?.clearChart()
+        setData(pieChart)
+        pieChart?.startAnimation()
     }
 
     private fun graficar(

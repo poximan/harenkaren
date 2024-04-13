@@ -101,7 +101,7 @@ class ExportarFragment : Fragment() {
             getEntidades()
         }
 
-        var datosEMAIL = CreadorCSV().empaquetarCSV(requireContext(),listaEntidadesPlanas)
+        var datosEMAIL = CreadorCSV().empaquetarCSV(requireContext(), listaEntidadesPlanas)
 
         val destinatarios = arrayOf("poxi_man@yahoo.com")
         val asunto = "respaldo censo"
