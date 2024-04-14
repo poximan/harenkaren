@@ -10,8 +10,8 @@ import com.example.demo.dao.RecorrDAO
 import com.example.demo.dao.UnSocDAO
 import com.example.demo.dao.UsuarioDAO
 import com.example.demo.model.Dia
-import com.example.demo.model.UnidSocial
 import com.example.demo.model.Recorrido
+import com.example.demo.model.UnidSocial
 import com.example.demo.model.Usuario
 import kotlinx.coroutines.CoroutineScope
 

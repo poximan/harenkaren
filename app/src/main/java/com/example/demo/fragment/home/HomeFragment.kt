@@ -3,15 +3,13 @@ package com.example.demo.fragment.home
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.demo.R
 import com.example.demo.databinding.FragmentHomeBinding
-import java.text.SimpleDateFormat
-import java.util.Date
 import kotlin.system.exitProcess
 
 class HomeFragment : Fragment() {

@@ -1,12 +1,6 @@
 package com.example.demo.export
 
-import android.Manifest
-import android.app.Activity
 import android.content.Context
-import android.content.pm.PackageManager
-import android.os.Build
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import com.example.demo.model.EntidadesPlanas
 import java.io.File
 import java.text.SimpleDateFormat

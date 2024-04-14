@@ -5,15 +5,16 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.util.UUID
 
 @Entity(tableName = "dia")
-data class Dia(
+data class Dia (
 
     @ColumnInfo(name = "id_celular")
     var celularId: String,
 
-    @PrimaryKey(autoGenerate = true)
-    var id: Int,
+    @PrimaryKey
+    var id: UUID,
 
     // ----- tiempo ----- //
     @ColumnInfo(name = "fecha")
@@ -26,7 +27,7 @@ data class Dia(
 ):Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString().toString(),
-        parcel.readInt(),
+        UUID.fromString(parcel.readString()),
 
         // ----- tiempo ----- //
         parcel.readString().toString(),
@@ -37,7 +38,7 @@ data class Dia(
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(celularId)
-        parcel.writeInt(id)
+        parcel.writeString(id.toString())
         parcel.writeString(fecha)
         parcel.writeString(meteo)
     }

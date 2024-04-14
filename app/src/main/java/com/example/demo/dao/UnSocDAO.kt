@@ -1,7 +1,5 @@
 package com.example.demo.dao
 
-import android.os.Parcel
-import android.os.Parcelable
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
@@ -10,7 +8,6 @@ import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
 import com.example.demo.model.EntidadesPlanas
-
 import com.example.demo.model.UnidSocial
 
 @Dao

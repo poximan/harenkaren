@@ -14,11 +14,16 @@ import com.example.demo.databinding.FragmentDevBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.UUID
 
 class DevFragment : Fragment() {
 
     private var _binding: FragmentDevBinding? = null
     private val binding get() = _binding!!
+
+    companion object {
+        var UUID_NULO = UUID.fromString("00000000-0000-0000-0000-000000000000")
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -78,8 +83,8 @@ class DevFragment : Fragment() {
                     .getDatabase(requireActivity().application, viewModelScope)
                     .unSocDao()
 
-                datos.generarDias(diaDao, requireContext())
-                datos.generarRecorridos(recorrDao)
+                val idsRetornos: Array<UUID> = datos.generarDias(diaDao).filterNotNull().toTypedArray()
+                datos.generarRecorridos(recorrDao, idsRetornos)
                 datos.generarUnidadesSociales(unSocDao)
             }
         }

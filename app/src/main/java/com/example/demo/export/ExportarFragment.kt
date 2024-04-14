@@ -6,11 +6,12 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
-import androidx.fragment.app.Fragment
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.demo.database.HarenKarenRoomDatabase
 import com.example.demo.databinding.FragmentExportarBinding
@@ -32,7 +33,7 @@ class ExportarFragment : Fragment() {
     ): View {
         _binding = FragmentExportarBinding.inflate(inflater, container, false)
 
-        binding.emailBtn.setOnClickListener { enviarEmail() }
+        binding.emailBtn.setOnClickListener { enviarMedioExterno() }
         binding.bluetoothBtn.setOnClickListener { enviarConcentrador() }
 
         binding.radioBt.setOnClickListener { clickRadio() }
@@ -44,6 +45,7 @@ class ExportarFragment : Fragment() {
     private fun clickRadio() {
 
         if(binding.radioBt.isChecked){
+            binding.txtMasterBt.inputType = InputType.TYPE_CLASS_TEXT
             binding.bluetoothBtn.text = "enviar por BT"
             binding.idMasterBt.text = "ID bluetooth"
 
@@ -71,6 +73,7 @@ class ExportarFragment : Fragment() {
             binding.recepcionBt.text = datosConcatenados.toString()
         }
         if(binding.radioWifi.isChecked) {
+            binding.txtMasterBt.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_CLASS_NUMBER
             binding.bluetoothBtn.text = "enviar por WF"
             binding.idMasterBt.text = "IP destino"
         }
@@ -95,7 +98,7 @@ class ExportarFragment : Fragment() {
         }
     }
 
-    private fun enviarEmail() {
+    private fun enviarMedioExterno() {
 
         var listaEntidadesPlanas = runBlocking {
             getEntidades()

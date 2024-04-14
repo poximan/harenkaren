@@ -3,10 +3,11 @@ package com.example.demo.model
 import android.os.Parcel
 import android.os.Parcelable
 import java.io.Serializable
+import java.util.UUID
 
 data class EntidadesPlanas(
     val celular_id: String?,
-    val dia_id: Int,
+    val dia_id: UUID,
     val dia_fecha: String?,
     val meteo: String?,
     val recorr_id: Int,
@@ -57,7 +58,7 @@ data class EntidadesPlanas(
 ) : Parcelable, Serializable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
-        parcel.readInt(),
+        UUID.fromString(parcel.readString()),
         parcel.readString(),
         parcel.readString(),
         parcel.readInt(),
@@ -107,7 +108,7 @@ data class EntidadesPlanas(
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(celular_id)
-        parcel.writeInt(dia_id)
+        parcel.writeString(dia_id.toString())
         parcel.writeString(dia_fecha)
         parcel.writeString(meteo)
         parcel.writeInt(recorr_id)
@@ -156,6 +157,21 @@ data class EntidadesPlanas(
 
     override fun describeContents(): Int {
         return 0
+    }
+
+    fun getDia(): Dia {
+        return Dia(
+            celularId = celular_id!!, id = dia_id,
+            fecha = dia_fecha!!, meteo = meteo!!
+        )
+    }
+
+    fun getRecorrido(): Recorrido {
+        return Recorrido(
+            recorr_id, dia_id, observador!!, recorr_fecha_ini!!, recorr_fecha_fin!!,
+            recorr_latitud_ini, recorr_latitud_fin, recorr_longitud_ini, recorr_longitud_fin,
+            area_recorrida!!
+        )
     }
 
     companion object CREATOR : Parcelable.Creator<EntidadesPlanas> {

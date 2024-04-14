@@ -4,15 +4,14 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import com.example.demo.model.UnidSocial
 import com.example.demo.database.HarenKarenRoomDatabase
-import com.example.demo.repository.Consultable
+import com.example.demo.model.UnidSocial
 import com.example.demo.repository.UnSocRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class UnSocViewModel(application: Application) : AndroidViewModel(application), Consultable<UnidSocial> {
+class UnSocViewModel(application: Application) : AndroidViewModel(application){
 
     private val repository: UnSocRepository
     private val allUnSoc: LiveData<List<UnidSocial>>
@@ -32,7 +31,7 @@ class UnSocViewModel(application: Application) : AndroidViewModel(application), 
         repository.update(unidSocial)
     }
 
-    override fun readConFK(id: Int): LiveData<List<UnidSocial>> {
+    fun readConFK(id: Int): LiveData<List<UnidSocial>> {
         return repository.readConFK(id)
     }
 

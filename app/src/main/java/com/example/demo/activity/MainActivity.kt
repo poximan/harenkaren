@@ -1,6 +1,8 @@
 package com.example.demo.activity
 
+import android.content.ContentResolver
 import android.os.Bundle
+import android.provider.Settings
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -16,11 +18,21 @@ private lateinit var drawerLayout: DrawerLayout
 
 class MainActivity : AppCompatActivity() {
 
+    companion object {
+        private lateinit var resolver: ContentResolver
+
+        fun obtenerAndroidID(): String{
+            val androidID = Settings.Secure.getString(resolver, Settings.Secure.ANDROID_ID)
+            return androidID+"@"+android.os.Build.MANUFACTURER+"-"+android.os.Build.MODEL
+        }
+    }
+
     private val mapaParesOrigenDestino: MutableMap<Int, Int> = mutableMapOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
+        resolver = applicationContext.contentResolver
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root

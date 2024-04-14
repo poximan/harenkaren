@@ -5,8 +5,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.example.demo.fragment.add.UnSocGralFragment
-import com.example.demo.fragment.add.UnSocVivosFragment
 import com.example.demo.fragment.add.UnSocMuertosFragment
+import com.example.demo.fragment.add.UnSocVivosFragment
 import java.util.Calendar
 
 class UnSocPagerAdapter(

@@ -3,12 +3,17 @@ package com.example.demo.export
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Parcelable
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import com.example.demo.database.HarenKarenRoomDatabase
 import com.example.demo.databinding.FragmentImportarBinding
 import com.example.demo.model.EntidadesPlanas
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.net.Inet4Address
 import java.net.InetAddress
 import java.net.NetworkInterface
@@ -73,7 +78,27 @@ class ImportarFragment : Fragment(), RegistroDistribuible {
     override fun onMessageReceived(lista: ArrayList<Parcelable>) {
 
         val listaEntidadesPlanas = desparcelarLista(lista)
+
+        insertarEntidades(listaEntidadesPlanas)
+
         binding.recepcionBt.text = listaEntidadesPlanas.toString()
+    }
+
+    private fun insertarEntidades(listaEntidadesPlanas: List<EntidadesPlanas>) {
+        // Crear un CoroutineScope
+        val viewModelScope = viewLifecycleOwner.lifecycleScope
+
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {// Dispatchers.IO es el hilo background
+
+                val bd = HarenKarenRoomDatabase
+                    .getDatabase(requireActivity().application, viewModelScope)
+
+                bd.diaDao().insertarDesnormalizado(listaEntidadesPlanas)
+                bd.recorrDao().insertarDesnormalizado(listaEntidadesPlanas)
+               // bd.unSocDao().insertarDesnormalizado(listaEntidadesPlanas)
+            }
+        }
     }
 
     private fun obtenerDireccionIpWifi(): String? {

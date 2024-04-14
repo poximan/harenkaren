@@ -135,7 +135,7 @@
             app:startDestination="@id/recorr_list_fragment">
             <argument
                 android:name="idDia"
-                app:argType="integer" />
+                app:argType="java.util.UUID" />
             <fragment
                 android:id="@+id/recorr_list_fragment"
                 android:name="com.example.demo.fragment.list.RecorrListFragment"
@@ -143,7 +143,7 @@
                 tools:layout="@layout/fragment_recorr_list">
                 <argument
                     android:name="idDia"
-                    app:argType="integer" />
+                    app:argType="java.util.UUID" />
                 <action
                     android:id="@+id/goToRecorrDetailAction"
                     app:destination="@id/recorr_detail_fragment" />
@@ -158,7 +158,7 @@
                 tools:layout="@layout/fragment_recorr_add">
                 <argument
                     android:name="idDia"
-                    app:argType="integer" />
+                    app:argType="java.util.UUID" />
                 <action
                     android:id="@+id/goToRecorrListAction"
                     app:destination="@id/recorr_list_fragment" />

@@ -4,8 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.demo.dao.RecorrDAO
 import com.example.demo.model.Recorrido
+import java.util.UUID
 
-class RecorrRepository(private val dao: RecorrDAO) : Consultable<Recorrido> {
+class RecorrRepository(private val dao: RecorrDAO) {
 
     val recorrListAll: LiveData<List<Recorrido>> = dao.getAll()
 
@@ -16,7 +17,7 @@ class RecorrRepository(private val dao: RecorrDAO) : Consultable<Recorrido> {
         dao.update(recorrido)
     }
 
-    override fun readConFK(id: Int): LiveData<List<Recorrido>> {
+    fun readConFK(id: UUID): LiveData<List<Recorrido>> {
         val listaIntermedia = dao.getRecorrByDiaId(id)
         return convertirAData(listaIntermedia)
     }
@@ -27,7 +28,7 @@ class RecorrRepository(private val dao: RecorrDAO) : Consultable<Recorrido> {
         return liveData
     }
 
-    fun readAsynConFK(id: Int): List<Recorrido> {
+    fun readAsynConFK(id: UUID): List<Recorrido> {
         return dao.getRecorrByDiaId(id)
     }
 }

@@ -8,6 +8,7 @@ import androidx.room.ForeignKey
 import androidx.room.Ignore
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import java.util.UUID
 
 @Entity(
     tableName = "recorrido",
@@ -25,7 +26,7 @@ data class Recorrido(
     var id: Int?,
 
     @ColumnInfo(name = "id_dia")
-    var diaId: Int,
+    var diaId: UUID,
 
     // ----- entorno ----- //
     @ColumnInfo(name = "observador")
@@ -59,7 +60,7 @@ data class Recorrido(
     @Ignore
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
-        parcel.readInt(),
+        UUID.fromString(parcel.readString()),
         // ----- entorno ----- //
         parcel.readString().toString(),
         // ----- tiempo ----- //
@@ -73,7 +74,7 @@ data class Recorrido(
         parcel.readString().toString()
     )
 
-    constructor(idDia: Int, observador: String, fechaIni: String,
+    constructor(idDia: UUID, observador: String, fechaIni: String,
                 latitudIni: Double, longitudIni: Double, areaRecorrida: String
     ): this(
         null, idDia, observador, fechaIni, "",

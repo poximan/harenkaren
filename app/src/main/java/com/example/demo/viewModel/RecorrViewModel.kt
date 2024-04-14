@@ -1,21 +1,19 @@
 package com.example.demo.viewModel
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.example.demo.database.HarenKarenRoomDatabase
 import com.example.demo.model.Recorrido
 import com.example.demo.repository.RecorrRepository
-import com.example.demo.repository.Consultable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.UUID
 
-class RecorrViewModel(application: Application) : AndroidViewModel(application), Consultable<Recorrido> {
+class RecorrViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository: RecorrRepository
     private val allRecorr: LiveData<List<Recorrido>>
@@ -35,11 +33,11 @@ class RecorrViewModel(application: Application) : AndroidViewModel(application),
         repository.update(recorrido)
     }
 
-    override fun readConFK(idDia: Int) : LiveData<List<Recorrido>> {
+    fun readConFK(idDia: UUID) : LiveData<List<Recorrido>> {
         return repository.readConFK(idDia)
     }
 
-    fun readAsynConFK(idDia: Int, callback: (List<Recorrido>) -> Unit) {
+    fun readAsynConFK(idDia: UUID, callback: (List<Recorrido>) -> Unit) {
         CoroutineScope(Dispatchers.IO).launch {
             val result = repository.readAsynConFK(idDia)
             withContext(Dispatchers.Main) {

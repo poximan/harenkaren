@@ -1,7 +1,7 @@
 package com.example.demo.database
 
-import android.content.Context
-import android.provider.Settings
+import com.example.demo.DevFragment
+import com.example.demo.activity.MainActivity
 import com.example.demo.dao.DiaDAO
 import com.example.demo.dao.RecorrDAO
 import com.example.demo.dao.UnSocDAO
@@ -9,41 +9,41 @@ import com.example.demo.dao.UsuarioDAO
 import com.example.demo.model.Dia
 import com.example.demo.model.Recorrido
 import com.example.demo.model.UnidSocial
+import java.util.UUID
 
 class DevDatos {
 
-    private fun obtenerAndroidID(context: Context): String {
-        return Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
-    }
+    fun generarDias(diaDAO: DiaDAO): Array<UUID?> {
 
-    fun generarDias(diaDAO: DiaDAO, context: Context) {
-
-        val idUnivoco = obtenerAndroidID(context)
+        val idUnivoco = MainActivity.obtenerAndroidID()
 
         val diaList = listOf<Dia>(
-            Dia(celularId = idUnivoco, id = 1, fecha = "2023/10/19 - 08:20:48", meteo = "parcialmente nublado"),
-            Dia(celularId = idUnivoco, id = 2, fecha = "2023/10/20 - 12:17:13", meteo = "despejado")
+            Dia(celularId = idUnivoco, id = DevFragment.UUID_NULO, fecha = "2023/10/19 - 08:20:48", meteo = "parcialmente nublado"),
+            Dia(celularId = idUnivoco, id = DevFragment.UUID_NULO, fecha = "2023/10/20 - 12:17:13", meteo = "despejado")
         )
 
-        diaList.forEach { dia ->
-            diaDAO.insert(dia)
+        val idsRetornos = Array<UUID?>(diaList.size) { null }
+
+        diaList.forEachIndexed { idx, dia ->
+            idsRetornos[idx] = diaDAO.insertar(dia)
         }
+        return idsRetornos
     }
 
-    fun generarRecorridos(recorrDAO: RecorrDAO) {
+    fun generarRecorridos(recorrDAO: RecorrDAO, listDia: Array<UUID>) {
         val recorrList = listOf<Recorrido>(
             Recorrido(
-                id = 1, diaId = 1, observador = "hugo",
+                id = 1, diaId = listDia[0], observador = "hugo",
                 fechaIni = "2023/10/19 - 12:20:48", fechaFin = "2023/10/19 - 18:07:48",
                 latitudIni = -42.555, longitudIni = -65.031, latitudFin = -39.555, longitudFin = -61.031,
                 areaRecorrida = "punta norte"),
             Recorrido(
-                id = 2, diaId = 1, observador = "sebastian",
+                id = 2, diaId = listDia[0], observador = "sebastian",
                 fechaIni = "2023/10/19 - 10:15:48", fechaFin = "2023/10/19 - 17:23:48",
                 latitudIni = -42.555, longitudIni = -65.031, latitudFin = -38.555, longitudFin = -59.031,
                 areaRecorrida = "punta delgada"),
             Recorrido(
-                id = 3, diaId = 2, observador = "donato",
+                id = 3, diaId = listDia[1], observador = "donato",
                 fechaIni = "2024/01/21 - 11:15:48", fechaFin = "2024/01/21 - 18:38:48",
                 latitudIni = -42.123, longitudIni = -62.371, latitudFin = -38.533, longitudFin = -60.311,
                 areaRecorrida = "isla escondida"),
