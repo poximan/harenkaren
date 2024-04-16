@@ -168,7 +168,7 @@ data class EntidadesPlanas(
 
     fun getRecorrido(): Recorrido {
         return Recorrido(
-            recorr_id, dia_id, observador!!, recorr_fecha_ini!!, recorr_fecha_fin!!,
+            dia_id, observador!!, recorr_fecha_ini!!, recorr_fecha_fin!!,
             recorr_latitud_ini, recorr_latitud_fin, recorr_longitud_ini, recorr_longitud_fin,
             area_recorrida!!
         )

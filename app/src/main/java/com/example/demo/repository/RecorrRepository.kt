@@ -11,7 +11,7 @@ class RecorrRepository(private val dao: RecorrDAO) {
     val recorrListAll: LiveData<List<Recorrido>> = dao.getAll()
 
     fun insert(recorrido: Recorrido) {
-        dao.insert(recorrido)
+        dao.insertConUltInst(recorrido)
     }
     fun update(recorrido: Recorrido) {
         dao.update(recorrido)

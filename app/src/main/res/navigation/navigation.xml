@@ -69,7 +69,7 @@
             app:popExitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/goToSolapas"
-            app:destination="@id/solapa_fragment"
+            app:destination="@id/unsoc_add_fragment"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out"
             app:popEnterAnim="@android:anim/fade_in"
@@ -209,14 +209,14 @@
                         app:destination="@id/unsoc_detail_fragment" />
                     <action
                         android:id="@+id/goToNewUnSocFromUnSocListAction"
-                        app:destination="@id/solapa_fragment" />
+                        app:destination="@id/unsoc_add_fragment" />
                 </fragment>
 
                 <fragment
-                    android:id="@+id/solapa_fragment"
-                    android:name="com.example.demo.fragment.add.SolapaFragment"
+                    android:id="@+id/unsoc_add_fragment"
+                    android:name="com.example.demo.fragment.add.UnSocAddFragment"
                     android:label="Nueva unidad social"
-                    tools:layout="@layout/fragment_solapa">
+                    tools:layout="@layout/fragment_unsoc_add">
                     <argument
                         android:name="idRecorrido"
                         app:argType="integer"/>

@@ -11,16 +11,16 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.demo.R
 import com.example.demo.adapter.UnSocPagerAdapter
-import com.example.demo.databinding.FragmentSolapaBinding
+import com.example.demo.databinding.FragmentUnsocAddBinding
 import com.example.demo.model.UnidSocial
 import com.example.demo.viewModel.UnSocViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 
-class SolapaFragment: Fragment() {
+class UnSocAddFragment: Fragment() {
 
-    private lateinit var binding: FragmentSolapaBinding
-    private val args: SolapaFragmentArgs by navArgs()
+    private lateinit var binding: FragmentUnsocAddBinding
+    private val args: UnSocAddFragmentArgs by navArgs()
 
     private lateinit var unSoc: UnidSocial
     private lateinit var adapter: UnSocPagerAdapter
@@ -29,7 +29,7 @@ class SolapaFragment: Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentSolapaBinding.inflate(inflater, container, false)
+        binding = FragmentUnsocAddBinding.inflate(inflater, container, false)
 
         val formato = requireContext().resources.getString(R.string.formato_fecha)
         val estampatiempo = SimpleDateFormat(formato).format(Date())
@@ -90,7 +90,7 @@ class SolapaFragment: Fragment() {
         model.insert(unSoc)
 
         Toast.makeText(activity, "Unidad social agregada correctamente", Toast.LENGTH_LONG).show()
-        val action = SolapaFragmentDirections.goToUnSocListFromSolapaAction(unSoc.recorrId)
+        val action = UnSocAddFragmentDirections.goToUnSocListFromSolapaAction(unSoc.recorrId)
         findNavController().navigate(action)
     }
 }

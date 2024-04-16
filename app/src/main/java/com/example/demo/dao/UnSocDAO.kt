@@ -16,14 +16,6 @@ interface UnSocDAO {
     @Query("SELECT * from unidsocial ORDER BY id DESC")
     fun getAll(): LiveData<List<UnidSocial>>
 
-    /*
-    JOIN es la condicion de union de las tablas, mientras que WHERE es el filtro de filas luego del JOIN
-    es necesario hacer el join para respetar el metodo abstracto de retorno 'Map<Recorrido, List<UnidSocial>>'
-
-    @Transaction
-    @Query("SELECT * FROM recorrido JOIN unidsocial ON recorrido.id = unidsocial.id_recorrido WHERE unidsocial.id_recorrido = :idRecorrido")
-    fun getUnidSocialByRecorridoId(idRecorrido: Int): Map<Recorrido, List<UnidSocial>>
-    */
     @Transaction
     @Query("SELECT * FROM unidsocial WHERE unidsocial.id_recorrido = :idRecorrido")
     fun getUnSocByRecorrId(idRecorrido: Int): List<UnidSocial>
@@ -31,8 +23,22 @@ interface UnSocDAO {
     @Query("SELECT * FROM unidsocial WHERE unidsocial.id = :idUnSoc")
     fun getUnSocById(idUnSoc: Int): UnidSocial
 
+    /*
+    cuando se da de alta una entidad que existe en otro dispositivo y fue
+    importada a este mediante una herramienta de transferencia, se debe
+    adecuar su contador de instancias al contexto de la BD destino
+    */
+    fun insertConUltInst(elem: UnidSocial) {
+        val ultimaInstancia = getUltimaInstancia(elem.recorrId) ?: 0
+        elem.contadorInstancias = ultimaInstancia + 1
+        insert(elem)
+    }
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(unidSocial: UnidSocial)
+
+    @Query("SELECT MAX(cont_inst) FROM unidsocial WHERE id_recorrido = :idRecorr")
+    fun getUltimaInstancia(idRecorr: Int): Int?
 
     @Query("DELETE FROM unidsocial")
     fun deleteAll()
@@ -45,8 +51,8 @@ interface UnSocDAO {
     fun update(unidSocial: UnidSocial)
 
     @Query("SELECT \n" +
-            "   id, id_recorrido,\n" +
-            "   pto_observacion, ctx_social, tpo_sustrato ,\n" +
+            "   unidsocial.id, id_recorrido, unidsocial.cont_inst,\n" +
+            "   pto_observacion, ctx_social, tpo_sustrato,\n" +
             "   SUM(v_alfa_s4ad) AS v_alfa_s4ad,\n" +
             "   SUM(v_alfa_sams) AS v_alfa_sams,\n" +
             "   SUM(v_hembras_ad) AS v_hembras_ad,\n" +
@@ -73,12 +79,15 @@ interface UnSocDAO {
             "   SUM(m_otros_sams_lejos) AS m_otros_sams_lejos,\n" +
             "   date, latitud, longitud, photo_path, comentario \n" +
             "FROM unidsocial\n" +
-            "WHERE id_recorrido = :idRecorr;\n")
+            "JOIN\n" +
+            "   recorrido ON unidsocial.id_recorrido = recorrido.id\n" +
+            "WHERE \n" +
+            "   recorrido.cont_inst = :idRecorr")
     fun getSumUnSocByRecorrId(idRecorr: Int): UnidSocial
 
     @Query("SELECT \n" +
-            "   id, id_recorrido,\n" +
-            "   pto_observacion, ctx_social, tpo_sustrato ,\n" +
+            "   unidsocial.id, id_recorrido, unidsocial.cont_inst,\n" +
+            "   pto_observacion, ctx_social, tpo_sustrato,\n" +
             "   SUM(v_alfa_s4ad) AS v_alfa_s4ad,\n" +
             "   SUM(v_alfa_sams) AS v_alfa_sams,\n" +
             "   SUM(v_hembras_ad) AS v_hembras_ad,\n" +
@@ -103,16 +112,20 @@ interface UnSocDAO {
             "   SUM(m_otros_sams_perif) AS m_otros_sams_perif,\n" +
             "   SUM(m_otros_sams_cerca) AS m_otros_sams_cerca,\n" +
             "   SUM(m_otros_sams_lejos) AS m_otros_sams_lejos,\n" +
-            "   date, latitud, longitud, photo_path, comentario \n" +
+            "   date, latitud, longitud, photo_path, comentario\n" +
             "FROM \n" +
-            "    unidsocial\n" +
+            "   unidsocial\n" +
+            "JOIN\n" +
+            "   recorrido ON unidsocial.id_recorrido = recorrido.id\n" +
+            "JOIN\n" +
+            "   dia ON recorrido.id_dia = dia.id\n" +
             "WHERE \n" +
-            "    id_recorrido IN (SELECT id FROM recorrido WHERE id_dia = :idDia);\n")
-    fun getSumUnSocByDiaId(idDia: Int): UnidSocial
+            "   dia.cont_inst = :idRecorr")
+    fun getTotalByDiaId(idRecorr: Int): UnidSocial
 
     @Query("SELECT \n" +
-            "   id, id_recorrido,\n" +
-            "   pto_observacion, ctx_social, tpo_sustrato ,\n" +
+            "   id, id_recorrido, cont_inst,\n" +
+            "   pto_observacion, ctx_social, tpo_sustrato,\n" +
             "   SUM(v_alfa_s4ad) AS v_alfa_s4ad,\n" +
             "   SUM(v_alfa_sams) AS v_alfa_sams,\n" +
             "   SUM(v_hembras_ad) AS v_hembras_ad,\n" +

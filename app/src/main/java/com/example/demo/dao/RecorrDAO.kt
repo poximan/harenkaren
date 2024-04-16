@@ -20,8 +20,22 @@ interface RecorrDAO {
     @Query("SELECT * FROM recorrido WHERE recorrido.id_dia = :idDia")
     fun getRecorrByDiaId(idDia: UUID): List<Recorrido>
 
+    /*
+    cuando se da de alta una entidad que existe en otro dispositivo y fue
+    importada a este mediante una herramienta de transferencia, se debe
+    adecuar su contador de instancias al contexto de la BD destino
+    */
+    fun insertConUltInst(elem: Recorrido) {
+        val ultimaInstancia = getUltimaInstancia(elem.diaId) ?: 0
+        elem.contadorInstancias = ultimaInstancia + 1
+        insert(elem)
+    }
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(recorrido: Recorrido)
+
+    @Query("SELECT MAX(cont_inst) FROM recorrido WHERE id_dia = :idDia")
+    fun getUltimaInstancia(idDia: UUID): Int?
 
     @Query("DELETE FROM recorrido")
     fun deleteAll()
@@ -33,13 +47,14 @@ interface RecorrDAO {
     @Update
     fun update(recorrido: Recorrido): Int
 
+    @Transaction
     fun insertarDesnormalizado(listaEntidadesPlanas: List<EntidadesPlanas>) {
         listaEntidadesPlanas.forEach { entidadPlana ->
             val recorrido = entidadPlana.getRecorrido()
 
             val filasActualizadas = update(recorrido)
             if (filasActualizadas == 0) {
-                insert(recorrido)
+                insertConUltInst(recorrido)
             }
         }
     }

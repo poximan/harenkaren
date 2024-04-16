@@ -10,7 +10,7 @@ class UnSocRepository(private val dao: UnSocDAO) {
     val unSocListAll: LiveData<List<UnidSocial>> = dao.getAll()
 
     fun insert(unidSocial: UnidSocial) {
-        dao.insert(unidSocial)
+        dao.insertConUltInst(unidSocial)
     }
     fun update(unidSocial: UnidSocial) {
         dao.update(unidSocial)
@@ -29,8 +29,8 @@ class UnSocRepository(private val dao: UnSocDAO) {
         return dao.getSumUnSocByRecorrId(id)
     }
 
-    fun readSumUnSocByDiaId(id: Int): UnidSocial {
-        return dao.getSumUnSocByDiaId(id)
+    fun readSumUnSocByDiaId(idContInst: Int): UnidSocial {
+        return dao.getTotalByDiaId(idContInst)
     }
 
     fun readSumTotal(): UnidSocial {

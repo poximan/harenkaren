@@ -37,7 +37,7 @@ class DiaListAdapter(
 
         fun bind(dia: Dia) {
             itemView.setOnClickListener { itemClickListener.onItemClick(dia) }
-            numDia.text = dia.id.toString()
+            numDia.text = dia.contadorInstancias.toString()
             fecha.text = dia.fecha
         }
     }

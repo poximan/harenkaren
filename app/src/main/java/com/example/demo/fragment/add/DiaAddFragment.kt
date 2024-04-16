@@ -61,7 +61,7 @@ class DiaAddFragment : Fragment() {
         val meteo = binding.editTextMeteo.text.toString()
 
         val uuid = DevFragment.UUID_NULO
-        return Dia(celularId, uuid, timeStamp,meteo)
+        return Dia(celularId, uuid, 0, timeStamp,meteo)
     }
 }
 

@@ -43,8 +43,8 @@ class UnSocViewModel(application: Application) : AndroidViewModel(application){
         return repository.readSumUnSocByRecorrId(id)
     }
 
-    fun readSumDia(id: Int): UnidSocial {
-        return repository.readSumUnSocByDiaId(id)
+    fun readSumDia(idContInst: Int): UnidSocial {
+        return repository.readSumUnSocByDiaId(idContInst)
     }
 
     fun readSumTotal(): UnidSocial {

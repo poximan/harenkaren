@@ -20,14 +20,10 @@ interface DiaDAO {
     fun getAll(): LiveData<List<Dia>>
 
     /*
-    cuando se da de alta una entidad que no existio nunca ni en este ni en ningun
-    otro dispositivo, se pasa primero por aqui para asignar un UUID unico.
-
-    en cambio cuando se da de alta una entidad que existe en otro dispositivo y fue
-    importada a este mediante una herramienta de transferencia, el UUID
-    ya se calculo antes y no debe ser reemplazado. usar directamente insert(elem)
-     */
-    fun insertar(elem: Dia): UUID {
+    cuando se da de alta una entidad que no existio nunca en este ni en ningun
+    otro dispositivo, se usa insertConUUID(elem) para asignar UUID unico.
+    */
+    fun insertConUUID(elem: Dia): UUID {
 
         if (elem.id == DevFragment.UUID_NULO) {
             val nombre = MainActivity.obtenerAndroidID()
@@ -35,12 +31,28 @@ interface DiaDAO {
                 UUID.nameUUIDFromBytes("$elem.id:$nombre".toByteArray(StandardCharsets.UTF_8))
                 elem.id = uuid
         }
-        insert(elem)
+        insertConUltInst(elem)
         return elem.id
+    }
+
+    /*
+    cuando se da de alta una entidad que existe en otro dispositivo y fue
+    importada a este mediante una herramienta de transferencia, el UUID
+    ya se calculo antes y no debe ser reemplazado, entonces se usa
+    insertConUltInst(elem) para adecuar su contador de instancias
+    al contexto de la BD donde será insertada la entidad
+    */
+    private fun insertConUltInst(elem: Dia) {
+        val ultimaInstancia = getUltimaInstancia() ?: 0
+        elem.contadorInstancias = ultimaInstancia + 1
+        insert(elem)
     }
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(elem: Dia)
+
+    @Query("SELECT MAX(cont_inst) FROM dia")
+    fun getUltimaInstancia(): Int?
 
     @Query("DELETE FROM dia")
     fun deleteAll()
@@ -60,7 +72,7 @@ interface DiaDAO {
 
             val filasActualizadas = update(dia)
             if (filasActualizadas == 0) {
-                insert(dia)
+                insertConUltInst(dia)
             }
         }
     }

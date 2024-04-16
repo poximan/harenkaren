@@ -27,8 +27,8 @@ interface UsuarioDAO {
     @Update
     fun update(usuario: Usuario)
 
-    @Query("SELECT * FROM usuario WHERE id = :idUsuario LIMIT 1")
-    fun getUsuarioById(idUsuario: Int): Usuario
+    @Query("SELECT * FROM usuario WHERE id = :id LIMIT 1")
+    fun getUsuarioById(id: Int): Usuario
 
     @Query("SELECT * FROM usuario WHERE email = :email AND pass = :pass")
     fun getUsuario(email: String, pass: String): List<Usuario>

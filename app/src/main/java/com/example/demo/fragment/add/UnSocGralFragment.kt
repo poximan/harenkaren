@@ -183,7 +183,7 @@ class UnSocGralFragment() : Fragment() {
     }
 
     private fun usarMapaOSM() {
-        val action = SolapaFragmentDirections.goToOSMFragmentAction(latLon)
+        val action = UnSocAddFragmentDirections.goToOSMFragmentAction(latLon)
         findNavController().navigate(action)
     }
 

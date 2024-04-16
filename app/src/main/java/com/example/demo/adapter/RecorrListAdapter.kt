@@ -41,7 +41,7 @@ class RecorrListAdapter(
         fun bind(recorrido: Recorrido) {
             itemView.setOnClickListener { itemClickListener.onItemClick(recorrido) }
 
-            id.text = recorrido.id.toString()
+            id.text = recorrido.contadorInstancias.toString()
             area.text = "Area recorrida: " + recorrido.areaRecorrida
             observador.text = "Observador: " + recorrido.observador
             fecha.text = "Fecha inicio: " + recorrido.fechaIni

@@ -21,11 +21,15 @@ import androidx.room.PrimaryKey
 )
 data class UnidSocial(
 
+    // ----- identidicadores ----- //
     @PrimaryKey(autoGenerate = true)
     var id: Int?,
 
     @ColumnInfo(name = "id_recorrido")
     var recorrId: Int,
+
+    @ColumnInfo(name = "cont_inst")
+    var contadorInstancias: Int,
 
     // ----- entorno ----- //
     @ColumnInfo(name = "pto_observacion")
@@ -139,7 +143,7 @@ data class UnidSocial(
 
     @ColumnInfo(name = "comentario")
     var comentario: String?
-) : Parcelable {
+): Parcelable {
 /*
 Parcelable es una interfaz para serializar objetos. util para transferirlos entre actividades y fragmentos,
 o entre aplicaciones a través de Intent o Bundle. Es un objeto enviado como flujo de bytes.
@@ -149,11 +153,17 @@ y createFromParcel() para crear una nueva instancia del objeto a partir de un Pa
  */
     @Ignore
     constructor(parcel: Parcel) : this(
+        // ----- identidicadores ----- //
         parcel.readInt(),
         parcel.readInt(),
+        parcel.readInt(),
+
+        // ----- entorno ----- //
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
+
+        // ----- vivos ----- //
         parcel.readInt(),
         parcel.readInt(),
         parcel.readInt(),
@@ -166,6 +176,8 @@ y createFromParcel() para crear una nueva instancia del objeto a partir de un Pa
         parcel.readInt(),
         parcel.readInt(),
         parcel.readInt(),
+
+        // ----- muertos ----- //
         parcel.readInt(),
         parcel.readInt(),
         parcel.readInt(),
@@ -178,6 +190,8 @@ y createFromParcel() para crear una nueva instancia del objeto a partir de un Pa
         parcel.readInt(),
         parcel.readInt(),
         parcel.readInt(),
+
+        // ----- tiempo/espacio ----- //
         parcel.readString(),
         parcel.readDouble(),
         parcel.readDouble(),
@@ -188,7 +202,7 @@ y createFromParcel() para crear una nueva instancia del objeto a partir de un Pa
 
     @Ignore
     constructor(idRecorrido: Int, estampatiempo: String) : this(
-        null,idRecorrido,null, null, null,
+        null,idRecorrido,0, null, null, null,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, /* vivos */
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, /* muertos */
         estampatiempo, 0.0, 0.0, "","")
@@ -206,7 +220,7 @@ y createFromParcel() para crear una nueva instancia del objeto a partir de un Pa
         latitud: Double, longitud: Double,
         photoPath: String,
         comentario: String
-    ) : this(null, idRecorrido, ptoObsUnSoc, ctxSocial, tpoSustrato,
+    ) : this(null, idRecorrido, 0, ptoObsUnSoc, ctxSocial, tpoSustrato,
         vAlfaS4Ad, vAlfaSams, vHembrasAd, vCrias, vDestetados, vJuveniles,
         vS4AdPerif, vS4AdCerca, vS4AdLejos, vOtrosSamsPerif, vOtrosSamsCerca, vOtrosSamsLejos,
         mAlfaS4Ad, mAlfaSams, mHembrasAd, mCrias, mDestetados, mJuveniles,

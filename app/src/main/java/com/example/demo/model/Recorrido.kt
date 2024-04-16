@@ -22,11 +22,15 @@ import java.util.UUID
 )
 data class Recorrido(
 
+    // ----- identidicadores ----- //
     @PrimaryKey(autoGenerate = true)
     var id: Int?,
 
     @ColumnInfo(name = "id_dia")
     var diaId: UUID,
+
+    @ColumnInfo(name = "cont_inst")
+    var contadorInstancias: Int,
 
     // ----- entorno ----- //
     @ColumnInfo(name = "observador")
@@ -56,16 +60,19 @@ data class Recorrido(
     var areaRecorrida: String
 
 ):Parcelable {
-
-    @Ignore
     constructor(parcel: Parcel) : this(
+        // ----- identidicadores ----- //
         parcel.readInt(),
         UUID.fromString(parcel.readString()),
+        parcel.readInt(),
+
         // ----- entorno ----- //
         parcel.readString().toString(),
+
         // ----- tiempo ----- //
         parcel.readString().toString(),
         parcel.readString().toString(),
+
         // ----- espacio ----- //
         parcel.readValue(Double::class.java.classLoader) as? Double,
         parcel.readValue(Double::class.java.classLoader) as? Double,
@@ -77,18 +84,41 @@ data class Recorrido(
     constructor(idDia: UUID, observador: String, fechaIni: String,
                 latitudIni: Double, longitudIni: Double, areaRecorrida: String
     ): this(
-        null, idDia, observador, fechaIni, "",
+        null, idDia, 0,observador, fechaIni, "",
         latitudIni, longitudIni, 0.0, 0.0, areaRecorrida)
+
+    constructor(
+        diaId: UUID,
+        observador: String,
+        recorrFechaIni: String,
+        recorrFechaFin: String,
+        recorrLatitudIni: Double,
+        recorrLatitudFin: Double,
+        recorrLongitudIni: Double,
+        recorrLongitudFin: Double,
+        areaRecorrida: String
+    ) : this(null, diaId, 0, observador, recorrFechaIni, recorrFechaFin,
+        recorrLatitudIni, recorrLongitudIni, recorrLatitudFin, recorrLongitudFin,
+        areaRecorrida)
 
     override fun describeContents(): Int {
         return Parcelable.CONTENTS_FILE_DESCRIPTOR
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
+        // ----- identidicadores ----- //
         id?.let { parcel.writeInt(it) }
+        parcel.writeString(diaId.toString())
+        parcel.writeInt(contadorInstancias)
+
+        // ----- entorno ----- //
         parcel.writeString(observador)
+
+        // ----- tiempo ----- //
         parcel.writeString(fechaIni)
         parcel.writeString(fechaFin)
+
+        // ----- espacio ----- //
         parcel.writeValue(latitudIni)
         parcel.writeValue(longitudIni)
         parcel.writeValue(latitudFin)
