@@ -7,16 +7,30 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.example.demo.fragment.add.UnSocGralFragment
 import com.example.demo.fragment.add.UnSocMuertosFragment
 import com.example.demo.fragment.add.UnSocVivosFragment
+import com.example.demo.fragment.detail.UnSocGralDetailFragment
+import com.example.demo.fragment.detail.UnSocMuertosDetailFragment
+import com.example.demo.fragment.detail.UnSocVivosDetailFragment
+import com.example.demo.model.UnidSocial
 import java.util.Calendar
 
 class UnSocPagerAdapter(
-    fm: FragmentManager
+    fm: FragmentManager,
+    unSoc: UnidSocial? = null
 ) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
-    private val solapas = arrayOf(
-        UnSocGralFragment().newInstance(::colectar),
-        UnSocVivosFragment().newInstance(::colectar),
-        UnSocMuertosFragment().newInstance(::colectar))
+    private val solapas = if (unSoc == null) {
+        arrayOf(
+            UnSocGralFragment().newInstance(::colectar),
+            UnSocVivosFragment().newInstance(::colectar),
+            UnSocMuertosFragment().newInstance(::colectar)
+        )
+    } else {
+        arrayOf(
+            UnSocGralDetailFragment().editInstance(::colectar, unSoc),
+            UnSocVivosDetailFragment().editInstance(::colectar, unSoc),
+            UnSocMuertosDetailFragment().editInstance(::colectar, unSoc)
+        )
+    }
 
     private var map: MutableMap<String, Any?> = mutableMapOf(
         "pto_observacion" to "",

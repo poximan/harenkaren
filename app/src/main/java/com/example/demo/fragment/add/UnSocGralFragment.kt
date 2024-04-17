@@ -67,7 +67,8 @@ class UnSocGralFragment() : Fragment() {
     private var indicatorLight: ImageView? = null
     private val latLon = LatLong()
 
-    fun newInstance(colectarFunc: KFunction2<Int, Map<String, Any>, Unit>): UnSocGralFragment {
+    fun newInstance(colectarFunc: KFunction2<Int, Map<String, Any>, Unit>
+    ): UnSocGralFragment {
         colectar = colectarFunc
         return UnSocGralFragment()
     }

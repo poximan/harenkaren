@@ -35,7 +35,7 @@ class UnSocAddFragment: Fragment() {
         val estampatiempo = SimpleDateFormat(formato).format(Date())
 
         unSoc = UnidSocial(args.idRecorrido, estampatiempo)
-        adapter = UnSocPagerAdapter(childFragmentManager)
+        adapter = UnSocPagerAdapter(childFragmentManager, unSoc)
 
         binding.viewPager.adapter = adapter
         binding.tabLayout.setupWithViewPager(binding.viewPager)

@@ -57,7 +57,7 @@ class DevDatos {
     fun generarUnidadesSociales(unsocDAO: UnSocDAO) {
         val unSocList = listOf<UnidSocial>(
             UnidSocial(
-                id = 1, recorrId = 1, contadorInstancias = 0, ptoObsUnSoc = "alto", ctxSocial = "H", tpoSustrato = "A",
+                id = 1, recorrId = 1, contadorInstancias = 0, ptoObsUnSoc = "alto", ctxSocial = "haren(H)", tpoSustrato = "arena(A)",
                 vAlfaS4Ad = 1, vAlfaSams = 2, vHembrasAd = 10, vCrias = 8, vDestetados = 1,
                 vJuveniles = 2, vS4AdPerif = 2, vS4AdCerca = 1, vS4AdLejos = 0,
                 vOtrosSamsPerif = 2, vOtrosSamsCerca = 1, vOtrosSamsLejos = 0,
@@ -66,7 +66,7 @@ class DevDatos {
                 mOtrosSamsPerif = 2, mOtrosSamsCerca = 1, mOtrosSamsLejos = 0, date = "2023/10/18 - 17:26:48",
                 latitud = -42.079241, longitud = -63.765547, photoPath = "", comentario = "comentario 1"),
             UnidSocial(
-                id = 2, recorrId = 1, contadorInstancias = 0, ptoObsUnSoc = "bajo", ctxSocial = "GH", tpoSustrato = "CR",
+                id = 2, recorrId = 1, contadorInstancias = 0, ptoObsUnSoc = "bajo", ctxSocial = "gpo. harenes(GH)", tpoSustrato = "canto rodado(CR)",
                 vAlfaS4Ad = 3, vAlfaSams = 4, vHembrasAd = 15, vCrias = 12, vDestetados = 3,
                 vJuveniles = 4, vS4AdPerif = 4, vS4AdCerca = 3, vS4AdLejos = 2,
                 vOtrosSamsPerif = 4, vOtrosSamsCerca = 3, vOtrosSamsLejos = 2,
@@ -75,7 +75,7 @@ class DevDatos {
                 mOtrosSamsPerif = 4, mOtrosSamsCerca = 3, mOtrosSamsLejos = 2, date = "2023/10/18 - 14:26:48",
                 latitud = -42.083023, longitud = -63.753115, photoPath = "", comentario = "comentario 2"),
             UnidSocial(
-                id = 3, recorrId = 1, contadorInstancias = 0, ptoObsUnSoc = "alto", ctxSocial = "PS", tpoSustrato = "M",
+                id = 3, recorrId = 1, contadorInstancias = 0, ptoObsUnSoc = "alto", ctxSocial = "pja. solitaria(PS)", tpoSustrato = "mezcla(M)",
                 vAlfaS4Ad = 5, vAlfaSams = 6, vHembrasAd = 20, vCrias = 16, vDestetados = 5,
                 vJuveniles = 6, vS4AdPerif = 6, vS4AdCerca = 5, vS4AdLejos = 4,
                 vOtrosSamsPerif = 6, vOtrosSamsCerca = 5, vOtrosSamsLejos = 4,
@@ -84,7 +84,7 @@ class DevDatos {
                 mOtrosSamsPerif = 6, mOtrosSamsCerca = 5, mOtrosSamsLejos = 4, date = "2023/10/18 - 18:26:48",
                 latitud = -42.096113, longitud = -63.740619, photoPath = "", comentario = "comentario 3"),
             UnidSocial(
-                id = 4, recorrId = 1, contadorInstancias = 0, ptoObsUnSoc = "bajo", ctxSocial = "S", tpoSustrato = "R",
+                id = 4, recorrId = 1, contadorInstancias = 0, ptoObsUnSoc = "bajo", ctxSocial = "indiv. solos(S)", tpoSustrato = "restinga(R)",
                 vAlfaS4Ad = 7, vAlfaSams = 8, vHembrasAd = 25, vCrias = 20, vDestetados = 7,
                 vJuveniles = 8, vS4AdPerif = 8, vS4AdCerca = 7, vS4AdLejos = 6,
                 vOtrosSamsPerif = 8, vOtrosSamsCerca = 7, vOtrosSamsLejos = 6,
@@ -93,7 +93,7 @@ class DevDatos {
                 mOtrosSamsPerif = 8, mOtrosSamsCerca = 7, mOtrosSamsLejos = 6, date = "2023/10/18 - 13:26:48",
                 latitud = -42.109932, longitud = -63.732213, photoPath = "", comentario = "comentario 4"),
             UnidSocial(
-                id = 5, recorrId = 2, contadorInstancias = 0, ptoObsUnSoc = "alto", ctxSocial = "H", tpoSustrato = "A",
+                id = 5, recorrId = 2, contadorInstancias = 0, ptoObsUnSoc = "alto", ctxSocial = "haren(H)", tpoSustrato = "arena(A)",
                 vAlfaS4Ad = 9, vAlfaSams = 10, vHembrasAd = 30, vCrias = 24, vDestetados = 9,
                 vJuveniles = 10, vS4AdPerif = 10, vS4AdCerca = 9, vS4AdLejos = 8,
                 vOtrosSamsPerif = 10, vOtrosSamsCerca = 9, vOtrosSamsLejos = 8,
@@ -102,7 +102,7 @@ class DevDatos {
                 mOtrosSamsPerif = 0, mOtrosSamsCerca = 0, mOtrosSamsLejos = 0, date = "2023/10/18 - 12:26:48",
                 latitud = -42.497655, longitud = -63.607295, photoPath = "", comentario = "comentario 5"),
             UnidSocial(
-                id = 6, recorrId = 2, contadorInstancias = 0, ptoObsUnSoc = "bajo", ctxSocial = "GH", tpoSustrato = "CR",
+                id = 6, recorrId = 2, contadorInstancias = 0, ptoObsUnSoc = "bajo", ctxSocial = "gpo. harenes(GH)", tpoSustrato = "canto rodado(CR)",
                 vAlfaS4Ad = 11, vAlfaSams = 12, vHembrasAd = 35, vCrias = 28, vDestetados = 11,
                 vJuveniles = 12, vS4AdPerif = 12, vS4AdCerca = 11, vS4AdLejos = 10,
                 vOtrosSamsPerif = 12, vOtrosSamsCerca = 11, vOtrosSamsLejos = 10,
@@ -111,7 +111,7 @@ class DevDatos {
                 mOtrosSamsPerif = 0, mOtrosSamsCerca = 0, mOtrosSamsLejos = 0, date = "2023/10/18 - 11:26:48",
                 latitud = -42.501262, longitud = -63.607638, photoPath = "", comentario = "comentario 6"),
             UnidSocial(
-                id = 7, recorrId = 2, contadorInstancias = 0, ptoObsUnSoc = "alto", ctxSocial = "PS", tpoSustrato = "M",
+                id = 7, recorrId = 2, contadorInstancias = 0, ptoObsUnSoc = "alto", ctxSocial = "pja. solitaria(PS)", tpoSustrato = "mezcla(M)",
                 vAlfaS4Ad = 13, vAlfaSams = 14, vHembrasAd = 40, vCrias = 32, vDestetados = 13,
                 vJuveniles = 14, vS4AdPerif = 14, vS4AdCerca = 13, vS4AdLejos = 12,
                 vOtrosSamsPerif = 14, vOtrosSamsCerca = 13, vOtrosSamsLejos = 12,
@@ -120,7 +120,7 @@ class DevDatos {
                 mOtrosSamsPerif = 0, mOtrosSamsCerca = 0, mOtrosSamsLejos = 0, date = "2023/10/18 - 09:26:48",
                 latitud = -42.506135, longitud = -63.603645, photoPath = "", comentario = "comentario 7"),
             UnidSocial(
-                id = 8, recorrId = 3, contadorInstancias = 0, ptoObsUnSoc = "bajo", ctxSocial = "S", tpoSustrato = "R",
+                id = 8, recorrId = 3, contadorInstancias = 0, ptoObsUnSoc = "bajo", ctxSocial = "indiv. solos(S)", tpoSustrato = "restinga(R)",
                 vAlfaS4Ad = 0, vAlfaSams = 0, vHembrasAd = 0, vCrias = 0, vDestetados = 0,
                 vJuveniles = 0, vS4AdPerif = 0, vS4AdCerca = 0, vS4AdLejos = 0,
                 vOtrosSamsPerif = 0, vOtrosSamsCerca = 0, vOtrosSamsLejos = 0,
@@ -129,7 +129,7 @@ class DevDatos {
                 mOtrosSamsPerif = 16, mOtrosSamsCerca = 15, mOtrosSamsLejos = 14, date = "2023/10/19 - 15:26:48",
                 latitud = -43.664679, longitud = -65.336265, photoPath = "", comentario = "comentario 8"),
             UnidSocial(
-                id = 9, recorrId = 3, contadorInstancias = 0, ptoObsUnSoc = "alto", ctxSocial = "H", tpoSustrato = "A",
+                id = 9, recorrId = 3, contadorInstancias = 0, ptoObsUnSoc = "alto", ctxSocial = "haren(H)", tpoSustrato = "arena(A)",
                 vAlfaS4Ad = 0, vAlfaSams = 0, vHembrasAd = 0, vCrias = 0, vDestetados = 0,
                 vJuveniles = 0, vS4AdPerif = 0, vS4AdCerca = 0, vS4AdLejos = 0,
                 vOtrosSamsPerif = 0, vOtrosSamsCerca = 0, vOtrosSamsLejos = 0,
@@ -138,7 +138,7 @@ class DevDatos {
                 mOtrosSamsPerif = 18, mOtrosSamsCerca = 17, mOtrosSamsLejos = 16, date = "2023/10/19 - 16:26:48",
                 latitud = -43.657476, longitud = -65.332543, photoPath = "", comentario = "comentario 9"),
             UnidSocial(
-                id = 10, recorrId = 3, contadorInstancias = 0, ptoObsUnSoc = "bajo", ctxSocial = "GH", tpoSustrato = "CR",
+                id = 10, recorrId = 3, contadorInstancias = 0, ptoObsUnSoc = "bajo", ctxSocial = "gpo. harenes(GH)", tpoSustrato = "canto rodado(CR)",
                 vAlfaS4Ad = 0, vAlfaSams = 0, vHembrasAd = 0, vCrias = 0, vDestetados = 0,
                 vJuveniles = 0, vS4AdPerif = 0, vS4AdCerca = 0, vS4AdLejos = 0,
                 vOtrosSamsPerif = 0, vOtrosSamsCerca = 0, vOtrosSamsLejos = 0,

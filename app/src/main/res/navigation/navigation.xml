@@ -236,23 +236,11 @@
                     android:id="@+id/unsoc_detail_fragment"
                     android:name="com.example.demo.fragment.detail.UnSocDetailFragment"
                     android:label="Detalle unidad social"
-                    tools:layout="@layout/fragment_unsoc_detail">
+                    tools:layout="@layout/fragment_unsoc_add">
 
                     <argument
                         android:name="unSocActual"
                         app:argType="com.example.demo.model.UnidSocial" />
-
-                    <action
-                        android:id="@+id/goToUnSocUpdateAction"
-                        app:destination="@id/unsoc_update_fragment"
-                        app:enterAnim="@android:anim/fade_in"
-                        app:exitAnim="@android:anim/fade_out"
-                        app:popEnterAnim="@android:anim/fade_in"
-                        app:popExitAnim="@android:anim/fade_out" />
-
-                    <action
-                        android:id="@+id/goToOSMFragmentFromUnSocDetailAction"
-                        app:destination="@id/osm_fragment" />
 
                     <action
                         android:id="@+id/goToUnSocListFromUnSocDetailAction"
@@ -263,23 +251,6 @@
                         app:popExitAnim="@android:anim/fade_out" />
                 </fragment>
 
-                <fragment
-                    android:id="@+id/unsoc_update_fragment"
-                    android:name="com.example.demo.fragment.update.UnSocUpdateFragment"
-                    android:label="Editar unidad social"
-                    tools:layout="@layout/fragment_unsoc_update">
-
-                    <argument
-                        android:name="unSocActual"
-                        app:argType="com.example.demo.model.UnidSocial" />
-                    <action
-                        android:id="@+id/goToUnSocDetailFromUnSocUpdateAction"
-                        app:destination="@id/unsoc_detail_fragment"
-                        app:enterAnim="@android:anim/fade_in"
-                        app:exitAnim="@android:anim/fade_out"
-                        app:popEnterAnim="@android:anim/fade_in"
-                        app:popExitAnim="@android:anim/fade_out" />
-                </fragment>
                 <fragment
                     android:id="@+id/osm_fragment"
                     android:name="com.example.demo.fragment.maps.OSMFragment"

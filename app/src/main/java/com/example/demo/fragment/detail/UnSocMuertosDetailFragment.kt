@@ -1,4 +1,4 @@
-package com.example.demo.fragment.add
+package com.example.demo.fragment.detail
 
 import android.os.Bundle
 import android.text.Editable
@@ -8,9 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.demo.databinding.FragmentUnsocMuertosBinding
+import com.example.demo.model.UnidSocial
 import kotlin.reflect.KFunction2
 
-class UnSocMuertosFragment() : Fragment() {
+class UnSocMuertosDetailFragment() : Fragment() {
 
     companion object {
         private lateinit var colectar: (Int, Map<String, Any>) -> Unit
@@ -20,9 +21,15 @@ class UnSocMuertosFragment() : Fragment() {
     private var _binding: FragmentUnsocMuertosBinding? = null
     private val binding get() = _binding!!
 
-    fun newInstance(colectarFunc: KFunction2<Int, Map<String, Any>, Unit>): UnSocMuertosFragment {
+    private lateinit var unSocEditable: UnidSocial
+    
+    fun editInstance(
+        colectarFunc: KFunction2<Int, Map<String, Any>, Unit>,
+        unSoc: UnidSocial
+    ): UnSocMuertosDetailFragment {
         colectar = colectarFunc
-        return UnSocMuertosFragment()
+        unSocEditable = unSoc
+        return this
     }
 
     override fun onCreateView(
@@ -30,6 +37,25 @@ class UnSocMuertosFragment() : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentUnsocMuertosBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    private fun cargarDatos() {
+
+        binding.mAlfaS4Ad.setText(unSocEditable.mAlfaS4Ad.toString())
+        binding.mAlfaSams.setText(unSocEditable.mAlfaSams.toString())
+
+        binding.mHembrasAd.setText(unSocEditable.mHembrasAd.toString())
+        binding.mCrias.setText(unSocEditable.mCrias.toString())
+        binding.mDestetados.setText(unSocEditable.mDestetados.toString())
+        binding.mJuveniles.setText(unSocEditable.mJuveniles.toString())
+
+        binding.mS4AdPerif.setText(unSocEditable.mS4AdPerif.toString())
+        binding.mS4AdCerca.setText(unSocEditable.mS4AdCerca.toString())
+        binding.mS4AdLejos.setText(unSocEditable.mS4AdLejos.toString())
+        binding.mOtrosSamsPerif.setText(unSocEditable.mOtrosSamsPerif.toString())
+        binding.mOtrosSamsCerca.setText(unSocEditable.mOtrosSamsCerca.toString())
+        binding.mOtrosSamsLejos.setText(unSocEditable.mOtrosSamsLejos.toString())
 
         binding.mAlfaS4Ad.addTextChangedListener(textWatcher)
         binding.mAlfaSams.addTextChangedListener(textWatcher)
@@ -43,11 +69,11 @@ class UnSocMuertosFragment() : Fragment() {
         binding.mOtrosSamsPerif.addTextChangedListener(textWatcher)
         binding.mOtrosSamsCerca.addTextChangedListener(textWatcher)
         binding.mOtrosSamsLejos.addTextChangedListener(textWatcher)
-
-        return binding.root
     }
+    
     override fun onResume() {
         super.onResume()
+        cargarDatos()
         cargarMap()
     }
 
@@ -84,19 +110,19 @@ class UnSocMuertosFragment() : Fragment() {
         colectar(2,map)
     }
 
-    private val textWatcher = object : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-        override fun afterTextChanged(s: Editable?) {
-            cargarMap()
-        }
-    }
-
     private fun safeStringToInt(value: String): Int {
         return try {
             value.toInt()
         } catch (e: NumberFormatException) {
             0
+        }
+    }
+
+    private val textWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        override fun afterTextChanged(s: Editable?) {
+            cargarMap()
         }
     }
 
