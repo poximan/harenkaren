@@ -85,7 +85,7 @@ class StatisticsFragment : Fragment() {
                         )
                     }
                 } catch (e: NullPointerException) {
-                    Toast.makeText(activity, "No existe unidad social, verificar {#}", Toast.LENGTH_LONG).show()
+                    Toast.makeText(activity, "No existe registro, verificar {#}", Toast.LENGTH_LONG).show()
                 }
             }
         }

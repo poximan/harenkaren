@@ -36,6 +36,7 @@ class RecorrListAdapter(
         private val id: TextView = view.findViewById(R.id.num_recorr)
         private val area: TextView = view.findViewById(R.id.area_recorrida)
         private val observador: TextView = view.findViewById(R.id.text_observador)
+        private val meteo: TextView = view.findViewById(R.id.text_meteo)
         private val fecha: TextView = view.findViewById(R.id.textViewTimestamp)
 
         fun bind(recorrido: Recorrido) {
@@ -44,6 +45,7 @@ class RecorrListAdapter(
             id.text = recorrido.contadorInstancias.toString()
             area.text = "Area recorrida: " + recorrido.areaRecorrida
             observador.text = "Observador: " + recorrido.observador
+            meteo.text = "Condicion climatica: " + recorrido.meteo
             fecha.text = "Fecha inicio: " + recorrido.fechaIni
         }
     }

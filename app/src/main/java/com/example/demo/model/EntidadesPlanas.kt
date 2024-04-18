@@ -9,7 +9,6 @@ data class EntidadesPlanas(
     val celular_id: String?,
     val dia_id: UUID,
     val dia_fecha: String?,
-    val meteo: String?,
     val recorr_id: Int,
     val observador: String?,
     val recorr_fecha_ini: String?,
@@ -19,6 +18,7 @@ data class EntidadesPlanas(
     val recorr_latitud_fin: Double,
     val recorr_longitud_fin: Double,
     val area_recorrida: String?,
+    val meteo: String?,
     val unidsocial_id: Int,
     val pto_observacion: String?,
     val ctx_social: String?,
@@ -60,7 +60,6 @@ data class EntidadesPlanas(
         parcel.readString(),
         UUID.fromString(parcel.readString()),
         parcel.readString(),
-        parcel.readString(),
         parcel.readInt(),
         parcel.readString(),
         parcel.readString(),
@@ -69,6 +68,7 @@ data class EntidadesPlanas(
         parcel.readDouble(),
         parcel.readDouble(),
         parcel.readDouble(),
+        parcel.readString(),
         parcel.readString(),
         parcel.readInt(),
         parcel.readString(),
@@ -160,17 +160,14 @@ data class EntidadesPlanas(
     }
 
     fun getDia(): Dia {
-        return Dia(
-            celularId = celular_id!!, id = dia_id,
-            fecha = dia_fecha!!, meteo = meteo!!
-        )
+        return Dia(celularId = celular_id!!, id = dia_id, fecha = dia_fecha!!)
     }
 
     fun getRecorrido(): Recorrido {
         return Recorrido(
             dia_id, observador!!, recorr_fecha_ini!!, recorr_fecha_fin!!,
             recorr_latitud_ini, recorr_latitud_fin, recorr_longitud_ini, recorr_longitud_fin,
-            area_recorrida!!
+            area_recorrida!!, meteo!!
         )
     }
 

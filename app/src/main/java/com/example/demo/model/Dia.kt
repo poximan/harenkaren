@@ -23,11 +23,7 @@ data class Dia (
 
     // ----- tiempo ----- //
     @ColumnInfo(name = "fecha")
-    var fecha : String,
-
-    // ----- espacio ----- //
-    @ColumnInfo(name = "meteo")
-    var meteo: String
+    var fecha : String
 
 ):Parcelable {
     constructor(parcel: Parcel) : this(
@@ -36,14 +32,13 @@ data class Dia (
         UUID.fromString(parcel.readString()),
         parcel.readInt(),
 
-        // ----- tiempo/espacio ----- //
-        parcel.readString().toString(),
+        // ----- tiempo ----- //
         parcel.readString().toString()
     )
 
     @Ignore
-    constructor(celularId: String, id: UUID, fecha: String, meteo: String) :
-            this(celularId, id, 0, fecha, meteo)
+    constructor(celularId: String, id: UUID, fecha: String) :
+            this(celularId, id, 0, fecha)
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         // ----- identidicadores ----- //
@@ -51,9 +46,8 @@ data class Dia (
         parcel.writeString(id.toString())
         parcel.writeInt(contadorInstancias)
 
-        // ----- tiempo/espacio ----- //
+        // ----- tiempo ----- //
         parcel.writeString(fecha)
-        parcel.writeString(meteo)
     }
 
     override fun describeContents(): Int {

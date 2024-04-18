@@ -38,6 +38,16 @@
                 android:layout_height="wrap_content"
                 android:enabled="false"
                 android:inputType="textMultiLine" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Condicion climatica" />
+            <EditText
+                android:id="@+id/meteo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:inputType="textMultiLine" />
         </LinearLayout>
         <CheckBox
             android:id="@+id/checkBox"
@@ -211,7 +221,7 @@
         android:id="@+id/verUnSocButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Unidades sociales"
+        android:text="Registros"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

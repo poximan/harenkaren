@@ -83,7 +83,7 @@ class UnSocDetailFragment: Fragment() {
 
         model.update(unSoc)
 
-        Toast.makeText(activity, "Unidad social editada correctamente", Toast.LENGTH_LONG).show()
+        Toast.makeText(activity, "Registro editado correctamente", Toast.LENGTH_LONG).show()
         val action = UnSocDetailFragmentDirections.goToUnSocListFromUnSocDetailAction(unSoc.recorrId)
         findNavController().navigate(action)
     }

@@ -199,7 +199,7 @@
                 <fragment
                     android:id="@+id/unsoc_list_fragment"
                     android:name="com.example.demo.fragment.list.UnSocListFragment"
-                    android:label="Unidades sociales"
+                    android:label="Registros"
                     tools:layout="@layout/fragment_unsoc_list">
                     <argument
                         android:name="idRecorrido"
@@ -215,7 +215,7 @@
                 <fragment
                     android:id="@+id/unsoc_add_fragment"
                     android:name="com.example.demo.fragment.add.UnSocAddFragment"
-                    android:label="Nueva unidad social"
+                    android:label="Nuevo registro"
                     tools:layout="@layout/fragment_unsoc_add">
                     <argument
                         android:name="idRecorrido"
@@ -235,7 +235,7 @@
                 <fragment
                     android:id="@+id/unsoc_detail_fragment"
                     android:name="com.example.demo.fragment.detail.UnSocDetailFragment"
-                    android:label="Detalle unidad social"
+                    android:label="Detalle registro"
                     tools:layout="@layout/fragment_unsoc_add">
 
                     <argument

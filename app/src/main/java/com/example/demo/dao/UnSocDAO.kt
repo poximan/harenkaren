@@ -159,7 +159,6 @@ interface UnSocDAO {
             "    dia.id_celular AS celular_id,\n" +
             "    dia.id AS dia_id,\n" +
             "    dia.fecha AS dia_fecha,\n" +
-            "    dia.meteo,\n" +
             "    recorrido.id AS recorr_id,\n" +
             "    recorrido.observador,\n" +
             "    recorrido.fecha_ini AS recorr_fecha_ini,\n" +
@@ -169,6 +168,7 @@ interface UnSocDAO {
             "    recorrido.latitud_fin AS recorr_latitud_fin,\n" +
             "    recorrido.longitud_fin AS recorr_longitud_fin,\n" +
             "    recorrido.area_recorrida,\n" +
+            "    recorrido.meteo,\n" +
             "    unidsocial.id AS unidsocial_id,\n" +
             "    unidsocial.pto_observacion,\n" +
             "    unidsocial.ctx_social,\n" +

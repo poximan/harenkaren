@@ -53,6 +53,7 @@ class RecorrDetailFragment : Fragment() {
 
         binding.editObservador.text = args.recorrActual.observador.toEditable()
         binding.areaRecorr.text = args.recorrActual.areaRecorrida.toEditable()
+        binding.meteo.text = args.recorrActual.meteo.toEditable()
         binding.fechaIni.text = "Fecha inicio: " + args.recorrActual.fechaIni
         binding.fechaFin.text = "Fecha fin: " + args.recorrActual.fechaFin
 
@@ -85,6 +86,7 @@ class RecorrDetailFragment : Fragment() {
         binding.checkBox.setOnCheckedChangeListener { _, isChecked ->
             binding.editObservador.isEnabled = isChecked
             binding.areaRecorr.isEnabled = isChecked
+            binding.meteo.isEnabled = isChecked
 
             binding.getPosicionIni.isEnabled = isChecked
             binding.getPosicionFin.isEnabled = isChecked
@@ -106,7 +108,6 @@ class RecorrDetailFragment : Fragment() {
         val formato = requireContext().resources.getString(R.string.formato_fecha)
 
         args.recorrActual.observador = binding.editObservador.text.toString()
-
         args.recorrActual.fechaFin = SimpleDateFormat(formato).format(Date())
 
         args.recorrActual.latitudIni = latLonIni.lat
@@ -115,6 +116,7 @@ class RecorrDetailFragment : Fragment() {
         args.recorrActual.longitudFin = latLonFin.lon
 
         args.recorrActual.areaRecorrida = binding.areaRecorr.text.toString()
+        args.recorrActual.meteo = binding.meteo.text.toString()
 
         model.update(args.recorrActual)
 

@@ -5,7 +5,6 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
-import androidx.room.Ignore
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import java.util.UUID
@@ -32,7 +31,6 @@ data class Recorrido(
     @ColumnInfo(name = "cont_inst")
     var contadorInstancias: Int,
 
-    // ----- entorno ----- //
     @ColumnInfo(name = "observador")
     var observador: String,
 
@@ -57,7 +55,10 @@ data class Recorrido(
     var longitudFin: Double?,
 
     @ColumnInfo(name = "area_recorrida")
-    var areaRecorrida: String
+    var areaRecorrida: String,
+
+    @ColumnInfo(name = "meteo")
+    var meteo: String
 
 ):Parcelable {
     constructor(parcel: Parcel) : this(
@@ -65,8 +66,6 @@ data class Recorrido(
         parcel.readInt(),
         UUID.fromString(parcel.readString()),
         parcel.readInt(),
-
-        // ----- entorno ----- //
         parcel.readString().toString(),
 
         // ----- tiempo ----- //
@@ -78,14 +77,15 @@ data class Recorrido(
         parcel.readValue(Double::class.java.classLoader) as? Double,
         parcel.readValue(Double::class.java.classLoader) as? Double,
         parcel.readValue(Double::class.java.classLoader) as? Double,
+        parcel.readString().toString(),
         parcel.readString().toString()
     )
 
     constructor(idDia: UUID, observador: String, fechaIni: String,
-                latitudIni: Double, longitudIni: Double, areaRecorrida: String
+                latitudIni: Double, longitudIni: Double, areaRecorrida: String, meteo: String
     ): this(
-        null, idDia, 0,observador, fechaIni, "",
-        latitudIni, longitudIni, 0.0, 0.0, areaRecorrida)
+        null, idDia, 0, observador, fechaIni, "",
+        latitudIni, longitudIni, 0.0, 0.0, areaRecorrida, meteo)
 
     constructor(
         diaId: UUID,
@@ -96,10 +96,11 @@ data class Recorrido(
         recorrLatitudFin: Double,
         recorrLongitudIni: Double,
         recorrLongitudFin: Double,
-        areaRecorrida: String
+        areaRecorrida: String,
+        meteo: String
     ) : this(null, diaId, 0, observador, recorrFechaIni, recorrFechaFin,
         recorrLatitudIni, recorrLongitudIni, recorrLatitudFin, recorrLongitudFin,
-        areaRecorrida)
+        areaRecorrida, meteo)
 
     override fun describeContents(): Int {
         return Parcelable.CONTENTS_FILE_DESCRIPTOR
@@ -110,8 +111,6 @@ data class Recorrido(
         id?.let { parcel.writeInt(it) }
         parcel.writeString(diaId.toString())
         parcel.writeInt(contadorInstancias)
-
-        // ----- entorno ----- //
         parcel.writeString(observador)
 
         // ----- tiempo ----- //
@@ -124,6 +123,7 @@ data class Recorrido(
         parcel.writeValue(latitudFin)
         parcel.writeValue(longitudFin)
         parcel.writeString(areaRecorrida)
+        parcel.writeString(meteo)
     }
 
     companion object CREATOR : Parcelable.Creator<Recorrido> {

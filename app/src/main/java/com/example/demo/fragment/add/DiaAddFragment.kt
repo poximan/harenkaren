@@ -58,10 +58,8 @@ class DiaAddFragment : Fragment() {
         val formato = requireContext().resources.getString(R.string.formato_fecha)
         val timeStamp = SimpleDateFormat(formato).format(Date())
 
-        val meteo = binding.editTextMeteo.text.toString()
-
         val uuid = DevFragment.UUID_NULO
-        return Dia(celularId, uuid, 0, timeStamp,meteo)
+        return Dia(celularId, uuid, 0, timeStamp)
     }
 }
 

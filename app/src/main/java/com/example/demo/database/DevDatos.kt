@@ -18,8 +18,8 @@ class DevDatos {
         val idUnivoco = MainActivity.obtenerAndroidID()
 
         val diaList = listOf<Dia>(
-            Dia(celularId = idUnivoco, id = DevFragment.UUID_NULO, contadorInstancias = 0, fecha = "2023/10/19 - 08:20:48", meteo = "parcialmente nublado"),
-            Dia(celularId = idUnivoco, id = DevFragment.UUID_NULO, contadorInstancias = 0, fecha = "2023/10/20 - 12:17:13", meteo = "despejado")
+            Dia(celularId = idUnivoco, id = DevFragment.UUID_NULO, contadorInstancias = 0, fecha = "2023/10/19 - 08:20:48"),
+            Dia(celularId = idUnivoco, id = DevFragment.UUID_NULO, contadorInstancias = 0, fecha = "2023/10/20 - 12:17:13")
         )
 
         val idsRetornos = Array<UUID?>(diaList.size) { null }
@@ -36,17 +36,17 @@ class DevDatos {
                 id = 1, diaId = listDia[0], contadorInstancias = 0, observador = "hugo",
                 fechaIni = "2023/10/19 - 12:20:48", fechaFin = "2023/10/19 - 18:07:48",
                 latitudIni = -42.555, longitudIni = -65.031, latitudFin = -39.555, longitudFin = -61.031,
-                areaRecorrida = "punta norte"),
+                areaRecorrida = "punta norte", meteo = "parcialmente nublado"),
             Recorrido(
                 id = 2, diaId = listDia[0], contadorInstancias = 0, observador = "sebastian",
                 fechaIni = "2023/10/19 - 10:15:48", fechaFin = "2023/10/19 - 17:23:48",
                 latitudIni = -42.555, longitudIni = -65.031, latitudFin = -38.555, longitudFin = -59.031,
-                areaRecorrida = "punta delgada"),
+                areaRecorrida = "punta delgada", meteo = "parcialmente nublado"),
             Recorrido(
                 id = 3, diaId = listDia[1], contadorInstancias = 0, observador = "donato",
                 fechaIni = "2024/01/21 - 11:15:48", fechaFin = "2024/01/21 - 18:38:48",
                 latitudIni = -42.123, longitudIni = -62.371, latitudFin = -38.533, longitudFin = -60.311,
-                areaRecorrida = "isla escondida"),
+                areaRecorrida = "isla escondida", meteo = "despejado"),
         )
 
         recorrList.forEach { recorr ->
