@@ -63,14 +63,30 @@
                 android:layout_height="wrap_content"
                 android:inputType="textMultiLine" />
         </LinearLayout>
-
+        <LinearLayout
+            android:id="@+id/linearLayout4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/linearLayout3">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Estado de la marea" />
+            <Spinner
+                android:id="@+id/spinner_marea"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
         <LinearLayout
             android:id="@+id/linearLayout5"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            app:layout_constraintTop_toBottomOf="@id/linearLayout3">
+            app:layout_constraintTop_toBottomOf="@id/linearLayout4">
 
             <Button
                 android:id="@+id/getPosicionIni"

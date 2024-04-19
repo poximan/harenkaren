@@ -18,7 +18,7 @@ data class Dia (
     @PrimaryKey
     var id: UUID,
 
-    @ColumnInfo(name = "cont_inst")
+    @ColumnInfo(name = "cont_instancias")
     var contadorInstancias: Int,
 
     // ----- tiempo ----- //

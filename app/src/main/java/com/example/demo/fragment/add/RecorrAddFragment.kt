@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -48,10 +49,13 @@ class RecorrAddFragment : Fragment() {
 
         model = ViewModelProvider(this)[RecorrViewModel::class.java]
 
-        binding.getPosicionIni.setOnClickListener { getPosicionActual() }
+        val estadosMarea = resources.getStringArray(R.array.estado_marea)
+        val mareasArrayAdapter = ArrayAdapter(view.context, R.layout.dropdown_item, estadosMarea)
+        binding.spinnerMarea.adapter = mareasArrayAdapter
 
+        binding.getPosicionIni.setOnClickListener { getPosicionActual() }
         binding.confirmarRecorridoButton.setOnClickListener { confirmarRecorrido() }
-        binding.latitudIni.text
+
         return view
     }
 
@@ -81,11 +85,14 @@ class RecorrAddFragment : Fragment() {
         val observador = binding.editObservador.text.toString()
         val areaRecorrida = binding.areaRecorr.text.toString()
         val meteo = binding.editTextMeteo.text.toString()
+        val marea = binding.spinnerMarea.selectedItem.toString()
 
         val formato = requireContext().resources.getString(R.string.formato_fecha)
-        val timeStamp = SimpleDateFormat(formato).format(Date())
+        val fechaIni = SimpleDateFormat(formato).format(Date())
 
-        return Recorrido(args.idDia, observador, timeStamp, latLonIni.lat, latLonIni.lon, areaRecorrida, meteo)
+        return Recorrido(args.idDia, observador, fechaIni, "",
+            latLonIni.lat, latLonIni.lon, 0.0, 0.0,
+            areaRecorrida, meteo, marea)
     }
 
     private fun getPosicionActual() {
@@ -166,4 +173,3 @@ class RecorrAddFragment : Fragment() {
         }
     }
 }
-

@@ -1,6 +1,7 @@
 package com.example.demo.fragment.detail
 
 import android.os.Bundle
+import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +23,8 @@ class UnSocDetailFragment: Fragment() {
     private lateinit var unSoc: UnidSocial
     private lateinit var adapter: UnSocPagerAdapter
 
+    private fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -31,6 +34,7 @@ class UnSocDetailFragment: Fragment() {
         unSoc = args.unSocActual
         adapter = UnSocPagerAdapter(childFragmentManager, unSoc)
 
+        binding.idUnsoc.text = "ID unico de registro = " + unSoc.id.toString().toEditable()
         binding.viewPager.adapter = adapter
         binding.tabLayout.setupWithViewPager(binding.viewPager)
         binding.confirmarUnsoc.setOnClickListener { confirmarAlta() }

@@ -5,6 +5,7 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Ignore
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import java.util.UUID
@@ -28,10 +29,9 @@ data class Recorrido(
     @ColumnInfo(name = "id_dia")
     var diaId: UUID,
 
-    @ColumnInfo(name = "cont_inst")
+    @ColumnInfo(name = "cont_instancias")
     var contadorInstancias: Int,
 
-    @ColumnInfo(name = "observador")
     var observador: String,
 
     // ----- tiempo ----- //
@@ -43,22 +43,23 @@ data class Recorrido(
 
     // ----- espacio ----- //
     @ColumnInfo(name="latitud_ini")
-    var latitudIni: Double?,
+    var latitudIni: Double,
 
     @ColumnInfo(name="longitud_ini")
-    var longitudIni: Double?,
+    var longitudIni: Double,
 
     @ColumnInfo(name="latitud_fin")
-    var latitudFin: Double?,
+    var latitudFin: Double,
 
     @ColumnInfo(name="longitud_fin")
-    var longitudFin: Double?,
+    var longitudFin: Double,
 
     @ColumnInfo(name = "area_recorrida")
     var areaRecorrida: String,
 
-    @ColumnInfo(name = "meteo")
-    var meteo: String
+    var meteo: String,
+
+    var marea: String
 
 ):Parcelable {
     constructor(parcel: Parcel) : this(
@@ -73,34 +74,31 @@ data class Recorrido(
         parcel.readString().toString(),
 
         // ----- espacio ----- //
-        parcel.readValue(Double::class.java.classLoader) as? Double,
-        parcel.readValue(Double::class.java.classLoader) as? Double,
-        parcel.readValue(Double::class.java.classLoader) as? Double,
-        parcel.readValue(Double::class.java.classLoader) as? Double,
+        parcel.readValue(Double::class.java.classLoader) as Double,
+        parcel.readValue(Double::class.java.classLoader) as Double,
+        parcel.readValue(Double::class.java.classLoader) as Double,
+        parcel.readValue(Double::class.java.classLoader) as Double,
+        parcel.readString().toString(),
         parcel.readString().toString(),
         parcel.readString().toString()
     )
 
-    constructor(idDia: UUID, observador: String, fechaIni: String,
-                latitudIni: Double, longitudIni: Double, areaRecorrida: String, meteo: String
-    ): this(
-        null, idDia, 0, observador, fechaIni, "",
-        latitudIni, longitudIni, 0.0, 0.0, areaRecorrida, meteo)
-
+    @Ignore
     constructor(
         diaId: UUID,
         observador: String,
-        recorrFechaIni: String,
-        recorrFechaFin: String,
-        recorrLatitudIni: Double,
-        recorrLatitudFin: Double,
-        recorrLongitudIni: Double,
-        recorrLongitudFin: Double,
+        fechaIni: String,
+        fechaFin: String,
+        latitudIni: Double,
+        longitudIni: Double,
+        latitudFin: Double,
+        longitudFin: Double,
         areaRecorrida: String,
-        meteo: String
-    ) : this(null, diaId, 0, observador, recorrFechaIni, recorrFechaFin,
-        recorrLatitudIni, recorrLongitudIni, recorrLatitudFin, recorrLongitudFin,
-        areaRecorrida, meteo)
+        meteo: String,
+        marea: String
+    ) : this(null, diaId, 0, observador, fechaIni, fechaFin,
+        latitudIni, longitudIni, latitudFin, longitudFin,
+        areaRecorrida, meteo, marea)
 
     override fun describeContents(): Int {
         return Parcelable.CONTENTS_FILE_DESCRIPTOR
@@ -124,6 +122,7 @@ data class Recorrido(
         parcel.writeValue(longitudFin)
         parcel.writeString(areaRecorrida)
         parcel.writeString(meteo)
+        parcel.writeString(marea)
     }
 
     companion object CREATOR : Parcelable.Creator<Recorrido> {

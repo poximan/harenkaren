@@ -19,6 +19,9 @@ interface DiaDAO {
     @Query("SELECT * from dia ORDER BY id ASC")
     fun getAll(): LiveData<List<Dia>>
 
+    @Query("SELECT * from dia WHERE id = :idDia")
+    fun getDiaByUUID(idDia: UUID): Dia
+
     /*
     cuando se da de alta una entidad que no existio nunca en este ni en ningun
     otro dispositivo, se usa insertConUUID(elem) para asignar UUID unico.
@@ -51,7 +54,7 @@ interface DiaDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(elem: Dia)
 
-    @Query("SELECT MAX(cont_inst) FROM dia")
+    @Query("SELECT MAX(cont_instancias) FROM dia")
     fun getUltimaInstancia(): Int?
 
     @Query("DELETE FROM dia")
@@ -66,12 +69,11 @@ interface DiaDAO {
 
     @Transaction
     fun insertarDesnormalizado(listaEntidadesPlanas: List<EntidadesPlanas>){
-
         listaEntidadesPlanas.forEach { entidadPlana ->
             val dia = entidadPlana.getDia()
 
-            val filasActualizadas = update(dia)
-            if (filasActualizadas == 0) {
+            val existe = getDiaByUUID(dia.id)
+            if (existe == null) {
                 insertConUltInst(dia)
             }
         }

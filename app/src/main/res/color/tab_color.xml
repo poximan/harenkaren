@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- Color de fondo para la pestaña activa -->
-    <item android:color="@android:color/transparent" android:state_selected="true" />
+    <item android:drawable="@android:color/holo_orange_light" android:state_selected="true" android:color="@android:color/holo_orange_light" />
     <!-- Color de fondo para las pestañas inactivas -->
-    <item android:color="@android:color/darker_gray" />
+    <item android:drawable="@android:color/darker_gray" android:color="@android:color/darker_gray" />
 </selector>

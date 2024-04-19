@@ -16,6 +16,9 @@ interface RecorrDAO {
     @Query("SELECT * from recorrido ORDER BY id DESC")
     fun getAll(): LiveData<List<Recorrido>>
 
+    @Query("SELECT * from recorrido WHERE id = :idRecorrido")
+    fun getRecorrById(idRecorrido: Int): Recorrido
+
     @Transaction
     @Query("SELECT * FROM recorrido WHERE recorrido.id_dia = :idDia")
     fun getRecorrByDiaId(idDia: UUID): List<Recorrido>
@@ -25,16 +28,16 @@ interface RecorrDAO {
     importada a este mediante una herramienta de transferencia, se debe
     adecuar su contador de instancias al contexto de la BD destino
     */
-    fun insertConUltInst(elem: Recorrido) {
+    fun insertConUltInst(elem: Recorrido): Int {
         val ultimaInstancia = getUltimaInstancia(elem.diaId) ?: 0
         elem.contadorInstancias = ultimaInstancia + 1
-        insert(elem)
+        return insert(elem).toInt()
     }
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(recorrido: Recorrido)
+    fun insert(recorrido: Recorrido): Long
 
-    @Query("SELECT MAX(cont_inst) FROM recorrido WHERE id_dia = :idDia")
+    @Query("SELECT MAX(cont_instancias) FROM recorrido WHERE id_dia = :idDia")
     fun getUltimaInstancia(idDia: UUID): Int?
 
     @Query("DELETE FROM recorrido")
@@ -52,8 +55,8 @@ interface RecorrDAO {
         listaEntidadesPlanas.forEach { entidadPlana ->
             val recorrido = entidadPlana.getRecorrido()
 
-            val filasActualizadas = update(recorrido)
-            if (filasActualizadas == 0) {
+            val existe = getRecorrById(recorrido.id!!)
+            if (existe == null) {
                 insertConUltInst(recorrido)
             }
         }

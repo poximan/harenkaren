@@ -29,4 +29,19 @@
         <item>Recorridos del dia {#}</item>
         <item>Todos los dias</item>
     </string-array>
+
+    <string-array name="estado_marea">
+        <item>Seleccione...</item>
+        <item>Muy Baja</item>
+        <item>Baja</item>
+        <item>Baja, bajando</item>
+        <item>Baja, subiendo</item>
+        <item>Media, bajando</item>
+        <item>Media</item>
+        <item>Media, subiendo</item>
+        <item>Alta, bajando</item>
+        <item>Alta, subiendo</item>
+        <item>Alta</item>
+        <item>Muy alta</item>
+    </string-array>
 </resources>

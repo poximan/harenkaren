@@ -19,6 +19,13 @@
             android:orientation="vertical"
             app:layout_constraintTop_toTopOf="parent">
             <TextView
+                android:id="@+id/id_recorr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginBottom="20dp"
+                android:hint="ID recorrido" />
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Observador" />
@@ -48,6 +55,15 @@
                 android:layout_height="wrap_content"
                 android:enabled="false"
                 android:inputType="textMultiLine" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Estado de la marea" />
+            <Spinner
+                android:id="@+id/spinner_marea"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </LinearLayout>
         <CheckBox
             android:id="@+id/checkBox"

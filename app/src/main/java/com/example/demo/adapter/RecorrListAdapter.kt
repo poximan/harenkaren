@@ -34,18 +34,20 @@ class RecorrListAdapter(
     inner class RecorrViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         private val id: TextView = view.findViewById(R.id.num_recorr)
-        private val area: TextView = view.findViewById(R.id.area_recorrida)
         private val observador: TextView = view.findViewById(R.id.text_observador)
+        private val area: TextView = view.findViewById(R.id.area_recorrida)
         private val meteo: TextView = view.findViewById(R.id.text_meteo)
+        private val marea: TextView = view.findViewById(R.id.text_marea)
         private val fecha: TextView = view.findViewById(R.id.textViewTimestamp)
 
         fun bind(recorrido: Recorrido) {
             itemView.setOnClickListener { itemClickListener.onItemClick(recorrido) }
 
             id.text = recorrido.contadorInstancias.toString()
-            area.text = "Area recorrida: " + recorrido.areaRecorrida
             observador.text = "Observador: " + recorrido.observador
+            area.text = "Area recorrida: " + recorrido.areaRecorrida
             meteo.text = "Condicion climatica: " + recorrido.meteo
+            marea.text = "Condicion climatica: " + recorrido.marea
             fecha.text = "Fecha inicio: " + recorrido.fechaIni
         }
     }

@@ -6,24 +6,32 @@ import java.io.Serializable
 import java.util.UUID
 
 data class EntidadesPlanas(
-    val celular_id: String?,
+    val celular_id: String,
     val dia_id: UUID,
-    val dia_fecha: String?,
+    val dia_cont_instancias: Int,
+    val dia_fecha: String,
+    /* recorrido */
     val recorr_id: Int,
-    val observador: String?,
-    val recorr_fecha_ini: String?,
-    val recorr_fecha_fin: String?,
+    val recorr_id_dia: UUID,
+    val recorr_cont_instancias: Int,
+    val observador: String,
+    val recorr_fecha_ini: String,
+    val recorr_fecha_fin: String,
     val recorr_latitud_ini: Double,
     val recorr_longitud_ini: Double,
     val recorr_latitud_fin: Double,
     val recorr_longitud_fin: Double,
-    val area_recorrida: String?,
-    val meteo: String?,
-    val unidsocial_id: Int,
-    val pto_observacion: String?,
-    val ctx_social: String?,
-    val tpo_sustrato: String?,
-    // Propiedades VIVIOS
+    val area_recorrida: String,
+    val meteo: String,
+    val marea: String,
+    /* unidad social */
+    val unsoc_id: Int,
+    val unsoc_id_recorr: Int,
+    val unsoc_cont_instancias: Int,
+    val pto_observacion: String,
+    val ctx_social: String,
+    val tpo_sustrato: String,
+    /* Propiedades VIVIOS */
     val v_alfa_s4ad: Int,
     val v_alfa_sams: Int,
     val v_hembras_ad: Int,
@@ -36,7 +44,7 @@ data class EntidadesPlanas(
     val v_otros_sams_perif: Int,
     val v_otros_sams_cerca: Int,
     val v_otros_sams_lejos: Int,
-    // Propiedades MUERTOS
+    /* Propiedades MUERTOS */
     val m_alfa_s4ad: Int,
     val m_alfa_sams: Int,
     val m_hembras_ad: Int,
@@ -49,38 +57,41 @@ data class EntidadesPlanas(
     val m_otros_sams_perif: Int,
     val m_otros_sams_cerca: Int,
     val m_otros_sams_lejos: Int,
-    // Propiedades adicionales
-    val unidsocial_fecha: String?,
-    val unidsocial_latitud: Double,
-    val unidsocial_longitud: Double,
-    val photo_path: String?,
-    val comentario: String?
+    /* Propiedades adicionales */
+    val unsoc_fecha: String,
+    val unsoc_latitud: Double,
+    val unsoc_longitud: Double,
+    val photo_path: String,
+    val comentario: String
 ) : Parcelable, Serializable {
     constructor(parcel: Parcel) : this(
-        parcel.readString(),
+        /* dia */
+        parcel.readString()!!,
         UUID.fromString(parcel.readString()),
-        parcel.readString(),
         parcel.readInt(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
+        parcel.readString()!!,
+        /* recorrido */
+        parcel.readInt(),
+        UUID.fromString(parcel.readString()),
+        parcel.readInt(),
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!,
         parcel.readDouble(),
         parcel.readDouble(),
         parcel.readDouble(),
         parcel.readDouble(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readInt(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!,
+        /* unidad social */
         parcel.readInt(),
         parcel.readInt(),
         parcel.readInt(),
-        parcel.readInt(),
-        parcel.readInt(),
-        parcel.readInt(),
-        parcel.readInt(),
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!,
+        /* vivos */
         parcel.readInt(),
         parcel.readInt(),
         parcel.readInt(),
@@ -93,25 +104,37 @@ data class EntidadesPlanas(
         parcel.readInt(),
         parcel.readInt(),
         parcel.readInt(),
+        /* muertos */
         parcel.readInt(),
         parcel.readInt(),
         parcel.readInt(),
         parcel.readInt(),
         parcel.readInt(),
-        parcel.readString(),
+        parcel.readInt(),
+        parcel.readInt(),
+        parcel.readInt(),
+        parcel.readInt(),
+        parcel.readInt(),
+        parcel.readInt(),
+        parcel.readInt(),
+        parcel.readString()!!,
         parcel.readDouble(),
         parcel.readDouble(),
-        parcel.readString(),
-        parcel.readString()
+        parcel.readString()!!,
+        parcel.readString()!!
     ) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
+        /* dia */
         parcel.writeString(celular_id)
         parcel.writeString(dia_id.toString())
+        parcel.writeInt(dia_cont_instancias)
         parcel.writeString(dia_fecha)
-        parcel.writeString(meteo)
+        /* recorrido */
         parcel.writeInt(recorr_id)
+        parcel.writeString(recorr_id_dia.toString())
+        parcel.writeInt(recorr_cont_instancias)
         parcel.writeString(observador)
         parcel.writeString(recorr_fecha_ini)
         parcel.writeString(recorr_fecha_fin)
@@ -120,10 +143,16 @@ data class EntidadesPlanas(
         parcel.writeDouble(recorr_latitud_fin)
         parcel.writeDouble(recorr_longitud_fin)
         parcel.writeString(area_recorrida)
-        parcel.writeInt(unidsocial_id)
+        parcel.writeString(meteo)
+        parcel.writeString(marea)
+        /* unidad social */
+        parcel.writeInt(unsoc_id)
+        parcel.writeInt(unsoc_id_recorr)
+        parcel.writeInt(unsoc_cont_instancias)
         parcel.writeString(pto_observacion)
         parcel.writeString(ctx_social)
         parcel.writeString(tpo_sustrato)
+        /* vivos */
         parcel.writeInt(v_alfa_s4ad)
         parcel.writeInt(v_alfa_sams)
         parcel.writeInt(v_hembras_ad)
@@ -136,6 +165,7 @@ data class EntidadesPlanas(
         parcel.writeInt(v_otros_sams_perif)
         parcel.writeInt(v_otros_sams_cerca)
         parcel.writeInt(v_otros_sams_lejos)
+        /* muertos */
         parcel.writeInt(m_alfa_s4ad)
         parcel.writeInt(m_alfa_sams)
         parcel.writeInt(m_hembras_ad)
@@ -148,9 +178,9 @@ data class EntidadesPlanas(
         parcel.writeInt(m_otros_sams_perif)
         parcel.writeInt(m_otros_sams_cerca)
         parcel.writeInt(m_otros_sams_lejos)
-        parcel.writeString(unidsocial_fecha)
-        parcel.writeDouble(unidsocial_latitud)
-        parcel.writeDouble(unidsocial_longitud)
+        parcel.writeString(unsoc_fecha)
+        parcel.writeDouble(unsoc_latitud)
+        parcel.writeDouble(unsoc_longitud)
         parcel.writeString(photo_path)
         parcel.writeString(comentario)
     }
@@ -160,14 +190,15 @@ data class EntidadesPlanas(
     }
 
     fun getDia(): Dia {
-        return Dia(celularId = celular_id!!, id = dia_id, fecha = dia_fecha!!)
+        return Dia(celularId = celular_id, id = dia_id, fecha = dia_fecha)
     }
 
     fun getRecorrido(): Recorrido {
         return Recorrido(
-            dia_id, observador!!, recorr_fecha_ini!!, recorr_fecha_fin!!,
-            recorr_latitud_ini, recorr_latitud_fin, recorr_longitud_ini, recorr_longitud_fin,
-            area_recorrida!!, meteo!!
+            diaId = recorr_id_dia,
+            observador = observador, fechaIni = recorr_fecha_ini, fechaFin = recorr_fecha_fin,
+            latitudIni = recorr_latitud_ini, longitudIni = recorr_longitud_ini, latitudFin = recorr_latitud_fin, longitudFin =  recorr_longitud_fin,
+            area_recorrida, meteo, marea
         )
     }
 

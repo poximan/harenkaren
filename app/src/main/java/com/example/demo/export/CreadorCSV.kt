@@ -29,15 +29,15 @@ class CreadorCSV {
                     "${entidad.observador},${entidad.recorr_fecha_ini},${entidad.recorr_fecha_fin}," +
                     "${entidad.recorr_latitud_ini},${entidad.recorr_longitud_ini}," +
                     "${entidad.recorr_latitud_fin},${entidad.recorr_longitud_fin},${entidad.area_recorrida}," +
-                    "${entidad.unidsocial_id},${entidad.pto_observacion},${entidad.ctx_social},${entidad.tpo_sustrato}," +
+                    "${entidad.unsoc_id},${entidad.pto_observacion},${entidad.ctx_social},${entidad.tpo_sustrato}," +
                     "${entidad.v_alfa_s4ad},${entidad.v_alfa_sams},${entidad.v_hembras_ad},${entidad.v_crias}," +
                     "${entidad.v_destetados},${entidad.v_juveniles},${entidad.v_s4ad_perif},${entidad.v_s4ad_cerca}," +
                     "${entidad.v_s4ad_lejos},${entidad.v_otros_sams_perif},${entidad.v_otros_sams_cerca}," +
                     "${entidad.v_otros_sams_lejos},${entidad.m_alfa_s4ad},${entidad.m_alfa_sams},${entidad.m_hembras_ad}," +
                     "${entidad.m_crias},${entidad.m_destetados},${entidad.m_juveniles},${entidad.m_s4ad_perif}," +
                     "${entidad.m_s4ad_cerca},${entidad.m_s4ad_lejos},${entidad.m_otros_sams_perif}," +
-                    "${entidad.m_otros_sams_cerca},${entidad.m_otros_sams_lejos},${entidad.unidsocial_fecha}," +
-                    "${entidad.unidsocial_latitud},${entidad.unidsocial_longitud},${entidad.photo_path},${entidad.comentario}"
+                    "${entidad.m_otros_sams_cerca},${entidad.m_otros_sams_lejos},${entidad.unsoc_fecha}," +
+                    "${entidad.unsoc_latitud},${entidad.unsoc_longitud},${entidad.photo_path},${entidad.comentario}"
         }
 
         return header + csvRows

@@ -37,7 +37,7 @@ interface UnSocDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(unidSocial: UnidSocial)
 
-    @Query("SELECT MAX(cont_inst) FROM unidsocial WHERE id_recorrido = :idRecorr")
+    @Query("SELECT MAX(cont_instancias) FROM unidsocial WHERE id_recorrido = :idRecorr")
     fun getUltimaInstancia(idRecorr: Int): Int?
 
     @Query("DELETE FROM unidsocial")
@@ -51,7 +51,7 @@ interface UnSocDAO {
     fun update(unidSocial: UnidSocial)
 
     @Query("SELECT \n" +
-            "   unidsocial.id, id_recorrido, unidsocial.cont_inst,\n" +
+            "   unidsocial.id, id_recorrido, unidsocial.cont_instancias,\n" +
             "   pto_observacion, ctx_social, tpo_sustrato,\n" +
             "   SUM(v_alfa_s4ad) AS v_alfa_s4ad,\n" +
             "   SUM(v_alfa_sams) AS v_alfa_sams,\n" +
@@ -82,11 +82,11 @@ interface UnSocDAO {
             "JOIN\n" +
             "   recorrido ON unidsocial.id_recorrido = recorrido.id\n" +
             "WHERE \n" +
-            "   recorrido.cont_inst = :idRecorr")
+            "   recorrido.cont_instancias = :idRecorr")
     fun getSumUnSocByRecorrId(idRecorr: Int): UnidSocial
 
     @Query("SELECT \n" +
-            "   unidsocial.id, id_recorrido, unidsocial.cont_inst,\n" +
+            "   unidsocial.id, id_recorrido, unidsocial.cont_instancias,\n" +
             "   pto_observacion, ctx_social, tpo_sustrato,\n" +
             "   SUM(v_alfa_s4ad) AS v_alfa_s4ad,\n" +
             "   SUM(v_alfa_sams) AS v_alfa_sams,\n" +
@@ -120,11 +120,11 @@ interface UnSocDAO {
             "JOIN\n" +
             "   dia ON recorrido.id_dia = dia.id\n" +
             "WHERE \n" +
-            "   dia.cont_inst = :idRecorr")
+            "   dia.cont_instancias = :idRecorr")
     fun getTotalByDiaId(idRecorr: Int): UnidSocial
 
     @Query("SELECT \n" +
-            "   id, id_recorrido, cont_inst,\n" +
+            "   id, id_recorrido, cont_instancias,\n" +
             "   pto_observacion, ctx_social, tpo_sustrato,\n" +
             "   SUM(v_alfa_s4ad) AS v_alfa_s4ad,\n" +
             "   SUM(v_alfa_sams) AS v_alfa_sams,\n" +
@@ -158,8 +158,12 @@ interface UnSocDAO {
     @Query("SELECT \n" +
             "    dia.id_celular AS celular_id,\n" +
             "    dia.id AS dia_id,\n" +
+            "    dia.cont_instancias AS dia_cont_instancias,\n" +
             "    dia.fecha AS dia_fecha,\n" +
+            "    -- recorrido\n" +
             "    recorrido.id AS recorr_id,\n" +
+            "    recorrido.id_dia AS recorr_id_dia,\n" +
+            "    recorrido.cont_instancias AS recorr_cont_instancias,\n" +
             "    recorrido.observador,\n" +
             "    recorrido.fecha_ini AS recorr_fecha_ini,\n" +
             "    recorrido.fecha_fin AS recorr_fecha_fin,\n" +
@@ -169,7 +173,11 @@ interface UnSocDAO {
             "    recorrido.longitud_fin AS recorr_longitud_fin,\n" +
             "    recorrido.area_recorrida,\n" +
             "    recorrido.meteo,\n" +
-            "    unidsocial.id AS unidsocial_id,\n" +
+            "    recorrido.marea,\n" +
+            "    -- unidad social\n" +
+            "    unidsocial.id AS unsoc_id,\n" +
+            "    unidsocial.id_recorrido AS unsoc_id_recorr,\n" +
+            "    unidsocial.cont_instancias AS unsoc_cont_instancias,\n" +
             "    unidsocial.pto_observacion,\n" +
             "    unidsocial.ctx_social,\n" +
             "    unidsocial.tpo_sustrato,\n" +
@@ -200,9 +208,9 @@ interface UnSocDAO {
             "    unidsocial.m_otros_sams_cerca,\n" +
             "    unidsocial.m_otros_sams_lejos,\n" +
             "    -- Propiedades adicionales\n" +
-            "    unidsocial.date AS unidsocial_fecha,\n" +
-            "    unidsocial.latitud AS unidsocial_latitud,\n" +
-            "    unidsocial.longitud AS unidsocial_longitud,\n" +
+            "    unidsocial.date AS unsoc_fecha,\n" +
+            "    unidsocial.latitud AS unsoc_latitud,\n" +
+            "    unidsocial.longitud AS unsoc_longitud,\n" +
             "    unidsocial.photo_path,\n" +
             "    unidsocial.comentario\n" +
             "FROM \n" +

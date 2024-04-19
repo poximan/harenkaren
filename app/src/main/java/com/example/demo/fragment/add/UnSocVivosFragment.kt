@@ -6,8 +6,12 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import com.example.demo.R
 import com.example.demo.databinding.FragmentUnsocVivosBinding
+import com.example.demo.viewModel.UnSocShareViewModel
 import kotlin.reflect.KFunction2
 
 class UnSocVivosFragment() : Fragment() {
@@ -19,6 +23,9 @@ class UnSocVivosFragment() : Fragment() {
 
     private var _binding: FragmentUnsocVivosBinding? = null
     private val binding get() = _binding!!
+
+    private val sharedViewModel: UnSocShareViewModel by activityViewModels()
+    private fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)
 
     fun newInstance(funcColectar: KFunction2<Int, Map<String, Any>, Unit>): UnSocVivosFragment {
         colectar = funcColectar
@@ -33,7 +40,6 @@ class UnSocVivosFragment() : Fragment() {
 
         binding.vAlfaS4Ad.addTextChangedListener(textWatcher)
         binding.vAlfaSams.addTextChangedListener(textWatcher)
-        binding.vHembrasAd.addTextChangedListener(textWatcher)
         binding.vCrias.addTextChangedListener(textWatcher)
         binding.vDestetados.addTextChangedListener(textWatcher)
         binding.vJuveniles.addTextChangedListener(textWatcher)
@@ -49,6 +55,7 @@ class UnSocVivosFragment() : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        observarCtxSocial()
         cargarMap()
     }
 
@@ -96,7 +103,76 @@ class UnSocVivosFragment() : Fragment() {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         override fun afterTextChanged(s: Editable?) {
+            observarCtxSocial()
             cargarMap()
+        }
+    }
+
+    private fun observarCtxSocial() {
+        // si en la solapa general se eligio pareja solitaria
+        sharedViewModel.lastSelectedValue.observe(viewLifecycleOwner) { ctxElegido ->
+            vistaPjaSolitaria(ctxElegido)
+            vistaGrupoHarenes(ctxElegido)
+        }
+    }
+
+    private fun vistaGrupoHarenes(ctxElegido: String) {
+        val ctxSocial = resources.getStringArray(R.array.op_contexto_social)
+
+        if(ctxElegido == ctxSocial[3]) {
+            var contMacho = 0
+
+            if (!binding.vAlfaS4Ad.text.isNullOrEmpty())
+                contMacho += binding.vAlfaS4Ad.text.toString().toInt()
+            if (!binding.vAlfaSams.text.isNullOrEmpty())
+                contMacho += binding.vAlfaSams.text.toString().toInt()
+
+            if(contMacho < 2)
+                Toast.makeText(
+                    activity,
+                    "Para grupo de harenes, la suma de los machos dominantes deben ser >=2",
+                    Toast.LENGTH_LONG
+                ).show()
+        }
+    }
+
+    private fun vistaPjaSolitaria(ctxElegido: String) {
+        val ctxSocial = resources.getStringArray(R.array.op_contexto_social)
+
+        if(ctxElegido == ctxSocial[4]) {
+            binding.vHembrasAd.removeTextChangedListener(textWatcher)
+            when (binding.root.findFocus()?.id) {
+                R.id.vAlfaS4Ad -> {
+                    if (!binding.vAlfaS4Ad.text.isNullOrEmpty() && binding.vAlfaS4Ad.text.toString()
+                            .toInt() > 1
+                    ) {
+                        Toast.makeText(
+                            activity,
+                            "Solo se permite [0,1] si es pareja solitaria",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        binding.vAlfaS4Ad.text = "1".toEditable()
+                    }
+                }
+
+                R.id.vAlfaSams -> {
+                    if (!binding.vAlfaSams.text.isNullOrEmpty() && binding.vAlfaSams.text.toString()
+                            .toInt() > 1
+                    ) {
+                        Toast.makeText(
+                            activity,
+                            "Solo se permite [0,1] si es pareja solitaria",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        binding.vAlfaSams.text = "1".toEditable()
+                    }
+                }
+            }
+            binding.vHembrasAd.text = "1".toEditable()
+            binding.vHembrasAd.isEnabled = false
+        } else {
+            binding.vHembrasAd.addTextChangedListener(textWatcher)
+            binding.vHembrasAd.isEnabled = true
         }
     }
 

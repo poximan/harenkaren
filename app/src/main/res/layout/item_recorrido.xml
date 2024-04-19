@@ -26,24 +26,27 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/area_recorrida"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Area recorrida" />
-
-            <TextView
                 android:id="@+id/text_observador"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="Observador"
                 android:inputType="textMultiLine" />
-
+            <TextView
+                android:id="@+id/area_recorrida"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Area recorrida" />
             <TextView
                 android:id="@+id/text_meteo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="Condicion climatica"
                 android:inputType="textMultiLine" />
+            <TextView
+                android:id="@+id/text_marea"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Estado marea" />
 
             <TextView
                 android:id="@+id/textViewTimestamp"

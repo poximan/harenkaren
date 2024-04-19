@@ -11,7 +11,9 @@ import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.ImageView
+import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -47,13 +49,25 @@ class RecorrDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        _binding = FragmentRecorrDetailBinding.inflate(inflater, container, false)
+        val view = binding.root
+
         model = ViewModelProvider(this)[RecorrViewModel::class.java]
 
-        _binding = FragmentRecorrDetailBinding.inflate(inflater, container, false)
+        val estadosMarea = resources.getStringArray(R.array.estado_marea)
+        val mareasArrayAdapter = ArrayAdapter(view.context, R.layout.dropdown_item, estadosMarea)
+        binding.spinnerMarea.adapter = mareasArrayAdapter
+
+        binding.idRecorr.text = "ID unico de recorrido = " + args.recorrActual.id.toString().toEditable()
 
         binding.editObservador.text = args.recorrActual.observador.toEditable()
         binding.areaRecorr.text = args.recorrActual.areaRecorrida.toEditable()
         binding.meteo.text = args.recorrActual.meteo.toEditable()
+
+        val indice = obtenerPosicionSpinner(args.recorrActual.marea, binding.spinnerMarea)
+        binding.spinnerMarea.setSelection(indice)
+        binding.spinnerMarea.isEnabled = false
+
         binding.fechaIni.text = "Fecha inicio: " + args.recorrActual.fechaIni
         binding.fechaFin.text = "Fecha fin: " + args.recorrActual.fechaFin
 
@@ -87,6 +101,7 @@ class RecorrDetailFragment : Fragment() {
             binding.editObservador.isEnabled = isChecked
             binding.areaRecorr.isEnabled = isChecked
             binding.meteo.isEnabled = isChecked
+            binding.spinnerMarea.isEnabled = isChecked
 
             binding.getPosicionIni.isEnabled = isChecked
             binding.getPosicionFin.isEnabled = isChecked
@@ -94,7 +109,7 @@ class RecorrDetailFragment : Fragment() {
             binding.confirmarButton.isEnabled = isChecked
         }
 
-        return binding.root
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -117,6 +132,7 @@ class RecorrDetailFragment : Fragment() {
 
         args.recorrActual.areaRecorrida = binding.areaRecorr.text.toString()
         args.recorrActual.meteo = binding.meteo.text.toString()
+        args.recorrActual.marea = binding.spinnerMarea.selectedItem.toString()
 
         model.update(args.recorrActual)
 
@@ -124,6 +140,17 @@ class RecorrDetailFragment : Fragment() {
 
         val action = RecorrDetailFragmentDirections.goToRecorrListAction(args.recorrActual.diaId)
         findNavController().navigate(action)
+    }
+
+    private fun obtenerPosicionSpinner(entradaBuscada: String?, spinnerActual: Spinner): Int {
+        val opcionesAdapter = spinnerActual.adapter // Obtener el adaptador del Spinner
+        val opciones = mutableListOf<String>()
+        if (opcionesAdapter != null) {
+            for (i in 0 until opcionesAdapter.count) {
+                opciones.add(opcionesAdapter.getItem(i).toString())
+            }
+        }
+        return opciones.indexOfFirst { it.equals(entradaBuscada, ignoreCase = true) }
     }
 
     private fun verUnidadSocial() {

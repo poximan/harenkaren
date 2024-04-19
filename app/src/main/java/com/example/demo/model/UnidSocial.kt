@@ -28,7 +28,7 @@ data class UnidSocial(
     @ColumnInfo(name = "id_recorrido")
     var recorrId: Int,
 
-    @ColumnInfo(name = "cont_inst")
+    @ColumnInfo(name = "cont_instancias")
     var contadorInstancias: Int,
 
     // ----- entorno ----- //

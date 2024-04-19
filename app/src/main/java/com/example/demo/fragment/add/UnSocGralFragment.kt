@@ -29,6 +29,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.exifinterface.media.ExifInterface
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -36,6 +37,7 @@ import com.example.demo.R
 import com.example.demo.adapter.PhotoAdapter
 import com.example.demo.databinding.FragmentUnsocGralBinding
 import com.example.demo.model.LatLong
+import com.example.demo.viewModel.UnSocShareViewModel
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -58,6 +60,8 @@ class UnSocGralFragment() : Fragment() {
 
     private var _binding: FragmentUnsocGralBinding? = null
     val binding get() = _binding!!
+
+    private val sharedViewModel: UnSocShareViewModel by activityViewModels()
 
     private val photoPaths = mutableListOf<String>()
     private val adapter = PhotoAdapter(photoPaths)
@@ -90,22 +94,22 @@ class UnSocGralFragment() : Fragment() {
         // punto de observacion
         val ptObsUnSoc = resources.getStringArray(R.array.op_punto_obs_unsoc)
         val ptObsUnSocArrayAdapter = ArrayAdapter(view.context, R.layout.dropdown_item, ptObsUnSoc)
-
         binding.spinnerAddPtoObs.adapter = ptObsUnSocArrayAdapter
+
         binding.helpPtoObsUnSoc.setOnClickListener { ptoObsUnidadSocialInfo() }
 
         // contexto social
         val ctxSocial = resources.getStringArray(R.array.op_contexto_social)
         val ctxSocialArrayAdapter = ArrayAdapter(view.context, R.layout.dropdown_item, ctxSocial)
-
         binding.spinnerAddCtxSocial.adapter = ctxSocialArrayAdapter
+
         binding.helpCtxSocial.setOnClickListener { ctxSocialInfo() }
 
         // tipo de sustrato en playa
         val tpoSustrato = resources.getStringArray(R.array.op_tipo_sustrato)
         val tpoSustratoArrayAdapter = ArrayAdapter(view.context, R.layout.dropdown_item, tpoSustrato)
-
         binding.spinnerAddTpoSustrato.adapter = tpoSustratoArrayAdapter
+
         binding.helpTpoSustrato.setOnClickListener { tpoSustratoInfo() }
 
         binding.getPosicion.setOnClickListener { getPosicionActual() }
@@ -170,6 +174,12 @@ class UnSocGralFragment() : Fragment() {
 
     private val onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            when (parent?.id) {
+                R.id.spinnerAddCtxSocial -> {
+                    val selectedValue = binding.spinnerAddCtxSocial.getItemAtPosition(position).toString()
+                    sharedViewModel.setLastSelectedValue(selectedValue)
+                }
+            }
             cargarMap()
         }
         override fun onNothingSelected(parent: AdapterView<*>?) {}

@@ -36,17 +36,17 @@ class DevDatos {
                 id = 1, diaId = listDia[0], contadorInstancias = 0, observador = "hugo",
                 fechaIni = "2023/10/19 - 12:20:48", fechaFin = "2023/10/19 - 18:07:48",
                 latitudIni = -42.555, longitudIni = -65.031, latitudFin = -39.555, longitudFin = -61.031,
-                areaRecorrida = "punta norte", meteo = "parcialmente nublado"),
+                areaRecorrida = "punta norte", meteo = "parcialmente nublado", marea = "Media"),
             Recorrido(
                 id = 2, diaId = listDia[0], contadorInstancias = 0, observador = "sebastian",
                 fechaIni = "2023/10/19 - 10:15:48", fechaFin = "2023/10/19 - 17:23:48",
                 latitudIni = -42.555, longitudIni = -65.031, latitudFin = -38.555, longitudFin = -59.031,
-                areaRecorrida = "punta delgada", meteo = "parcialmente nublado"),
+                areaRecorrida = "punta delgada", meteo = "parcialmente nublado", marea = "Baja, bajando"),
             Recorrido(
                 id = 3, diaId = listDia[1], contadorInstancias = 0, observador = "donato",
                 fechaIni = "2024/01/21 - 11:15:48", fechaFin = "2024/01/21 - 18:38:48",
                 latitudIni = -42.123, longitudIni = -62.371, latitudFin = -38.533, longitudFin = -60.311,
-                areaRecorrida = "isla escondida", meteo = "despejado"),
+                areaRecorrida = "isla escondida", meteo = "despejado", marea = "Muy alta"),
         )
 
         recorrList.forEach { recorr ->
