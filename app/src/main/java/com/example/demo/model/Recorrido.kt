@@ -100,6 +100,24 @@ data class Recorrido(
         latitudIni, longitudIni, latitudFin, longitudFin,
         areaRecorrida, meteo, marea)
 
+    @Ignore
+    constructor(
+        id: Int,
+        diaId: UUID,
+        observador: String,
+        fechaIni: String,
+        fechaFin: String,
+        latitudIni: Double,
+        longitudIni: Double,
+        latitudFin: Double,
+        longitudFin: Double,
+        areaRecorrida: String,
+        meteo: String,
+        marea: String
+    ) : this(id, diaId, 0, observador, fechaIni, fechaFin,
+        latitudIni, longitudIni, latitudFin, longitudFin,
+        areaRecorrida, meteo, marea)
+
     override fun describeContents(): Int {
         return Parcelable.CONTENTS_FILE_DESCRIPTOR
     }

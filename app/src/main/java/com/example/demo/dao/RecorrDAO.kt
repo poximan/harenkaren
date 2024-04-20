@@ -13,11 +13,9 @@ import java.util.UUID
 
 @Dao
 interface RecorrDAO {
+
     @Query("SELECT * from recorrido ORDER BY id DESC")
     fun getAll(): LiveData<List<Recorrido>>
-
-    @Query("SELECT * from recorrido WHERE id = :idRecorrido")
-    fun getRecorrById(idRecorrido: Int): Recorrido
 
     @Transaction
     @Query("SELECT * FROM recorrido WHERE recorrido.id_dia = :idDia")
@@ -51,12 +49,23 @@ interface RecorrDAO {
     fun update(recorrido: Recorrido): Int
 
     @Transaction
-    fun insertarDesnormalizado(listaEntidadesPlanas: List<EntidadesPlanas>) {
+    fun insertarDesnormalizado(
+        listaEntidadesPlanas: List<EntidadesPlanas>,
+        idMap: MutableMap<Int, Int>
+    ) {
         listaEntidadesPlanas.forEach { entidadPlana ->
-            val recorrido = entidadPlana.getRecorrido()
 
-            val existe = getRecorrById(recorrido.id!!)
-            if (existe == null) {
+            val recorrido = entidadPlana.getRecorrido()
+            val idAnterior = recorrido.id!!
+
+            var idNuevo = idMap[idAnterior]
+
+            if(idNuevo == null){
+                recorrido.id = null
+                idNuevo = insertConUltInst(recorrido)
+                idMap[idAnterior] = idNuevo
+            } else {
+                recorrido.id = idNuevo
                 insertConUltInst(recorrido)
             }
         }

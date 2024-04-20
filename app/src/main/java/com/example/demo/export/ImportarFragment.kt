@@ -87,6 +87,8 @@ class ImportarFragment : Fragment(), RegistroDistribuible {
     private fun insertarEntidades(listaEntidadesPlanas: List<EntidadesPlanas>) {
         // Crear un CoroutineScope
         val viewModelScope = viewLifecycleOwner.lifecycleScope
+        val idMapRecorr = mutableMapOf<Int, Int>()
+        val idMapUnSoc = mutableMapOf<Int, Int>()
 
         viewModelScope.launch {
             withContext(Dispatchers.IO) {// Dispatchers.IO es el hilo background
@@ -95,8 +97,8 @@ class ImportarFragment : Fragment(), RegistroDistribuible {
                     .getDatabase(requireActivity().application, viewModelScope)
 
                 bd.diaDao().insertarDesnormalizado(listaEntidadesPlanas)
-                bd.recorrDao().insertarDesnormalizado(listaEntidadesPlanas)
-               // bd.unSocDao().insertarDesnormalizado(listaEntidadesPlanas)
+                bd.recorrDao().insertarDesnormalizado(listaEntidadesPlanas, idMapRecorr)
+                bd.unSocDao().insertarDesnormalizado(listaEntidadesPlanas, idMapUnSoc)
             }
         }
     }

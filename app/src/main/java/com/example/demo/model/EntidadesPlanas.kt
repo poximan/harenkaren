@@ -194,12 +194,23 @@ data class EntidadesPlanas(
     }
 
     fun getRecorrido(): Recorrido {
-        return Recorrido(
-            diaId = recorr_id_dia,
+        return Recorrido(id = recorr_id, diaId = recorr_id_dia,
             observador = observador, fechaIni = recorr_fecha_ini, fechaFin = recorr_fecha_fin,
             latitudIni = recorr_latitud_ini, longitudIni = recorr_longitud_ini, latitudFin = recorr_latitud_fin, longitudFin =  recorr_longitud_fin,
             area_recorrida, meteo, marea
         )
+    }
+    
+    fun getUnidSocial(): UnidSocial {
+        return UnidSocial(id = unsoc_id, recorrId = unsoc_id_recorr,
+            ptoObsUnSoc = pto_observacion, ctx_social, tpo_sustrato,
+            v_alfa_s4ad, v_alfa_sams, v_hembras_ad, v_crias, v_destetados, v_juveniles,
+            v_s4ad_perif, v_s4ad_cerca, v_s4ad_lejos, v_otros_sams_perif, v_otros_sams_cerca, v_otros_sams_lejos,
+            m_alfa_s4ad, m_alfa_sams, m_hembras_ad, m_crias, m_destetados, m_juveniles,
+            m_s4ad_perif, m_s4ad_cerca, m_s4ad_lejos, m_otros_sams_perif, m_otros_sams_cerca, m_otros_sams_lejos,
+            date = unsoc_fecha, latitud = unsoc_latitud, longitud = unsoc_longitud,
+            photo_path, comentario
+            )
     }
 
     companion object CREATOR : Parcelable.Creator<EntidadesPlanas> {

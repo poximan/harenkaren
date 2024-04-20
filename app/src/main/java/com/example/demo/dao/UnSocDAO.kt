@@ -28,14 +28,14 @@ interface UnSocDAO {
     importada a este mediante una herramienta de transferencia, se debe
     adecuar su contador de instancias al contexto de la BD destino
     */
-    fun insertConUltInst(elem: UnidSocial) {
+    fun insertConUltInst(elem: UnidSocial): Int {
         val ultimaInstancia = getUltimaInstancia(elem.recorrId) ?: 0
         elem.contadorInstancias = ultimaInstancia + 1
-        insert(elem)
+        return insert(elem).toInt()
     }
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(unidSocial: UnidSocial)
+    fun insert(unidSocial: UnidSocial): Long
 
     @Query("SELECT MAX(cont_instancias) FROM unidsocial WHERE id_recorrido = :idRecorr")
     fun getUltimaInstancia(idRecorr: Int): Int?
@@ -220,4 +220,28 @@ interface UnSocDAO {
             "INNER JOIN \n" +
             "    unidsocial ON recorrido.id = unidSocial.id_recorrido")
     fun getUnSocDesnormalizado(): List<EntidadesPlanas>
+
+
+    @Transaction
+    fun insertarDesnormalizado(
+        listaEntidadesPlanas: List<EntidadesPlanas>,
+        idMap: MutableMap<Int, Int>
+    ) {
+        listaEntidadesPlanas.forEach { entidadPlana ->
+
+            val unSoc = entidadPlana.getUnidSocial()
+            val idAnterior = unSoc.id!!
+
+            var idNuevo = idMap[idAnterior]
+
+            if(idNuevo == null){
+                unSoc.id = null
+                idNuevo = insertConUltInst(unSoc)
+                idMap[idAnterior] = idNuevo
+            } else {
+                unSoc.id = idNuevo
+                insertConUltInst(unSoc)
+            }
+        }
+    }
 }
