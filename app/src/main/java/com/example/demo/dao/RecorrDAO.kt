@@ -53,7 +53,7 @@ interface RecorrDAO {
         listaEntidadesPlanas: List<EntidadesPlanas>,
         idMap: MutableMap<Int, Int>
     ) {
-        listaEntidadesPlanas.forEach { entidadPlana ->
+        listaEntidadesPlanas.forEachIndexed { indice, entidadPlana ->
 
             val recorrido = entidadPlana.getRecorrido()
             val idAnterior = recorrido.id!!
@@ -68,6 +68,8 @@ interface RecorrDAO {
                 recorrido.id = idNuevo
                 insertConUltInst(recorrido)
             }
+            listaEntidadesPlanas[indice].recorr_id = idNuevo
+            listaEntidadesPlanas[indice].unsoc_id_recorr = idNuevo
         }
     }
 }

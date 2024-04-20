@@ -11,7 +11,7 @@ data class EntidadesPlanas(
     val dia_cont_instancias: Int,
     val dia_fecha: String,
     /* recorrido */
-    val recorr_id: Int,
+    var recorr_id: Int,
     val recorr_id_dia: UUID,
     val recorr_cont_instancias: Int,
     val observador: String,
@@ -26,7 +26,7 @@ data class EntidadesPlanas(
     val marea: String,
     /* unidad social */
     val unsoc_id: Int,
-    val unsoc_id_recorr: Int,
+    var unsoc_id_recorr: Int,
     val unsoc_cont_instancias: Int,
     val pto_observacion: String,
     val ctx_social: String,
@@ -202,8 +202,8 @@ data class EntidadesPlanas(
     }
     
     fun getUnidSocial(): UnidSocial {
-        return UnidSocial(id = unsoc_id, recorrId = unsoc_id_recorr,
-            ptoObsUnSoc = pto_observacion, ctx_social, tpo_sustrato,
+        return UnidSocial(id = unsoc_id, recorrId = unsoc_id_recorr, unsoc_cont_instancias,
+            pto_observacion, ctx_social, tpo_sustrato,
             v_alfa_s4ad, v_alfa_sams, v_hembras_ad, v_crias, v_destetados, v_juveniles,
             v_s4ad_perif, v_s4ad_cerca, v_s4ad_lejos, v_otros_sams_perif, v_otros_sams_cerca, v_otros_sams_lejos,
             m_alfa_s4ad, m_alfa_sams, m_hembras_ad, m_crias, m_destetados, m_juveniles,

@@ -227,27 +227,6 @@ y createFromParcel() para crear una nueva instancia del objeto a partir de un Pa
         mS4AdPerif, mS4AdCerca, mS4AdLejos, mOtrosSamsPerif, mOtrosSamsCerca, mOtrosSamsLejos,
         timeStamp, latitud, longitud, photoPath, comentario)
 
-    @Ignore
-    constructor(
-        id: Int, idRecorrido: Int,
-        ptoObsUnSoc: String, ctxSocial: String, tpoSustrato: String,
-        vAlfaS4Ad: Int, vAlfaSams: Int, vHembrasAd: Int, vCrias: Int,
-        vDestetados: Int, vJuveniles: Int, vS4AdPerif: Int, vS4AdCerca: Int,
-        vS4AdLejos: Int, vOtrosSamsPerif: Int, vOtrosSamsCerca: Int, vOtrosSamsLejos: Int,
-        mAlfaS4Ad: Int, mAlfaSams: Int, mHembrasAd: Int, mCrias: Int,
-        mDestetados: Int, mJuveniles: Int, mS4AdPerif: Int, mS4AdCerca: Int,
-        mS4AdLejos: Int, mOtrosSamsPerif: Int, mOtrosSamsCerca: Int, mOtrosSamsLejos: Int,
-        timeStamp: String,
-        latitud: Double, longitud: Double,
-        photoPath: String,
-        comentario: String
-    ) : this(id, idRecorrido, 0, ptoObsUnSoc, ctxSocial, tpoSustrato,
-        vAlfaS4Ad, vAlfaSams, vHembrasAd, vCrias, vDestetados, vJuveniles,
-        vS4AdPerif, vS4AdCerca, vS4AdLejos, vOtrosSamsPerif, vOtrosSamsCerca, vOtrosSamsLejos,
-        mAlfaS4Ad, mAlfaSams, mHembrasAd, mCrias, mDestetados, mJuveniles,
-        mS4AdPerif, mS4AdCerca, mS4AdLejos, mOtrosSamsPerif, mOtrosSamsCerca, mOtrosSamsLejos,
-        timeStamp, latitud, longitud, photoPath, comentario)
-
     override fun describeContents(): Int {
         return Parcelable.CONTENTS_FILE_DESCRIPTOR
     }
