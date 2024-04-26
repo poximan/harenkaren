@@ -270,6 +270,44 @@ y createFromParcel() para crear una nueva instancia del objeto a partir de un Pa
         parcel.writeString(comentario)
     }
 
+    fun getContadores(): List<String> {
+
+        val atributos = mutableListOf<String>()
+        val campos = this.javaClass.declaredFields
+
+        for (campo in campos) {
+            val nombreCampo = campo.name
+            if (nombreCampo.startsWith("v") || nombreCampo.startsWith("m")) {
+                // Acceder al valor del atributo
+                campo.isAccessible = true
+                atributos.add(nombreCampo)
+            }
+        }
+        return atributos
+    }
+
+    fun getContadoresNoNulos(): List<String> {
+
+        val atributos = mutableListOf<String>()
+        val campos = this.javaClass.declaredFields
+
+        // Filtrar los atributos que comienzan con "v" o "m" y cuyo valor sea mayor que 0
+        for (campo in campos) {
+            val nombreCampo = campo.name
+            if (nombreCampo.startsWith("v") || nombreCampo.startsWith("m")) {
+                // Acceder al valor del atributo
+                campo.isAccessible = true
+                val valor = campo.getInt(this)
+
+                // Verificar si el valor es mayor que 0
+                if (valor > 0) {
+                    atributos.add(nombreCampo)
+                }
+            }
+        }
+        return atributos
+    }
+
     companion object CREATOR : Parcelable.Creator<UnidSocial> {
         override fun createFromParcel(parcel: Parcel): UnidSocial {
             return UnidSocial(parcel)

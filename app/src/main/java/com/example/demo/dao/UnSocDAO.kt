@@ -82,7 +82,7 @@ interface UnSocDAO {
             "JOIN\n" +
             "   recorrido ON unidsocial.id_recorrido = recorrido.id\n" +
             "WHERE \n" +
-            "   recorrido.cont_instancias = :idRecorr")
+            "   recorrido.id = :idRecorr")
     fun getSumUnSocByRecorrId(idRecorr: Int): UnidSocial
 
     @Query("SELECT \n" +
@@ -120,8 +120,8 @@ interface UnSocDAO {
             "JOIN\n" +
             "   dia ON recorrido.id_dia = dia.id\n" +
             "WHERE \n" +
-            "   dia.cont_instancias = :idRecorr")
-    fun getTotalByDiaId(idRecorr: Int): UnidSocial
+            "   dia.id = :idDia")
+    fun getTotalByDiaId(idDia: Int): UnidSocial
 
     @Query("SELECT \n" +
             "   id, id_recorrido, cont_instancias,\n" +

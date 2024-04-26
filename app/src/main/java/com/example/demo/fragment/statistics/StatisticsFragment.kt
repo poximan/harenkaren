@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.AdapterView
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
@@ -15,7 +16,6 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.demo.R
-import com.example.demo.databinding.FragmentStatisticsBinding
 import com.example.demo.viewModel.UnSocViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -23,13 +23,15 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.eazegraph.lib.charts.PieChart
 import org.eazegraph.lib.models.PieModel
+import com.example.demo.databinding.FragmentStatisticsBinding
+import com.example.demo.model.UnidSocial
 
 class StatisticsFragment : Fragment() {
 
     private var _binding: FragmentStatisticsBinding? = null
     private val binding get() = _binding!!
 
-    private var pieChart: PieChart? = null
+    private val coloresDisponibles = mutableListOf<Int>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -76,13 +78,7 @@ class StatisticsFragment : Fragment() {
             withContext(Dispatchers.Main) {
                 try {
                     view?.let {
-                        graficar(
-                            it,
-                            resultado.vAlfaS4Ad, resultado.vAlfaSams, resultado.vHembrasAd,
-                            resultado.vCrias, resultado.vDestetados, resultado.vJuveniles,
-                            resultado.vS4AdPerif, resultado.vS4AdCerca, resultado.vS4AdLejos,
-                            resultado.vOtrosSamsPerif, resultado.vOtrosSamsCerca, resultado.vOtrosSamsLejos
-                        )
+                        graficar(it, resultado)
                     }
                 } catch (e: NullPointerException) {
                     Toast.makeText(activity, "No existe registro, verificar {#}", Toast.LENGTH_LONG).show()
@@ -97,13 +93,7 @@ class StatisticsFragment : Fragment() {
             val resultado = viewModel.readSumRecorr(binding.granulOrden.text.toString().toInt())
             withContext(Dispatchers.Main) {
                 view?.let {
-                    graficar(
-                        it,
-                        resultado.vAlfaS4Ad, resultado.vAlfaSams, resultado.vHembrasAd,
-                        resultado.vCrias, resultado.vDestetados, resultado.vJuveniles,
-                        resultado.vS4AdPerif, resultado.vS4AdCerca, resultado.vS4AdLejos,
-                        resultado.vOtrosSamsPerif, resultado.vOtrosSamsCerca, resultado.vOtrosSamsLejos
-                    )
+                    graficar(it, resultado)
                 }
             }
         }
@@ -115,13 +105,7 @@ class StatisticsFragment : Fragment() {
             val resultado = viewModel.readSumDia(binding.granulOrden.text.toString().toInt())
             withContext(Dispatchers.Main) {
                 view?.let {
-                    graficar(
-                        it,
-                        resultado.vAlfaS4Ad, resultado.vAlfaSams, resultado.vHembrasAd,
-                        resultado.vCrias, resultado.vDestetados, resultado.vJuveniles,
-                        resultado.vS4AdPerif, resultado.vS4AdCerca, resultado.vS4AdLejos,
-                        resultado.vOtrosSamsPerif, resultado.vOtrosSamsCerca, resultado.vOtrosSamsLejos
-                    )
+                    graficar(it, resultado)
                 }
             }
         }
@@ -133,169 +117,114 @@ class StatisticsFragment : Fragment() {
             val resultado = viewModel.readSumTotal()
             withContext(Dispatchers.Main) {
                 view?.let {
-                    graficar(
-                        it,
-                        resultado.vAlfaS4Ad, resultado.vAlfaSams, resultado.vHembrasAd,
-                        resultado.vCrias, resultado.vDestetados, resultado.vJuveniles,
-                        resultado.vS4AdPerif, resultado.vS4AdCerca, resultado.vS4AdLejos,
-                        resultado.vOtrosSamsPerif, resultado.vOtrosSamsCerca, resultado.vOtrosSamsLejos
-                    )
+                    graficar(it, resultado)
                 }
             }
         }
     }
 
-    private fun graficar2(view: View, grafTexts: IntArray) {
+    private fun graficar(view: View, unidSocial: UnidSocial) {
 
-        if (grafTexts.isEmpty()) {
-            throw IllegalArgumentException("El arreglo no puede estar vacío.")
+        val pieChart: PieChart = view.findViewById(R.id.piechart)
+        pieChart.clearChart()
+
+        val contadores = unidSocial.getContadores()
+        for (atribString in contadores) {
+            ocultarEtiquetas(atribString)
         }
 
-        for (i in grafTexts.indices) {
-            // Construir el nombre del componente visual dinámicamente
-            val fieldName = "grafText%02d".format(i + 1)
-            // Obtener el ID del componente visual usando el nombre construido
-            val textViewId = view.resources.getIdentifier(fieldName, "id", view.context.packageName)
-
-            if (textViewId != 0) {
-                val textView = view.findViewById<TextView>(textViewId)
-                textView.text = grafTexts[i].toString()
-            } else {
-                println("No se encontró el ID para el componente visual $fieldName")
-            }
+        val contadoresNoNulos = unidSocial.getContadoresNoNulos()
+        for (atribString in contadoresNoNulos) {
+            asignarValorPorReflexion(atribString, unidSocial)
+            setData2(pieChart, atribString, unidSocial)
         }
 
-        // Resto del código para inicializar el pieChart, limpiarlo, establecer datos y animación
-        pieChart = view.findViewById(R.id.piechart)
-        pieChart?.clearChart()
-        setData(pieChart)
-        pieChart?.startAnimation()
+        pieChart.startAnimation()
+    }
+    private fun ocultarEtiquetas(atribString: String) {
+
+        // Genera el nombre del campo correspondiente al componente visual
+        val capitalizar = if (atribString.startsWith('v')) 'V' else 'M'
+        val nombreCampo = "txt${capitalizar}${atribString.substring(1)}"
+
+        // Obtiene el campo del binding utilizando reflexión
+        val field = binding.javaClass.getDeclaredField(nombreCampo)
+        field.isAccessible = true
+
+        if (field.type == TextView::class.java) {
+            val textView = field.get(binding) as TextView
+            val layoutExiste = textView.parent as LinearLayout
+            layoutExiste.visibility = View.GONE
+        }
     }
 
-    private fun graficar(
-        view: View,
-        grafText01: Int, grafText02: Int, grafText03: Int, grafText04: Int,
-        grafText05: Int, grafText06: Int, grafText07: Int, grafText08: Int,
-        grafText09: Int, grafText10: Int, grafText11: Int, grafText12: Int
-    ) {
+    private fun asignarValorPorReflexion(atribString: String, unidSocial: UnidSocial) {
 
-        _binding!!.grafText01.text = grafText01.toString()
-        _binding!!.grafText02.text = grafText02.toString()
-        _binding!!.grafText03.text = grafText03.toString()
-        _binding!!.grafText04.text = grafText04.toString()
-        _binding!!.grafText05.text = grafText05.toString()
-        _binding!!.grafText06.text = grafText06.toString()
-        _binding!!.grafText07.text = grafText07.toString()
-        _binding!!.grafText08.text = grafText08.toString()
-        _binding!!.grafText09.text = grafText09.toString()
-        _binding!!.grafText10.text = grafText10.toString()
-        _binding!!.grafText11.text = grafText11.toString()
-        _binding!!.grafText12.text = grafText12.toString()
+        // Genera el nombre del campo correspondiente al componente visual
+        val capitalizar = if (atribString.startsWith('v')) 'V' else 'M'
+        val nombreCampo = "txt${capitalizar}${atribString.substring(1)}"
 
-        pieChart = view.findViewById(R.id.piechart)
+        // Obtiene el campo del binding utilizando reflexión
+        val field = binding.javaClass.getDeclaredField(nombreCampo)
+        field.isAccessible = true
 
-        pieChart?.clearChart()
-        setData(pieChart)
-        pieChart?.startAnimation()
+        if (field.type == TextView::class.java) {
+            val textView = field.get(binding) as TextView
+
+            // obtengo un objeto Field
+            val valorAtributo = unidSocial.javaClass.getDeclaredField(atribString)
+            valorAtributo.isAccessible = true
+            // utilizar el objeto Field para obtener el valor del atributo en unidSocial.
+            val valor = valorAtributo.get(unidSocial)
+            textView.text = "$atribString: $valor"
+
+            val layoutExiste = textView.parent as LinearLayout
+            layoutExiste.visibility = View.VISIBLE
+        }
     }
 
-    private fun setData(pieChart: PieChart?) {
+    private fun setData2(pieChart: PieChart, atribString: String, unidSocial: UnidSocial) {
 
-        var color = ContextCompat.getColor(requireContext(), R.color.graf_color01)
-        pieChart?.addPieSlice(
+        val valorAtributo = unidSocial.javaClass.getDeclaredField(atribString)
+        valorAtributo.isAccessible = true
+        // utilizar el objeto Field para obtener el valor del atributo en unidSocial.
+        val valor = (valorAtributo.get(unidSocial) as Int).toFloat()
+
+        pieChart.addPieSlice(
             PieModel(
-                _binding!!.grafText01.text.toString().toFloat(),
-                Color.parseColor(String.format("#%06X", 0xFFFFFF and color))
+                valor,
+                Color.parseColor(String.format("#%06X", 0xFFFFFF and siguienteColor()))
             )
         )
+    }
 
-        color = ContextCompat.getColor(requireContext(), R.color.graf_color02)
-        pieChart?.addPieSlice(
-            PieModel(
-                _binding!!.grafText02.text.toString().toFloat(),
-                Color.parseColor(String.format("#%06X", 0xFFFFFF and color))
-            )
+    private fun siguienteColor(): Int {
+
+        val colores = listOf(
+            R.color.clr_v_alfa_s4ad, R.color.clr_v_alfa_sams, R.color.clr_v_hembras_ad,
+            R.color.clr_v_crias, R.color.clr_v_destetados, R.color.clr_v_juveniles,
+            R.color.clr_v_s4ad_perif, R.color.clr_v_s4ad_cerca, R.color.clr_v_s4ad_lejos,
+            R.color.clr_v_otros_sams_perif, R.color.clr_v_otros_sams_cerca, R.color.clr_v_otros_sams_lejos,
+            R.color.clr_m_alfa_s4ad, R.color.clr_m_alfa_sams, R.color.clr_m_hembras_ad,
+            R.color.clr_m_crias, R.color.clr_m_destetados, R.color.clr_m_juveniles,
+            R.color.clr_m_s4ad_perif, R.color.clr_m_s4ad_cerca, R.color.clr_m_s4ad_lejos,
+            R.color.clr_m_otros_sams_perif, R.color.clr_m_otros_sams_cerca, R.color.clr_m_otros_sams_lejos
         )
 
-        color = ContextCompat.getColor(requireContext(), R.color.graf_color03)
-        pieChart?.addPieSlice(
-            PieModel(
-                _binding!!.grafText03.text.toString().toFloat(),
-                Color.parseColor(String.format("#%06X", 0xFFFFFF and color))
-            )
-        )
+        // Filtrar los colores que aún no han sido utilizados
+        val coloresNoUtilizados = colores.filter { !coloresDisponibles.contains(it) }
 
-        color = ContextCompat.getColor(requireContext(), R.color.graf_color04)
-        pieChart?.addPieSlice(
-            PieModel(
-                _binding!!.grafText04.text.toString().toFloat(),
-                Color.parseColor(String.format("#%06X", 0xFFFFFF and color))
-            )
-        )
+        if (coloresNoUtilizados.isEmpty()) {    // si no quedan disponibles
+            coloresDisponibles.clear()
+            return siguienteColor() // Volver a intentar pedir colore
+        }
 
-        color = ContextCompat.getColor(requireContext(), R.color.graf_color05)
-        pieChart?.addPieSlice(
-            PieModel(
-                _binding!!.grafText05.text.toString().toFloat(),
-                Color.parseColor(String.format("#%06X", 0xFFFFFF and color))
-            )
-        )
+        // Obtener un color aleatorio de los colores no utilizados
+        val colorIndex = (coloresNoUtilizados.indices).random()
+        val colorId = coloresNoUtilizados[colorIndex]
+        coloresDisponibles.add(colorId)
 
-        color = ContextCompat.getColor(requireContext(), R.color.graf_color06)
-        pieChart?.addPieSlice(
-            PieModel(
-                _binding!!.grafText06.text.toString().toFloat(),
-                Color.parseColor(String.format("#%06X", 0xFFFFFF and color))
-            )
-        )
-
-        color = ContextCompat.getColor(requireContext(), R.color.graf_color07)
-        pieChart?.addPieSlice(
-            PieModel(
-                _binding!!.grafText07.text.toString().toFloat(),
-                Color.parseColor(String.format("#%06X", 0xFFFFFF and color))
-            )
-        )
-
-        color = ContextCompat.getColor(requireContext(), R.color.graf_color08)
-        pieChart?.addPieSlice(
-            PieModel(
-                _binding!!.grafText08.text.toString().toFloat(),
-                Color.parseColor(String.format("#%06X", 0xFFFFFF and color))
-            )
-        )
-
-        color = ContextCompat.getColor(requireContext(), R.color.graf_color09)
-        pieChart?.addPieSlice(
-            PieModel(
-                _binding!!.grafText09.text.toString().toFloat(),
-                Color.parseColor(String.format("#%06X", 0xFFFFFF and color))
-            )
-        )
-
-        color = ContextCompat.getColor(requireContext(), R.color.graf_color10)
-        pieChart?.addPieSlice(
-            PieModel(
-                _binding!!.grafText10.text.toString().toFloat(),
-                Color.parseColor(String.format("#%06X", 0xFFFFFF and color))
-            )
-        )
-
-        color = ContextCompat.getColor(requireContext(), R.color.graf_color11)
-        pieChart?.addPieSlice(
-            PieModel(
-                _binding!!.grafText11.text.toString().toFloat(),
-                Color.parseColor(String.format("#%06X", 0xFFFFFF and color))
-            )
-        )
-
-        color = ContextCompat.getColor(requireContext(), R.color.graf_color12)
-        pieChart?.addPieSlice(
-            PieModel(
-                _binding!!.grafText12.text.toString().toFloat(),
-                Color.parseColor(String.format("#%06X", 0xFFFFFF and color))
-            )
-        )
+        return ContextCompat.getColor(requireContext(), colorId)
     }
 
     private fun goBack() {

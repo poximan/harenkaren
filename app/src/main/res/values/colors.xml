@@ -20,16 +20,29 @@
     <color name="color_white">#ededf2</color>
     <color name="color_two">#E3E0E0</color>
 
-    <color name="graf_color01">#FFA726</color>
-    <color name="graf_color02">#66BB6A</color>
-    <color name="graf_color03">#EF5350</color>
-    <color name="graf_color04">#29B6F6</color>
-    <color name="graf_color05">#FFC0CB</color>
-    <color name="graf_color06">#FAD201</color>
-    <color name="graf_color07">#20214F</color>
-    <color name="graf_color08">#FF5733</color>
-    <color name="graf_color09">#33FF57</color>
-    <color name="graf_color10">#5733FF</color>
-    <color name="graf_color11">#33FFEC</color>
-    <color name="graf_color12">#FF3333</color>
+    <color name="clr_v_alfa_s4ad">#FFA726</color>
+    <color name="clr_v_alfa_sams">#66BB6A</color>
+    <color name="clr_v_hembras_ad">#EF5350</color>
+    <color name="clr_v_crias">#29B6F6</color>
+    <color name="clr_v_destetados">#FFC0CB</color>
+    <color name="clr_v_juveniles">#FAD201</color>
+    <color name="clr_v_s4ad_perif">#20214F</color>
+    <color name="clr_v_s4ad_cerca">#FF5733</color>
+    <color name="clr_v_s4ad_lejos">#33FF57</color>
+    <color name="clr_v_otros_sams_perif">#5733FF</color>
+    <color name="clr_v_otros_sams_cerca">#33FFEC</color>
+    <color name="clr_v_otros_sams_lejos">#FF3333</color>
+
+    <color name="clr_m_alfa_s4ad">#292f56</color>
+    <color name="clr_m_alfa_sams">#382c68</color>
+    <color name="clr_m_hembras_ad">#582e7c</color>
+    <color name="clr_m_crias">#842f90</color>
+    <color name="clr_m_destetados">#a62e8d</color>
+    <color name="clr_m_juveniles">#bd2d6e</color>
+    <color name="clr_m_s4ad_perif">#d52a3e</color>
+    <color name="clr_m_s4ad_cerca">#df5b36</color>
+    <color name="clr_m_s4ad_lejos">#e79e43</color>
+    <color name="clr_m_otros_sams_perif">#efde51</color>
+    <color name="clr_m_otros_sams_cerca">#d3f560</color>
+    <color name="clr_m_otros_sams_lejos">#acfa70</color>
 </resources>
