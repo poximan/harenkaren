@@ -47,8 +47,8 @@ class RecorrListAdapter(
             observador.text = "Observador: " + recorrido.observador
             area.text = "Area recorrida: " + recorrido.areaRecorrida
             meteo.text = "Condicion climatica: " + recorrido.meteo
-            marea.text = "Condicion climatica: " + recorrido.marea
-            fecha.text = "Fecha inicio: " + recorrido.fechaIni
+            marea.text = "Estado de la marea: " + recorrido.marea
+            fecha.text = "Hora inicio: " + recorrido.fechaIni
         }
     }
 

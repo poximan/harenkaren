@@ -20,8 +20,8 @@ class UnSocRepository(private val dao: UnSocDAO) {
         return dao.getUnSocById(id)
     }
 
-    fun readConFK(id: Int): LiveData<List<UnidSocial>> {
-        val listaIntermedia = dao.getUnSocByRecorrId(id)
+    fun readConFK(idRecorr: Int): LiveData<List<UnidSocial>> {
+        val listaIntermedia = dao.getUnSocByRecorrId(idRecorr)
         return convertirAData(listaIntermedia)
     }
 

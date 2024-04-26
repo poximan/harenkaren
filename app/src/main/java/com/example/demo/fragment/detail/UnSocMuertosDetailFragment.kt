@@ -3,6 +3,7 @@ package com.example.demo.fragment.detail
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,6 +39,30 @@ class UnSocMuertosDetailFragment() : Fragment() {
     ): View {
         _binding = FragmentUnsocMuertosBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        try {
+            outState.putParcelable("unSocEditable", unSocEditable)
+        } catch (e: UninitializedPropertyAccessException){
+            Log.i("estadoRotacion","falso positivo para UninitializedPropertyAccessException en ${toString()}." +
+                    " por rotacion de pantalla + criterio de anticipacion TabLayout/ViewPager que pretende salvar datos" +
+                    " antes que entre en RUN el fragmento contenedor")
+        }
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        savedInstanceState?.let {
+            try {
+                unSocEditable = it.getParcelable("unSocEditable")!!
+            } catch (e: NullPointerException){
+                Log.i("estadoRotacion","falso positivo para NullPointerException en ${toString()}." +
+                        " por rotacion de pantalla + criterio de anticipacion TabLayout/ViewPager que pretende recuperar datos" +
+                        " antes que entre en RUN el fragmento contenedor")
+            }
+        }
     }
 
     private fun cargarDatos() {

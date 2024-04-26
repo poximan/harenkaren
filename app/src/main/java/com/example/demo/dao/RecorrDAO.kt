@@ -9,6 +9,7 @@ import androidx.room.Transaction
 import androidx.room.Update
 import com.example.demo.model.EntidadesPlanas
 import com.example.demo.model.Recorrido
+import com.example.demo.model.UnidSocial
 import java.util.UUID
 
 @Dao
@@ -16,6 +17,9 @@ interface RecorrDAO {
 
     @Query("SELECT * from recorrido ORDER BY id DESC")
     fun getAll(): LiveData<List<Recorrido>>
+
+    @Query("SELECT * FROM recorrido WHERE recorrido.id = :id")
+    fun getRecorrById(id: Int): Recorrido
 
     @Transaction
     @Query("SELECT * FROM recorrido WHERE recorrido.id_dia = :idDia")

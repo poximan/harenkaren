@@ -71,7 +71,7 @@ class UnSocPagerAdapter(
     private fun colectar(position: Int, mapaActual: Map<String, Any>) {
 
         val instante = String.format("%02d", Calendar.getInstance().get(Calendar.SECOND))
-        Log.i("notimap", "${instante}: carga de datos desde solapa ${getPageTitle(position)}")
+        Log.i("pagerAdapter", "${instante}: carga de datos desde solapa ${getPageTitle(position)}")
 
         when (position) {
             0 -> {
