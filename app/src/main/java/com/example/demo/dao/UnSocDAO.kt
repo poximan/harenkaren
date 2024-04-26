@@ -120,7 +120,7 @@ interface UnSocDAO {
             "JOIN\n" +
             "   dia ON recorrido.id_dia = dia.id\n" +
             "WHERE \n" +
-            "   dia.id = :idDia")
+            "   dia.cont_instancias = :idDia")
     fun getTotalByDiaId(idDia: Int): UnidSocial
 
     @Query("SELECT \n" +

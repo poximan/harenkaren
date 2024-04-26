@@ -14,7 +14,6 @@ import kotlinx.coroutines.launch
 class DiaViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository: DiaRepository
-
     val allDia: LiveData<List<Dia>>
 
     init {

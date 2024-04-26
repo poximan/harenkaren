@@ -50,421 +50,426 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </androidx.cardview.widget.CardView>
-        <LinearLayout
-            android:id="@+id/linearMitad"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:layout_weight="1">
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone">
-
-                <View
-                    android:layout_width="20dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/clr_v_alfa_s4ad" />
-
-                <TextView
-                    android:id="@+id/txt_vAlfaS4Ad"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
-                    android:hint="alfa S4/Ad" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
-
-                <View
-                    android:layout_width="20dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/clr_v_alfa_sams" />
-
-                <TextView
-                    android:id="@+id/txt_vAlfaSams"
+                android:orientation="vertical">
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
-                    android:text="alfa otros SA" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
+                    android:visibility="gone">
 
-                <View
-                    android:layout_width="20dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/clr_v_hembras_ad" />
+                    <View
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/clr_v_alfa_s4ad" />
 
-                <TextView
-                    android:id="@+id/txt_vHembrasAd"
+                    <TextView
+                        android:id="@+id/txt_vAlfaS4Ad"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:hint="alfa S4/Ad" />
+                </LinearLayout>
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
-                    android:text="hembra Ad" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
+                    android:visibility="gone">
 
-                <View
-                    android:layout_width="20dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/clr_v_crias" />
+                    <View
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/clr_v_alfa_sams" />
 
-                <TextView
-                    android:id="@+id/txt_vCrias"
+                    <TextView
+                        android:id="@+id/txt_vAlfaSams"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:text="alfa otros SA" />
+                </LinearLayout>
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
-                    android:text="cria" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
+                    android:visibility="gone">
 
-                <View
-                    android:layout_width="20dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/clr_v_destetados" />
+                    <View
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/clr_v_hembras_ad" />
 
-                <TextView
-                    android:id="@+id/txt_vDestetados"
+                    <TextView
+                        android:id="@+id/txt_vHembrasAd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:text="hembra Ad" />
+                </LinearLayout>
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
-                    android:text="destetado" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
+                    android:visibility="gone">
 
-                <View
-                    android:layout_width="20dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/clr_v_juveniles" />
+                    <View
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/clr_v_crias" />
 
-                <TextView
-                    android:id="@+id/txt_vJuveniles"
+                    <TextView
+                        android:id="@+id/txt_vCrias"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:text="cria" />
+                </LinearLayout>
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
-                    android:text="juvenil" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
+                    android:visibility="gone">
 
-                <View
-                    android:layout_width="20dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/clr_v_s4ad_perif" />
+                    <View
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/clr_v_destetados" />
 
-                <TextView
-                    android:id="@+id/txt_vS4AdPerif"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
-                    android:text="S4/Ad Perif" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
-
-                <View
-                    android:layout_width="20dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/clr_v_s4ad_cerca" />
-
-                <TextView
-                    android:id="@+id/txt_vS4AdCerca"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
-                    android:text="S4/Ad Cerca" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
-
-                <View
-                    android:layout_width="20dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/clr_v_s4ad_lejos" />
-
-                <TextView
-                    android:id="@+id/txt_vS4AdLejos"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
-                    android:text="S4/Ad Lejos" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
-
-                <View
-                    android:layout_width="20dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/clr_v_otros_sams_perif" />
-
-                <TextView
-                    android:id="@+id/txt_vOtrosSamsPerif"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
-                    android:text="otros SA Perif" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
-
-                <View
-                    android:layout_width="20dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/clr_v_otros_sams_cerca" />
-
-                <TextView
-                    android:id="@+id/txt_vOtrosSamsCerca"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
-                    android:text="otros SA Cerca" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
-
-                <View
-                    android:layout_width="20dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/clr_v_otros_sams_lejos" />
-
-                <TextView
-                    android:id="@+id/txt_vOtrosSamsLejos"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
-                    android:text="otros SA Lejos" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
-
-                <View
-                    android:layout_width="20dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/clr_m_alfa_s4ad" />
-
-                <TextView
-                    android:id="@+id/txt_mAlfaS4Ad"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
-                    android:hint="alfa S4/Ad" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
-
-                <View
-                    android:layout_width="20dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/clr_m_alfa_sams" />
-
-                <TextView
-                    android:id="@+id/txt_mAlfaSams"
+                    <TextView
+                        android:id="@+id/txt_vDestetados"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:text="destetado" />
+                </LinearLayout>
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
-                    android:text="alfa otros SA" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
+                    android:visibility="gone">
 
-                <View
-                    android:layout_width="20dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/clr_m_hembras_ad" />
+                    <View
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/clr_v_juveniles" />
 
-                <TextView
-                    android:id="@+id/txt_mHembrasAd"
+                    <TextView
+                        android:id="@+id/txt_vJuveniles"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:text="juvenil" />
+                </LinearLayout>
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
-                    android:text="hembra Ad" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
+                    android:visibility="gone">
 
-                <View
-                    android:layout_width="20dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/clr_m_crias" />
+                    <View
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/clr_v_s4ad_perif" />
 
-                <TextView
-                    android:id="@+id/txt_mCrias"
+                    <TextView
+                        android:id="@+id/txt_vS4AdPerif"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:text="S4/Ad Perif" />
+                </LinearLayout>
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
-                    android:text="cria" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
+                    android:visibility="gone">
 
-                <View
-                    android:layout_width="20dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/clr_m_destetados" />
+                    <View
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/clr_v_s4ad_cerca" />
 
-                <TextView
-                    android:id="@+id/txt_mDestetados"
+                    <TextView
+                        android:id="@+id/txt_vS4AdCerca"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:text="S4/Ad Cerca" />
+                </LinearLayout>
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
-                    android:text="destetado" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
+                    android:visibility="gone">
 
-                <View
-                    android:layout_width="20dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/clr_m_juveniles" />
+                    <View
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/clr_v_s4ad_lejos" />
 
-                <TextView
-                    android:id="@+id/txt_mJuveniles"
+                    <TextView
+                        android:id="@+id/txt_vS4AdLejos"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:text="S4/Ad Lejos" />
+                </LinearLayout>
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
-                    android:text="juvenil" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
+                    android:visibility="gone">
 
-                <View
-                    android:layout_width="20dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/clr_m_s4ad_perif" />
+                    <View
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/clr_v_otros_sams_perif" />
 
-                <TextView
-                    android:id="@+id/txt_mS4AdPerif"
-                    android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/txt_vOtrosSamsPerif"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:text="otros SA Perif" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
-                    android:text="S4/Ad Perif" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
+                    android:visibility="gone">
 
-                <View
-                    android:layout_width="20dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/clr_m_s4ad_cerca" />
+                    <View
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/clr_v_otros_sams_cerca" />
 
-                <TextView
-                    android:id="@+id/txt_mS4AdCerca"
-                    android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/txt_vOtrosSamsCerca"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:text="otros SA Cerca" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
-                    android:text="S4/Ad Cerca" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
+                    android:visibility="gone">
 
-                <View
-                    android:layout_width="20dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/clr_m_s4ad_lejos" />
+                    <View
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/clr_v_otros_sams_lejos" />
 
-                <TextView
-                    android:id="@+id/txt_mS4AdLejos"
-                    android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/txt_vOtrosSamsLejos"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:text="otros SA Lejos" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
-                    android:text="S4/Ad Lejos" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
+                    android:visibility="gone">
 
-                <View
-                    android:layout_width="20dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/clr_m_otros_sams_perif" />
+                    <View
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/clr_m_alfa_s4ad" />
 
-                <TextView
-                    android:id="@+id/txt_mOtrosSamsPerif"
-                    android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/txt_mAlfaS4Ad"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:hint="alfa S4/Ad" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
-                    android:text="otros SA Perif" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
+                    android:visibility="gone">
 
-                <View
-                    android:layout_width="20dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/clr_m_otros_sams_cerca" />
+                    <View
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/clr_m_alfa_sams" />
 
-                <TextView
-                    android:id="@+id/txt_mOtrosSamsCerca"
-                    android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/txt_mAlfaSams"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:text="alfa otros SA" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
-                    android:text="otros SA Cerca" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
+                    android:visibility="gone">
 
-                <View
-                    android:layout_width="20dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/clr_m_otros_sams_lejos" />
+                    <View
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/clr_m_hembras_ad" />
 
-                <TextView
-                    android:id="@+id/txt_mOtrosSamsLejos"
-                    android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/txt_mHembrasAd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:text="hembra Ad" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
-                    android:text="otros SA Lejos" />
+                    android:visibility="gone">
+
+                    <View
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/clr_m_crias" />
+
+                    <TextView
+                        android:id="@+id/txt_mCrias"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:text="cria" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+
+                    <View
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/clr_m_destetados" />
+
+                    <TextView
+                        android:id="@+id/txt_mDestetados"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:text="destetado" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+
+                    <View
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/clr_m_juveniles" />
+
+                    <TextView
+                        android:id="@+id/txt_mJuveniles"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:text="juvenil" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+
+                    <View
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/clr_m_s4ad_perif" />
+
+                    <TextView
+                        android:id="@+id/txt_mS4AdPerif"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:text="S4/Ad Perif" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+
+                    <View
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/clr_m_s4ad_cerca" />
+
+                    <TextView
+                        android:id="@+id/txt_mS4AdCerca"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:text="S4/Ad Cerca" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+
+                    <View
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/clr_m_s4ad_lejos" />
+
+                    <TextView
+                        android:id="@+id/txt_mS4AdLejos"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:text="S4/Ad Lejos" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+
+                    <View
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/clr_m_otros_sams_perif" />
+
+                    <TextView
+                        android:id="@+id/txt_mOtrosSamsPerif"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:text="otros SA Perif" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+
+                    <View
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/clr_m_otros_sams_cerca" />
+
+                    <TextView
+                        android:id="@+id/txt_mOtrosSamsCerca"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:text="otros SA Cerca" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+
+                    <View
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/clr_m_otros_sams_lejos" />
+
+                    <TextView
+                        android:id="@+id/txt_mOtrosSamsLejos"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:text="otros SA Lejos" />
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
+        </ScrollView>
+
         <Button
             android:id="@+id/goBackButton"
             android:layout_width="wrap_content"

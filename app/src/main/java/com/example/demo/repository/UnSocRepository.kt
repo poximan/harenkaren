@@ -42,5 +42,9 @@ class UnSocRepository(private val dao: UnSocDAO) {
         liveData.postValue(list)
         return liveData
     }
+
+    fun readAsynConFK(idRecorr: Int): List<UnidSocial> {
+        return dao.getUnSocByRecorrId(idRecorr)
+    }
 }
 

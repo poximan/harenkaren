@@ -43,11 +43,6 @@ class DevFragment : Fragment() {
         return binding.root
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.regulation_filter_menu, menu)
-        menu.findItem(R.id.regulation_action_filter)
-    }
-
     private fun altaUsuario() {
         val viewModelScope = viewLifecycleOwner.lifecycleScope
 

@@ -10,6 +10,7 @@ import com.example.demo.repository.UnSocRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class UnSocViewModel(application: Application) : AndroidViewModel(application){
 
@@ -20,7 +21,6 @@ class UnSocViewModel(application: Application) : AndroidViewModel(application){
         val unSocDao = HarenKarenRoomDatabase
             .getDatabase(application, viewModelScope).unSocDao()
         repository = UnSocRepository(unSocDao)
-
         allUnSoc = repository.unSocListAll
     }
     fun insert(unidSocial: UnidSocial) = CoroutineScope(Dispatchers.IO).launch(Dispatchers.IO) {
@@ -49,6 +49,15 @@ class UnSocViewModel(application: Application) : AndroidViewModel(application){
 
     fun readSumTotal(): UnidSocial {
         return repository.readSumTotal()
+    }
+
+    fun readAsynConFK(idRecorr: Int, callback: (List<UnidSocial>) -> Unit) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val result = repository.readAsynConFK(idRecorr)
+            withContext(Dispatchers.Main) {
+                callback(result)
+            }
+        }
     }
 }
 

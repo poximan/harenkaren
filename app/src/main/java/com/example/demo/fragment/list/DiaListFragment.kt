@@ -118,7 +118,7 @@ class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
         val texto: String = when (diaViewModel.allDia.value?.size){
             0 -> "Aun no has agregado ningun dia, y por lo tanto la lista esta vacia. Hacé click en (+) para agregarlo"
             1 -> "Ahora hay un solo dia dado de alta. Cuando agregues mas, notaras la lista. Hace click en el dia" +
-                    "existente para administrar sus recorridos"
+                    " existente para administrar sus recorridos"
             else -> { "Hace click en la fila que representa el dia de interes, para poder continuar a su detalle. " +
                     "Allí podrás adminstrar los recorridos asociados a la fecha que seleccionaste"}
         }
