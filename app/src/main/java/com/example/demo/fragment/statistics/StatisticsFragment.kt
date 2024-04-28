@@ -24,6 +24,7 @@ import kotlinx.coroutines.withContext
 import org.eazegraph.lib.charts.PieChart
 import org.eazegraph.lib.models.PieModel
 import com.example.demo.databinding.FragmentStatisticsBinding
+import com.example.demo.exception.NoExisteRegistroException
 import com.example.demo.model.UnidSocial
 
 class StatisticsFragment : Fragment() {
@@ -76,13 +77,7 @@ class StatisticsFragment : Fragment() {
         CoroutineScope(Dispatchers.IO).launch {
             val resultado = viewModel.readUnico(binding.granulOrden.text.toString().toInt())
             withContext(Dispatchers.Main) {
-                try {
-                    view?.let {
-                        graficar(it, resultado)
-                    }
-                } catch (e: NullPointerException) {
-                    Toast.makeText(activity, "No existe registro, verificar {#}", Toast.LENGTH_LONG).show()
-                }
+                tratarResultado(resultado)
             }
         }
     }
@@ -92,9 +87,7 @@ class StatisticsFragment : Fragment() {
         CoroutineScope(Dispatchers.IO).launch {
             val resultado = viewModel.readSumRecorr(binding.granulOrden.text.toString().toInt())
             withContext(Dispatchers.Main) {
-                view?.let {
-                    graficar(it, resultado)
-                }
+                tratarResultado(resultado)
             }
         }
     }
@@ -104,9 +97,7 @@ class StatisticsFragment : Fragment() {
         CoroutineScope(Dispatchers.IO).launch {
             val resultado = viewModel.readSumDia(binding.granulOrden.text.toString().toInt())
             withContext(Dispatchers.Main) {
-                view?.let {
-                    graficar(it, resultado)
-                }
+                tratarResultado(resultado)
             }
         }
     }
@@ -116,10 +107,20 @@ class StatisticsFragment : Fragment() {
         CoroutineScope(Dispatchers.IO).launch {
             val resultado = viewModel.readSumTotal()
             withContext(Dispatchers.Main) {
-                view?.let {
-                    graficar(it, resultado)
-                }
+                tratarResultado(resultado)
             }
+        }
+    }
+
+    private fun tratarResultado(resultado: UnidSocial) {
+        try {
+            view?.let {
+                if (resultado == null)
+                    throw NoExisteRegistroException()
+                graficar(it, resultado)
+            }
+        } catch (e: NoExisteRegistroException) {
+            Toast.makeText(activity, "No existe registro, verificar {#}", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -136,7 +137,7 @@ class StatisticsFragment : Fragment() {
         val contadoresNoNulos = unidSocial.getContadoresNoNulos()
         for (atribString in contadoresNoNulos) {
             asignarValorPorReflexion(atribString, unidSocial)
-            setData2(pieChart, atribString, unidSocial)
+            setData(pieChart, atribString, unidSocial)
         }
 
         pieChart.startAnimation()
@@ -183,7 +184,7 @@ class StatisticsFragment : Fragment() {
         }
     }
 
-    private fun setData2(pieChart: PieChart, atribString: String, unidSocial: UnidSocial) {
+    private fun setData(pieChart: PieChart, atribString: String, unidSocial: UnidSocial) {
 
         val valorAtributo = unidSocial.javaClass.getDeclaredField(atribString)
         valorAtributo.isAccessible = true

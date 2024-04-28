@@ -88,12 +88,6 @@ class UnSocListAdapter(
         }
     }
 
-    override fun getItemCount() = unidSocialList.size
-
-    interface OnUnSocClickListener {
-        fun onItemClick(elem: UnidSocial)
-    }
-
     fun armarResumen(unidSocial: UnidSocial): String {
         return buildString {
             append("Gral --> ")
@@ -116,7 +110,9 @@ class UnSocListAdapter(
             if (unidSocial.vOtrosSamsPerif > 0) append("*Ot.Sams Perif.: ${unidSocial.vOtrosSamsPerif} ")
             if (unidSocial.vOtrosSamsCerca > 0) append("*Ot.Sams Cerca: ${unidSocial.vOtrosSamsCerca} ")
             if (unidSocial.vOtrosSamsLejos > 0) append("*Ot.Sams Lejos: ${unidSocial.vOtrosSamsLejos} ")
-            append("\n")
+            if (endsWith("vivos --> ")) {
+                delete(length - "vivos --> ".length, length)
+            } else append("\n")
 
             append("muertos --> ")
             if (unidSocial.mAlfaS4Ad > 0) append("*AlfaS4/Ad: ${unidSocial.mAlfaS4Ad} ")
@@ -131,9 +127,17 @@ class UnSocListAdapter(
             if (unidSocial.mOtrosSamsPerif > 0) append("*Ot.Sams Perif.: ${unidSocial.mOtrosSamsPerif} ")
             if (unidSocial.mOtrosSamsCerca > 0) append("*Ot.Sams Cerca: ${unidSocial.mOtrosSamsCerca} ")
             if (unidSocial.mOtrosSamsLejos > 0) append("*Ot.Sams Lejos: ${unidSocial.mOtrosSamsLejos} ")
-            append("\n\n")
+            if (endsWith("muertos --> ")) {
+                delete(length - "muertos --> ".length, length)
+            } else append("\n")
 
             if (unidSocial.comentario?.isNotEmpty() == true) append("*Comentario: ${unidSocial.comentario}")
         }
+    }
+
+    override fun getItemCount() = unidSocialList.size
+
+    interface OnUnSocClickListener {
+        fun onItemClick(elem: UnidSocial)
     }
 }

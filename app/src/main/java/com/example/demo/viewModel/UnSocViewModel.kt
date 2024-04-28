@@ -52,6 +52,10 @@ class UnSocViewModel(application: Application) : AndroidViewModel(application){
         return repository.readUnico(idUnSoc)
     }
 
+    fun getMaxRegistro(idRecorr: Int): Int {
+        return repository.getMaxRegistro(idRecorr)
+    }
+
     fun readSumRecorr(id: Int): UnidSocial {
         return repository.readSumUnSocByRecorrId(id)
     }

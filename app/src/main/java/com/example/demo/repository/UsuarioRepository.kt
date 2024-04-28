@@ -2,7 +2,7 @@ package com.example.demo.repository
 
 import com.example.demo.dao.UsuarioDAO
 import com.example.demo.exception.MultipleUsuarioException
-import com.example.demo.exception.NoExiteUsuarioException
+import com.example.demo.exception.NoExisteUsuarioException
 import com.example.demo.model.Usuario
 
 class UsuarioRepository(private val dao: UsuarioDAO) {
@@ -18,7 +18,7 @@ class UsuarioRepository(private val dao: UsuarioDAO) {
         val usuarioBD = dao.getUsuario(email, pass)
 
         if(usuarioBD.isEmpty())
-            throw NoExiteUsuarioException()
+            throw NoExisteUsuarioException()
 
         if(usuarioBD.count() > 1)
             throw MultipleUsuarioException()

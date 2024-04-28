@@ -23,6 +23,17 @@ interface UnSocDAO {
     @Query("SELECT * FROM unidsocial WHERE unidsocial.id = :idUnSoc")
     fun getUnSocById(idUnSoc: Int): UnidSocial
 
+    @Query("SELECT MAX(total) AS maximo_total FROM (\n" +
+            "    SELECT \n" +
+            "        v_alfa_s4ad + v_alfa_sams + v_hembras_ad + v_crias + v_destetados + v_juveniles +\n" +
+            "        v_s4ad_perif + v_s4ad_cerca + v_s4ad_lejos + v_otros_sams_perif + v_otros_sams_cerca + v_otros_sams_lejos +\n" +
+            "        m_alfa_s4ad + m_alfa_sams + m_hembras_ad + m_crias + m_destetados + m_juveniles +\n" +
+            "        m_s4ad_perif + m_s4ad_cerca + m_s4ad_lejos + m_otros_sams_perif + m_otros_sams_cerca + m_otros_sams_lejos AS total\n" +
+            "    FROM unidsocial\n" +
+            "    WHERE id_recorrido = :idRecorr\n" +
+            "    )")
+    fun getMaxRegistro(idRecorr: Int): Int
+
     /*
     cuando se da de alta una entidad que existe en otro dispositivo y fue
     importada a este mediante una herramienta de transferencia, se debe
@@ -82,7 +93,7 @@ interface UnSocDAO {
             "JOIN\n" +
             "   recorrido ON unidsocial.id_recorrido = recorrido.id\n" +
             "WHERE \n" +
-            "   recorrido.id = :idRecorr")
+            "   unidsocial.id_recorrido = :idRecorr")
     fun getSumUnSocByRecorrId(idRecorr: Int): UnidSocial
 
     @Query("SELECT \n" +

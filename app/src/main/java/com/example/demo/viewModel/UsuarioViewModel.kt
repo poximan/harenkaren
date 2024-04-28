@@ -5,7 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.demo.database.HarenKarenRoomDatabase
 import com.example.demo.exception.MultipleUsuarioException
-import com.example.demo.exception.NoExiteUsuarioException
+import com.example.demo.exception.NoExisteUsuarioException
 import com.example.demo.fragment.login.UsuarioCallback
 import com.example.demo.model.Usuario
 import com.example.demo.repository.UsuarioRepository
@@ -36,7 +36,7 @@ class UsuarioViewModel(application: Application) : AndroidViewModel(application)
             repository.login(email, password)
             callback.onLoginSuccess()
         }
-        catch (e: NoExiteUsuarioException){
+        catch (e: NoExisteUsuarioException){
             callback.onLoginFailure("No se encontraron coincidencias para {email, contraseña}")
         }
         catch (e: MultipleUsuarioException){

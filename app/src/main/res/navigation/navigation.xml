@@ -210,8 +210,29 @@
                     <action
                         android:id="@+id/goToNewUnSocFromUnSocListAction"
                         app:destination="@id/unsoc_add_fragment" />
+                    <action
+                        android:id="@+id/goToModoGrafico"
+                        app:destination="@id/unsoc_listgraf_fragment" />
                 </fragment>
 
+                <fragment
+                    android:id="@+id/unsoc_listgraf_fragment"
+                    android:name="com.example.demo.fragment.list.UnSocListGrafFragment"
+                    android:label="Registros"
+                    tools:layout="@layout/fragment_unsoc_list_graf">
+                    <argument
+                        android:name="idRecorrido"
+                        app:argType="integer" />
+                    <action
+                        android:id="@+id/goToUnSocDetailFromUnSocListAction"
+                        app:destination="@id/unsoc_detail_fragment" />
+                    <action
+                        android:id="@+id/goToNewUnSocFromUnSocListAction"
+                        app:destination="@id/unsoc_add_fragment" />
+                    <action
+                        android:id="@+id/goToModoTexto"
+                        app:destination="@id/unsoc_list_fragment" />
+                </fragment>
                 <fragment
                     android:id="@+id/unsoc_add_fragment"
                     android:name="com.example.demo.fragment.add.UnSocAddFragment"

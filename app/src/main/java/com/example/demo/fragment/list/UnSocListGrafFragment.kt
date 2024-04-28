@@ -10,29 +10,33 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.findViewTreeViewModelStoreOwner
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.navGraphViewModels
-import androidx.recyclerview.widget.RecyclerView
 import com.example.demo.R
-import com.example.demo.adapter.UnSocListAdapter
-import com.example.demo.databinding.FragmentUnsocListBinding
+import com.example.demo.adapter.UnSocListGrafAdapter
+import com.example.demo.databinding.FragmentUnsocListGrafBinding
 import com.example.demo.model.UnidSocial
 import com.example.demo.viewModel.UnSocViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.eazegraph.lib.charts.StackedBarChart
 
-class UnSocListFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
+class UnSocListGrafFragment : Fragment(){
 
     private val unSocViewModel: UnSocViewModel by navGraphViewModels(R.id.app_navigation)
     private val args: UnSocListFragmentArgs by navArgs()
 
-    private var _binding: FragmentUnsocListBinding? = null
+    private var _binding: FragmentUnsocListGrafBinding? = null
     private val binding get() = _binding!!
-    private lateinit var unSocList: RecyclerView
+
+    private lateinit var stackchart: StackedBarChart
+    private var graficoEscalado = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,21 +44,23 @@ class UnSocListFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
     ): View {
 
         setHasOptionsMenu(true)
-        _binding = FragmentUnsocListBinding.inflate(inflater, container, false)
+        _binding = FragmentUnsocListGrafBinding.inflate(inflater, container, false)
+        stackchart = binding.stackchart
 
         binding.homeActionButton.setOnClickListener { goHome() }
         binding.newUnsocButton.setOnClickListener { nuevaUnidadSocial() }
         binding.cambiarActionButton.setOnClickListener { cambiarVista() }
 
-        unSocList = binding.listUnSoc
-        loadFullList()
+        stackchart.setOnClickListener { escalarGrafico() }
 
+        loadFullList()
         return binding.root
     }
 
-    override fun onItemClick(elem: UnidSocial) {
-        val action = UnSocListFragmentDirections.goToUnSocDetailFromUnSocListAction(elem)
-        findNavController().navigate(action)
+    private fun escalarGrafico() {
+        graficoEscalado = !graficoEscalado
+        Toast.makeText(activity, "escala entre barras " + if(graficoEscalado) "activado" else "desactivado" , Toast.LENGTH_LONG).show()
+        loadFullList()
     }
 
     private fun goHome() {
@@ -67,7 +73,7 @@ class UnSocListFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
     }
 
     private fun cambiarVista() {
-        var action = UnSocListFragmentDirections.goToModoGrafico(args.idRecorrido)
+        var action = UnSocListGrafFragmentDirections.goToModoTexto(args.idRecorrido)
         findNavController().navigate(action)
     }
 
@@ -139,16 +145,18 @@ class UnSocListFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
 
     private fun loadFullList() {
 
-        val unSocAdapter = UnSocListAdapter(this)
-        unSocList.adapter = unSocAdapter
+        val unSocAdapter = UnSocListGrafAdapter(requireContext())
 
         CoroutineScope(Dispatchers.IO).launch {
             val unSocListAsync = unSocViewModel.readConFK(args.idRecorrido)
+            val total = if(graficoEscalado) unSocViewModel.getMaxRegistro(args.idRecorrido)
+            else 0
+
             withContext(Dispatchers.Main) {
                 unSocListAsync.observe(
                     viewLifecycleOwner
                 ) { elem ->
-                    elem?.let {unSocAdapter.setUnSoc(it) }
+                    elem?.let {unSocAdapter.setUnSoc(it, stackchart, total) }
                 }
             }
         }
@@ -156,17 +164,18 @@ class UnSocListFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
 
     private fun loadListWithDate(date: String) {
 
-        val unSocAdapter = UnSocListAdapter(this)
-        unSocList.adapter = unSocAdapter
+        val unSocAdapter = UnSocListGrafAdapter(requireContext())
 
         CoroutineScope(Dispatchers.IO).launch {
             val unSocListAsync = unSocViewModel.readConFK(args.idRecorrido)
+            val total = unSocViewModel.getMaxRegistro(args.idRecorrido)
+
             withContext(Dispatchers.Main) {
                 unSocListAsync.observe(
                     viewLifecycleOwner
                 ) { unSocList ->
                     val filteredList = remove(unSocList, date)
-                    unSocList?.let { unSocAdapter.setUnSoc(filteredList) }
+                    unSocList?.let { unSocAdapter.setUnSoc(filteredList, stackchart, total) }
                 }
             }
         }

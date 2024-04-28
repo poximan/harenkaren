@@ -30,14 +30,18 @@ class DiaAddFragment : Fragment() {
     ): View {
 
         _binding = FragmentDiaAddBinding.inflate(inflater, container, false)
-        val view = binding.root
-
         model = ViewModelProvider(this)[DiaViewModel::class.java]
 
         binding.confirmarDiaButton.setOnClickListener { confirmarDia() }
-        return view
+        return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.textDia.text = "Haste este momento, la vista de alta de nuevo dia no posee datos adicionales." +
+                " De seguir asi, esta pantalla desaparecerá. Por el momento se deja" +
+                " preventivamente, en caso que se requiera agregar datos durante el alta de un nuevo dia"
+    }
     private fun confirmarDia() {
 
         val dia = dataDesdeIU()
