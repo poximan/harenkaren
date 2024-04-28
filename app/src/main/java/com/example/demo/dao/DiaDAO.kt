@@ -47,14 +47,14 @@ interface DiaDAO {
     */
     private fun insertConUltInst(elem: Dia) {
         val ultimaInstancia = getUltimaInstancia() ?: 0
-        elem.contadorInstancias = ultimaInstancia + 1
+        elem.orden = ultimaInstancia + 1
         insert(elem)
     }
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(elem: Dia)
 
-    @Query("SELECT MAX(cont_instancias) FROM dia")
+    @Query("SELECT MAX(orden) FROM dia")
     fun getUltimaInstancia(): Int?
 
     @Query("DELETE FROM dia")

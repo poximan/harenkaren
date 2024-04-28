@@ -8,12 +8,12 @@ import java.util.UUID
 data class EntidadesPlanas(
     val celular_id: String,
     val dia_id: UUID,
-    val dia_cont_instancias: Int,
+    val dia_orden: Int,
     val dia_fecha: String,
     /* recorrido */
     var recorr_id: Int,
     val recorr_id_dia: UUID,
-    val recorr_cont_instancias: Int,
+    val recorr_orden: Int,
     val observador: String,
     val recorr_fecha_ini: String,
     val recorr_fecha_fin: String,
@@ -27,7 +27,7 @@ data class EntidadesPlanas(
     /* unidad social */
     val unsoc_id: Int,
     var unsoc_id_recorr: Int,
-    val unsoc_cont_instancias: Int,
+    val unsoc_orden: Int,
     val pto_observacion: String,
     val ctx_social: String,
     val tpo_sustrato: String,
@@ -129,12 +129,12 @@ data class EntidadesPlanas(
         /* dia */
         parcel.writeString(celular_id)
         parcel.writeString(dia_id.toString())
-        parcel.writeInt(dia_cont_instancias)
+        parcel.writeInt(dia_orden)
         parcel.writeString(dia_fecha)
         /* recorrido */
         parcel.writeInt(recorr_id)
         parcel.writeString(recorr_id_dia.toString())
-        parcel.writeInt(recorr_cont_instancias)
+        parcel.writeInt(recorr_orden)
         parcel.writeString(observador)
         parcel.writeString(recorr_fecha_ini)
         parcel.writeString(recorr_fecha_fin)
@@ -148,7 +148,7 @@ data class EntidadesPlanas(
         /* unidad social */
         parcel.writeInt(unsoc_id)
         parcel.writeInt(unsoc_id_recorr)
-        parcel.writeInt(unsoc_cont_instancias)
+        parcel.writeInt(unsoc_orden)
         parcel.writeString(pto_observacion)
         parcel.writeString(ctx_social)
         parcel.writeString(tpo_sustrato)
@@ -202,7 +202,7 @@ data class EntidadesPlanas(
     }
     
     fun getUnidSocial(): UnidSocial {
-        return UnidSocial(id = unsoc_id, recorrId = unsoc_id_recorr, unsoc_cont_instancias,
+        return UnidSocial(id = unsoc_id, recorrId = unsoc_id_recorr, unsoc_orden,
             pto_observacion, ctx_social, tpo_sustrato,
             v_alfa_s4ad, v_alfa_sams, v_hembras_ad, v_crias, v_destetados, v_juveniles,
             v_s4ad_perif, v_s4ad_cerca, v_s4ad_lejos, v_otros_sams_perif, v_otros_sams_cerca, v_otros_sams_lejos,

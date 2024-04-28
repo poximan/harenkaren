@@ -28,8 +28,7 @@ data class UnidSocial(
     @ColumnInfo(name = "id_recorrido")
     var recorrId: Int,
 
-    @ColumnInfo(name = "cont_instancias")
-    var contadorInstancias: Int,
+    var orden: Int,
 
     // ----- entorno ----- //
     @ColumnInfo(name = "pto_observacion")
@@ -128,20 +127,16 @@ data class UnidSocial(
     var mOtrosSamsLejos: Int,
 
     // ----- tiempo/espacio ----- //
-    @ColumnInfo(name = "date")
     var date: String?,
 
-    @ColumnInfo(name="latitud")
     var latitud: Double,
 
-    @ColumnInfo(name="longitud")
     var longitud: Double,
 
     // ----- otros datos ----- //
     @ColumnInfo(name = "photo_path")
     var photoPath: String?,
 
-    @ColumnInfo(name = "comentario")
     var comentario: String?
 ): Parcelable {
 /*

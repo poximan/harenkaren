@@ -12,7 +12,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.findViewTreeViewModelStoreOwner
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.navGraphViewModels
@@ -27,7 +26,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.eazegraph.lib.charts.StackedBarChart
 
-class UnSocListGrafFragment : Fragment(){
+class UnSocListGrafFragment : Fragment() {
 
     private val unSocViewModel: UnSocViewModel by navGraphViewModels(R.id.app_navigation)
     private val args: UnSocListFragmentArgs by navArgs()
@@ -51,16 +50,42 @@ class UnSocListGrafFragment : Fragment(){
         binding.newUnsocButton.setOnClickListener { nuevaUnidadSocial() }
         binding.cambiarActionButton.setOnClickListener { cambiarVista() }
 
-        stackchart.setOnClickListener { escalarGrafico() }
+        stackchart.setOnLongClickListener { escalarGrafico() }
+        stackchart.setOnBarClickedListener { index -> mostrarLeyenda(index) }
 
         loadFullList()
         return binding.root
     }
 
-    private fun escalarGrafico() {
+    fun isPointInsideView(x: Float, y: Float, view: View): Boolean {
+        val viewLocation = IntArray(2)
+        view.getLocationOnScreen(viewLocation)
+        val viewX = viewLocation[0]
+        val viewY = viewLocation[1]
+
+        val viewWidth = view.width
+        val viewHeight = view.height
+
+        return x >= viewX && x <= viewX + viewWidth &&
+                y >= viewY && y <= viewY + viewHeight
+    }
+
+    private fun mostrarLeyenda(index: Int) {
+
+        val barData = stackchart.data[index] // Obtiene los datos en el índice especificado
+        var acumulador = ""
+        for (i in 0 until barData.bars.size-1) {
+            acumulador += "${barData.bars[i].legendLabel}\n"
+        }
+
+        Toast.makeText(activity, acumulador , Toast.LENGTH_LONG).show()
+    }
+
+    private fun escalarGrafico(): Boolean {
         graficoEscalado = !graficoEscalado
         Toast.makeText(activity, "escala entre barras " + if(graficoEscalado) "activado" else "desactivado" , Toast.LENGTH_LONG).show()
         loadFullList()
+        return true
     }
 
     private fun goHome() {

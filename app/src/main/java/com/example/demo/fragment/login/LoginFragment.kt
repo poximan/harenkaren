@@ -16,9 +16,11 @@ import androidx.navigation.fragment.findNavController
 import com.example.demo.R
 import com.example.demo.databinding.FragmentLoginBinding
 import com.example.demo.viewModel.UsuarioViewModel
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+
 
 class LoginFragment : Fragment(), UsuarioCallback {
 
@@ -32,16 +34,23 @@ class LoginFragment : Fragment(), UsuarioCallback {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
-        _binding!!.loginButton.setOnClickListener { checkLogin() }
-        _binding!!.cancelButton.setOnClickListener { goBack() }
+        usuarioViewModel = UsuarioViewModel(requireActivity().application)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.loginButton.setOnClickListener { checkLogin() }
+        binding.cancelButton.setOnClickListener { goBack() }
+        binding.huella.setOnClickListener { checkLoginHuella(view) }
 
         // visibilidad de la contraseña
-        _binding!!.pass.setOnTouchListener(OnTouchListener { _, event ->
+        binding.pass.setOnTouchListener(OnTouchListener { _, event ->
             val DRAWABLE_RIGHT = 2
             if (event.action == MotionEvent.ACTION_UP) {
-                if (event.rawX >= _binding!!.pass.right - _binding!!.pass.compoundDrawables
+                if (event.rawX >= binding.pass.right - binding.pass.compoundDrawables
                         .get(DRAWABLE_RIGHT).bounds.width()
                 ) {
                     turnVisibility()
@@ -50,15 +59,30 @@ class LoginFragment : Fragment(), UsuarioCallback {
             }
             false
         })
+    }
 
-        usuarioViewModel = UsuarioViewModel(requireActivity().application)
-        return binding.root
+    private fun checkLoginHuella(view: View) {
+        val biometricLoginManager = BiometricLoginManager(requireContext())
+
+        biometricLoginManager.authenticate(object : BiometricLoginManager.BiometricAuthenticationCallback {
+            override fun onAuthenticationSuccess() {
+                onLoginSuccess()
+            }
+
+            override fun onAuthenticationError(errorCode: Int, errorMessage: String) {
+                snack(view, "cancelado")
+            }
+
+            override fun onAuthenticationFailed() {
+                snack(view, "falla login con huella")
+            }
+        })
     }
 
     private fun turnVisibility() {
         if (!visible) {
-            _binding!!.pass.transformationMethod = PasswordTransformationMethod.getInstance()
-            _binding!!.pass.setCompoundDrawablesWithIntrinsicBounds(
+            binding.pass.transformationMethod = PasswordTransformationMethod.getInstance()
+            binding.pass.setCompoundDrawablesWithIntrinsicBounds(
                 0,
                 0,
                 R.drawable.visible_on,
@@ -66,8 +90,8 @@ class LoginFragment : Fragment(), UsuarioCallback {
             )
             visible = true
         } else {
-            _binding!!.pass.transformationMethod = HideReturnsTransformationMethod.getInstance()
-            _binding!!.pass.setCompoundDrawablesWithIntrinsicBounds(
+            binding.pass.transformationMethod = HideReturnsTransformationMethod.getInstance()
+            binding.pass.setCompoundDrawablesWithIntrinsicBounds(
                 0,
                 0,
                 R.drawable.visible_off,
@@ -79,8 +103,8 @@ class LoginFragment : Fragment(), UsuarioCallback {
 
     private fun checkLogin() {
 
-        val email = _binding!!.email.text.toString()
-        val password = _binding!!.pass.text.toString()
+        val email = binding.email.text.toString()
+        val password = binding.pass.text.toString()
 
         if (email.isEmpty() || password.isEmpty()) {
             showErrorMsg("Complete los campos")
@@ -119,5 +143,11 @@ class LoginFragment : Fragment(), UsuarioCallback {
                 _binding?.loginFailedTextView?.visibility = View.INVISIBLE
             }, 1000)
         }
+    }
+
+    private fun snack(view: View, text: String) {
+        val view: View = view.findViewById(R.id.vista_login)
+        val snackbar = Snackbar.make(view, text, Snackbar.LENGTH_LONG)
+        snackbar.show()
     }
 }

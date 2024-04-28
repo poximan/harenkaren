@@ -29,8 +29,7 @@ data class Recorrido(
     @ColumnInfo(name = "id_dia")
     var diaId: UUID,
 
-    @ColumnInfo(name = "cont_instancias")
-    var contadorInstancias: Int,
+    var orden: Int,
 
     var observador: String,
 
@@ -126,7 +125,7 @@ data class Recorrido(
         // ----- identidicadores ----- //
         id?.let { parcel.writeInt(it) }
         parcel.writeString(diaId.toString())
-        parcel.writeInt(contadorInstancias)
+        parcel.writeInt(orden)
         parcel.writeString(observador)
 
         // ----- tiempo ----- //

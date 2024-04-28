@@ -32,14 +32,14 @@ interface RecorrDAO {
     */
     fun insertConUltInst(elem: Recorrido): Int {
         val ultimaInstancia = getUltimaInstancia(elem.diaId) ?: 0
-        elem.contadorInstancias = ultimaInstancia + 1
+        elem.orden = ultimaInstancia + 1
         return insert(elem).toInt()
     }
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(recorrido: Recorrido): Long
 
-    @Query("SELECT MAX(cont_instancias) FROM recorrido WHERE id_dia = :idDia")
+    @Query("SELECT MAX(orden) FROM recorrido WHERE id_dia = :idDia")
     fun getUltimaInstancia(idDia: UUID): Int?
 
     @Query("DELETE FROM recorrido")

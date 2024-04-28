@@ -1,6 +1,8 @@
 package com.example.demo.adapter
 
 import android.content.Context
+import android.graphics.RectF
+import androidx.compose.ui.geometry.Rect
 import androidx.core.content.ContextCompat
 import com.example.demo.R
 import com.example.demo.model.UnidSocial
@@ -22,21 +24,21 @@ class UnSocListGrafAdapter(private val context: Context) {
     private fun armarResumen(unidSocial: UnidSocial, total: Int): StackedBarModel {
 
         var acumulado = 0
-        val barModel = StackedBarModel()
+        val stackBarModel = StackedBarModel()
 
         val contadoresNoNulos = unidSocial.getContadoresNoNulos()
         for (atribString in contadoresNoNulos) {
-            acumulado += setData(barModel, atribString, unidSocial)
+            acumulado += setData(stackBarModel, atribString, unidSocial)
         }
         if(total != 0)
-            cerrarSet(barModel, total-acumulado)
+            cerrarSet(stackBarModel, total-acumulado)
 
-        barModel.legendLabel = "id${unidSocial.contadorInstancias}($acumulado)"
-        return barModel
+        stackBarModel.legendLabel = "id${unidSocial.orden}($acumulado)"
+        return stackBarModel
     }
 
     private fun setData(
-        barModel: StackedBarModel,
+        stackBarModel: StackedBarModel,
         atribString: String,
         unidSocial: UnidSocial
     ): Int {
@@ -46,12 +48,12 @@ class UnSocListGrafAdapter(private val context: Context) {
         // utilizar el objeto Field para obtener el valor del atributo en unidSocial.
         val valor = valorAtributo.get(unidSocial) as Int
 
-        barModel.addBar(BarModel(atribString, valor.toFloat(), siguienteColor(atribString)))
+        stackBarModel.addBar(BarModel(atribString, valor.toFloat(), siguienteColor(atribString)))
         return valor
     }
 
-    private fun cerrarSet(barModel: StackedBarModel, diferencia: Int) {
-        barModel.addBar(BarModel("vacio", diferencia.toFloat(), 0))
+    private fun cerrarSet(stackBarModel: StackedBarModel, diferencia: Int) {
+        stackBarModel.addBar(BarModel("vacio", diferencia.toFloat(), 0))
     }
 
     private fun siguienteColor(atribString: String): Int {

@@ -25,7 +25,7 @@ class DiaDetailFragment : Fragment() {
     ): View {
         _binding = FragmentDiaDetailBinding.inflate(inflater, container, false)
 
-        binding.idDia.text = "ID unico de dia = " + args.diaActual.contadorInstancias.toString().toEditable()
+        binding.idDia.text = "ID unico de dia = " + args.diaActual.orden.toString().toEditable()
         val origen = args.diaActual.celularId.substringAfter("@")
         binding.origen.text = "Generado en = " + origen.toEditable()
 

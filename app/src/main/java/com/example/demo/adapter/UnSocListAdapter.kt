@@ -41,7 +41,7 @@ class UnSocListAdapter(
         fun bind(unidSocial: UnidSocial) {
             itemView.setOnClickListener { itemClickListener.onItemClick(unidSocial) }
 
-            id.text = unidSocial.contadorInstancias.toString()
+            id.text = unidSocial.orden.toString()
             unSocResumen.text = armarResumen(unidSocial)
             date.text = unidSocial.date
 

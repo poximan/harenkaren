@@ -18,11 +18,9 @@ data class Dia (
     @PrimaryKey
     var id: UUID,
 
-    @ColumnInfo(name = "cont_instancias")
-    var contadorInstancias: Int,
+    var orden: Int,
 
     // ----- tiempo ----- //
-    @ColumnInfo(name = "fecha")
     var fecha : String
 
 ):Parcelable {
@@ -44,7 +42,7 @@ data class Dia (
         // ----- identidicadores ----- //
         parcel.writeString(celularId)
         parcel.writeString(id.toString())
-        parcel.writeInt(contadorInstancias)
+        parcel.writeInt(orden)
 
         // ----- tiempo ----- //
         parcel.writeString(fecha)

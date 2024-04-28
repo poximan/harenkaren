@@ -41,14 +41,14 @@ interface UnSocDAO {
     */
     fun insertConUltInst(elem: UnidSocial): Int {
         val ultimaInstancia = getUltimaInstancia(elem.recorrId) ?: 0
-        elem.contadorInstancias = ultimaInstancia + 1
+        elem.orden = ultimaInstancia + 1
         return insert(elem).toInt()
     }
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(unidSocial: UnidSocial): Long
 
-    @Query("SELECT MAX(cont_instancias) FROM unidsocial WHERE id_recorrido = :idRecorr")
+    @Query("SELECT MAX(orden) FROM unidsocial WHERE id_recorrido = :idRecorr")
     fun getUltimaInstancia(idRecorr: Int): Int?
 
     @Query("DELETE FROM unidsocial")
@@ -62,7 +62,7 @@ interface UnSocDAO {
     fun update(unidSocial: UnidSocial)
 
     @Query("SELECT \n" +
-            "   unidsocial.id, id_recorrido, unidsocial.cont_instancias,\n" +
+            "   unidsocial.id, id_recorrido, unidsocial.orden,\n" +
             "   pto_observacion, ctx_social, tpo_sustrato,\n" +
             "   SUM(v_alfa_s4ad) AS v_alfa_s4ad,\n" +
             "   SUM(v_alfa_sams) AS v_alfa_sams,\n" +
@@ -97,7 +97,7 @@ interface UnSocDAO {
     fun getSumUnSocByRecorrId(idRecorr: Int): UnidSocial
 
     @Query("SELECT \n" +
-            "   unidsocial.id, id_recorrido, unidsocial.cont_instancias,\n" +
+            "   unidsocial.id, id_recorrido, unidsocial.orden,\n" +
             "   pto_observacion, ctx_social, tpo_sustrato,\n" +
             "   SUM(v_alfa_s4ad) AS v_alfa_s4ad,\n" +
             "   SUM(v_alfa_sams) AS v_alfa_sams,\n" +
@@ -131,11 +131,11 @@ interface UnSocDAO {
             "JOIN\n" +
             "   dia ON recorrido.id_dia = dia.id\n" +
             "WHERE \n" +
-            "   dia.cont_instancias = :idDia")
+            "   dia.orden = :idDia")
     fun getTotalByDiaId(idDia: Int): UnidSocial
 
     @Query("SELECT \n" +
-            "   id, id_recorrido, cont_instancias,\n" +
+            "   id, id_recorrido, orden,\n" +
             "   pto_observacion, ctx_social, tpo_sustrato,\n" +
             "   SUM(v_alfa_s4ad) AS v_alfa_s4ad,\n" +
             "   SUM(v_alfa_sams) AS v_alfa_sams,\n" +
@@ -169,12 +169,12 @@ interface UnSocDAO {
     @Query("SELECT \n" +
             "    dia.id_celular AS celular_id,\n" +
             "    dia.id AS dia_id,\n" +
-            "    dia.cont_instancias AS dia_cont_instancias,\n" +
+            "    dia.orden AS dia_orden,\n" +
             "    dia.fecha AS dia_fecha,\n" +
             "    -- recorrido\n" +
             "    recorrido.id AS recorr_id,\n" +
             "    recorrido.id_dia AS recorr_id_dia,\n" +
-            "    recorrido.cont_instancias AS recorr_cont_instancias,\n" +
+            "    recorrido.orden AS recorr_orden,\n" +
             "    recorrido.observador,\n" +
             "    recorrido.fecha_ini AS recorr_fecha_ini,\n" +
             "    recorrido.fecha_fin AS recorr_fecha_fin,\n" +
@@ -188,7 +188,7 @@ interface UnSocDAO {
             "    -- unidad social\n" +
             "    unidsocial.id AS unsoc_id,\n" +
             "    unidsocial.id_recorrido AS unsoc_id_recorr,\n" +
-            "    unidsocial.cont_instancias AS unsoc_cont_instancias,\n" +
+            "    unidsocial.orden AS unsoc_orden,\n" +
             "    unidsocial.pto_observacion,\n" +
             "    unidsocial.ctx_social,\n" +
             "    unidsocial.tpo_sustrato,\n" +
