@@ -1,6 +1,5 @@
-package com.example.demo
+package com.example.demo.fragment.info
 
 interface Coordinadora {
-
     fun onChangeOpciones(index:Int)
 }

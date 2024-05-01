@@ -16,6 +16,7 @@ import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.MapEventsOverlay
+import org.osmdroid.views.overlay.Marker
 import org.osmdroid.views.overlay.Polyline
 
 class OSMFragment : Fragment(), MapEventsReceiver {
@@ -63,6 +64,14 @@ class OSMFragment : Fragment(), MapEventsReceiver {
 
         val startPoint = routePoints.first()
         mapController.setCenter(startPoint)
+
+        // Agregar marcador en el punto
+        val marker = Marker(mapView)
+        marker.position = startPoint
+        marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+        marker.icon = requireContext().resources.getDrawable(R.mipmap.ic_cachorris)
+        marker.title = "Punto"
+        mapView.overlays.add(marker)
 
         val polyline = Polyline().apply {
             setPoints(routePoints)

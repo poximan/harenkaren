@@ -20,7 +20,7 @@ class ExportarBT(
 ) {
     companion object {
         val BLUETOOTH_UUID: UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
-        const val BLUETOOTH_CONNECT_PERMISSION_CODE = 1
+        const val PERMISSION_REQUEST_BLUETOOTH = 1
     }
 
     fun activarComoRTU(lista: ArrayList<Parcelable>) {
@@ -73,7 +73,7 @@ class ExportarBT(
             ActivityCompat.requestPermissions(
                 activity,
                 arrayOf(Manifest.permission.BLUETOOTH_CONNECT),
-                BLUETOOTH_CONNECT_PERMISSION_CODE
+                PERMISSION_REQUEST_BLUETOOTH
             )
             return emptySet()
         }

@@ -53,7 +53,7 @@ class UnSocGralFragment() : Fragment() {
     private val map: MutableMap<String, Any> = mutableMapOf()
 
     object DbConstants {
-        const val REQUEST_TAKE_PHOTO = 2
+        const val PERMISSION_REQUEST_TAKE_PHOTO = 2
         const val PERMISSION_REQUEST_CAMERA = 3
         const val PERMISSION_REQUEST_LOCATION = 4
     }
@@ -313,7 +313,7 @@ class UnSocGralFragment() : Fragment() {
                         photoFile
                     )
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                    startActivityForResult(takePictureIntent, DbConstants.REQUEST_TAKE_PHOTO)
+                    startActivityForResult(takePictureIntent, DbConstants.PERMISSION_REQUEST_TAKE_PHOTO)
                 }
             }
         }
@@ -377,7 +377,7 @@ class UnSocGralFragment() : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == DbConstants.REQUEST_TAKE_PHOTO && resultCode == AppCompatActivity.RESULT_OK) {
+        if (requestCode == DbConstants.PERMISSION_REQUEST_TAKE_PHOTO && resultCode == AppCompatActivity.RESULT_OK) {
             val rotatedBitmap = rotateImage(reduceBitmap())
             saveRotatedBitmap(rotatedBitmap)
             photoPaths.add(currentPhotoPath)

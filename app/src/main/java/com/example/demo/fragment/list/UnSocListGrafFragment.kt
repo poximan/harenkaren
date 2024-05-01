@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.navGraphViewModels
+import com.example.demo.FunkyFlotante
 import com.example.demo.R
 import com.example.demo.adapter.UnSocListGrafAdapter
 import com.example.demo.databinding.FragmentUnsocListGrafBinding
@@ -50,35 +51,23 @@ class UnSocListGrafFragment : Fragment() {
         binding.newUnsocButton.setOnClickListener { nuevaUnidadSocial() }
         binding.cambiarActionButton.setOnClickListener { cambiarVista() }
 
-        stackchart.setOnLongClickListener { escalarGrafico() }
         stackchart.setOnBarClickedListener { index -> mostrarLeyenda(index) }
 
         loadFullList()
         return binding.root
     }
 
-    fun isPointInsideView(x: Float, y: Float, view: View): Boolean {
-        val viewLocation = IntArray(2)
-        view.getLocationOnScreen(viewLocation)
-        val viewX = viewLocation[0]
-        val viewY = viewLocation[1]
-
-        val viewWidth = view.width
-        val viewHeight = view.height
-
-        return x >= viewX && x <= viewX + viewWidth &&
-                y >= viewY && y <= viewY + viewHeight
-    }
-
     private fun mostrarLeyenda(index: Int) {
 
+        val acumulador = StringBuilder()
         val barData = stackchart.data[index] // Obtiene los datos en el índice especificado
-        var acumulador = ""
+
         for (i in 0 until barData.bars.size-1) {
-            acumulador += "${barData.bars[i].legendLabel}\n"
+            acumulador.insert(0,"${barData.bars[i].legendLabel}=${barData.bars[i].value}\n")
         }
 
-        Toast.makeText(activity, acumulador , Toast.LENGTH_LONG).show()
+        val funky = FunkyFlotante(requireActivity())
+        funky.funkeala(acumulador.toString().trim())
     }
 
     private fun escalarGrafico(): Boolean {

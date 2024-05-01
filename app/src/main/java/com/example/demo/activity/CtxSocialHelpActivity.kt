@@ -2,7 +2,7 @@ package com.example.demo.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.demo.Coordinadora
+import com.example.demo.fragment.info.Coordinadora
 import com.example.demo.R
 import com.example.demo.fragment.info.CtxSocialHelpDescripFragment
 
