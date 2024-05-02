@@ -21,7 +21,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-
 class LoginFragment : Fragment(), UsuarioCallback {
 
     private var _binding: FragmentLoginBinding? = null
@@ -64,17 +63,18 @@ class LoginFragment : Fragment(), UsuarioCallback {
     private fun checkLoginHuella(view: View) {
         val biometricLoginManager = BiometricLoginManager(requireContext())
 
-        biometricLoginManager.authenticate(object : BiometricLoginManager.BiometricAuthenticationCallback {
+        biometricLoginManager.authenticate(object :
+            BiometricLoginManager.BiometricAuthenticationCallback {
             override fun onAuthenticationSuccess() {
                 onLoginSuccess()
             }
 
             override fun onAuthenticationError(errorCode: Int, errorMessage: String) {
-                snack(view, "cancelado")
+                snack(view, "No se encontro hardware detector de huella")
             }
 
             override fun onAuthenticationFailed() {
-                snack(view, "falla login con huella")
+                snack(view, "No se pudo verificar usuario")
             }
         })
     }
