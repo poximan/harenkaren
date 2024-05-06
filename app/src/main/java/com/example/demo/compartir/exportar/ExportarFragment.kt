@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.example.demo.compartir.Compartible
 import com.example.demo.database.HarenKarenRoomDatabase
 import com.example.demo.databinding.FragmentExportarBinding
 import com.example.demo.fragment.messaging.EmailSender

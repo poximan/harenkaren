@@ -3,7 +3,7 @@ package com.example.demo.compartir.importar
 import android.bluetooth.BluetoothAdapter
 import android.content.Context
 import android.content.pm.PackageManager
-import com.example.demo.compartir.exportar.Compartible
+import com.example.demo.compartir.Compartible
 
 class ImportarBT(
     private val context: Context,

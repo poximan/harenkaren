@@ -1,4 +1,4 @@
-package com.example.demo.compartir.exportar
+package com.example.demo.compartir
 
 interface Compartible {
     fun desconectar()

@@ -11,6 +11,7 @@ import android.os.Parcelable
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.example.demo.compartir.Compartible
 import java.util.UUID
 
 class ExportarBT(

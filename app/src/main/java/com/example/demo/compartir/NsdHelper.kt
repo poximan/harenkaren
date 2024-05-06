@@ -1,10 +1,11 @@
-package com.example.demo.compartir.exportar
+package com.example.demo.compartir
 
 import android.content.Context
 import android.net.nsd.NsdManager
 import android.net.nsd.NsdServiceInfo
 import android.util.Log
 import com.example.demo.activity.MainActivity
+import com.example.demo.compartir.exportar.ServiceListDialog
 import java.net.InetAddress
 import java.net.ServerSocket
 
@@ -32,30 +33,30 @@ class NsdHelper(private val context: Context) {
     ==========================================
      */
 
-    fun initializeServerSocket() {
+    fun initializeServerSocket(): Int {
 
         if(!::serverSocket.isInitialized){
             Log.i(TAG, "anunciando mi servicio")
             // Initialize a server socket on the next available port.
             serverSocket = ServerSocket(0).also { socket ->
                 Log.i(TAG, "puerto asig es ${socket.localPort}")
-                registerService(socket.localPort)
             }
         } else
             Log.i(TAG, "mi servicio fue anunciado previamente")
+        return serverSocket.localPort
     }
 
-    private fun registerService(mLocalPort: Int) {
+    fun registerService(mLocalPort: Int) {
         val serviceInfo = NsdServiceInfo().apply {
             serviceName = mServiceName
             serviceType = SERV_TYPE
             port = mLocalPort
             setAttribute("origen", MainActivity.obtenerAndroidID())
         }
+
         nsdManager = (context.getSystemService(Context.NSD_SERVICE) as NsdManager).apply {
             registerService(serviceInfo, NsdManager.PROTOCOL_DNS_SD, registrationListener)
         }
-        Log.i("tiempo","primero")
     }
 
     // --------------- CLASE ANONIMA
@@ -93,7 +94,11 @@ class NsdHelper(private val context: Context) {
             descubrirActivado = true
 
             Log.i(TAG, "activando descubridor de servicios")
-            nsdManager.discoverServices(SERV_TYPE, NsdManager.PROTOCOL_DNS_SD, discoveryListener)
+            nsdManager.discoverServices(
+                SERV_TYPE,
+                NsdManager.PROTOCOL_DNS_SD,
+                discoveryListener
+            )
         } else
             Log.i(TAG, "el descubridor fue activado previamente")
     }

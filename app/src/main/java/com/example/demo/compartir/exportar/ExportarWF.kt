@@ -3,6 +3,8 @@ package com.example.demo.compartir.exportar
 import android.content.Context
 import android.os.Parcelable
 import android.util.Log
+import com.example.demo.compartir.Compartible
+import com.example.demo.compartir.NsdHelper
 
 class ExportarWF(context: Context): Compartible {
 
