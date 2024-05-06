@@ -1,4 +1,4 @@
-package com.example.demo.export
+package com.example.demo.compartir.importar
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.example.demo.compartir.exportar.Compartible
 import com.example.demo.database.HarenKarenRoomDatabase
 import com.example.demo.databinding.FragmentImportarBinding
 import com.example.demo.model.EntidadesPlanas
@@ -23,8 +24,8 @@ class ImportarFragment : Fragment(), RegistroDistribuible {
 
     private var _binding: FragmentImportarBinding? = null
     private val binding get() = _binding!!
+    private lateinit var comunicacion: Compartible
 
-    @SuppressLint("MissingPermission")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,35 +34,50 @@ class ImportarFragment : Fragment(), RegistroDistribuible {
 
         binding.bluetoothBtn.setOnClickListener { recibirDatos() }
 
-        binding.radioBt.setOnClickListener { clickRadio() }
-        binding.radioWifi.setOnClickListener { clickRadio() }
+        binding.radioBt.setOnClickListener { clickBT() }
+        binding.radioWifi.setOnClickListener { clickWF() }
 
         return binding.root
     }
 
-    private fun clickRadio() {
+    override fun onDestroy() {
+        super.onDestroy()
+        apagarServNSD()
+    }
 
-        if(binding.radioBt.isChecked) {
-            binding.bluetoothBtn.text = "escuchar por BT"
-            binding.idMasterBt.text = "el alias es:"
-        }
-        if(binding.radioWifi.isChecked) {
-            val direccionIpWifi = obtenerDireccionIpWifi()
-            binding.bluetoothBtn.text = "escuchar por WF"
-            binding.idMasterBt.text = "mi IP es $direccionIpWifi:"
-        }
+    private fun apagarServNSD(){
+        try {
+            comunicacion.desconectar()
+        } catch (e: UninitializedPropertyAccessException){}
+    }
 
+    private fun clickBT() {
+        apagarServNSD()
+
+        binding.bluetoothBtn.text = "escuchar por BT"
+        binding.idMasterBt.text = "el alias es:"
+        binding.recepcionBt.text = "esperando datos desde remota"
+    }
+
+    private fun clickWF() {
+        val direccionIpWifi = obtenerDireccionIpWifi()
+        binding.bluetoothBtn.text = "escuchar por WF"
+        binding.idMasterBt.text = "mi IP es $direccionIpWifi:"
+
+        comunicacion = ImportarWF(requireContext(),this)
         binding.recepcionBt.text = "esperando datos desde remota"
     }
 
     private fun recibirDatos() {
         if(binding.radioBt.isChecked){
-            val comunicacion = ImportarBT(requireContext(), this)
-            comunicacion.activarComoMTU()
+            comunicacion = ImportarBT(requireContext(), this)
+
+            val com = (comunicacion as ImportarBT)
+            com.activarComoMTU()
         }
         if(binding.radioWifi.isChecked) {
-            val comunicacion = ImportarWF(this)
-            comunicacion.activarComoMTU()
+            (comunicacion as ImportarWF).descubrir()
+            //com.activarComoMTU()
         }
     }
 
@@ -78,9 +94,7 @@ class ImportarFragment : Fragment(), RegistroDistribuible {
     override fun onMessageReceived(lista: ArrayList<Parcelable>) {
 
         val listaEntidadesPlanas = desparcelarLista(lista)
-
         insertarEntidades(listaEntidadesPlanas)
-
         binding.recepcionBt.text = listaEntidadesPlanas.toString()
     }
 

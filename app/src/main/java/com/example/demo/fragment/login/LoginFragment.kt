@@ -70,7 +70,7 @@ class LoginFragment : Fragment(), UsuarioCallback {
             }
 
             override fun onAuthenticationError(errorCode: Int, errorMessage: String) {
-                snack(view, "No se encontro hardware detector de huella")
+                snack(view, "Falta hardware para deteccion de huella")
             }
 
             override fun onAuthenticationFailed() {

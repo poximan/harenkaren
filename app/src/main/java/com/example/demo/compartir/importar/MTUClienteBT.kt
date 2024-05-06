@@ -1,44 +1,30 @@
-package com.example.demo.export
+package com.example.demo.compartir.importar
 
-import android.os.AsyncTask
+import android.annotation.SuppressLint
+import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothServerSocket
+import android.bluetooth.BluetoothSocket
 import android.os.Parcelable
-import android.util.Log
+import com.example.demo.compartir.exportar.ExportarBT
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.io.ObjectInputStream
-import java.net.ServerSocket
 
-class MTUClienteWF(private val callback: RegistroDistribuible) {
+class MTUClienteBT(private val bluetoothAdapter: BluetoothAdapter) {
 
-    companion object {
-        private const val TAG = "MTUConcentrator"
-        private const val PORT = 8888
-    }
-
-    private var serverSocket: ServerSocket? = null
-
-    fun startListening() {
-        ServerTask().execute()
-    }
-
-    fun stopListening() {
-        try {
-            serverSocket?.close()
-        } catch (e: IOException) {
-            Log.e(TAG, "Error closing server socket: ${e.message}")
-        }
-    }
-
-    private inner class ServerTask() : AsyncTask<Void, ArrayList<Parcelable>, Void>() {
-
-        override fun doInBackground(vararg params: Void?): Void? {
+    @SuppressLint("MissingPermission")
+    fun startListeningForRTUConnection(callback: RegistroDistribuible) {
+        val thread = Thread {
 
             var lista: ArrayList<Parcelable>? = null
+
             try {
-                val serverSocket = ServerSocket(PORT)
+                val serverSocket: BluetoothServerSocket = bluetoothAdapter.listenUsingRfcommWithServiceRecord(
+                    "BluetoothMTU", ExportarBT.BLUETOOTH_UUID
+                )
                 println("Esperando conexión...")
-                val socket = serverSocket.accept()
+                val socket: BluetoothSocket = serverSocket.accept()
                 println("Conexión establecida.")
 
                 // Recibir los bytes del socket
@@ -63,23 +49,17 @@ class MTUClienteWF(private val callback: RegistroDistribuible) {
                 socket.close()
                 serverSocket.close()
 
+                if (lista != null) {
+                    callback.onMessageReceived(lista)
+                }
+                serverSocket.close()
+
             } catch (e: IOException) {
                 e.printStackTrace()
             } catch (e: ClassNotFoundException) {
                 e.printStackTrace()
             }
-
-            if (lista != null) {
-                publishProgress(lista)
-            }
-            return null
         }
-
-        override fun onProgressUpdate(vararg values: ArrayList<Parcelable>?) {
-            super.onProgressUpdate(*values)
-            values.firstOrNull()?.let {
-                callback.onMessageReceived(it)
-            }
-        }
+        thread.start()
     }
 }

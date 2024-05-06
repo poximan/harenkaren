@@ -1,4 +1,4 @@
-package com.example.demo.export
+package com.example.demo.compartir.exportar
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -17,7 +17,8 @@ class ExportarBT(
     private val masterBT: String,
     private val activity: Activity,
     private val context: Context
-) {
+): Compartible {
+
     companion object {
         val BLUETOOTH_UUID: UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
         const val PERMISSION_REQUEST_BLUETOOTH = 1
@@ -56,7 +57,6 @@ class ExportarBT(
                 return dispositivo.address
             else
                 Toast.makeText(activity, "No se conoce ID", Toast.LENGTH_LONG).show()
-
         }
         return null
     }
@@ -79,5 +79,11 @@ class ExportarBT(
         }
 
         return bluetoothAdapter.bondedDevices
+    }
+
+    override fun desconectar() {
+    }
+
+    override fun descubrir() {
     }
 }

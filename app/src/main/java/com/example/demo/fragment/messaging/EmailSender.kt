@@ -9,8 +9,9 @@ import java.io.File
 // cienciaycoso
 object EmailSender {
 
-    fun sendEmail(destinatarios: Array<String>, asunto: String, cuerpo: String, archivoAdjunto: File, context: Context) {
+    fun sendEmail(destinatarios: Array<String>, cuerpo: String, archivoAdjunto: File, context: Context) {
 
+        val asunto = "respaldo censo"
         val uri = FileProvider.getUriForFile(context, "com.example.demo.fileprovider", archivoAdjunto)
 
         val intent = Intent(Intent.ACTION_SEND).apply {

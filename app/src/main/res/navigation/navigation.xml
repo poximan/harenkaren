@@ -331,12 +331,12 @@
         tools:layout="@layout/fragment_show_message" />
     <fragment
         android:id="@+id/export_fragment"
-        android:name="com.example.demo.export.ExportarFragment"
+        android:name="com.example.demo.compartir.exportar.ExportarFragment"
         android:label="Exportar registros"
         tools:layout="@layout/fragment_exportar" />
     <fragment
         android:id="@+id/import_fragment"
-        android:name="com.example.demo.export.ImportarFragment"
+        android:name="com.example.demo.compartir.importar.ImportarFragment"
         android:label="Importar registros"
         tools:layout="@layout/fragment_importar" />
 </navigation>
