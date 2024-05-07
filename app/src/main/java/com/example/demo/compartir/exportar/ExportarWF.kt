@@ -2,7 +2,6 @@ package com.example.demo.compartir.exportar
 
 import android.content.Context
 import android.os.Parcelable
-import android.util.Log
 import com.example.demo.compartir.Compartible
 import com.example.demo.compartir.NsdHelper
 
@@ -23,11 +22,13 @@ class ExportarWF(context: Context): Compartible {
     }
 
     override fun desconectar() {
+        port = 0
         nsdHelper.tearDown()
     }
 
-    fun activarComoRTU(lista: ArrayList<Parcelable>, ipMTU: String) {
-        rtuServWF = RTUServWF(ipMTU)
+    fun activarComoRTU(lista: ArrayList<Parcelable>) {
+        val ip = "192"
+        rtuServWF = RTUServWF(ip, port)
         rtuServWF.sendData(lista)
     }
 

@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
 import android.text.InputType
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -86,12 +85,12 @@ class ExportarFragment : Fragment() {
     private fun clickWF() {
 
         binding.txtMasterBt.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_CLASS_NUMBER
-        binding.bluetoothBtn.text = "enviar por WF"
+        binding.bluetoothBtn.text = "destinatarios"
         binding.idMasterBt.text = "IP destino"
 
         comWF.descubrir()
-        //val listaParcel = prepararDatos()
-        //comWF.activarComoRTU(listaParcel, binding.txtMasterBt.text.toString())
+        val listaParcel = prepararDatos()
+        comWF.activarComoRTU(listaParcel)
     }
 
     private fun prepararDatos():  ArrayList<Parcelable> {

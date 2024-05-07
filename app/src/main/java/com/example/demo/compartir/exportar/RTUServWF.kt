@@ -7,12 +7,7 @@ import java.io.IOException
 import java.io.ObjectOutputStream
 import java.net.Socket
 
-class RTUServWF(private val serverIp: String) {
-
-    companion object {
-        private const val TAG = "RTUServer"
-        private const val PORT = 8888
-    }
+class RTUServWF(private val ip: String, private val port: Int) {
 
     fun sendData(lista: ArrayList<Parcelable>) {
         SendDataTask(lista).execute()
@@ -29,7 +24,7 @@ class RTUServWF(private val serverIp: String) {
 
             // Establecer conexión con el servidor y enviar los datos
             try {
-                val socket = Socket(serverIp, PORT)
+                val socket = Socket(ip, port)
                 val outputStream = socket.outputStream
                 outputStream.write(bytes)
                 outputStream.flush()

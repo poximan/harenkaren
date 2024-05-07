@@ -1,11 +1,12 @@
 package com.example.demo.compartir.importar
 
 import android.content.Context
-import android.util.Log
 import com.example.demo.compartir.Compartible
 import com.example.demo.compartir.NsdHelper
 
-class ImportarWF(context: Context, private val callback: RegistroDistribuible
+class ImportarWF(
+    context: Context,
+    private val callback: RegistroDistribuible
 ): Compartible {
 
     private lateinit var mtuClienteWF: MTUClienteWF
@@ -23,6 +24,7 @@ class ImportarWF(context: Context, private val callback: RegistroDistribuible
     }
 
     override fun desconectar() {
+        port = 0
         nsdHelper.tearDown()
     }
 

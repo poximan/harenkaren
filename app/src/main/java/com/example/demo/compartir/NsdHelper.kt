@@ -14,17 +14,16 @@ class NsdHelper(private val context: Context) {
 
     companion object {
         const val TAG = "descubrir"
-        private const val SERV_NAME = "compartirCensos"
+        private const val SERV_NAME = "censos"
         private const val SERV_TYPE = "_http._tcp."
     }
 
     private lateinit var nsdManager: NsdManager
-    private var mServiceName: String = SERV_NAME
+    private val mServiceName: String = "$SERV_NAME@${androidID()}"
 
     private lateinit var serverSocket: ServerSocket
 
     private var descubrirActivado = false
-    private var resolverActivado = false
 
     /*
     ==========================================
@@ -34,7 +33,7 @@ class NsdHelper(private val context: Context) {
 
     fun initializeServerSocket(): Int {
 
-        if(!::serverSocket.isInitialized){
+        if(!::serverSocket.isInitialized || serverSocket.isClosed){
             Log.i(TAG, "anunciando mi servicio")
             // Initialize a server socket on the next available port.
             serverSocket = ServerSocket(0).also { socket ->
@@ -50,9 +49,9 @@ class NsdHelper(private val context: Context) {
             serviceName = mServiceName
             serviceType = SERV_TYPE
             port = mLocalPort
-            setAttribute("origen", MainActivity.obtenerAndroidID())
-        }
 
+            setAttribute("origen", androidID())
+        }
         nsdManager = (context.getSystemService(Context.NSD_SERVICE) as NsdManager).apply {
             registerService(serviceInfo, NsdManager.PROTOCOL_DNS_SD, registrationListener)
         }
@@ -65,7 +64,6 @@ class NsdHelper(private val context: Context) {
             // Save the service name. Android may have changed it in order to
             // resolve a conflict, so update the name you initially requested
             // with the name Android actually used.
-            mServiceName = nsdServiceInfo.serviceName
         }
 
         override fun onRegistrationFailed(serviceInfo: NsdServiceInfo, errorCode: Int) {
@@ -112,23 +110,20 @@ class NsdHelper(private val context: Context) {
             // A service was found! Do something with it.
             Log.i(TAG, "Service discovery success $service")
             when {
-                service.serviceType != SERV_TYPE ->
-                    Log.e(TAG, "Unknown Service Type: ${service.serviceType}")
+                service.serviceType != SERV_TYPE || !service.serviceName.contains(SERV_NAME) ->
+                    Log.e(TAG, "Unknown Service Type: ${service.serviceName} - ${service.serviceType}")
 
                 /*
                 la aparente comparacion redundante primero "==" y luego "contains" es porque si dos dispositivos en la red
                 tienen instalada la misma app (como es este el caso), ella vera dos instancias; a si misma y a la semejante
-                en el otro dispositivo, cuyo nombre tendra el formato "$SERV_NAME (1)"
+                en el otro dispositivo, cuyo nombre tendra el formato "$SERV_NAME (n)"
                  */
-                service.serviceName == SERV_NAME ->
-                    Log.i(TAG, "este: $SERV_NAME")
+                service.serviceName == mServiceName ->
+                    Log.i(TAG, "este: ${service.serviceName}")
 
-                service.serviceName.contains(SERV_NAME) -> {
+                service.serviceName != mServiceName -> {
                     Log.i(TAG, "otro: ${service.serviceName}")
-                    if (!resolverActivado) {
-                        resolverActivado = true
-                        nsdManager.resolveService(service, resolveListener)
-                    }
+                    nsdManager.resolveService(service, resolveListener)
                 }
             }
         }
@@ -137,6 +132,9 @@ class NsdHelper(private val context: Context) {
             // When the network service is no longer available.
             // Internal bookkeeping code goes here.
             Log.e(TAG, "service lost: $service")
+            listNsdServiceInfo.removeIf { texto ->
+                texto.contains(service.serviceName)
+            }
         }
 
         override fun onDiscoveryStopped(serviceType: String) {
@@ -166,12 +164,10 @@ class NsdHelper(private val context: Context) {
 
             if (serviceInfo.serviceName != SERV_NAME) {
 
-                val byteArray = serviceInfo.attributes["origen"]
-                val origen: String = String(byteArray!!).substringAfter("@")
                 val host = serviceInfo.host.hostAddress
                 val port = serviceInfo.port
+                val texto = "${serviceInfo.serviceName}\n$host:$port"
                 val posicion = listNsdServiceInfo.size+1
-                val texto = "$origen -> ${serviceInfo.serviceName} $host:$port"
 
                 Log.i(TAG, "otro (desglose): $texto")
                 listNsdServiceInfo.add("$posicion- $texto")
@@ -187,20 +183,25 @@ class NsdHelper(private val context: Context) {
     */
 
     fun tearDown() {
-        nsdManager.apply {
-            try {
+        try {
+            nsdManager.apply {
                 unregisterService(registrationListener)
                 stopServiceDiscovery(discoveryListener)
+            }
+            serverSocket.close()
 
-                descubrirActivado = false
-                resolverActivado = false
-            } catch (e: IllegalArgumentException){}
-        }
+            descubrirActivado = false
+            listNsdServiceInfo.clear()
+        } catch (e: IllegalArgumentException){}
     }
 
     fun showServiceListDialog() {
         val serviceListDialog = ServiceListDialog(context)
         serviceListDialog.updateServices(listNsdServiceInfo)
         serviceListDialog.show()
+    }
+
+    private fun androidID(): String {
+        return MainActivity.obtenerAndroidID().substringAfter("@")
     }
 }
