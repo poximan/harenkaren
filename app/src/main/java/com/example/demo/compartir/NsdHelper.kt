@@ -6,15 +6,14 @@ import android.net.nsd.NsdServiceInfo
 import android.util.Log
 import com.example.demo.activity.MainActivity
 import com.example.demo.compartir.exportar.ServiceListDialog
-import java.net.InetAddress
 import java.net.ServerSocket
 
 class NsdHelper(private val context: Context) {
 
-    private val listNsdServiceInfo = mutableListOf<NsdServiceInfo>()
+    private val listNsdServiceInfo = mutableListOf<String>()
 
     companion object {
-        private const val TAG = "descubrir"
+        const val TAG = "descubrir"
         private const val SERV_NAME = "compartirCensos"
         private const val SERV_TYPE = "_http._tcp."
     }
@@ -29,7 +28,7 @@ class NsdHelper(private val context: Context) {
 
     /*
     ==========================================
-    EL QUE ANUNCIA SU SERVICIO
+    ANUNCIAR UN SERVICIO
     ==========================================
      */
 
@@ -85,7 +84,7 @@ class NsdHelper(private val context: Context) {
 
     /*
     ==========================================
-    EL QUE DESCUBRE UN SERVICIO
+    DESCUBRIR UN SERVICIO
     ==========================================
      */
 
@@ -113,8 +112,7 @@ class NsdHelper(private val context: Context) {
             // A service was found! Do something with it.
             Log.i(TAG, "Service discovery success $service")
             when {
-                service.serviceType != SERV_TYPE -> // Service type is the string containing the protocol and
-                    // transport layer for this service.
+                service.serviceType != SERV_TYPE ->
                     Log.e(TAG, "Unknown Service Type: ${service.serviceType}")
 
                 /*
@@ -122,16 +120,15 @@ class NsdHelper(private val context: Context) {
                 tienen instalada la misma app (como es este el caso), ella vera dos instancias; a si misma y a la semejante
                 en el otro dispositivo, cuyo nombre tendra el formato "$SERV_NAME (1)"
                  */
-                service.serviceName == SERV_NAME -> // The name of the service tells the user what they'd be
-                    // connecting to. It could be "Bob's Chat App".
-                    Log.i(TAG, "Soy yo: $SERV_NAME")
-                service.serviceName.contains(SERV_NAME) -> {
+                service.serviceName == SERV_NAME ->
+                    Log.i(TAG, "este: $SERV_NAME")
 
+                service.serviceName.contains(SERV_NAME) -> {
+                    Log.i(TAG, "otro: ${service.serviceName}")
                     if (!resolverActivado) {
                         resolverActivado = true
                         nsdManager.resolveService(service, resolveListener)
-                    } else {}
-                    Log.i(TAG, "No soy yo: $SERV_NAME")
+                    }
                 }
             }
         }
@@ -168,14 +165,16 @@ class NsdHelper(private val context: Context) {
         override fun onServiceResolved(serviceInfo: NsdServiceInfo) {
 
             if (serviceInfo.serviceName != SERV_NAME) {
+
                 val byteArray = serviceInfo.attributes["origen"]
                 val origen: String = String(byteArray!!).substringAfter("@")
+                val host = serviceInfo.host.hostAddress
+                val port = serviceInfo.port
+                val posicion = listNsdServiceInfo.size+1
+                val texto = "$origen -> ${serviceInfo.serviceName} $host:$port"
 
-                val port: Int = serviceInfo.port
-                val host: InetAddress = serviceInfo.host
-
-                Log.i(TAG, "Es otro ($origen) --> serv:${serviceInfo.serviceName} host:$host port:$port")
-                listNsdServiceInfo.add(serviceInfo)
+                Log.i(TAG, "otro (desglose): $texto")
+                listNsdServiceInfo.add("$posicion- $texto")
                 return
             }
         }
@@ -183,7 +182,7 @@ class NsdHelper(private val context: Context) {
 
     /*
    ==========================================
-   EL QUE ANUNCIA || DESCUBRE SERVICIOS
+   EL QUE ANUNCIA && DESCUBRE SERVICIOS
    ==========================================
     */
 

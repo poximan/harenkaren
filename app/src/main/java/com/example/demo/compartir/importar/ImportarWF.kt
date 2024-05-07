@@ -16,9 +16,7 @@ class ImportarWF(context: Context, private val callback: RegistroDistribuible
         nsdHelper.apply {
             if(port == 0){
                 port = initializeServerSocket()
-                Log.i("tiempo","primero")
                 registerService(port)
-                Log.i("tiempo", "segundo")
             }
             discoverServices()
         }

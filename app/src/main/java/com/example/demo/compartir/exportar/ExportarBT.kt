@@ -1,6 +1,5 @@
 package com.example.demo.compartir.exportar
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.bluetooth.BluetoothAdapter
@@ -9,15 +8,12 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Parcelable
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import com.example.demo.compartir.Compartible
 import java.util.UUID
 
 class ExportarBT(
-    private val masterBT: String,
-    private val activity: Activity,
-    private val context: Context
+    private val context: Context,
+    private val masterBT: String
 ): Compartible {
 
     companion object {
@@ -57,27 +53,15 @@ class ExportarBT(
             if (dispositivo.name == nombreDispositivo)
                 return dispositivo.address
             else
-                Toast.makeText(activity, "No se conoce ID", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, "No se conoce ID", Toast.LENGTH_LONG).show()
         }
         return null
     }
 
+    @SuppressLint("MissingPermission")
     fun obtenerDispositivosEmparejados(): Set<BluetoothDevice> {
         val bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
             ?: return emptySet()
-
-        if (ContextCompat.checkSelfPermission(
-                context,
-                Manifest.permission.BLUETOOTH_CONNECT
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                activity,
-                arrayOf(Manifest.permission.BLUETOOTH_CONNECT),
-                PERMISSION_REQUEST_BLUETOOTH
-            )
-            return emptySet()
-        }
 
         return bluetoothAdapter.bondedDevices
     }

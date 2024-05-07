@@ -2,13 +2,12 @@ package com.example.demo.compartir.exportar
 
 import android.app.Dialog
 import android.content.Context
-import android.net.nsd.NsdServiceInfo
 import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.ListView
-import androidx.core.view.get
 import com.example.demo.R
+import com.example.demo.compartir.NsdHelper
 
 class ServiceListDialog(context: Context) : Dialog(context) {
 
@@ -21,18 +20,21 @@ class ServiceListDialog(context: Context) : Dialog(context) {
 
         listView = findViewById(R.id.serviceListView)
         listView.adapter = adapter
-        listView.setOnItemClickListener { adapter, _, position, _ ->
-            // Aquí puedes manejar el clic en un servicio
-            val selectedService = adapter[position]
-            Log.i("detalle", selectedService.toString())
-            dismiss()
+        listView.setOnItemClickListener { parent, _, position, _ ->
+            val adapter = parent.adapter
+
+            if (adapter is ArrayAdapter<*>) {
+                val item = adapter.getItem(position) as String
+                Log.i(NsdHelper.TAG, item)
+                dismiss()
+            }
         }
     }
 
     // Método para actualizar la lista de servicios
-    fun updateServices(listNsdServiceInfo: List<NsdServiceInfo>) {
+    fun updateServices(listNsdServiceInfo: List<String>) {
         adapter.clear()
-        adapter.addAll(listNsdServiceInfo.map { it.serviceName })
+        adapter.addAll(listNsdServiceInfo)
         adapter.notifyDataSetChanged()
     }
 }

@@ -10,11 +10,14 @@ class ExportarWF(context: Context): Compartible {
 
     private lateinit var rtuServWF: RTUServWF
     private val nsdHelper: NsdHelper = NsdHelper(context)
+    private var port = 0
 
     override fun descubrir() {
         nsdHelper.apply {
-            initializeServerSocket()
-            Log.i("tiempo", "segundo")
+            if(port == 0){
+                port = initializeServerSocket()
+                registerService(port)
+            }
             discoverServices()
         }
     }
