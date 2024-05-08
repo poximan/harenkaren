@@ -11,8 +11,14 @@ import com.example.demo.compartir.NsdHelper
 
 class ServiceListDialog(context: Context) : Dialog(context) {
 
-    private lateinit var listView: ListView
+    interface ServiceSelectedListener {
+        fun onServiceSelected(serviceName: String)
+    }
+
     private val adapter: ArrayAdapter<String> = ArrayAdapter(context, android.R.layout.simple_list_item_1)
+    private lateinit var listView: ListView
+
+    private var listener: ServiceSelectedListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,16 +31,19 @@ class ServiceListDialog(context: Context) : Dialog(context) {
 
             if (adapter is ArrayAdapter<*>) {
                 val item = adapter.getItem(position) as String
-                Log.i(NsdHelper.TAG, item)
+                listener?.onServiceSelected(item)
                 dismiss()
             }
         }
     }
 
-    // Método para actualizar la lista de servicios
     fun updateServices(listNsdServiceInfo: List<String>) {
         adapter.clear()
         adapter.addAll(listNsdServiceInfo)
         adapter.notifyDataSetChanged()
+    }
+
+    fun setServiceSelectedListener(listener: ServiceSelectedListener) {
+        this.listener = listener
     }
 }

@@ -48,7 +48,6 @@ class ImportarFragment : Fragment(), RegistroDistribuible {
 
     private fun apagarServNSD(){
         try {
-            comBT.desconectar()
             comWF.desconectar()
         } catch (e: UninitializedPropertyAccessException){}
     }

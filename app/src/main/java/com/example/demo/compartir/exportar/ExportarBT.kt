@@ -1,20 +1,15 @@
 package com.example.demo.compartir.exportar
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Parcelable
 import android.widget.Toast
-import com.example.demo.compartir.Compartible
 import java.util.UUID
 
-class ExportarBT(
-    private val context: Context,
-    private val masterBT: String
-): Compartible {
+class ExportarBT(private val context: Context, private val masterBT: String) {
 
     companion object {
         val BLUETOOTH_UUID: UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
@@ -64,11 +59,5 @@ class ExportarBT(
             ?: return emptySet()
 
         return bluetoothAdapter.bondedDevices
-    }
-
-    override fun desconectar() {
-    }
-
-    override fun descubrir() {
     }
 }

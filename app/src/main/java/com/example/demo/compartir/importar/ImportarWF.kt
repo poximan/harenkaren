@@ -1,19 +1,15 @@
 package com.example.demo.compartir.importar
 
 import android.content.Context
-import com.example.demo.compartir.Compartible
 import com.example.demo.compartir.NsdHelper
 
-class ImportarWF(
-    context: Context,
-    private val callback: RegistroDistribuible
-): Compartible {
+class ImportarWF(context: Context, private val callback: RegistroDistribuible) {
 
     private lateinit var mtuClienteWF: MTUClienteWF
     private val nsdHelper: NsdHelper = NsdHelper(context)
     private var port = 0
 
-    override fun descubrir() {
+    fun descubrir() {
         nsdHelper.apply {
             if(port == 0){
                 port = initializeServerSocket()
@@ -23,7 +19,7 @@ class ImportarWF(
         }
     }
 
-    override fun desconectar() {
+    fun desconectar() {
         port = 0
         nsdHelper.tearDown()
     }

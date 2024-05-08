@@ -5,12 +5,11 @@ import android.net.nsd.NsdManager
 import android.net.nsd.NsdServiceInfo
 import android.util.Log
 import com.example.demo.activity.MainActivity
+import com.example.demo.compartir.exportar.ExportarWF
 import com.example.demo.compartir.exportar.ServiceListDialog
 import java.net.ServerSocket
 
 class NsdHelper(private val context: Context) {
-
-    private val listNsdServiceInfo = mutableListOf<String>()
 
     companion object {
         const val TAG = "descubrir"
@@ -19,10 +18,10 @@ class NsdHelper(private val context: Context) {
     }
 
     private lateinit var nsdManager: NsdManager
+    private lateinit var serverSocket: ServerSocket
     private val mServiceName: String = "$SERV_NAME@${androidID()}"
 
-    private lateinit var serverSocket: ServerSocket
-
+    private val listNsdServiceInfo = mutableListOf<String>()
     private var descubrirActivado = false
 
     /*
@@ -195,8 +194,9 @@ class NsdHelper(private val context: Context) {
         } catch (e: IllegalArgumentException){}
     }
 
-    fun showServiceListDialog() {
+    fun showServiceListDialog(claseQueLeInteresaRetorno: ExportarWF) {
         val serviceListDialog = ServiceListDialog(context)
+        serviceListDialog.setServiceSelectedListener(claseQueLeInteresaRetorno)
         serviceListDialog.updateServices(listNsdServiceInfo)
         serviceListDialog.show()
     }

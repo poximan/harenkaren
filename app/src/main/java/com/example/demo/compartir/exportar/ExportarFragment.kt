@@ -53,7 +53,6 @@ class ExportarFragment : Fragment() {
 
     private fun apagarServNSD(){
         try {
-            comBT.desconectar()
             comWF.desconectar()
         } catch (e: UninitializedPropertyAccessException){}
     }
@@ -88,9 +87,8 @@ class ExportarFragment : Fragment() {
         binding.bluetoothBtn.text = "destinatarios"
         binding.idMasterBt.text = "IP destino"
 
-        comWF.descubrir()
         val listaParcel = prepararDatos()
-        comWF.activarComoRTU(listaParcel)
+        comWF.descubrir(listaParcel)
     }
 
     private fun prepararDatos():  ArrayList<Parcelable> {
