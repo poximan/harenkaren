@@ -100,11 +100,9 @@ class ExportarFragment : Fragment() {
 
         var listaEntidadesPlanas = runBlocking { getEntidades() }
         var datosEMAIL = CreadorCSV().empaquetarCSV(requireContext(), listaEntidadesPlanas)
-
-        val destinatarios = arrayOf("poxi_man@yahoo.com")
         val cuerpo = "este es un respaldo de los ${listaEntidadesPlanas.size} registros contenidos en la app"
 
-        EmailSender.sendEmail(destinatarios, cuerpo, datosEMAIL, requireContext())
+        EmailSender.sendEmail(cuerpo, datosEMAIL, requireContext())
     }
 
     private fun enviarConcentrador() {

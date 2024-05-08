@@ -2,6 +2,7 @@ package com.example.demo.compartir.importar
 
 import android.os.Bundle
 import android.os.Parcelable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -68,7 +69,7 @@ class ImportarFragment : Fragment(), RegistroDistribuible {
         binding.recepcionBt.text = "esperando datos desde remota"
 
         comWF.descubrir()
-        //comWF.activarComoMTU()
+        comWF.activarComoMTU()
     }
 
     private fun desparcelarLista(parcelables: ArrayList<Parcelable>): List<EntidadesPlanas> {
@@ -84,6 +85,7 @@ class ImportarFragment : Fragment(), RegistroDistribuible {
     override fun onMessageReceived(lista: ArrayList<Parcelable>) {
 
         val listaEntidadesPlanas = desparcelarLista(lista)
+        Log.i("compartir","transformados a ${listaEntidadesPlanas.size} objetos desnomarlizados")
         insertarEntidades(listaEntidadesPlanas)
         binding.recepcionBt.text = listaEntidadesPlanas.toString()
     }

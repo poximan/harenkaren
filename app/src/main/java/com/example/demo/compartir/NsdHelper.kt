@@ -21,7 +21,8 @@ class NsdHelper(private val context: Context) {
     private lateinit var serverSocket: ServerSocket
     private val mServiceName: String = "$SERV_NAME@${androidID()}"
 
-    private val listNsdServiceInfo = mutableListOf<String>()
+
+    val mapNSD: MutableMap<Int, NsdServiceInfo> = mutableMapOf()
     private var descubrirActivado = false
 
     /*
@@ -131,9 +132,10 @@ class NsdHelper(private val context: Context) {
             // When the network service is no longer available.
             // Internal bookkeeping code goes here.
             Log.e(TAG, "service lost: $service")
-            listNsdServiceInfo.removeIf { texto ->
-                texto.contains(service.serviceName)
-            }
+
+            val clave = mapNSD.entries.find { it.value.serviceName == service.serviceName }?.key
+            if (clave != null)
+                mapNSD.remove(clave)
         }
 
         override fun onDiscoveryStopped(serviceType: String) {
@@ -163,13 +165,11 @@ class NsdHelper(private val context: Context) {
 
             if (serviceInfo.serviceName != SERV_NAME) {
 
-                val host = serviceInfo.host.hostAddress
-                val port = serviceInfo.port
-                val texto = "${serviceInfo.serviceName}\n$host:$port"
-                val posicion = listNsdServiceInfo.size+1
-
+                val texto = presentarAmigable(serviceInfo)
                 Log.i(TAG, "otro (desglose): $texto")
-                listNsdServiceInfo.add("$posicion- $texto")
+
+                val posicion = mapNSD.size+1
+                mapNSD[posicion] = serviceInfo
                 return
             }
         }
@@ -190,18 +190,35 @@ class NsdHelper(private val context: Context) {
             serverSocket.close()
 
             descubrirActivado = false
-            listNsdServiceInfo.clear()
+            mapNSD.clear()
         } catch (e: IllegalArgumentException){}
     }
 
     fun showServiceListDialog(claseQueLeInteresaRetorno: ExportarWF) {
-        val serviceListDialog = ServiceListDialog(context)
+
+        val serviceListDialog = ServiceListDialog(context, mapNSD)
         serviceListDialog.setServiceSelectedListener(claseQueLeInteresaRetorno)
+
+        val listNsdServiceInfo = mutableListOf<String>()
+        for ((clave, valor) in mapNSD) {
+            val texto = presentarAmigable(valor)
+            listNsdServiceInfo.add("$clave- $texto")
+        }
         serviceListDialog.updateServices(listNsdServiceInfo)
         serviceListDialog.show()
     }
 
     private fun androidID(): String {
         return MainActivity.obtenerAndroidID().substringAfter("@")
+    }
+
+    private fun presentarAmigable(serviceInfo: NsdServiceInfo): String{
+        val host = serviceInfo.host.hostAddress
+        val port = serviceInfo.port
+        return "${serviceInfo.serviceName}\n$host:$port"
+    }
+
+    fun getSocket(): ServerSocket {
+        return serverSocket
     }
 }

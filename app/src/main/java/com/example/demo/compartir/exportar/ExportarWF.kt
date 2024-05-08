@@ -1,6 +1,7 @@
 package com.example.demo.compartir.exportar
 
 import android.content.Context
+import android.net.nsd.NsdServiceInfo
 import android.os.Parcelable
 import android.util.Log
 import com.example.demo.compartir.NsdHelper
@@ -29,8 +30,7 @@ class ExportarWF(context: Context): ServiceListDialog.ServiceSelectedListener {
         nsdHelper.tearDown()
     }
 
-    private fun activarComoRTU() {
-        val ip = "192"
+    private fun activarComoRTU(ip: String, port: Int) {
         rtuServWF = RTUServWF(ip, port)
         rtuServWF.sendData(listaParcel)
     }
@@ -39,23 +39,9 @@ class ExportarWF(context: Context): ServiceListDialog.ServiceSelectedListener {
         nsdHelper.showServiceListDialog(this)
     }
 
-    override fun onServiceSelected(serviceName: String) {
-        Log.i(NsdHelper.TAG, "llego hasta aca: $serviceName")
-        val (ip, puerto) = obtenerDatos(serviceName) ?: run {
-            println("No se encontró dirección IP y puerto en el texto.")
-            return
-        }
-        println("Dirección IP: $ip")
-        println("Puerto: $puerto")
-    }
-
-    private fun obtenerDatos(texto: String): Pair<String, Int>? {
-        val regex = Regex("""\b(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}):(\d+)\b""")
-        val matchResult = regex.find(texto)
-        return matchResult?.let {
-            val ip = it.groupValues[1]
-            val puerto = it.groupValues[2].toInt()
-            ip to puerto
-        }
+    override fun onServiceSelected(serviceInfo: NsdServiceInfo) {
+        Log.i(NsdHelper.TAG, "Dirección IP: ${serviceInfo.host.hostAddress}")
+        Log.i(NsdHelper.TAG, "Puerto: ${serviceInfo.port}")
+        activarComoRTU(serviceInfo.host.hostAddress, serviceInfo.port)
     }
 }

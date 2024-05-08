@@ -2,17 +2,16 @@ package com.example.demo.compartir.exportar
 
 import android.app.Dialog
 import android.content.Context
+import android.net.nsd.NsdServiceInfo
 import android.os.Bundle
-import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import com.example.demo.R
-import com.example.demo.compartir.NsdHelper
 
-class ServiceListDialog(context: Context) : Dialog(context) {
+class ServiceListDialog(context: Context, private val mapNSD: MutableMap<Int, NsdServiceInfo>) : Dialog(context) {
 
     interface ServiceSelectedListener {
-        fun onServiceSelected(serviceName: String)
+        fun onServiceSelected(serviceInfo: NsdServiceInfo)
     }
 
     private val adapter: ArrayAdapter<String> = ArrayAdapter(context, android.R.layout.simple_list_item_1)
@@ -31,7 +30,8 @@ class ServiceListDialog(context: Context) : Dialog(context) {
 
             if (adapter is ArrayAdapter<*>) {
                 val item = adapter.getItem(position) as String
-                listener?.onServiceSelected(item)
+                val entrada = mapNSD[item.substringBefore("-").toInt()]!!
+                listener?.onServiceSelected(entrada)
                 dismiss()
             }
         }

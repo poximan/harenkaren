@@ -2,6 +2,7 @@ package com.example.demo.compartir.importar
 
 import android.os.AsyncTask
 import android.os.Parcelable
+import android.util.Log
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.IOException
@@ -10,21 +11,16 @@ import java.net.ServerSocket
 
 class MTUClienteWF(private val callback: RegistroDistribuible) {
 
-    companion object {
-        private const val PORT = 8888
+    fun startListening(socket: ServerSocket) {
+        ServerTask(socket).execute()
     }
 
-    fun startListening() {
-        ServerTask().execute()
-    }
-
-    private inner class ServerTask() : AsyncTask<Void, ArrayList<Parcelable>, Void>() {
+    private inner class ServerTask(private val serverSocket: ServerSocket) : AsyncTask<Void, ArrayList<Parcelable>, Void>() {
 
         override fun doInBackground(vararg params: Void?): Void? {
 
             var lista: ArrayList<Parcelable>? = null
             try {
-                val serverSocket = ServerSocket(PORT)
                 println("Esperando conexión...")
                 val socket = serverSocket.accept()
                 println("Conexión establecida.")
@@ -43,13 +39,15 @@ class MTUClienteWF(private val callback: RegistroDistribuible) {
                 val objectInputStream = ObjectInputStream(byteArrayInputStream)
                 lista = objectInputStream.readObject() as? ArrayList<Parcelable>
 
+                Log.i("compartir","arribaron ${bytes.size} bytes")
+                Log.i("compartir","transformados a ${lista!!.size} parcel")
+
                 // Cerrar los streams y el socket
                 inputStream.close()
                 byteArrayOutputStream.close()
                 byteArrayInputStream.close()
                 objectInputStream.close()
                 socket.close()
-                serverSocket.close()
 
             } catch (e: IOException) {
                 e.printStackTrace()
