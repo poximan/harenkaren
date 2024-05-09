@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.demo.dao.RecorrDAO
 import com.example.demo.model.Recorrido
-import com.example.demo.model.UnidSocial
 import java.util.UUID
 
 class RecorrRepository(private val dao: RecorrDAO) {
@@ -14,6 +13,7 @@ class RecorrRepository(private val dao: RecorrDAO) {
     fun insert(recorrido: Recorrido) {
         dao.insertConUltInst(recorrido)
     }
+
     fun update(recorrido: Recorrido) {
         dao.update(recorrido)
     }

@@ -20,9 +20,10 @@ class MTUClienteBT(private val bluetoothAdapter: BluetoothAdapter) {
             var lista: ArrayList<Parcelable>? = null
 
             try {
-                val serverSocket: BluetoothServerSocket = bluetoothAdapter.listenUsingRfcommWithServiceRecord(
-                    "BluetoothMTU", ExportarBT.BLUETOOTH_UUID
-                )
+                val serverSocket: BluetoothServerSocket =
+                    bluetoothAdapter.listenUsingRfcommWithServiceRecord(
+                        "BluetoothMTU", ExportarBT.BLUETOOTH_UUID
+                    )
                 println("Esperando conexión...")
                 val socket: BluetoothSocket = serverSocket.accept()
                 println("Conexión establecida.")

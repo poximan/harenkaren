@@ -5,7 +5,6 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
-import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,7 +34,7 @@ class ExportarFragment : Fragment() {
         _binding = FragmentExportarBinding.inflate(inflater, container, false)
 
         binding.emailBtn.setOnClickListener { enviarMedioExterno() }
-        binding.bluetoothBtn.setOnClickListener { enviarConcentrador() }
+        binding.medioBtn.setOnClickListener { enviarConcentrador() }
 
         binding.radioBt.setOnClickListener { clickBT() }
         binding.radioWifi.setOnClickListener { clickWF() }
@@ -51,18 +50,18 @@ class ExportarFragment : Fragment() {
         apagarServNSD()
     }
 
-    private fun apagarServNSD(){
+    private fun apagarServNSD() {
         try {
             comWF.desconectar()
-        } catch (e: UninitializedPropertyAccessException){}
+        } catch (e: UninitializedPropertyAccessException) {
+        }
     }
 
     private fun clickBT() {
         apagarServNSD()
 
-        binding.txtMasterBt.inputType = InputType.TYPE_CLASS_TEXT
-        binding.bluetoothBtn.text = "enviar por BT"
-        binding.idMasterBt.text = "ID bluetooth"
+        binding.txtMasterBt.isEnabled = true
+        binding.medioBtn.text = "enviar por BT"
 
         val datosConcatenados = StringBuilder()
         for (elemento in comBT.obtenerDispositivosEmparejados()) {
@@ -76,22 +75,18 @@ class ExportarFragment : Fragment() {
             datosConcatenados.append("MAC: ${elemento.address}, Alias: ${elemento.name}\n")
         }
         binding.recepcionBt.text = datosConcatenados.toString()
-
-        val listaParcel = prepararDatos()
-        comBT.activarComoRTU(listaParcel)
     }
 
     private fun clickWF() {
 
-        binding.txtMasterBt.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_CLASS_NUMBER
-        binding.bluetoothBtn.text = "destinatarios"
-        binding.idMasterBt.text = "IP destino"
+        binding.txtMasterBt.isEnabled = false
+        binding.medioBtn.text = "destinatarios"
 
         val listaParcel = prepararDatos()
         comWF.descubrir(listaParcel)
     }
 
-    private fun prepararDatos():  ArrayList<Parcelable> {
+    private fun prepararDatos(): ArrayList<Parcelable> {
         var listaEntidadesPlanas = runBlocking { getEntidades() }
         return parcelarLista(listaEntidadesPlanas)
     }
@@ -100,13 +95,19 @@ class ExportarFragment : Fragment() {
 
         var listaEntidadesPlanas = runBlocking { getEntidades() }
         var datosEMAIL = CreadorCSV().empaquetarCSV(requireContext(), listaEntidadesPlanas)
-        val cuerpo = "este es un respaldo de los ${listaEntidadesPlanas.size} registros contenidos en la app"
+        val cuerpo =
+            "este es un respaldo de los ${listaEntidadesPlanas.size} registros contenidos en la app"
 
         EmailSender.sendEmail(cuerpo, datosEMAIL, requireContext())
     }
 
     private fun enviarConcentrador() {
-        comWF.levantarModal()
+        if(binding.radioWifi.isChecked)
+            comWF.levantarModal()
+        if(binding.radioBt.isChecked){
+            val listaParcel = prepararDatos()
+            comBT.activarComoRTU(listaParcel)
+        }
     }
 
     private suspend fun getEntidades(): List<EntidadesPlanas> {

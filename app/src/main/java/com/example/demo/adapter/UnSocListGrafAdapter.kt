@@ -1,8 +1,6 @@
 package com.example.demo.adapter
 
 import android.content.Context
-import android.graphics.RectF
-import androidx.compose.ui.geometry.Rect
 import androidx.core.content.ContextCompat
 import com.example.demo.R
 import com.example.demo.model.UnidSocial
@@ -12,7 +10,11 @@ import org.eazegraph.lib.models.StackedBarModel
 
 class UnSocListGrafAdapter(private val context: Context) {
 
-    internal fun setUnSoc(unidSocialList: List<UnidSocial>, stackchart: StackedBarChart, total: Int) {
+    internal fun setUnSoc(
+        unidSocialList: List<UnidSocial>,
+        stackchart: StackedBarChart,
+        total: Int
+    ) {
 
         stackchart.clearChart()
         for (unidSocial in unidSocialList) {
@@ -30,8 +32,8 @@ class UnSocListGrafAdapter(private val context: Context) {
         for (atribString in contadoresNoNulos) {
             acumulado += setData(stackBarModel, atribString, unidSocial)
         }
-        if(total != 0)
-            cerrarSet(stackBarModel, total-acumulado)
+        if (total != 0)
+            cerrarSet(stackBarModel, total - acumulado)
 
         stackBarModel.legendLabel = "id${unidSocial.orden}($acumulado)"
         return stackBarModel

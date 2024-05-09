@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class UnSocShareViewModel: ViewModel() {
+class UnSocShareViewModel : ViewModel() {
 
     private val _lastSelectedValue = MutableLiveData<String>()
     val lastSelectedValue: LiveData<String>

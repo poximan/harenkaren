@@ -13,7 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class UnSocViewModel(application: Application) : AndroidViewModel(application){
+class UnSocViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository: UnSocRepository
     private val repositoryPropagado: RecorrRepository
@@ -30,6 +30,7 @@ class UnSocViewModel(application: Application) : AndroidViewModel(application){
 
         allUnSoc = repository.unSocListAll
     }
+
     fun insert(unidSocial: UnidSocial) = CoroutineScope(Dispatchers.IO).launch(Dispatchers.IO) {
         repository.insert(unidSocial)
 

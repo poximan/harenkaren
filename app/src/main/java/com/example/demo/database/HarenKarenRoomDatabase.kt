@@ -15,7 +15,11 @@ import com.example.demo.model.UnidSocial
 import com.example.demo.model.Usuario
 import kotlinx.coroutines.CoroutineScope
 
-@Database(entities = [Dia::class, Recorrido::class, UnidSocial::class, Usuario::class], version = 1, exportSchema = false)
+@Database(
+    entities = [Dia::class, Recorrido::class, UnidSocial::class, Usuario::class],
+    version = 1,
+    exportSchema = false
+)
 @TypeConverters(Converter::class)
 abstract class HarenKarenRoomDatabase : RoomDatabase() {
 

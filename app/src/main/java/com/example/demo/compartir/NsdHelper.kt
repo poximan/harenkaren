@@ -21,7 +21,6 @@ class NsdHelper(private val context: Context) {
     private lateinit var serverSocket: ServerSocket
     private val mServiceName: String = "$SERV_NAME@${androidID()}"
 
-
     val mapNSD: MutableMap<Int, NsdServiceInfo> = mutableMapOf()
     private var descubrirActivado = false
 
@@ -33,7 +32,7 @@ class NsdHelper(private val context: Context) {
 
     fun initializeServerSocket(): Int {
 
-        if(!::serverSocket.isInitialized || serverSocket.isClosed){
+        if (!::serverSocket.isInitialized || serverSocket.isClosed) {
             Log.i(TAG, "anunciando mi servicio")
             // Initialize a server socket on the next available port.
             serverSocket = ServerSocket(0).also { socket ->
@@ -55,6 +54,10 @@ class NsdHelper(private val context: Context) {
         nsdManager = (context.getSystemService(Context.NSD_SERVICE) as NsdManager).apply {
             registerService(serviceInfo, NsdManager.PROTOCOL_DNS_SD, registrationListener)
         }
+    }
+
+    fun miNombre(): String {
+        return mServiceName
     }
 
     // --------------- CLASE ANONIMA
@@ -111,7 +114,10 @@ class NsdHelper(private val context: Context) {
             Log.i(TAG, "Service discovery success $service")
             when {
                 service.serviceType != SERV_TYPE || !service.serviceName.contains(SERV_NAME) ->
-                    Log.e(TAG, "Unknown Service Type: ${service.serviceName} - ${service.serviceType}")
+                    Log.e(
+                        TAG,
+                        "Unknown Service Type: ${service.serviceName} - ${service.serviceType}"
+                    )
 
                 /*
                 la aparente comparacion redundante primero "==" y luego "contains" es porque si dos dispositivos en la red
@@ -153,6 +159,20 @@ class NsdHelper(private val context: Context) {
         }
     }
 
+    fun showServiceListDialog(claseQueLeInteresaRetorno: ExportarWF) {
+
+        val serviceListDialog = ServiceListDialog(context, mapNSD)
+        serviceListDialog.setServiceSelectedListener(claseQueLeInteresaRetorno)
+
+        val listNsdServiceInfo = mutableListOf<String>()
+        for ((clave, valor) in mapNSD) {
+            val texto = presentarAmigable(valor)
+            listNsdServiceInfo.add("$clave- $texto")
+        }
+        serviceListDialog.updateServices(listNsdServiceInfo)
+        serviceListDialog.show()
+    }
+
     // --------------- CLASE ANONIMA
     private val resolveListener = object : NsdManager.ResolveListener {
 
@@ -168,7 +188,7 @@ class NsdHelper(private val context: Context) {
                 val texto = presentarAmigable(serviceInfo)
                 Log.i(TAG, "otro (desglose): $texto")
 
-                val posicion = mapNSD.size+1
+                val posicion = mapNSD.size + 1
                 mapNSD[posicion] = serviceInfo
                 return
             }
@@ -191,28 +211,15 @@ class NsdHelper(private val context: Context) {
 
             descubrirActivado = false
             mapNSD.clear()
-        } catch (e: IllegalArgumentException){}
-    }
-
-    fun showServiceListDialog(claseQueLeInteresaRetorno: ExportarWF) {
-
-        val serviceListDialog = ServiceListDialog(context, mapNSD)
-        serviceListDialog.setServiceSelectedListener(claseQueLeInteresaRetorno)
-
-        val listNsdServiceInfo = mutableListOf<String>()
-        for ((clave, valor) in mapNSD) {
-            val texto = presentarAmigable(valor)
-            listNsdServiceInfo.add("$clave- $texto")
+        } catch (e: IllegalArgumentException) {
         }
-        serviceListDialog.updateServices(listNsdServiceInfo)
-        serviceListDialog.show()
     }
 
     private fun androidID(): String {
         return MainActivity.obtenerAndroidID().substringAfter("@")
     }
 
-    private fun presentarAmigable(serviceInfo: NsdServiceInfo): String{
+    private fun presentarAmigable(serviceInfo: NsdServiceInfo): String {
         val host = serviceInfo.host.hostAddress
         val port = serviceInfo.port
         return "${serviceInfo.serviceName}\n$host:$port"

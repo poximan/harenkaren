@@ -36,7 +36,8 @@ class DiaDetailFragment : Fragment() {
     }
 
     private fun verRecorrido() {
-        val action = DiaDetailFragmentDirections.goToRecorrListFromDiaDetailAction(args.diaActual.id)
+        val action =
+            DiaDetailFragmentDirections.goToRecorrListFromDiaDetailAction(args.diaActual.id)
         findNavController().navigate(action)
     }
 

@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey
 import java.util.UUID
 
 @Entity(tableName = "dia")
-data class Dia (
+data class Dia(
 
     // ----- identidicadores ----- //
     @ColumnInfo(name = "id_celular")
@@ -21,9 +21,9 @@ data class Dia (
     var orden: Int,
 
     // ----- tiempo ----- //
-    var fecha : String
+    var fecha: String
 
-):Parcelable {
+) : Parcelable {
     constructor(parcel: Parcel) : this(
         // ----- identidicadores ----- //
         parcel.readString().toString(),

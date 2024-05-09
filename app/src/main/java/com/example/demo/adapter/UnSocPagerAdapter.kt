@@ -83,6 +83,7 @@ class UnSocPagerAdapter(
                 map["photo_path"] = mapaActual["photo_path"] as String
                 map["comentario"] = mapaActual["comentario"] as String
             }
+
             1 -> {
                 map["v_alfa_s4ad"] = mapaActual["v_alfa_s4ad"] as Int
                 map["v_alfa_sams"] = mapaActual["v_alfa_sams"] as Int
@@ -97,6 +98,7 @@ class UnSocPagerAdapter(
                 map["v_otros_sams_cerca"] = mapaActual["v_otros_sams_cerca"] as Int
                 map["v_otros_sams_lejos"] = mapaActual["v_otros_sams_lejos"] as Int
             }
+
             2 -> {
                 map["m_alfa_s4ad"] = mapaActual["m_alfa_s4ad"] as Int
                 map["m_alfa_sams"] = mapaActual["m_alfa_sams"] as Int
@@ -122,7 +124,7 @@ class UnSocPagerAdapter(
         return solapas.size
     }
 
-    override fun getPageTitle(position: Int): CharSequence? {
+    override fun getPageTitle(position: Int): CharSequence {
         return solapas[position].toString()
     }
 

@@ -28,11 +28,12 @@ import com.example.demo.model.LatLong
 import com.example.demo.model.UnidSocial
 import kotlin.reflect.KFunction2
 
-class UnSocGralDetailFragment() : Fragment() {
+class UnSocGralDetailFragment : Fragment() {
 
     companion object {
         private lateinit var colectar: (Int, Map<String, Any>) -> Unit
     }
+
     private val map: MutableMap<String, Any> = mutableMapOf()
 
     private var _binding: FragmentUnsocGralBinding? = null
@@ -77,7 +78,8 @@ class UnSocGralDetailFragment() : Fragment() {
 
         // tipo de sustrato en playa
         val tpoSustrato = resources.getStringArray(R.array.op_tipo_sustrato)
-        val tpoSustratoArrayAdapter = ArrayAdapter(view.context, R.layout.dropdown_item, tpoSustrato)
+        val tpoSustratoArrayAdapter =
+            ArrayAdapter(view.context, R.layout.dropdown_item, tpoSustrato)
 
         binding.spinnerAddTpoSustrato.adapter = tpoSustratoArrayAdapter
         binding.helpTpoSustrato.setOnClickListener { tpoSustratoInfo() }
@@ -100,10 +102,13 @@ class UnSocGralDetailFragment() : Fragment() {
         super.onSaveInstanceState(outState)
         try {
             outState.putParcelable("unSocEditable", unSocEditable)
-        } catch (e: UninitializedPropertyAccessException){
-            Log.i("estadoRotacion","falso positivo para UninitializedPropertyAccessException en ${toString()}" +
-                    " por rotacion de pantalla + criterio de anticipacion TabLayout/ViewPager que pretende salvar datos" +
-                    " antes que entre en RUN el fragmento contenedor")
+        } catch (e: UninitializedPropertyAccessException) {
+            Log.i(
+                "estadoRotacion",
+                "falso positivo para UninitializedPropertyAccessException en ${toString()}" +
+                        " por rotacion de pantalla + criterio de anticipacion TabLayout/ViewPager que pretende salvar datos" +
+                        " antes que entre en RUN el fragmento contenedor"
+            )
         }
     }
 
@@ -112,10 +117,12 @@ class UnSocGralDetailFragment() : Fragment() {
         savedInstanceState?.let {
             try {
                 unSocEditable = it.getParcelable("unSocEditable")!!
-            } catch (e: NullPointerException){
-                Log.i("estadoRotacion","falso positivo para NullPointerException en ${toString()}." +
-                        " por rotacion de pantalla + criterio de anticipacion TabLayout/ViewPager que pretende recuperar datos" +
-                        " antes que entre en RUN el fragmento contenedor")
+            } catch (e: NullPointerException) {
+                Log.i(
+                    "estadoRotacion", "falso positivo para NullPointerException en ${toString()}." +
+                            " por rotacion de pantalla + criterio de anticipacion TabLayout/ViewPager que pretende recuperar datos" +
+                            " antes que entre en RUN el fragmento contenedor"
+                )
             }
         }
     }
@@ -156,11 +163,10 @@ class UnSocGralDetailFragment() : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        try{
+        try {
             latLon.lat = arguments?.getDouble("lat")!!
             latLon.lon = arguments?.getDouble("lon")!!
-        }
-        catch(e: NullPointerException){
+        } catch (e: NullPointerException) {
         }
         cargarDatos()
         cargarMap()
@@ -188,19 +194,20 @@ class UnSocGralDetailFragment() : Fragment() {
 
         map["pto_observacion"] = binding.spinnerAddPtoObs.selectedItem.toString()
         map["ctx_social"] = binding.spinnerAddCtxSocial.selectedItem.toString()
-        map["tpo_sustrato"] =  binding.spinnerAddTpoSustrato.selectedItem.toString()
+        map["tpo_sustrato"] = binding.spinnerAddTpoSustrato.selectedItem.toString()
         map["latitud"] = latLon.lat
         map["longitud"] = latLon.lon
         map["photo_path"] = unSocEditable.photoPath as String
         map["comentario"] = binding.unSocComentario.text.toString()
 
-        colectar(0,map)
+        colectar(0, map)
     }
 
     private val onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
             cargarMap()
         }
+
         override fun onNothingSelected(parent: AdapterView<*>?) {}
     }
 

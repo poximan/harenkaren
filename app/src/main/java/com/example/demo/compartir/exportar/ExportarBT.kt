@@ -17,7 +17,7 @@ class ExportarBT(private val context: Context, private val masterBT: String) {
     }
 
     fun activarComoRTU(lista: ArrayList<Parcelable>) {
-        var adapter = obtenerBluetoothAdapter() ?.let { it }
+        var adapter = obtenerBluetoothAdapter()?.let { it }
 
         val direccionMAC = adapter?.let { obtenerDireccionMAC(it, masterBT) }
 
@@ -37,7 +37,10 @@ class ExportarBT(private val context: Context, private val masterBT: String) {
     }
 
     @SuppressLint("MissingPermission")
-    private fun obtenerDireccionMAC(bluetoothAdapter: BluetoothAdapter, nombreDispositivo: String): String? {
+    private fun obtenerDireccionMAC(
+        bluetoothAdapter: BluetoothAdapter,
+        nombreDispositivo: String
+    ): String? {
         if (!bluetoothAdapter.isEnabled) {
             return null
         }

@@ -41,16 +41,16 @@ data class Recorrido(
     var fechaFin: String,
 
     // ----- espacio ----- //
-    @ColumnInfo(name="latitud_ini")
+    @ColumnInfo(name = "latitud_ini")
     var latitudIni: Double,
 
-    @ColumnInfo(name="longitud_ini")
+    @ColumnInfo(name = "longitud_ini")
     var longitudIni: Double,
 
-    @ColumnInfo(name="latitud_fin")
+    @ColumnInfo(name = "latitud_fin")
     var latitudFin: Double,
 
-    @ColumnInfo(name="longitud_fin")
+    @ColumnInfo(name = "longitud_fin")
     var longitudFin: Double,
 
     @ColumnInfo(name = "area_recorrida")
@@ -60,7 +60,7 @@ data class Recorrido(
 
     var marea: String
 
-):Parcelable {
+) : Parcelable {
     constructor(parcel: Parcel) : this(
         // ----- identidicadores ----- //
         parcel.readInt(),
@@ -95,9 +95,11 @@ data class Recorrido(
         areaRecorrida: String,
         meteo: String,
         marea: String
-    ) : this(null, diaId, 0, observador, fechaIni, fechaFin,
+    ) : this(
+        null, diaId, 0, observador, fechaIni, fechaFin,
         latitudIni, longitudIni, latitudFin, longitudFin,
-        areaRecorrida, meteo, marea)
+        areaRecorrida, meteo, marea
+    )
 
     @Ignore
     constructor(
@@ -113,9 +115,11 @@ data class Recorrido(
         areaRecorrida: String,
         meteo: String,
         marea: String
-    ) : this(id, diaId, 0, observador, fechaIni, fechaFin,
+    ) : this(
+        id, diaId, 0, observador, fechaIni, fechaFin,
         latitudIni, longitudIni, latitudFin, longitudFin,
-        areaRecorrida, meteo, marea)
+        areaRecorrida, meteo, marea
+    )
 
     override fun describeContents(): Int {
         return Parcelable.CONTENTS_FILE_DESCRIPTOR

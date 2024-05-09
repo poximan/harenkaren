@@ -21,9 +21,9 @@ class MainActivity : AppCompatActivity() {
     companion object {
         private lateinit var resolver: ContentResolver
 
-        fun obtenerAndroidID(): String{
+        fun obtenerAndroidID(): String {
             val androidID = Settings.Secure.getString(resolver, Settings.Secure.ANDROID_ID)
-            return androidID+"@"+android.os.Build.MANUFACTURER+"-"+android.os.Build.MODEL
+            return androidID + "@" + android.os.Build.MANUFACTURER + "-" + android.os.Build.MODEL
         }
     }
 
@@ -61,10 +61,10 @@ class MainActivity : AppCompatActivity() {
         NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
         setContentView(view)
 
-        agregarParOrigenDestino(R.id.home_fragment, R.id.login_fragment,)
-        agregarParOrigenDestino(R.id.dia_list_fragment,R.id.home_fragment)
-        agregarParOrigenDestino(R.id.recorr_list_fragment,R.id.dia_detail_fragment)
-        agregarParOrigenDestino(R.id.unsoc_list_fragment,R.id.recorr_detail_fragment)
+        agregarParOrigenDestino(R.id.home_fragment, R.id.login_fragment)
+        agregarParOrigenDestino(R.id.dia_list_fragment, R.id.home_fragment)
+        agregarParOrigenDestino(R.id.recorr_list_fragment, R.id.dia_detail_fragment)
+        agregarParOrigenDestino(R.id.unsoc_list_fragment, R.id.recorr_detail_fragment)
     }
 
     override fun onSupportNavigateUp(): Boolean {

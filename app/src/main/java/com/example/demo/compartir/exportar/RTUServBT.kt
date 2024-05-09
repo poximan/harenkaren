@@ -25,7 +25,8 @@ class RTUServBT(private val bluetoothAdapter: BluetoothAdapter) {
         val bytes = byteArrayOutputStream.toByteArray()
 
         try {
-            val socket: BluetoothSocket = mtuDevice.createRfcommSocketToServiceRecord(ExportarBT.BLUETOOTH_UUID)
+            val socket: BluetoothSocket =
+                mtuDevice.createRfcommSocketToServiceRecord(ExportarBT.BLUETOOTH_UUID)
             socket.connect()
             // Enviar el mensaje al dispositivo maestro
             val outputStream = socket.outputStream

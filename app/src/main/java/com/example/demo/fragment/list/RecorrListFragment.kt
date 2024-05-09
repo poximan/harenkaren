@@ -42,7 +42,7 @@ class RecorrListFragment : Fragment(), RecorrListAdapter.OnRecorrClickListener {
         _binding = FragmentRecorrListBinding.inflate(inflater, container, false)
 
         _binding!!.homeActionButton.setOnClickListener { goHome() }
-        _binding!!.nvoRecorrButton.setOnClickListener{ nvoRecorrido() }
+        _binding!!.nvoRecorrButton.setOnClickListener { nvoRecorrido() }
 
         recorrList = binding.listRecorr
         loadFullList()
@@ -75,14 +75,17 @@ class RecorrListFragment : Fragment(), RecorrListAdapter.OnRecorrClickListener {
                 filtrar()
                 true
             }
+
             R.id.filtro_limpiar -> {
                 loadFullList()
                 true
             }
+
             R.id.ayuda -> {
                 mostrarAyuda()
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -128,7 +131,7 @@ class RecorrListFragment : Fragment(), RecorrListAdapter.OnRecorrClickListener {
         val dpd = DatePickerDialog(
             activity!!,
             { _, year, monthOfYear, dayOfMonth ->
-                val dateSelected = "" + dayOfMonth + "/" + (monthOfYear + 1)  + "/" + year
+                val dateSelected = "" + dayOfMonth + "/" + (monthOfYear + 1) + "/" + year
                 loadListWithDate(dateSelected)
             }, year, month, day
         )

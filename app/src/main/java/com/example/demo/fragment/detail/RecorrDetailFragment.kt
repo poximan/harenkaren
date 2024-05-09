@@ -45,7 +45,8 @@ class RecorrDetailFragment : Fragment() {
         val mareasArrayAdapter = ArrayAdapter(view.context, R.layout.dropdown_item, estadosMarea)
         binding.spinnerMarea.adapter = mareasArrayAdapter
 
-        binding.idRecorr.text = "ID unico de recorrido = " + args.recorrActual.id.toString().toEditable()
+        binding.idRecorr.text =
+            "ID unico de recorrido = " + args.recorrActual.id.toString().toEditable()
 
         binding.editObservador.text = args.recorrActual.observador.toEditable()
         binding.areaRecorr.text = args.recorrActual.areaRecorrida.toEditable()
@@ -58,13 +59,13 @@ class RecorrDetailFragment : Fragment() {
         binding.horaIni.text = "Hora inicio: " + args.recorrActual.fechaIni
         binding.horaFin.text = "Hora fin: " + args.recorrActual.fechaFin
 
-        latLonIni.lat = args.recorrActual.latitudIni!!
-        latLonIni.lon = args.recorrActual.longitudIni!!
+        latLonIni.lat = args.recorrActual.latitudIni
+        latLonIni.lon = args.recorrActual.longitudIni
         binding.latitudIni.text = String.format("%.6f", latLonIni.lat)
         binding.longitudIni.text = String.format("%.6f", latLonIni.lon)
 
-        latLonFin.lat = args.recorrActual.latitudFin!!
-        latLonFin.lon = args.recorrActual.longitudFin!!
+        latLonFin.lat = args.recorrActual.latitudFin
+        latLonFin.lon = args.recorrActual.longitudFin
         binding.latitudFin.text = String.format("%.6f", latLonFin.lat)
         binding.longitudFin.text = String.format("%.6f", latLonFin.lon)
 
@@ -131,7 +132,7 @@ class RecorrDetailFragment : Fragment() {
     }
 
     private fun goBack() {
-        val action = args.recorrActual.diaId?.let {
+        val action = args.recorrActual.diaId.let {
             RecorrDetailFragmentDirections.goToRecorrListAction(
                 it
             )

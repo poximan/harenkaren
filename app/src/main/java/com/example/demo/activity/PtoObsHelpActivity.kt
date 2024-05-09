@@ -2,8 +2,8 @@ package com.example.demo.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.demo.fragment.info.Coordinadora
 import com.example.demo.R
+import com.example.demo.fragment.info.Coordinadora
 import com.example.demo.fragment.info.PtoObsHelpDescripFragment
 
 class PtoObsHelpActivity : AppCompatActivity(), Coordinadora {
@@ -13,7 +13,8 @@ class PtoObsHelpActivity : AppCompatActivity(), Coordinadora {
     }
 
     override fun onChangeOpciones(index: Int) {
-        val fragment = supportFragmentManager.findFragmentById(R.id.fragment_ptoObsHelpDescrip) as PtoObsHelpDescripFragment
+        val fragment =
+            supportFragmentManager.findFragmentById(R.id.fragment_ptoObsHelpDescrip) as PtoObsHelpDescripFragment
         fragment.change(index)
     }
 }

@@ -12,18 +12,19 @@ import com.example.demo.databinding.FragmentUnsocMuertosBinding
 import com.example.demo.model.UnidSocial
 import kotlin.reflect.KFunction2
 
-class UnSocMuertosDetailFragment() : Fragment() {
+class UnSocMuertosDetailFragment : Fragment() {
 
     companion object {
         private lateinit var colectar: (Int, Map<String, Any>) -> Unit
     }
+
     private val map: MutableMap<String, Any> = mutableMapOf()
 
     private var _binding: FragmentUnsocMuertosBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var unSocEditable: UnidSocial
-    
+
     fun editInstance(
         colectarFunc: KFunction2<Int, Map<String, Any>, Unit>,
         unSoc: UnidSocial
@@ -45,10 +46,13 @@ class UnSocMuertosDetailFragment() : Fragment() {
         super.onSaveInstanceState(outState)
         try {
             outState.putParcelable("unSocEditable", unSocEditable)
-        } catch (e: UninitializedPropertyAccessException){
-            Log.i("estadoRotacion","falso positivo para UninitializedPropertyAccessException en ${toString()}." +
-                    " por rotacion de pantalla + criterio de anticipacion TabLayout/ViewPager que pretende salvar datos" +
-                    " antes que entre en RUN el fragmento contenedor")
+        } catch (e: UninitializedPropertyAccessException) {
+            Log.i(
+                "estadoRotacion",
+                "falso positivo para UninitializedPropertyAccessException en ${toString()}." +
+                        " por rotacion de pantalla + criterio de anticipacion TabLayout/ViewPager que pretende salvar datos" +
+                        " antes que entre en RUN el fragmento contenedor"
+            )
         }
     }
 
@@ -57,10 +61,12 @@ class UnSocMuertosDetailFragment() : Fragment() {
         savedInstanceState?.let {
             try {
                 unSocEditable = it.getParcelable("unSocEditable")!!
-            } catch (e: NullPointerException){
-                Log.i("estadoRotacion","falso positivo para NullPointerException en ${toString()}." +
-                        " por rotacion de pantalla + criterio de anticipacion TabLayout/ViewPager que pretende recuperar datos" +
-                        " antes que entre en RUN el fragmento contenedor")
+            } catch (e: NullPointerException) {
+                Log.i(
+                    "estadoRotacion", "falso positivo para NullPointerException en ${toString()}." +
+                            " por rotacion de pantalla + criterio de anticipacion TabLayout/ViewPager que pretende recuperar datos" +
+                            " antes que entre en RUN el fragmento contenedor"
+                )
             }
         }
     }
@@ -95,7 +101,7 @@ class UnSocMuertosDetailFragment() : Fragment() {
         binding.mOtrosSamsCerca.addTextChangedListener(textWatcher)
         binding.mOtrosSamsLejos.addTextChangedListener(textWatcher)
     }
-    
+
     override fun onResume() {
         super.onResume()
         cargarDatos()
@@ -132,7 +138,7 @@ class UnSocMuertosDetailFragment() : Fragment() {
         map["m_otros_sams_cerca"] = safeStringToInt(binding.mOtrosSamsCerca.text.toString())
         map["m_otros_sams_lejos"] = safeStringToInt(binding.mOtrosSamsLejos.text.toString())
 
-        colectar(2,map)
+        colectar(2, map)
     }
 
     private fun safeStringToInt(value: String): Int {

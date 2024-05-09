@@ -13,7 +13,8 @@ class RTUServWF(private val ip: String, private val port: Int) {
         SendDataTask(lista).execute()
     }
 
-    private inner class SendDataTask(private val lista: ArrayList<Parcelable>) : AsyncTask<Void, Void, Void>() {
+    private inner class SendDataTask(private val lista: ArrayList<Parcelable>) :
+        AsyncTask<Void, Void, Void>() {
 
         override fun doInBackground(vararg params: Void?): Void? {
 

@@ -32,7 +32,7 @@ interface DiaDAO {
             val nombre = MainActivity.obtenerAndroidID()
             val uuid =
                 UUID.nameUUIDFromBytes("$elem.id:$nombre".toByteArray(StandardCharsets.UTF_8))
-                elem.id = uuid
+            elem.id = uuid
         }
         insertConUltInst(elem)
         return elem.id
@@ -68,7 +68,7 @@ interface DiaDAO {
     fun update(recorrido: Dia): Int
 
     @Transaction
-    fun insertarDesnormalizado(listaEntidadesPlanas: List<EntidadesPlanas>){
+    fun insertarDesnormalizado(listaEntidadesPlanas: List<EntidadesPlanas>) {
         listaEntidadesPlanas.forEach { entidadPlana ->
             val dia = entidadPlana.getDia()
 

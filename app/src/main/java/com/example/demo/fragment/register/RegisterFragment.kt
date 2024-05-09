@@ -97,8 +97,10 @@ class RegisterFragment : Fragment(), UsuarioCallback {
 
     private fun turnVisibility() {
         if (!visible) {
-            _binding!!.editTextPassword.transformationMethod = PasswordTransformationMethod.getInstance()
-            _binding!!.editTextPassword2.transformationMethod = PasswordTransformationMethod.getInstance()
+            _binding!!.editTextPassword.transformationMethod =
+                PasswordTransformationMethod.getInstance()
+            _binding!!.editTextPassword2.transformationMethod =
+                PasswordTransformationMethod.getInstance()
 
             _binding!!.editTextPassword.setCompoundDrawablesWithIntrinsicBounds(
                 0,
@@ -114,8 +116,10 @@ class RegisterFragment : Fragment(), UsuarioCallback {
             )
             visible = true
         } else {
-            _binding!!.editTextPassword.transformationMethod = HideReturnsTransformationMethod.getInstance()
-            _binding!!.editTextPassword2.transformationMethod = HideReturnsTransformationMethod.getInstance()
+            _binding!!.editTextPassword.transformationMethod =
+                HideReturnsTransformationMethod.getInstance()
+            _binding!!.editTextPassword2.transformationMethod =
+                HideReturnsTransformationMethod.getInstance()
 
             _binding!!.editTextPassword.setCompoundDrawablesWithIntrinsicBounds(
                 0,

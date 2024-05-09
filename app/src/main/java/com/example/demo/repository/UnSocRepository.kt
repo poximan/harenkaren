@@ -12,6 +12,7 @@ class UnSocRepository(private val dao: UnSocDAO) {
     fun insert(unidSocial: UnidSocial) {
         dao.insertConUltInst(unidSocial)
     }
+
     fun update(unidSocial: UnidSocial) {
         dao.update(unidSocial)
     }

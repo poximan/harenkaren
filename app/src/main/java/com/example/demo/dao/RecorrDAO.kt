@@ -9,7 +9,6 @@ import androidx.room.Transaction
 import androidx.room.Update
 import com.example.demo.model.EntidadesPlanas
 import com.example.demo.model.Recorrido
-import com.example.demo.model.UnidSocial
 import java.util.UUID
 
 @Dao
@@ -64,7 +63,7 @@ interface RecorrDAO {
 
             var idNuevo = idMap[idAnterior]
 
-            if(idNuevo == null){
+            if (idNuevo == null) {
                 recorrido.id = null
                 idNuevo = insertConUltInst(recorrido)
                 idMap[idAnterior] = idNuevo

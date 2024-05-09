@@ -14,11 +14,12 @@ import com.example.demo.databinding.FragmentUnsocVivosBinding
 import com.example.demo.viewModel.UnSocShareViewModel
 import kotlin.reflect.KFunction2
 
-class UnSocVivosFragment() : Fragment() {
+class UnSocVivosFragment : Fragment() {
 
     companion object {
         private lateinit var colectar: (Int, Map<String, Any>) -> Unit
     }
+
     private val map: MutableMap<String, Any> = mutableMapOf()
 
     private var _binding: FragmentUnsocVivosBinding? = null
@@ -88,7 +89,7 @@ class UnSocVivosFragment() : Fragment() {
         map["v_otros_sams_cerca"] = safeStringToInt(binding.vOtrosSamsCerca.text.toString())
         map["v_otros_sams_lejos"] = safeStringToInt(binding.vOtrosSamsLejos.text.toString())
 
-        colectar(1,map)
+        colectar(1, map)
     }
 
     private fun safeStringToInt(value: String): Int {
@@ -119,7 +120,7 @@ class UnSocVivosFragment() : Fragment() {
     private fun vistaGrupoHarenes(ctxElegido: String) {
         val ctxSocial = resources.getStringArray(R.array.op_contexto_social)
 
-        if(ctxElegido == ctxSocial[3]) {
+        if (ctxElegido == ctxSocial[3]) {
             var contMacho = 0
 
             if (!binding.vAlfaS4Ad.text.isNullOrEmpty())
@@ -127,7 +128,7 @@ class UnSocVivosFragment() : Fragment() {
             if (!binding.vAlfaSams.text.isNullOrEmpty())
                 contMacho += binding.vAlfaSams.text.toString().toInt()
 
-            if(contMacho < 2)
+            if (contMacho < 2)
                 Toast.makeText(
                     activity,
                     "Para grupo de harenes, la suma de los machos dominantes deben ser >=2",
@@ -139,7 +140,7 @@ class UnSocVivosFragment() : Fragment() {
     private fun vistaPjaSolitaria(ctxElegido: String) {
         val ctxSocial = resources.getStringArray(R.array.op_contexto_social)
 
-        if(ctxElegido == ctxSocial[4]) {
+        if (ctxElegido == ctxSocial[4]) {
             binding.vHembrasAd.removeTextChangedListener(textWatcher)
             when (binding.root.findFocus()?.id) {
                 R.id.vAlfaS4Ad -> {

@@ -11,12 +11,16 @@ class ImportarWF(context: Context, private val callback: RegistroDistribuible) {
 
     fun descubrir() {
         nsdHelper.apply {
-            if(port == 0){
+            if (port == 0) {
                 port = initializeServerSocket()
                 registerService(port)
             }
             discoverServices()
         }
+    }
+
+    fun miNombre(): String {
+        return nsdHelper.miNombre()
     }
 
     fun desconectar() {

@@ -90,9 +90,11 @@ class RecorrAddFragment : Fragment() {
         val formato = requireContext().resources.getString(R.string.formato_fecha)
         val fechaIni = SimpleDateFormat(formato).format(Date())
 
-        return Recorrido(args.idDia, observador, fechaIni, "",
+        return Recorrido(
+            args.idDia, observador, fechaIni, "",
             latLonIni.lat, latLonIni.lon, 0.0, 0.0,
-            areaRecorrida, meteo, marea)
+            areaRecorrida, meteo, marea
+        )
     }
 
     private fun getPosicionActual() {

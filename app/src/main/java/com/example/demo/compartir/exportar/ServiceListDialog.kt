@@ -8,13 +8,15 @@ import android.widget.ArrayAdapter
 import android.widget.ListView
 import com.example.demo.R
 
-class ServiceListDialog(context: Context, private val mapNSD: MutableMap<Int, NsdServiceInfo>) : Dialog(context) {
+class ServiceListDialog(context: Context, private val mapNSD: MutableMap<Int, NsdServiceInfo>) :
+    Dialog(context) {
 
     interface ServiceSelectedListener {
         fun onServiceSelected(serviceInfo: NsdServiceInfo)
     }
 
-    private val adapter: ArrayAdapter<String> = ArrayAdapter(context, android.R.layout.simple_list_item_1)
+    private val adapter: ArrayAdapter<String> =
+        ArrayAdapter(context, android.R.layout.simple_list_item_1)
     private lateinit var listView: ListView
 
     private var listener: ServiceSelectedListener? = null

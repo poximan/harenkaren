@@ -10,11 +10,12 @@ import androidx.fragment.app.Fragment
 import com.example.demo.databinding.FragmentUnsocMuertosBinding
 import kotlin.reflect.KFunction2
 
-class UnSocMuertosFragment() : Fragment() {
+class UnSocMuertosFragment : Fragment() {
 
     companion object {
         private lateinit var colectar: (Int, Map<String, Any>) -> Unit
     }
+
     private val map: MutableMap<String, Any> = mutableMapOf()
 
     private var _binding: FragmentUnsocMuertosBinding? = null
@@ -46,6 +47,7 @@ class UnSocMuertosFragment() : Fragment() {
 
         return binding.root
     }
+
     override fun onResume() {
         super.onResume()
         cargarMap()
@@ -81,7 +83,7 @@ class UnSocMuertosFragment() : Fragment() {
         map["m_otros_sams_cerca"] = safeStringToInt(binding.mOtrosSamsCerca.text.toString())
         map["m_otros_sams_lejos"] = safeStringToInt(binding.mOtrosSamsLejos.text.toString())
 
-        colectar(2,map)
+        colectar(2, map)
     }
 
     private val textWatcher = object : TextWatcher {

@@ -11,6 +11,7 @@ class DiaRepository(private val diaDao: DiaDAO) {
     fun insert(elem: Dia) {
         diaDao.insertConUUID(elem)
     }
+
     fun update(elem: Dia) {
         diaDao.update(elem)
     }

@@ -15,7 +15,8 @@ object EmailSender {
         destinatarios.plus("harenkaren70@gmail.com")
 
         val asunto = "respaldo censo"
-        val uri = FileProvider.getUriForFile(context, "com.example.demo.fileprovider", archivoAdjunto)
+        val uri =
+            FileProvider.getUriForFile(context, "com.example.demo.fileprovider", archivoAdjunto)
 
         val intent = Intent(Intent.ACTION_SEND).apply {
             type = "message/rfc822"  // Esto asegura que se abran aplicaciones de correo electrónico
@@ -29,7 +30,11 @@ object EmailSender {
         if (intent.resolveActivity(context.packageManager) != null) {
             context.startActivity(intent)
         } else {
-            Toast.makeText(context, "No se encontró una aplicación de correo electrónico en este dispositivo", Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                context,
+                "No se encontró una aplicación de correo electrónico en este dispositivo",
+                Toast.LENGTH_LONG
+            ).show()
         }
     }
 }

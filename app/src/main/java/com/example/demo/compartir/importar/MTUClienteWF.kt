@@ -15,7 +15,8 @@ class MTUClienteWF(private val callback: RegistroDistribuible) {
         ServerTask(socket).execute()
     }
 
-    private inner class ServerTask(private val serverSocket: ServerSocket) : AsyncTask<Void, ArrayList<Parcelable>, Void>() {
+    private inner class ServerTask(private val serverSocket: ServerSocket) :
+        AsyncTask<Void, ArrayList<Parcelable>, Void>() {
 
         override fun doInBackground(vararg params: Void?): Void? {
 
@@ -39,8 +40,8 @@ class MTUClienteWF(private val callback: RegistroDistribuible) {
                 val objectInputStream = ObjectInputStream(byteArrayInputStream)
                 lista = objectInputStream.readObject() as? ArrayList<Parcelable>
 
-                Log.i("compartir","arribaron ${bytes.size} bytes")
-                Log.i("compartir","transformados a ${lista!!.size} parcel")
+                Log.i(ImportarFragment.TAG, "arribaron ${bytes.size} bytes")
+                Log.i(ImportarFragment.TAG, "convertidos en ${lista!!.size} parcel")
 
                 // Cerrar los streams y el socket
                 inputStream.close()

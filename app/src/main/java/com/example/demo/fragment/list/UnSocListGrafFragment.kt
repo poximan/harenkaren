@@ -62,8 +62,8 @@ class UnSocListGrafFragment : Fragment() {
         val acumulador = StringBuilder()
         val barData = stackchart.data[index] // Obtiene los datos en el índice especificado
 
-        for (i in 0 until barData.bars.size-1) {
-            acumulador.insert(0,"${barData.bars[i].legendLabel}=${barData.bars[i].value}\n")
+        for (i in 0 until barData.bars.size - 1) {
+            acumulador.insert(0, "${barData.bars[i].legendLabel}=${barData.bars[i].value}\n")
         }
 
         val funky = FunkyFlotante(requireActivity())
@@ -72,7 +72,11 @@ class UnSocListGrafFragment : Fragment() {
 
     private fun escalarGrafico(): Boolean {
         graficoEscalado = !graficoEscalado
-        Toast.makeText(activity, "escala entre barras " + if(graficoEscalado) "activado" else "desactivado" , Toast.LENGTH_LONG).show()
+        Toast.makeText(
+            activity,
+            "escala entre barras " + if (graficoEscalado) "activado" else "desactivado",
+            Toast.LENGTH_LONG
+        ).show()
         loadFullList()
         return true
     }
@@ -102,14 +106,17 @@ class UnSocListGrafFragment : Fragment() {
                 filtrar()
                 true
             }
+
             R.id.filtro_limpiar -> {
                 loadFullList()
                 true
             }
+
             R.id.ayuda -> {
                 mostrarAyuda()
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -121,6 +128,7 @@ class UnSocListGrafFragment : Fragment() {
                 0 -> "Aun no has agregado ningun registro, y por lo tanto la lista esta vacia. Hacé click en (+) para agregarlo"
                 1 -> "Ahora hay un solo registro dado de alta. Cuando agregues mas, notaras la lista. Hace click en el registro" +
                         " existente para ver su detalle"
+
                 else -> {
                     "Hace click en la fila que representa el registro de interes, para poder continuar a su detalle. " +
                             "Allí podrás revisar los valores definidos durante la observacion de esa unidad social"
@@ -150,7 +158,7 @@ class UnSocListGrafFragment : Fragment() {
         val dpd = DatePickerDialog(
             activity!!,
             { _, year, monthOfYear, dayOfMonth ->
-                val dateSelected = "" + dayOfMonth + "/" + (monthOfYear + 1)  + "/" + year
+                val dateSelected = "" + dayOfMonth + "/" + (monthOfYear + 1) + "/" + year
                 loadListWithDate(dateSelected)
             }, year, month, day
         )
@@ -163,14 +171,14 @@ class UnSocListGrafFragment : Fragment() {
 
         CoroutineScope(Dispatchers.IO).launch {
             val unSocListAsync = unSocViewModel.readConFK(args.idRecorrido)
-            val total = if(graficoEscalado) unSocViewModel.getMaxRegistro(args.idRecorrido)
+            val total = if (graficoEscalado) unSocViewModel.getMaxRegistro(args.idRecorrido)
             else 0
 
             withContext(Dispatchers.Main) {
                 unSocListAsync.observe(
                     viewLifecycleOwner
                 ) { elem ->
-                    elem?.let {unSocAdapter.setUnSoc(it, stackchart, total) }
+                    elem?.let { unSocAdapter.setUnSoc(it, stackchart, total) }
                 }
             }
         }

@@ -16,6 +16,9 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.demo.R
+import com.example.demo.databinding.FragmentStatisticsBinding
+import com.example.demo.exception.NoExisteRegistroException
+import com.example.demo.model.UnidSocial
 import com.example.demo.viewModel.UnSocViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -23,9 +26,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.eazegraph.lib.charts.PieChart
 import org.eazegraph.lib.models.PieModel
-import com.example.demo.databinding.FragmentStatisticsBinding
-import com.example.demo.exception.NoExisteRegistroException
-import com.example.demo.model.UnidSocial
 
 class StatisticsFragment : Fragment() {
 
@@ -82,7 +82,7 @@ class StatisticsFragment : Fragment() {
         }
     }
 
-    private fun unRecorrido(viewModel: UnSocViewModel)  {
+    private fun unRecorrido(viewModel: UnSocViewModel) {
 
         CoroutineScope(Dispatchers.IO).launch {
             val resultado = viewModel.readSumRecorr(binding.granulOrden.text.toString().toInt())
@@ -92,7 +92,7 @@ class StatisticsFragment : Fragment() {
         }
     }
 
-    private fun unDia(viewModel: UnSocViewModel)  {
+    private fun unDia(viewModel: UnSocViewModel) {
 
         CoroutineScope(Dispatchers.IO).launch {
             val resultado = viewModel.readSumDia(binding.granulOrden.text.toString().toInt())
@@ -102,7 +102,7 @@ class StatisticsFragment : Fragment() {
         }
     }
 
-    private fun todosLosDias(viewModel: UnSocViewModel)  {
+    private fun todosLosDias(viewModel: UnSocViewModel) {
 
         CoroutineScope(Dispatchers.IO).launch {
             val resultado = viewModel.readSumTotal()
@@ -142,6 +142,7 @@ class StatisticsFragment : Fragment() {
 
         pieChart.startAnimation()
     }
+
     private fun ocultarEtiquetas(atribString: String) {
 
         // Genera el nombre del campo correspondiente al componente visual
@@ -202,14 +203,30 @@ class StatisticsFragment : Fragment() {
     private fun siguienteColor(): Int {
 
         val colores = listOf(
-            R.color.clr_v_alfa_s4ad, R.color.clr_v_alfa_sams, R.color.clr_v_hembras_ad,
-            R.color.clr_v_crias, R.color.clr_v_destetados, R.color.clr_v_juveniles,
-            R.color.clr_v_s4ad_perif, R.color.clr_v_s4ad_cerca, R.color.clr_v_s4ad_lejos,
-            R.color.clr_v_otros_sams_perif, R.color.clr_v_otros_sams_cerca, R.color.clr_v_otros_sams_lejos,
-            R.color.clr_m_alfa_s4ad, R.color.clr_m_alfa_sams, R.color.clr_m_hembras_ad,
-            R.color.clr_m_crias, R.color.clr_m_destetados, R.color.clr_m_juveniles,
-            R.color.clr_m_s4ad_perif, R.color.clr_m_s4ad_cerca, R.color.clr_m_s4ad_lejos,
-            R.color.clr_m_otros_sams_perif, R.color.clr_m_otros_sams_cerca, R.color.clr_m_otros_sams_lejos
+            R.color.clr_v_alfa_s4ad,
+            R.color.clr_v_alfa_sams,
+            R.color.clr_v_hembras_ad,
+            R.color.clr_v_crias,
+            R.color.clr_v_destetados,
+            R.color.clr_v_juveniles,
+            R.color.clr_v_s4ad_perif,
+            R.color.clr_v_s4ad_cerca,
+            R.color.clr_v_s4ad_lejos,
+            R.color.clr_v_otros_sams_perif,
+            R.color.clr_v_otros_sams_cerca,
+            R.color.clr_v_otros_sams_lejos,
+            R.color.clr_m_alfa_s4ad,
+            R.color.clr_m_alfa_sams,
+            R.color.clr_m_hembras_ad,
+            R.color.clr_m_crias,
+            R.color.clr_m_destetados,
+            R.color.clr_m_juveniles,
+            R.color.clr_m_s4ad_perif,
+            R.color.clr_m_s4ad_cerca,
+            R.color.clr_m_s4ad_lejos,
+            R.color.clr_m_otros_sams_perif,
+            R.color.clr_m_otros_sams_cerca,
+            R.color.clr_m_otros_sams_lejos
         )
 
         // Filtrar los colores que aún no han sido utilizados

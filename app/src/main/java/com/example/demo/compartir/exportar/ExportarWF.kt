@@ -6,7 +6,7 @@ import android.os.Parcelable
 import android.util.Log
 import com.example.demo.compartir.NsdHelper
 
-class ExportarWF(context: Context): ServiceListDialog.ServiceSelectedListener {
+class ExportarWF(context: Context) : ServiceListDialog.ServiceSelectedListener {
 
     private lateinit var rtuServWF: RTUServWF
     private val nsdHelper: NsdHelper = NsdHelper(context)
@@ -17,7 +17,7 @@ class ExportarWF(context: Context): ServiceListDialog.ServiceSelectedListener {
     fun descubrir(lista: ArrayList<Parcelable>) {
         this.listaParcel = lista
         nsdHelper.apply {
-            if(port == 0){
+            if (port == 0) {
                 port = initializeServerSocket()
                 registerService(port)
             }
@@ -35,7 +35,7 @@ class ExportarWF(context: Context): ServiceListDialog.ServiceSelectedListener {
         rtuServWF.sendData(listaParcel)
     }
 
-    fun levantarModal(){
+    fun levantarModal() {
         nsdHelper.showServiceListDialog(this)
     }
 

@@ -10,6 +10,7 @@ class UsuarioRepository(private val dao: UsuarioDAO) {
     fun insert(elem: Usuario) {
         dao.insert(elem)
     }
+
     fun update(elem: Usuario) {
         dao.update(elem)
     }
@@ -17,10 +18,10 @@ class UsuarioRepository(private val dao: UsuarioDAO) {
     fun login(email: String, pass: String): Usuario {
         val usuarioBD = dao.getUsuario(email, pass)
 
-        if(usuarioBD.isEmpty())
+        if (usuarioBD.isEmpty())
             throw NoExisteUsuarioException()
 
-        if(usuarioBD.count() > 1)
+        if (usuarioBD.count() > 1)
             throw MultipleUsuarioException()
 
         return usuarioBD.first()

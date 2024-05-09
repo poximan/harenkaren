@@ -82,14 +82,17 @@ class UnSocListFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
                 filtrar()
                 true
             }
+
             R.id.filtro_limpiar -> {
                 loadFullList()
                 true
             }
+
             R.id.ayuda -> {
                 mostrarAyuda()
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -101,6 +104,7 @@ class UnSocListFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
                 0 -> "Aun no has agregado ningun registro, y por lo tanto la lista esta vacia. Hacé click en (+) para agregarlo"
                 1 -> "Ahora hay un solo registro dado de alta. Cuando agregues mas, notaras la lista. Hace click en el registro" +
                         " existente para ver su detalle"
+
                 else -> {
                     "Hace click en la fila que representa el registro de interes, para poder continuar a su detalle. " +
                             "Allí podrás revisar los valores definidos durante la observacion de esa unidad social"
@@ -130,7 +134,7 @@ class UnSocListFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
         val dpd = DatePickerDialog(
             activity!!,
             { _, year, monthOfYear, dayOfMonth ->
-                val dateSelected = "" + dayOfMonth + "/" + (monthOfYear + 1)  + "/" + year
+                val dateSelected = "" + dayOfMonth + "/" + (monthOfYear + 1) + "/" + year
                 loadListWithDate(dateSelected)
             }, year, month, day
         )
@@ -148,7 +152,7 @@ class UnSocListFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
                 unSocListAsync.observe(
                     viewLifecycleOwner
                 ) { elem ->
-                    elem?.let {unSocAdapter.setUnSoc(it) }
+                    elem?.let { unSocAdapter.setUnSoc(it) }
                 }
             }
         }

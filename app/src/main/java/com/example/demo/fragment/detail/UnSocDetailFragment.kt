@@ -15,7 +15,7 @@ import com.example.demo.databinding.FragmentUnsocAddBinding
 import com.example.demo.model.UnidSocial
 import com.example.demo.viewModel.UnSocViewModel
 
-class UnSocDetailFragment: Fragment() {
+class UnSocDetailFragment : Fragment() {
 
     private lateinit var binding: FragmentUnsocAddBinding
     private val args: UnSocDetailFragmentArgs by navArgs()
@@ -42,7 +42,7 @@ class UnSocDetailFragment: Fragment() {
         return binding.root
     }
 
-    private fun confirmarAlta(){
+    private fun confirmarAlta() {
 
         val model: UnSocViewModel = ViewModelProvider(this)[UnSocViewModel::class.java]
         val map: MutableMap<String, Any?> = adapter.transferirDatos()
@@ -88,7 +88,8 @@ class UnSocDetailFragment: Fragment() {
         model.update(unSoc)
 
         Toast.makeText(activity, "Registro editado correctamente", Toast.LENGTH_LONG).show()
-        val action = UnSocDetailFragmentDirections.goToUnSocListFromUnSocDetailAction(unSoc.recorrId)
+        val action =
+            UnSocDetailFragmentDirections.goToUnSocListFromUnSocDetailAction(unSoc.recorrId)
         findNavController().navigate(action)
     }
 }

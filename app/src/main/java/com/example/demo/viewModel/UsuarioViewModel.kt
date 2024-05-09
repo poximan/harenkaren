@@ -35,11 +35,9 @@ class UsuarioViewModel(application: Application) : AndroidViewModel(application)
         try {
             repository.login(email, password)
             callback.onLoginSuccess()
-        }
-        catch (e: NoExisteUsuarioException){
+        } catch (e: NoExisteUsuarioException) {
             callback.onLoginFailure("No se encontraron coincidencias para {email, contraseña}")
-        }
-        catch (e: MultipleUsuarioException){
+        } catch (e: MultipleUsuarioException) {
             callback.onLoginFailure("Inconsistencia BD, instancia multiple para {email, contraseña}")
         }
     }

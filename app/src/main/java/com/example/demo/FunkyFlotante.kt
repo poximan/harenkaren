@@ -21,7 +21,12 @@ class FunkyFlotante(private val activity: Activity) {
         val textView = view.findViewById<TextView>(R.id.funky_toast)
         textView.text = message
 
-        popupWindow = PopupWindow(view, WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT, true)
+        popupWindow = PopupWindow(
+            view,
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            true
+        )
         popupWindow?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         view.setOnTouchListener { _, event ->
@@ -29,6 +34,7 @@ class FunkyFlotante(private val activity: Activity) {
                 MotionEvent.ACTION_DOWN -> {
 
                 }
+
                 MotionEvent.ACTION_MOVE -> {
                     val newX = event.rawX.toInt()
                     val newY = event.rawY.toInt()

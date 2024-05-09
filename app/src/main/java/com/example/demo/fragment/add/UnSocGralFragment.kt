@@ -45,11 +45,12 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import kotlin.reflect.KFunction2
 
-class UnSocGralFragment() : Fragment() {
+class UnSocGralFragment : Fragment() {
 
     companion object {
         private lateinit var colectar: (Int, Map<String, Any>) -> Unit
     }
+
     private val map: MutableMap<String, Any> = mutableMapOf()
 
     object DbConstants {
@@ -71,7 +72,8 @@ class UnSocGralFragment() : Fragment() {
     private var indicatorLight: ImageView? = null
     private val latLon = LatLong()
 
-    fun newInstance(colectarFunc: KFunction2<Int, Map<String, Any>, Unit>
+    fun newInstance(
+        colectarFunc: KFunction2<Int, Map<String, Any>, Unit>
     ): UnSocGralFragment {
         colectar = colectarFunc
         return UnSocGralFragment()
@@ -107,7 +109,8 @@ class UnSocGralFragment() : Fragment() {
 
         // tipo de sustrato en playa
         val tpoSustrato = resources.getStringArray(R.array.op_tipo_sustrato)
-        val tpoSustratoArrayAdapter = ArrayAdapter(view.context, R.layout.dropdown_item, tpoSustrato)
+        val tpoSustratoArrayAdapter =
+            ArrayAdapter(view.context, R.layout.dropdown_item, tpoSustrato)
         binding.spinnerAddTpoSustrato.adapter = tpoSustratoArrayAdapter
 
         binding.helpTpoSustrato.setOnClickListener { tpoSustratoInfo() }
@@ -132,11 +135,10 @@ class UnSocGralFragment() : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        try{
+        try {
             latLon.lat = arguments?.getDouble("lat")!!
             latLon.lon = arguments?.getDouble("lon")!!
-        }
-        catch(e: NullPointerException){
+        } catch (e: NullPointerException) {
         }
         cargarMap()
         mostrarEnPantalla()
@@ -163,25 +165,27 @@ class UnSocGralFragment() : Fragment() {
 
         map["pto_observacion"] = binding.spinnerAddPtoObs.selectedItem.toString()
         map["ctx_social"] = binding.spinnerAddCtxSocial.selectedItem.toString()
-        map["tpo_sustrato"] =  binding.spinnerAddTpoSustrato.selectedItem.toString()
+        map["tpo_sustrato"] = binding.spinnerAddTpoSustrato.selectedItem.toString()
         map["latitud"] = latLon.lat
         map["longitud"] = latLon.lon
         map["photo_path"] = currentPhotoPath
         map["comentario"] = binding.unSocComentario.text.toString()
 
-        colectar(0,map)
+        colectar(0, map)
     }
 
     private val onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
             when (parent?.id) {
                 R.id.spinnerAddCtxSocial -> {
-                    val selectedValue = binding.spinnerAddCtxSocial.getItemAtPosition(position).toString()
+                    val selectedValue =
+                        binding.spinnerAddCtxSocial.getItemAtPosition(position).toString()
                     sharedViewModel.setLastSelectedValue(selectedValue)
                 }
             }
             cargarMap()
         }
+
         override fun onNothingSelected(parent: AdapterView<*>?) {}
     }
 
@@ -313,7 +317,10 @@ class UnSocGralFragment() : Fragment() {
                         photoFile
                     )
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                    startActivityForResult(takePictureIntent, DbConstants.PERMISSION_REQUEST_TAKE_PHOTO)
+                    startActivityForResult(
+                        takePictureIntent,
+                        DbConstants.PERMISSION_REQUEST_TAKE_PHOTO
+                    )
                 }
             }
         }

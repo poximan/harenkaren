@@ -1,4 +1,4 @@
-package com.example.demo.fragment.add;
+package com.example.demo.fragment.add
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -18,7 +18,7 @@ import com.example.demo.viewModel.UnSocViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 
-class UnSocAddFragment: Fragment() {
+class UnSocAddFragment : Fragment() {
 
     private lateinit var binding: FragmentUnsocAddBinding
     private val args: UnSocAddFragmentArgs by navArgs()
@@ -57,7 +57,7 @@ class UnSocAddFragment: Fragment() {
         parentView.removeView(textView)
     }
 
-    private fun confirmarAlta(){
+    private fun confirmarAlta() {
 
         val model: UnSocViewModel = ViewModelProvider(this)[UnSocViewModel::class.java]
         val map: MutableMap<String, Any?> = adapter.transferirDatos()

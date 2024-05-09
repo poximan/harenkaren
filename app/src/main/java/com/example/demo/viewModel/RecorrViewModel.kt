@@ -33,7 +33,7 @@ class RecorrViewModel(application: Application) : AndroidViewModel(application) 
         repository.update(recorrido)
     }
 
-    fun readConFK(idDia: UUID) : LiveData<List<Recorrido>> {
+    fun readConFK(idDia: UUID): LiveData<List<Recorrido>> {
         return repository.readConFK(idDia)
     }
 

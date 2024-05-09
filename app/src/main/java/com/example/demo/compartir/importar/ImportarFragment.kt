@@ -14,12 +14,12 @@ import com.example.demo.model.EntidadesPlanas
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.net.Inet4Address
-import java.net.InetAddress
-import java.net.NetworkInterface
-import java.util.Enumeration
 
 class ImportarFragment : Fragment(), RegistroDistribuible {
+
+    companion object {
+        const val TAG = "compartir"
+    }
 
     private var _binding: FragmentImportarBinding? = null
     private val binding get() = _binding!!
@@ -37,7 +37,7 @@ class ImportarFragment : Fragment(), RegistroDistribuible {
         binding.radioWifi.setOnClickListener { clickWF() }
 
         comBT = ImportarBT(requireContext(), this)
-        comWF = ImportarWF(requireContext(),this)
+        comWF = ImportarWF(requireContext(), this)
 
         return binding.root
     }
@@ -47,10 +47,11 @@ class ImportarFragment : Fragment(), RegistroDistribuible {
         apagarServNSD()
     }
 
-    private fun apagarServNSD(){
+    private fun apagarServNSD() {
         try {
             comWF.desconectar()
-        } catch (e: UninitializedPropertyAccessException){}
+        } catch (e: UninitializedPropertyAccessException) {
+        }
     }
 
     private fun clickBT() {
@@ -63,13 +64,12 @@ class ImportarFragment : Fragment(), RegistroDistribuible {
     }
 
     private fun clickWF() {
-        val direccionIpWifi = obtenerDireccionIpWifi()
-
-        binding.idMasterBt.text = "mi IP es $direccionIpWifi:"
-        binding.recepcionBt.text = "esperando datos desde remota"
 
         comWF.descubrir()
         comWF.activarComoMTU()
+
+        binding.idMasterBt.text = "En DESTINATARIOS buscame como ${comWF.miNombre()}"
+        binding.recepcionBt.text = "esperando datos desde remota"
     }
 
     private fun desparcelarLista(parcelables: ArrayList<Parcelable>): List<EntidadesPlanas> {
@@ -85,7 +85,7 @@ class ImportarFragment : Fragment(), RegistroDistribuible {
     override fun onMessageReceived(lista: ArrayList<Parcelable>) {
 
         val listaEntidadesPlanas = desparcelarLista(lista)
-        Log.i("compartir","transformados a ${listaEntidadesPlanas.size} objetos desnomarlizados")
+        Log.i(TAG, "transformados a ${listaEntidadesPlanas.size} objetos desnomarlizados")
         insertarEntidades(listaEntidadesPlanas)
         binding.recepcionBt.text = listaEntidadesPlanas.toString()
     }
@@ -107,24 +107,5 @@ class ImportarFragment : Fragment(), RegistroDistribuible {
                 bd.unSocDao().insertarDesnormalizado(listaEntidadesPlanas, idMapUnSoc)
             }
         }
-    }
-
-    private fun obtenerDireccionIpWifi(): String? {
-        try {
-            val interfaces: Enumeration<NetworkInterface> = NetworkInterface.getNetworkInterfaces()
-            while (interfaces.hasMoreElements()) {
-                val interfaz: NetworkInterface = interfaces.nextElement()
-                val direcciones: Enumeration<InetAddress> = interfaz.inetAddresses
-                while (direcciones.hasMoreElements()) {
-                    val direccion: InetAddress = direcciones.nextElement()
-                    if (!direccion.isLoopbackAddress && direccion is Inet4Address && interfaz.displayName.startsWith("wlan")) {
-                        return direccion.hostAddress
-                    }
-                }
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        return null
     }
 }

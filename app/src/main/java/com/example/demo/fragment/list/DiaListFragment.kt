@@ -38,7 +38,7 @@ class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
         _binding = FragmentDiaListBinding.inflate(inflater, container, false)
 
         _binding!!.homeActionButton.setOnClickListener { goHome() }
-        _binding!!.newRecorrButton.setOnClickListener{ nvoDia() }
+        _binding!!.newRecorrButton.setOnClickListener { nvoDia() }
 
         diaList = binding.listDia
         loadFullList()
@@ -101,32 +101,40 @@ class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
                 filtrar()
                 true
             }
+
             R.id.filtro_limpiar -> {
                 loadFullList()
                 true
             }
+
             R.id.ayuda -> {
                 mostrarAyuda()
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
 
     private fun mostrarAyuda() {
 
-        val texto: String = when (diaViewModel.allDia.value?.size){
+        val texto: String = when (diaViewModel.allDia.value?.size) {
             0 -> "Aun no has agregado ningun dia, y por lo tanto la lista esta vacia. Hacé click en (+) para agregarlo"
             1 -> "Ahora hay un solo dia dado de alta. Cuando agregues mas, notaras la lista. Hace click en el dia" +
                     " existente para administrar sus recorridos"
-            else -> { "Hace click en la fila que representa el dia de interes, para poder continuar a su detalle. " +
-                    "Allí podrás adminstrar los recorridos asociados a la fecha que seleccionaste"}
+
+            else -> {
+                "Hace click en la fila que representa el dia de interes, para poder continuar a su detalle. " +
+                        "Allí podrás adminstrar los recorridos asociados a la fecha que seleccionaste"
+            }
         }
 
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Fechas")
-        builder.setMessage("Esta pantalla representa una lista de dias, " +
-                "en donde cada dia esta representado por una fila.\n$texto")
+        builder.setMessage(
+            "Esta pantalla representa una lista de dias, " +
+                    "en donde cada dia esta representado por una fila.\n$texto"
+        )
 
         builder.setPositiveButton("OK") { dialog, _ ->
             dialog.dismiss()
@@ -146,7 +154,7 @@ class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
         val dpd = DatePickerDialog(
             activity!!,
             { _, year, monthOfYear, dayOfMonth ->
-                val dateSelected = "" + dayOfMonth + "/" + (monthOfYear + 1)  + "/" + year
+                val dateSelected = "" + dayOfMonth + "/" + (monthOfYear + 1) + "/" + year
                 loadListWithDate(dateSelected)
             }, year, month, day
         )

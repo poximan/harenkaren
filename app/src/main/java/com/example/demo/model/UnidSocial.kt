@@ -43,7 +43,7 @@ data class UnidSocial(
     /* =========================================
     ================== VIVIOS ==================
     ========================================= */
-    
+
     // ----- dominante ----- //
     @ColumnInfo(name = "v_alfa_s4ad")
     var vAlfaS4Ad: Int,
@@ -138,14 +138,14 @@ data class UnidSocial(
     var photoPath: String?,
 
     var comentario: String?
-): Parcelable {
-/*
-Parcelable es una interfaz para serializar objetos. util para transferirlos entre actividades y fragmentos,
-o entre aplicaciones a través de Intent o Bundle. Es un objeto enviado como flujo de bytes.
+) : Parcelable {
+    /*
+    Parcelable es una interfaz para serializar objetos. util para transferirlos entre actividades y fragmentos,
+    o entre aplicaciones a través de Intent o Bundle. Es un objeto enviado como flujo de bytes.
 
-La interfaz requiere writeToParcel() para escribir el estado de un objeto en un Parcel,
-y createFromParcel() para crear una nueva instancia del objeto a partir de un Parcel.
- */
+    La interfaz requiere writeToParcel() para escribir el estado de un objeto en un Parcel,
+    y createFromParcel() para crear una nueva instancia del objeto a partir de un Parcel.
+     */
     @Ignore
     constructor(parcel: Parcel) : this(
         // ----- identidicadores ----- //
@@ -192,15 +192,15 @@ y createFromParcel() para crear una nueva instancia del objeto a partir de un Pa
         parcel.readDouble(),
         parcel.readString(),
         parcel.readString()
-    ) {
-    }
+    )
 
     @Ignore
     constructor(idRecorrido: Int, estampatiempo: String) : this(
-        null,idRecorrido,0, null, null, null,
+        null, idRecorrido, 0, null, null, null,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, /* vivos */
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, /* muertos */
-        estampatiempo, 0.0, 0.0, "","")
+        estampatiempo, 0.0, 0.0, "", ""
+    )
 
     constructor(
         idRecorrido: Int,
@@ -215,12 +215,14 @@ y createFromParcel() para crear una nueva instancia del objeto a partir de un Pa
         latitud: Double, longitud: Double,
         photoPath: String,
         comentario: String
-    ) : this(null, idRecorrido, 0, ptoObsUnSoc, ctxSocial, tpoSustrato,
+    ) : this(
+        null, idRecorrido, 0, ptoObsUnSoc, ctxSocial, tpoSustrato,
         vAlfaS4Ad, vAlfaSams, vHembrasAd, vCrias, vDestetados, vJuveniles,
         vS4AdPerif, vS4AdCerca, vS4AdLejos, vOtrosSamsPerif, vOtrosSamsCerca, vOtrosSamsLejos,
         mAlfaS4Ad, mAlfaSams, mHembrasAd, mCrias, mDestetados, mJuveniles,
         mS4AdPerif, mS4AdCerca, mS4AdLejos, mOtrosSamsPerif, mOtrosSamsCerca, mOtrosSamsLejos,
-        timeStamp, latitud, longitud, photoPath, comentario)
+        timeStamp, latitud, longitud, photoPath, comentario
+    )
 
     override fun describeContents(): Int {
         return Parcelable.CONTENTS_FILE_DESCRIPTOR
