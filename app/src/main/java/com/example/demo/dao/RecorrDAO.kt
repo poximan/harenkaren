@@ -17,6 +17,25 @@ interface RecorrDAO {
     @Query("SELECT * from recorrido ORDER BY id DESC")
     fun getAll(): LiveData<List<Recorrido>>
 
+    @Query("SELECT * FROM recorrido WHERE " +
+            "id_dia = :diaId AND " +
+            "orden = :orden AND " +
+            "observador = :observador AND " +
+            "fecha_ini = :fechaIni AND " +
+            "fecha_fin = :fechaFin AND " +
+            "latitud_ini = :latitudIni AND " +
+            "longitud_ini = :longitudIni AND " +
+            "latitud_fin = :latitudFin AND " +
+            "longitud_fin = :longitudFin AND " +
+            "area_recorrida = :areaRecorrida AND " +
+            "meteo = :meteo AND " +
+            "marea = :marea")
+    fun getRecorridoByCampos(diaId: UUID, orden: Int, observador: String,
+                             fechaIni: String, fechaFin: String,
+                             latitudIni: Double, longitudIni: Double,
+                             latitudFin: Double, longitudFin: Double,
+                             areaRecorrida: String, meteo: String, marea: String): Recorrido
+
     @Query("SELECT * FROM recorrido WHERE recorrido.id = :id")
     fun getRecorrById(id: Int): Recorrido
 
@@ -52,28 +71,29 @@ interface RecorrDAO {
     fun update(recorrido: Recorrido): Int
 
     @Transaction
-    fun insertarDesnormalizado(
-        listaEntidadesPlanas: List<EntidadesPlanas>,
-        idMap: MutableMap<Int, Int>
-    ) {
+    fun insertarDesnormalizado(listaEntidadesPlanas: List<EntidadesPlanas>): Int {
+        var insertsEfectivos = 0
         listaEntidadesPlanas.forEachIndexed { indice, entidadPlana ->
 
-            val recorrido = entidadPlana.getRecorrido()
-            val idAnterior = recorrido.id!!
+            val recorr = entidadPlana.getRecorrido()
+            val existe = getRecorridoByCampos(recorr.diaId, recorr.orden, recorr.observador,
+                recorr.fechaIni, recorr.fechaFin, recorr.latitudIni, recorr.longitudIni,
+                recorr.latitudFin, recorr.longitudFin, recorr.areaRecorrida,
+                recorr.meteo, recorr.marea)
 
-            var idNuevo = idMap[idAnterior]
-
-            if (idNuevo == null) {
-                recorrido.id = null
-                idNuevo = insertConUltInst(recorrido)
-                idMap[idAnterior] = idNuevo
-            } else {
-                recorrido.id = idNuevo
-                insertConUltInst(recorrido)
+            if (existe == null){
+                recorr.id = null
+                recorr.id = insertConUltInst(recorr)
+                insertsEfectivos += 1
             }
-            listaEntidadesPlanas[indice].recorr_id = idNuevo
-            listaEntidadesPlanas[indice].unsoc_id_recorr = idNuevo
+            /*
+            se actualiza es lista porque luego sera consumida por los insert de unidad social,
+            y es necesario que tengan las referencias de clave foranea actualizadas
+            */
+            listaEntidadesPlanas[indice].recorr_id = recorr.id!!
+            listaEntidadesPlanas[indice].unsoc_id_recorr = recorr.id!!
         }
+        return insertsEfectivos
     }
 }
 

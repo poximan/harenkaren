@@ -68,15 +68,19 @@ interface DiaDAO {
     fun update(recorrido: Dia): Int
 
     @Transaction
-    fun insertarDesnormalizado(listaEntidadesPlanas: List<EntidadesPlanas>) {
+    fun insertarDesnormalizado(listaEntidadesPlanas: List<EntidadesPlanas>): Int {
+        var insertsEfectivos = 0
         listaEntidadesPlanas.forEach { entidadPlana ->
-            val dia = entidadPlana.getDia()
 
+            val dia = entidadPlana.getDia()
             val existe = getDiaByUUID(dia.id)
-            if (existe == null) {
+
+            if (existe == null){
                 insertConUltInst(dia)
+                insertsEfectivos += 1
             }
         }
+        return insertsEfectivos
     }
 }
 

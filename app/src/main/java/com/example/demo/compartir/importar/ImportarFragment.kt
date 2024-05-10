@@ -1,5 +1,6 @@
 package com.example.demo.compartir.importar
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.os.Parcelable
 import android.util.Log
@@ -14,6 +15,7 @@ import com.example.demo.model.EntidadesPlanas
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.UUID
 
 class ImportarFragment : Fragment(), RegistroDistribuible {
 
@@ -86,15 +88,17 @@ class ImportarFragment : Fragment(), RegistroDistribuible {
 
         val listaEntidadesPlanas = desparcelarLista(lista)
         Log.i(TAG, "transformados a ${listaEntidadesPlanas.size} objetos desnomarlizados")
-        insertarEntidades(listaEntidadesPlanas)
+
+        val mapContador = sumarEntidades(listaEntidadesPlanas)
+        Log.i(TAG, "distribuidos en ${mapContador["dias"]} dias, ${mapContador["recorr"]} recorridos y ${mapContador["unidsoc"]} unidades sociales")
+
+        insertarEntidades(listaEntidadesPlanas, mapContador)
         binding.recepcionBt.text = listaEntidadesPlanas.toString()
     }
 
-    private fun insertarEntidades(listaEntidadesPlanas: List<EntidadesPlanas>) {
+    private fun insertarEntidades(listaArribo: List<EntidadesPlanas>, mapContador: Map<String, Int>) {
         // Crear un CoroutineScope
         val viewModelScope = viewLifecycleOwner.lifecycleScope
-        val idMapRecorr = mutableMapOf<Int, Int>()
-        val idMapUnSoc = mutableMapOf<Int, Int>()
 
         viewModelScope.launch {
             withContext(Dispatchers.IO) {// Dispatchers.IO es el hilo background
@@ -102,10 +106,53 @@ class ImportarFragment : Fragment(), RegistroDistribuible {
                 val bd = HarenKarenRoomDatabase
                     .getDatabase(requireActivity().application, viewModelScope)
 
-                bd.diaDao().insertarDesnormalizado(listaEntidadesPlanas)
-                bd.recorrDao().insertarDesnormalizado(listaEntidadesPlanas, idMapRecorr)
-                bd.unSocDao().insertarDesnormalizado(listaEntidadesPlanas, idMapUnSoc)
+                val diasInsert = bd.diaDao().insertarDesnormalizado(listaArribo)
+                val recorrInsert = bd.recorrDao().insertarDesnormalizado(listaArribo)
+                val unSocInsert = bd.unSocDao().insertarDesnormalizado(listaArribo)
             }
         }
+    }
+
+    private fun mostrarResultado(lote: Int, aceptados: Int) {
+        val texto: String = when (aceptados) {
+            0 -> "De los $lote registos obtenidos desde el equipo remoto, se descartaran TODOS " +
+                    "porque ya existen en esta base de datos"
+            lote -> "Los $lote registos obtenidos desde el equipo remoto seran agregados a la base de datos"
+            else -> "De los $lote registos obtenidos desde el equipo remoto, se descartara $aceptados " +
+                    "porque ya existen en esta base de datos"
+        }
+
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Nuevos registros")
+        builder.setMessage(texto)
+        builder.setPositiveButton("OK") { dialog, _ ->
+            dialog.dismiss()
+        }
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+    private fun sumarEntidades(entidades: List<EntidadesPlanas>): Map<String, Int> {
+        val sumaDias = mutableMapOf<UUID, Int>()
+        val sumaRecorridos = mutableMapOf<Int, Int>()
+        val sumaUnidadesSociales = mutableMapOf<Int, Int>()
+
+        /*
+        crea una nueva clave cada vez. si encuentra que ya existe hace +1. por lo tanto
+        hay doble utilidad aqui, se sabe cuantos valores distintos hay (por la distribucion
+        de las claves) y se sabe qué concentracion en cada clave (por el +1)
+         */
+        for (entidad in entidades) {
+            sumaDias[entidad.dia_id] = (sumaDias[entidad.dia_id] ?: 0) + 1
+            sumaRecorridos[entidad.recorr_id] = (sumaRecorridos[entidad.recorr_id] ?: 0) + 1
+            sumaUnidadesSociales[entidad.unsoc_id] = (sumaUnidadesSociales[entidad.unsoc_id] ?: 0) + 1
+        }
+
+        val resultado = mutableMapOf<String, Int>()
+        resultado["dias"] = sumaDias.size
+        resultado["recorr"] = sumaRecorridos.size
+        resultado["unidsoc"] = sumaUnidadesSociales.size
+
+        return resultado
     }
 }

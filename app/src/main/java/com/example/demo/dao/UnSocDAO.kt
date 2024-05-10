@@ -242,27 +242,68 @@ interface UnSocDAO {
     )
     fun getUnSocDesnormalizado(): List<EntidadesPlanas>
 
+    @Query("SELECT * FROM unidsocial WHERE " +
+            "id_recorrido = :recorrId AND " +
+            "orden = :orden AND " +
+            "pto_observacion = :ptoObsUnSoc AND " +
+            "ctx_social = :ctxSocial AND " +
+            "tpo_sustrato = :tpoSustrato AND " +
+            "v_alfa_s4ad = :vAlfaS4Ad AND " +
+            "v_alfa_sams = :vAlfaSams AND " +
+            "v_hembras_ad = :vHembrasAd AND " +
+            "v_crias = :vCrias AND " +
+            "v_destetados = :vDestetados AND " +
+            "v_juveniles = :vJuveniles AND " +
+            "v_s4ad_perif = :vS4AdPerif AND " +
+            "v_s4ad_cerca = :vS4AdCerca AND " +
+            "v_s4ad_lejos = :vS4AdLejos AND " +
+            "v_otros_sams_perif = :vOtrosSamsPerif AND " +
+            "v_otros_sams_cerca = :vOtrosSamsCerca AND " +
+            "v_otros_sams_lejos = :vOtrosSamsLejos AND " +
+            "m_alfa_s4ad = :mAlfaS4Ad AND " +
+            "m_alfa_sams = :mAlfaSams AND " +
+            "m_hembras_ad = :mHembrasAd AND " +
+            "m_crias = :mCrias AND " +
+            "m_destetados = :mDestetados AND " +
+            "m_juveniles = :mJuveniles AND " +
+            "m_s4ad_perif = :mS4AdPerif AND " +
+            "m_s4ad_cerca = :mS4AdCerca AND " +
+            "m_s4ad_lejos = :mS4AdLejos AND " +
+            "m_otros_sams_perif = :mOtrosSamsPerif AND " +
+            "m_otros_sams_cerca = :mOtrosSamsCerca AND " +
+            "m_otros_sams_lejos = :mOtrosSamsLejos AND " +
+            "date = :date AND " +
+            "latitud = :latitud AND " +
+            "longitud = :longitud AND " +
+            "comentario = :comentario")
+    fun getUnidSocialByCampos(recorrId: Int, orden: Int,
+        ptoObsUnSoc: String, ctxSocial: String, tpoSustrato: String,
+        vAlfaS4Ad: Int, vAlfaSams: Int, vHembrasAd: Int, vCrias: Int, vDestetados: Int, vJuveniles: Int,
+        vS4AdPerif: Int, vS4AdCerca: Int, vS4AdLejos: Int, vOtrosSamsPerif: Int, vOtrosSamsCerca: Int, vOtrosSamsLejos: Int,
+        mAlfaS4Ad: Int, mAlfaSams: Int, mHembrasAd: Int, mCrias: Int, mDestetados: Int, mJuveniles: Int,
+        mS4AdPerif: Int, mS4AdCerca: Int, mS4AdLejos: Int, mOtrosSamsPerif: Int, mOtrosSamsCerca: Int, mOtrosSamsLejos: Int,
+        date: String, latitud: Double, longitud: Double, comentario: String): UnidSocial
 
     @Transaction
-    fun insertarDesnormalizado(
-        listaEntidadesPlanas: List<EntidadesPlanas>,
-        idMap: MutableMap<Int, Int>
-    ) {
+    fun insertarDesnormalizado(listaEntidadesPlanas: List<EntidadesPlanas>): Int {
+        var insertsEfectivos = 0
         listaEntidadesPlanas.forEach { entidadPlana ->
 
             val unSoc = entidadPlana.getUnidSocial()
-            val idAnterior = unSoc.id!!
-
-            var idNuevo = idMap[idAnterior]
-
-            if (idNuevo == null) {
+            val existe = getUnidSocialByCampos(unSoc.recorrId, unSoc.orden,
+                unSoc.ptoObsUnSoc!!, unSoc.ctxSocial!!, unSoc.tpoSustrato!!,
+                unSoc.vAlfaS4Ad, unSoc.vAlfaSams, unSoc.vHembrasAd, unSoc.vCrias, unSoc.vDestetados, unSoc.vJuveniles,
+                unSoc.vS4AdPerif, unSoc.vS4AdCerca, unSoc.vS4AdLejos, unSoc.vOtrosSamsPerif, unSoc.vOtrosSamsCerca, unSoc.vOtrosSamsLejos,
+                unSoc.mAlfaS4Ad, unSoc.mAlfaSams, unSoc.mHembrasAd, unSoc.mCrias, unSoc.mDestetados, unSoc.mJuveniles,
+                unSoc.mS4AdPerif, unSoc.mS4AdCerca, unSoc.mS4AdLejos, unSoc.mOtrosSamsPerif, unSoc.mOtrosSamsCerca, unSoc.mOtrosSamsLejos,
+                unSoc.date!!, unSoc.latitud, unSoc.longitud, unSoc.comentario!!
+            )
+            if (existe == null) {
                 unSoc.id = null
-                idNuevo = insertConUltInst(unSoc)
-                idMap[idAnterior] = idNuevo
-            } else {
-                unSoc.id = idNuevo
                 insertConUltInst(unSoc)
+                insertsEfectivos += 1
             }
         }
+        return insertsEfectivos
     }
 }
