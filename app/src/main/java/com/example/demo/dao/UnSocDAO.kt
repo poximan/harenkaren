@@ -243,8 +243,6 @@ interface UnSocDAO {
     fun getUnSocDesnormalizado(): List<EntidadesPlanas>
 
     @Query("SELECT * FROM unidsocial WHERE " +
-            "id_recorrido = :recorrId AND " +
-            "orden = :orden AND " +
             "pto_observacion = :ptoObsUnSoc AND " +
             "ctx_social = :ctxSocial AND " +
             "tpo_sustrato = :tpoSustrato AND " +
@@ -276,8 +274,7 @@ interface UnSocDAO {
             "latitud = :latitud AND " +
             "longitud = :longitud AND " +
             "comentario = :comentario")
-    fun getUnidSocialByCampos(recorrId: Int, orden: Int,
-        ptoObsUnSoc: String, ctxSocial: String, tpoSustrato: String,
+    fun getUnidSocialByCampos(ptoObsUnSoc: String, ctxSocial: String, tpoSustrato: String,
         vAlfaS4Ad: Int, vAlfaSams: Int, vHembrasAd: Int, vCrias: Int, vDestetados: Int, vJuveniles: Int,
         vS4AdPerif: Int, vS4AdCerca: Int, vS4AdLejos: Int, vOtrosSamsPerif: Int, vOtrosSamsCerca: Int, vOtrosSamsLejos: Int,
         mAlfaS4Ad: Int, mAlfaSams: Int, mHembrasAd: Int, mCrias: Int, mDestetados: Int, mJuveniles: Int,
@@ -290,8 +287,7 @@ interface UnSocDAO {
         listaEntidadesPlanas.forEach { entidadPlana ->
 
             val unSoc = entidadPlana.getUnidSocial()
-            val existe = getUnidSocialByCampos(unSoc.recorrId, unSoc.orden,
-                unSoc.ptoObsUnSoc!!, unSoc.ctxSocial!!, unSoc.tpoSustrato!!,
+            val existe = getUnidSocialByCampos(unSoc.ptoObsUnSoc!!, unSoc.ctxSocial!!, unSoc.tpoSustrato!!,
                 unSoc.vAlfaS4Ad, unSoc.vAlfaSams, unSoc.vHembrasAd, unSoc.vCrias, unSoc.vDestetados, unSoc.vJuveniles,
                 unSoc.vS4AdPerif, unSoc.vS4AdCerca, unSoc.vS4AdLejos, unSoc.vOtrosSamsPerif, unSoc.vOtrosSamsCerca, unSoc.vOtrosSamsLejos,
                 unSoc.mAlfaS4Ad, unSoc.mAlfaSams, unSoc.mHembrasAd, unSoc.mCrias, unSoc.mDestetados, unSoc.mJuveniles,

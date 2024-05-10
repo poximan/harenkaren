@@ -20,7 +20,7 @@ class DevFragment : Fragment() {
     private val binding get() = _binding!!
 
     companion object {
-        var UUID_NULO = UUID.fromString("00000000-0000-0000-0000-000000000000")
+        var UUID_NULO: UUID = UUID.fromString("00000000-0000-0000-0000-000000000000")
     }
 
     override fun onCreateView(
@@ -31,14 +31,36 @@ class DevFragment : Fragment() {
         _binding = FragmentDevBinding.inflate(inflater, container, false)
         setHasOptionsMenu(true)
 
-        _binding!!.poblarBd.setOnClickListener { poblar() }
-        _binding!!.usuario.setOnClickListener { altaUsuario() }
+        binding.poblarBd.setOnClickListener { poblar() }
+        binding.usuario.setOnClickListener { altaUsuario() }
 
-        _binding!!.limpiarDias.setOnClickListener { limpiarDias() }
-        _binding!!.limpiarRecorr.setOnClickListener { limpiarRecorr() }
-        _binding!!.limpiarUnsoc.setOnClickListener { limpiarUnidSoc() }
+        binding.limpiarDias.setOnClickListener { limpiarDias() }
+        binding.limpiarRecorr.setOnClickListener { limpiarRecorr() }
+        binding.limpiarUnsoc.setOnClickListener { limpiarUnidSoc() }
 
+        estadoBD()
         return binding.root
+    }
+
+    private fun estadoBD() {
+        val viewModelScope = viewLifecycleOwner.lifecycleScope
+
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {// Dispatchers.IO es el hilo background
+
+                val bd = HarenKarenRoomDatabase
+                    .getDatabase(requireActivity().application, viewModelScope)
+
+                val dias = bd.diaDao().getCount()
+                val recorr = bd.recorrDao().getCount()
+                val unsoc = bd.unSocDao().getCount()
+                withContext(Dispatchers.Main){
+                    binding.dias.text = "$dias entidades Dia"
+                    binding.recorr.text = "$recorr entidades Recorrido"
+                    binding.unsoc.text = "$unsoc entidades Unid.Social"
+                }
+            }
+        }
     }
 
     private fun altaUsuario() {
@@ -80,6 +102,10 @@ class DevFragment : Fragment() {
                     datos.generarDias(diaDao).filterNotNull().toTypedArray()
                 datos.generarRecorridos(recorrDao, idsRetornos)
                 datos.generarUnidadesSociales(unSocDao)
+
+                withContext(Dispatchers.Main){
+                    estadoBD()
+                }
             }
         }
     }
@@ -91,14 +117,13 @@ class DevFragment : Fragment() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {// Dispatchers.IO es el hilo background
                 val datos = DevDatos()
-
                 val dao = HarenKarenRoomDatabase
                     .getDatabase(requireActivity().application, viewModelScope)
                     .diaDao()
-
                 datos.vaciarDias(dao)
             }
         }
+        estadoBD()
     }
 
     private fun limpiarRecorr() {
@@ -108,14 +133,13 @@ class DevFragment : Fragment() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {// Dispatchers.IO es el hilo background
                 val datos = DevDatos()
-
                 val dao = HarenKarenRoomDatabase
                     .getDatabase(requireActivity().application, viewModelScope)
                     .recorrDao()
-
                 datos.vaciarRecorridos(dao)
             }
         }
+        estadoBD()
     }
 
     private fun limpiarUnidSoc() {
@@ -125,13 +149,12 @@ class DevFragment : Fragment() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {// Dispatchers.IO es el hilo background
                 val datos = DevDatos()
-
                 val dao = HarenKarenRoomDatabase
                     .getDatabase(requireActivity().application, viewModelScope)
                     .unSocDao()
-
                 datos.vaciarUnidadesSociales(dao)
             }
         }
+        estadoBD()
     }
 }

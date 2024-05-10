@@ -93,7 +93,7 @@ class ImportarFragment : Fragment(), RegistroDistribuible {
         Log.i(TAG, "distribuidos en ${mapContador["dias"]} dias, ${mapContador["recorr"]} recorridos y ${mapContador["unidsoc"]} unidades sociales")
 
         insertarEntidades(listaEntidadesPlanas, mapContador)
-        binding.recepcionBt.text = listaEntidadesPlanas.toString()
+        binding.recepcionBt.text = "Legaron desde dispositivo remoto $mapContador"
     }
 
     private fun insertarEntidades(listaArribo: List<EntidadesPlanas>, mapContador: Map<String, Int>) {

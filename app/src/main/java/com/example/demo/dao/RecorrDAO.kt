@@ -19,7 +19,6 @@ interface RecorrDAO {
 
     @Query("SELECT * FROM recorrido WHERE " +
             "id_dia = :diaId AND " +
-            "orden = :orden AND " +
             "observador = :observador AND " +
             "fecha_ini = :fechaIni AND " +
             "fecha_fin = :fechaFin AND " +
@@ -30,7 +29,7 @@ interface RecorrDAO {
             "area_recorrida = :areaRecorrida AND " +
             "meteo = :meteo AND " +
             "marea = :marea")
-    fun getRecorridoByCampos(diaId: UUID, orden: Int, observador: String,
+    fun getRecorridoByCampos(diaId: UUID, observador: String,
                              fechaIni: String, fechaFin: String,
                              latitudIni: Double, longitudIni: Double,
                              latitudFin: Double, longitudFin: Double,
@@ -76,7 +75,7 @@ interface RecorrDAO {
         listaEntidadesPlanas.forEachIndexed { indice, entidadPlana ->
 
             val recorr = entidadPlana.getRecorrido()
-            val existe = getRecorridoByCampos(recorr.diaId, recorr.orden, recorr.observador,
+            val existe = getRecorridoByCampos(recorr.diaId, recorr.observador,
                 recorr.fechaIni, recorr.fechaFin, recorr.latitudIni, recorr.longitudIni,
                 recorr.latitudFin, recorr.longitudFin, recorr.areaRecorrida,
                 recorr.meteo, recorr.marea)
@@ -85,6 +84,8 @@ interface RecorrDAO {
                 recorr.id = null
                 recorr.id = insertConUltInst(recorr)
                 insertsEfectivos += 1
+            } else {
+                recorr.id = existe.id
             }
             /*
             se actualiza es lista porque luego sera consumida por los insert de unidad social,
