@@ -23,8 +23,8 @@ import java.util.UUID
 data class Recorrido(
 
     // ----- identidicadores ----- //
-    @PrimaryKey(autoGenerate = true)
-    var id: Int?,
+    @PrimaryKey
+    var id: UUID,
 
     @ColumnInfo(name = "id_dia")
     var diaId: UUID,
@@ -63,7 +63,7 @@ data class Recorrido(
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         // ----- identidicadores ----- //
-        parcel.readInt(),
+        UUID.fromString(parcel.readString()),
         UUID.fromString(parcel.readString()),
         parcel.readInt(),
         parcel.readString().toString(),
@@ -84,26 +84,7 @@ data class Recorrido(
 
     @Ignore
     constructor(
-        diaId: UUID,
-        observador: String,
-        fechaIni: String,
-        fechaFin: String,
-        latitudIni: Double,
-        longitudIni: Double,
-        latitudFin: Double,
-        longitudFin: Double,
-        areaRecorrida: String,
-        meteo: String,
-        marea: String
-    ) : this(
-        null, diaId, 0, observador, fechaIni, fechaFin,
-        latitudIni, longitudIni, latitudFin, longitudFin,
-        areaRecorrida, meteo, marea
-    )
-
-    @Ignore
-    constructor(
-        id: Int,
+        id: UUID,
         diaId: UUID,
         observador: String,
         fechaIni: String,
@@ -127,7 +108,7 @@ data class Recorrido(
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         // ----- identidicadores ----- //
-        id?.let { parcel.writeInt(it) }
+        parcel.writeString(id.toString())
         parcel.writeString(diaId.toString())
         parcel.writeInt(orden)
         parcel.writeString(observador)

@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.demo.DevFragment
 import com.example.demo.R
 import com.example.demo.databinding.FragmentRecorrAddBinding
 import com.example.demo.model.LatLong
@@ -82,6 +83,7 @@ class RecorrAddFragment : Fragment() {
 
     private fun dataDesdeIU(): Recorrido {
 
+        val uuid = DevFragment.UUID_NULO
         val observador = binding.editObservador.text.toString()
         val areaRecorrida = binding.areaRecorr.text.toString()
         val meteo = binding.editTextMeteo.text.toString()
@@ -91,7 +93,7 @@ class RecorrAddFragment : Fragment() {
         val fechaIni = SimpleDateFormat(formato).format(Date())
 
         return Recorrido(
-            args.idDia, observador, fechaIni, "",
+            uuid, args.idDia, observador, fechaIni, "",
             latLonIni.lat, latLonIni.lon, 0.0, 0.0,
             areaRecorrida, meteo, marea
         )

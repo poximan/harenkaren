@@ -11,15 +11,15 @@ class RecorrRepository(private val dao: RecorrDAO) {
     val recorrListAll: LiveData<List<Recorrido>> = dao.getAll()
 
     fun insert(recorrido: Recorrido) {
-        dao.insertConUltInst(recorrido)
+        dao.insertConUUID(recorrido)
     }
 
     fun update(recorrido: Recorrido) {
         dao.update(recorrido)
     }
 
-    fun readUnico(id: Int): Recorrido {
-        return dao.getRecorrById(id)
+    fun readUnico(id: UUID): Recorrido {
+        return dao.getRecorrByUUID(id)
     }
 
     fun readConFK(id: UUID): LiveData<List<Recorrido>> {

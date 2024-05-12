@@ -8,6 +8,7 @@ import androidx.room.ForeignKey
 import androidx.room.Ignore
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import java.util.UUID
 
 @Entity(
     tableName = "unidsocial",
@@ -22,23 +23,23 @@ import androidx.room.PrimaryKey
 data class UnidSocial(
 
     // ----- identidicadores ----- //
-    @PrimaryKey(autoGenerate = true)
-    var id: Int?,
+    @PrimaryKey
+    var id: UUID,
 
     @ColumnInfo(name = "id_recorrido")
-    var recorrId: Int,
+    var recorrId: UUID,
 
     var orden: Int,
 
     // ----- entorno ----- //
     @ColumnInfo(name = "pto_observacion")
-    var ptoObsUnSoc: String?,
+    var ptoObsUnSoc: String,
 
     @ColumnInfo(name = "ctx_social")
-    var ctxSocial: String?,
+    var ctxSocial: String,
 
     @ColumnInfo(name = "tpo_sustrato")
-    var tpoSustrato: String?,
+    var tpoSustrato: String,
 
     /* =========================================
     ================== VIVIOS ==================
@@ -127,7 +128,7 @@ data class UnidSocial(
     var mOtrosSamsLejos: Int,
 
     // ----- tiempo/espacio ----- //
-    var date: String?,
+    var date: String,
 
     var latitud: Double,
 
@@ -149,14 +150,14 @@ data class UnidSocial(
     @Ignore
     constructor(parcel: Parcel) : this(
         // ----- identidicadores ----- //
-        parcel.readInt(),
-        parcel.readInt(),
+        UUID.fromString(parcel.readString()),
+        UUID.fromString(parcel.readString()),
         parcel.readInt(),
 
         // ----- entorno ----- //
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!,
 
         // ----- vivos ----- //
         parcel.readInt(),
@@ -187,7 +188,7 @@ data class UnidSocial(
         parcel.readInt(),
 
         // ----- tiempo/espacio ----- //
-        parcel.readString(),
+        parcel.readString()!!,
         parcel.readDouble(),
         parcel.readDouble(),
         parcel.readString(),
@@ -195,15 +196,15 @@ data class UnidSocial(
     )
 
     @Ignore
-    constructor(idRecorrido: Int, estampatiempo: String) : this(
-        null, idRecorrido, 0, null, null, null,
+    constructor(id: UUID, idRecorrido: UUID, estampatiempo: String) : this(
+        id, idRecorrido, 0, "", "", "",
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, /* vivos */
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, /* muertos */
         estampatiempo, 0.0, 0.0, "", ""
     )
 
     constructor(
-        idRecorrido: Int,
+        id: UUID, idRecorrido: UUID,
         ptoObsUnSoc: String, ctxSocial: String, tpoSustrato: String,
         vAlfaS4Ad: Int, vAlfaSams: Int, vHembrasAd: Int, vCrias: Int,
         vDestetados: Int, vJuveniles: Int, vS4AdPerif: Int, vS4AdCerca: Int,
@@ -216,7 +217,7 @@ data class UnidSocial(
         photoPath: String,
         comentario: String
     ) : this(
-        null, idRecorrido, 0, ptoObsUnSoc, ctxSocial, tpoSustrato,
+        id, idRecorrido, 0, ptoObsUnSoc, ctxSocial, tpoSustrato,
         vAlfaS4Ad, vAlfaSams, vHembrasAd, vCrias, vDestetados, vJuveniles,
         vS4AdPerif, vS4AdCerca, vS4AdLejos, vOtrosSamsPerif, vOtrosSamsCerca, vOtrosSamsLejos,
         mAlfaS4Ad, mAlfaSams, mHembrasAd, mCrias, mDestetados, mJuveniles,
@@ -229,11 +230,12 @@ data class UnidSocial(
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        id?.let { parcel.writeInt(it) }
-        parcel.writeInt(recorrId)
+        parcel.writeString(id.toString())
+        parcel.writeString(id.toString())
         parcel.writeString(ptoObsUnSoc)
         parcel.writeString(ctxSocial)
         parcel.writeString(tpoSustrato)
+        parcel.writeInt(orden)
         /* VIVAS */
         parcel.writeInt(vAlfaS4Ad)
         parcel.writeInt(vAlfaSams)

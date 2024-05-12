@@ -16,7 +16,6 @@ class DevDatos {
     fun generarDias(diaDAO: DiaDAO): Array<UUID?> {
 
         val idUnivoco = MainActivity.obtenerAndroidID()
-
         val diaList = listOf<Dia>(
             Dia(
                 celularId = idUnivoco,
@@ -31,19 +30,18 @@ class DevDatos {
                 fecha = "2023/10/20 - 12:17:13"
             )
         )
-
-        val idsRetornos = Array<UUID?>(diaList.size) { null }
-
+        val listUUID = Array<UUID?>(diaList.size) { null }
         diaList.forEachIndexed { idx, dia ->
-            idsRetornos[idx] = diaDAO.insertConUUID(dia)
+            listUUID[idx] = diaDAO.insertConUUID(dia)
         }
-        return idsRetornos
+        return listUUID
     }
 
-    fun generarRecorridos(recorrDAO: RecorrDAO, listDia: Array<UUID>) {
+    fun generarRecorridos(recorrDAO: RecorrDAO, listDia: Array<UUID>): Array<UUID?> {
+
         val recorrList = listOf<Recorrido>(
             Recorrido(
-                id = 1,
+                id = DevFragment.UUID_NULO,
                 diaId = listDia[0],
                 orden = 0,
                 observador = "hugo",
@@ -58,7 +56,7 @@ class DevDatos {
                 marea = "Media"
             ),
             Recorrido(
-                id = 2,
+                id = DevFragment.UUID_NULO,
                 diaId = listDia[0],
                 orden = 0,
                 observador = "sebastian",
@@ -73,7 +71,7 @@ class DevDatos {
                 marea = "Baja, bajando"
             ),
             Recorrido(
-                id = 3,
+                id = DevFragment.UUID_NULO,
                 diaId = listDia[1],
                 orden = 0,
                 observador = "donato",
@@ -88,17 +86,18 @@ class DevDatos {
                 marea = "Muy alta"
             ),
         )
-
-        recorrList.forEach { recorr ->
-            recorrDAO.insertConUltInst(recorr)
+        val listUUID = Array<UUID?>(recorrList.size) { null }
+        recorrList.forEachIndexed { idx, dia ->
+            listUUID[idx] = recorrDAO.insertConUUID(dia)
         }
+        return listUUID
     }
 
-    fun generarUnidadesSociales(unsocDAO: UnSocDAO) {
+    fun generarUnidadesSociales(unsocDAO: UnSocDAO, listRecorr: Array<UUID>) {
         val unSocList = listOf<UnidSocial>(
             UnidSocial(
-                id = 1,
-                recorrId = 1,
+                id = DevFragment.UUID_NULO,
+                recorrId = listRecorr[0],
                 orden = 0,
                 ptoObsUnSoc = "alto",
                 ctxSocial = "haren(H)",
@@ -134,8 +133,8 @@ class DevDatos {
                 comentario = "comentario 1"
             ),
             UnidSocial(
-                id = 2,
-                recorrId = 1,
+                id = DevFragment.UUID_NULO,
+                recorrId = listRecorr[0],
                 orden = 0,
                 ptoObsUnSoc = "bajo",
                 ctxSocial = "gpo. harenes(GH)",
@@ -171,8 +170,8 @@ class DevDatos {
                 comentario = "comentario 2"
             ),
             UnidSocial(
-                id = 3,
-                recorrId = 1,
+                id = DevFragment.UUID_NULO,
+                recorrId = listRecorr[0],
                 orden = 0,
                 ptoObsUnSoc = "alto",
                 ctxSocial = "pja. solitaria(PS)",
@@ -208,8 +207,8 @@ class DevDatos {
                 comentario = "comentario 3"
             ),
             UnidSocial(
-                id = 4,
-                recorrId = 1,
+                id = DevFragment.UUID_NULO,
+                recorrId = listRecorr[0],
                 orden = 0,
                 ptoObsUnSoc = "bajo",
                 ctxSocial = "indiv. solos(S)",
@@ -245,8 +244,8 @@ class DevDatos {
                 comentario = "comentario 4"
             ),
             UnidSocial(
-                id = 5,
-                recorrId = 2,
+                id = DevFragment.UUID_NULO,
+                recorrId = listRecorr[1],
                 orden = 0,
                 ptoObsUnSoc = "alto",
                 ctxSocial = "haren(H)",
@@ -282,8 +281,8 @@ class DevDatos {
                 comentario = "comentario 5"
             ),
             UnidSocial(
-                id = 6,
-                recorrId = 2,
+                id = DevFragment.UUID_NULO,
+                recorrId = listRecorr[1],
                 orden = 0,
                 ptoObsUnSoc = "bajo",
                 ctxSocial = "gpo. harenes(GH)",
@@ -319,8 +318,8 @@ class DevDatos {
                 comentario = "comentario 6"
             ),
             UnidSocial(
-                id = 7,
-                recorrId = 2,
+                id = DevFragment.UUID_NULO,
+                recorrId = listRecorr[1],
                 orden = 0,
                 ptoObsUnSoc = "alto",
                 ctxSocial = "pja. solitaria(PS)",
@@ -356,8 +355,8 @@ class DevDatos {
                 comentario = "comentario 7"
             ),
             UnidSocial(
-                id = 8,
-                recorrId = 3,
+                id = DevFragment.UUID_NULO,
+                recorrId = listRecorr[2],
                 orden = 0,
                 ptoObsUnSoc = "bajo",
                 ctxSocial = "indiv. solos(S)",
@@ -393,8 +392,8 @@ class DevDatos {
                 comentario = "comentario 8"
             ),
             UnidSocial(
-                id = 9,
-                recorrId = 3,
+                id = DevFragment.UUID_NULO,
+                recorrId = listRecorr[2],
                 orden = 0,
                 ptoObsUnSoc = "alto",
                 ctxSocial = "haren(H)",
@@ -430,8 +429,8 @@ class DevDatos {
                 comentario = "comentario 9"
             ),
             UnidSocial(
-                id = 10,
-                recorrId = 3,
+                id = DevFragment.UUID_NULO,
+                recorrId = listRecorr[2],
                 orden = 0,
                 ptoObsUnSoc = "bajo",
                 ctxSocial = "gpo. harenes(GH)",
@@ -467,9 +466,8 @@ class DevDatos {
                 comentario = "comentario 10"
             )
         )
-
         unSocList.forEach { unsoc ->
-            unsocDAO.insertConUltInst(unsoc)
+            unsocDAO.insertConUUID(unsoc)
         }
     }
 

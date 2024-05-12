@@ -2,6 +2,9 @@ package com.example.demo.fragment.statistics
 
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Parcel
+import android.os.Parcelable
+import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,9 +18,13 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.demo.R
 import com.example.demo.databinding.FragmentStatisticsBinding
 import com.example.demo.exception.NoExisteRegistroException
+import com.example.demo.model.Dia
+import com.example.demo.model.EntidadesPlanas
+import com.example.demo.model.Recorrido
 import com.example.demo.model.UnidSocial
 import com.example.demo.viewModel.UnSocViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -26,13 +33,16 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.eazegraph.lib.charts.PieChart
 import org.eazegraph.lib.models.PieModel
+import java.util.UUID
 
 class StatisticsFragment : Fragment() {
 
     private var _binding: FragmentStatisticsBinding? = null
     private val binding get() = _binding!!
+    private val args: StatisticsFragmentArgs by navArgs()
 
     private val coloresDisponibles = mutableListOf<Int>()
+    private fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,10 +51,34 @@ class StatisticsFragment : Fragment() {
         _binding = FragmentStatisticsBinding.inflate(inflater, container, false)
 
         binding.goBackButton.setOnClickListener { goBack() }
-        binding.granulOrden.setOnEnterPressedListener { tomarDatos() }
         binding.granularidad.setOnItemSelectedListener { posicion -> contextoItemElegido(posicion) }
+        binding.granulOrden.setOnEnterPressedListener { tomarDatos() }
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        when (val entidad = args.entidad) {
+            is Dia -> {
+                binding.granularidad.setSelection(2)
+                binding.granulOrden.text = entidad.id.toString().toEditable()
+                tomarDatos()
+            }
+            is Recorrido -> {
+                // Se recibió un objeto Recorrido
+                // Haz lo que necesites con el objeto Recorrido
+            }
+            is UnidSocial -> {
+                // Se recibió un objeto UnidSocial
+                // Haz lo que necesites con el objeto UnidSocial
+            }
+            else -> {
+                // El tipo de objeto recibido no es compatible con tus tipos de entidad esperados
+                // Maneja este caso según tu lógica de negocio
+            }
+        }
     }
 
     private fun contextoItemElegido(posicion: Int) {
@@ -75,7 +109,8 @@ class StatisticsFragment : Fragment() {
     private fun unaUnidadSocial(viewModel: UnSocViewModel) {
 
         CoroutineScope(Dispatchers.IO).launch {
-            val resultado = viewModel.readUnico(binding.granulOrden.text.toString().toInt())
+            val uuid = UUID.fromString(binding.granulOrden.text.toString())
+            val resultado = viewModel.readUnico(uuid)
             withContext(Dispatchers.Main) {
                 tratarResultado(resultado)
             }
@@ -85,7 +120,8 @@ class StatisticsFragment : Fragment() {
     private fun unRecorrido(viewModel: UnSocViewModel) {
 
         CoroutineScope(Dispatchers.IO).launch {
-            val resultado = viewModel.readSumRecorr(binding.granulOrden.text.toString().toInt())
+            val uuid = UUID.fromString(binding.granulOrden.text.toString())
+            val resultado = viewModel.readSumRecorr(uuid)
             withContext(Dispatchers.Main) {
                 tratarResultado(resultado)
             }
@@ -95,7 +131,8 @@ class StatisticsFragment : Fragment() {
     private fun unDia(viewModel: UnSocViewModel) {
 
         CoroutineScope(Dispatchers.IO).launch {
-            val resultado = viewModel.readSumDia(binding.granulOrden.text.toString().toInt())
+            val uuid = UUID.fromString(binding.granulOrden.text.toString())
+            val resultado = viewModel.readSumDia(uuid)
             withContext(Dispatchers.Main) {
                 tratarResultado(resultado)
             }

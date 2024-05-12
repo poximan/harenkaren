@@ -4,38 +4,39 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.demo.dao.UnSocDAO
 import com.example.demo.model.UnidSocial
+import java.util.UUID
 
 class UnSocRepository(private val dao: UnSocDAO) {
 
     val unSocListAll: LiveData<List<UnidSocial>> = dao.getAll()
 
     fun insert(unidSocial: UnidSocial) {
-        dao.insertConUltInst(unidSocial)
+        dao.insertConUUID(unidSocial)
     }
 
     fun update(unidSocial: UnidSocial) {
         dao.update(unidSocial)
     }
 
-    fun readUnico(id: Int): UnidSocial {
-        return dao.getUnSocById(id)
+    fun readUnico(id: UUID): UnidSocial {
+        return dao.getUnSocByUUID(id)
     }
 
-    fun getMaxRegistro(idRecorr: Int): Int {
-        return dao.getMaxRegistro(idRecorr)
-    }
-
-    fun readConFK(idRecorr: Int): LiveData<List<UnidSocial>> {
+    fun readConFK(idRecorr: UUID): LiveData<List<UnidSocial>> {
         val listaIntermedia = dao.getUnSocByRecorrId(idRecorr)
         return convertirAData(listaIntermedia)
     }
 
-    fun readSumUnSocByRecorrId(id: Int): UnidSocial {
+    fun getMaxRegistro(idRecorr: UUID): Int {
+        return dao.getMaxRegistro(idRecorr)
+    }
+
+    fun readSumUnSocByRecorrId(id: UUID): UnidSocial {
         return dao.getSumUnSocByRecorrId(id)
     }
 
-    fun readSumUnSocByDiaId(idContInst: Int): UnidSocial {
-        return dao.getTotalByDiaId(idContInst)
+    fun readSumUnSocByDiaId(id: UUID): UnidSocial {
+        return dao.getTotalByDiaId(id)
     }
 
     fun readSumTotal(): UnidSocial {
@@ -48,7 +49,7 @@ class UnSocRepository(private val dao: UnSocDAO) {
         return liveData
     }
 
-    fun readAsynConFK(idRecorr: Int): List<UnidSocial> {
+    fun readAsynConFK(idRecorr: UUID): List<UnidSocial> {
         return dao.getUnSocByRecorrId(idRecorr)
     }
 }

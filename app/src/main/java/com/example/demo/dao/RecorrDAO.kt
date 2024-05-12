@@ -7,8 +7,11 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
+import com.example.demo.DevFragment
+import com.example.demo.activity.MainActivity
 import com.example.demo.model.EntidadesPlanas
 import com.example.demo.model.Recorrido
+import java.nio.charset.StandardCharsets
 import java.util.UUID
 
 @Dao
@@ -17,47 +20,46 @@ interface RecorrDAO {
     @Query("SELECT * from recorrido ORDER BY id DESC")
     fun getAll(): LiveData<List<Recorrido>>
 
-    @Query("SELECT * FROM recorrido WHERE " +
-            "id_dia = :diaId AND " +
-            "observador = :observador AND " +
-            "fecha_ini = :fechaIni AND " +
-            "fecha_fin = :fechaFin AND " +
-            "latitud_ini = :latitudIni AND " +
-            "longitud_ini = :longitudIni AND " +
-            "latitud_fin = :latitudFin AND " +
-            "longitud_fin = :longitudFin AND " +
-            "area_recorrida = :areaRecorrida AND " +
-            "meteo = :meteo AND " +
-            "marea = :marea")
-    fun getRecorridoByCampos(diaId: UUID, observador: String,
-                             fechaIni: String, fechaFin: String,
-                             latitudIni: Double, longitudIni: Double,
-                             latitudFin: Double, longitudFin: Double,
-                             areaRecorrida: String, meteo: String, marea: String): Recorrido
-
     @Query("SELECT * FROM recorrido WHERE recorrido.id = :id")
-    fun getRecorrById(id: Int): Recorrido
+    fun getRecorrByUUID(id: UUID): Recorrido
 
-    @Transaction
     @Query("SELECT * FROM recorrido WHERE recorrido.id_dia = :idDia")
     fun getRecorrByDiaId(idDia: UUID): List<Recorrido>
 
     /*
-    cuando se da de alta una entidad que existe en otro dispositivo y fue
-    importada a este mediante una herramienta de transferencia, se debe
-    adecuar su contador de instancias al contexto de la BD destino
-    */
-    fun insertConUltInst(elem: Recorrido): Int {
-        val ultimaInstancia = getUltimaInstancia(elem.diaId) ?: 0
-        elem.orden = ultimaInstancia + 1
-        return insert(elem).toInt()
+   cuando se da de alta una entidad que no existio nunca en este ni en ningun
+   otro dispositivo, se usa insertConUUID(elem) para asignar UUID unico.
+   */
+    fun insertConUUID(elem: Recorrido): UUID {
+
+        if (elem.id == DevFragment.UUID_NULO) {
+            val nombre = MainActivity.obtenerAndroidID()
+            val uuid =
+                UUID.nameUUIDFromBytes("$elem.id:$nombre".toByteArray(StandardCharsets.UTF_8))
+            elem.id = uuid
+        }
+        insertConUltInst(elem)
+        return elem.id
     }
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(recorrido: Recorrido): Long
+    /*
+    cuando se da de alta una entidad que existe en otro dispositivo y fue
+    importada a este mediante una herramienta de transferencia, el UUID
+    ya se calculo antes y no debe ser reemplazado, entonces se usa
+    insertConUltInst(elem) para adecuar su contador de instancias
+    al contexto de la BD donde será insertada la entidad
+    */
+    private fun insertConUltInst(elem: Recorrido) {
+        val ultimaInstancia = getUltimaInstancia(elem.diaId) ?: 0
+        elem.orden = ultimaInstancia + 1
+        insert(elem)
+    }
 
     @Query("SELECT MAX(orden) FROM recorrido WHERE id_dia = :idDia")
     fun getUltimaInstancia(idDia: UUID): Int?
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insert(recorrido: Recorrido)
 
     @Query("DELETE FROM recorrido")
     fun deleteAll()
@@ -72,27 +74,15 @@ interface RecorrDAO {
     @Transaction
     fun insertarDesnormalizado(listaEntidadesPlanas: List<EntidadesPlanas>): Int {
         var insertsEfectivos = 0
-        listaEntidadesPlanas.forEachIndexed { indice, entidadPlana ->
+        listaEntidadesPlanas.forEach { entidadPlana ->
 
             val recorr = entidadPlana.getRecorrido()
-            val existe = getRecorridoByCampos(recorr.diaId, recorr.observador,
-                recorr.fechaIni, recorr.fechaFin, recorr.latitudIni, recorr.longitudIni,
-                recorr.latitudFin, recorr.longitudFin, recorr.areaRecorrida,
-                recorr.meteo, recorr.marea)
+            val existe = getRecorrByUUID(recorr.id)
 
-            if (existe == null){
-                recorr.id = null
-                recorr.id = insertConUltInst(recorr)
+            if (existe == null) {
+                insertConUltInst(recorr)
                 insertsEfectivos += 1
-            } else {
-                recorr.id = existe.id
             }
-            /*
-            se actualiza es lista porque luego sera consumida por los insert de unidad social,
-            y es necesario que tengan las referencias de clave foranea actualizadas
-            */
-            listaEntidadesPlanas[indice].recorr_id = recorr.id!!
-            listaEntidadesPlanas[indice].unsoc_id_recorr = recorr.id!!
         }
         return insertsEfectivos
     }

@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.demo.DevFragment
 import com.example.demo.R
 import com.example.demo.adapter.UnSocPagerAdapter
 import com.example.demo.databinding.FragmentUnsocAddBinding
@@ -34,8 +35,9 @@ class UnSocAddFragment : Fragment() {
 
         val formato = requireContext().resources.getString(R.string.formato_fecha)
         val estampatiempo = SimpleDateFormat(formato).format(Date())
+        val uuid = DevFragment.UUID_NULO
+        unSoc = UnidSocial(uuid, args.idRecorrido, estampatiempo)
 
-        unSoc = UnidSocial(args.idRecorrido, estampatiempo)
         adapter = UnSocPagerAdapter(childFragmentManager)
 
         binding.viewPager.adapter = adapter

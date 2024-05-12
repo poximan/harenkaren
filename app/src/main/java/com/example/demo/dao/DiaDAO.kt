@@ -75,7 +75,7 @@ interface DiaDAO {
             val dia = entidadPlana.getDia()
             val existe = getDiaByUUID(dia.id)
 
-            if (existe == null){
+            if (existe == null) {
                 insertConUltInst(dia)
                 insertsEfectivos += 1
             }

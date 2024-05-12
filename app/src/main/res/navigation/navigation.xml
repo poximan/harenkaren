@@ -74,13 +74,6 @@
             app:exitAnim="@android:anim/fade_out"
             app:popEnterAnim="@android:anim/fade_in"
             app:popExitAnim="@android:anim/fade_out" />
-        <action
-            android:id="@+id/goToStatisticsAction"
-            app:destination="@id/statistics_fragment"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out"
-            app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
     <navigation
         android:id="@+id/dia"
@@ -129,6 +122,9 @@
                 app:exitAnim="@android:anim/fade_out"
                 app:popEnterAnim="@android:anim/fade_in"
                 app:popExitAnim="@android:anim/fade_out" />
+            <action
+                android:id="@+id/goToGrafDesdeDiaAction"
+                app:destination="@id/statistics_fragment" />
         </fragment>
         <navigation
             android:id="@+id/recorrido"
@@ -168,11 +164,9 @@
                 android:name="com.example.demo.fragment.detail.RecorrDetailFragment"
                 android:label="Detalle recorrido"
                 tools:layout="@layout/fragment_recorr_detail">
-
                 <argument
                     android:name="recorrActual"
                     app:argType="com.example.demo.model.Recorrido" />
-
                 <action
                     android:id="@+id/goToRecorrListAction"
                     app:destination="@id/recorr_list_fragment"
@@ -180,7 +174,6 @@
                     app:exitAnim="@android:anim/fade_out"
                     app:popEnterAnim="@android:anim/fade_in"
                     app:popExitAnim="@android:anim/fade_out" />
-
                 <action
                     android:id="@+id/goToUnSocListFromRecorrDetailAction"
                     app:destination="@id/unidad_social"
@@ -188,13 +181,16 @@
                     app:exitAnim="@android:anim/fade_out"
                     app:popEnterAnim="@android:anim/fade_in"
                     app:popExitAnim="@android:anim/fade_out" />
+                <action
+                    android:id="@+id/goToGrafDesdeRecorrAction"
+                    app:destination="@id/statistics_fragment" />
             </fragment>
             <navigation
                 android:id="@+id/unidad_social"
                 app:startDestination="@id/unsoc_list_fragment">
                 <argument
                     android:name="idRecorrido"
-                    app:argType="integer" />
+                    app:argType="java.util.UUID" />
 
                 <fragment
                     android:id="@+id/unsoc_list_fragment"
@@ -203,7 +199,7 @@
                     tools:layout="@layout/fragment_unsoc_list">
                     <argument
                         android:name="idRecorrido"
-                        app:argType="integer" />
+                        app:argType="java.util.UUID" />
                     <action
                         android:id="@+id/goToUnSocDetailFromUnSocListAction"
                         app:destination="@id/unsoc_detail_fragment" />
@@ -222,7 +218,7 @@
                     tools:layout="@layout/fragment_unsoc_list_graf">
                     <argument
                         android:name="idRecorrido"
-                        app:argType="integer" />
+                        app:argType="java.util.UUID" />
                     <action
                         android:id="@+id/goToUnSocDetailFromUnSocListAction"
                         app:destination="@id/unsoc_detail_fragment" />
@@ -240,7 +236,7 @@
                     tools:layout="@layout/fragment_unsoc_add">
                     <argument
                         android:name="idRecorrido"
-                        app:argType="integer"/>
+                        app:argType="java.util.UUID"/>
                     <action
                         android:id="@+id/goToOSMFragmentAction"
                         app:destination="@id/osm_fragment"
@@ -258,11 +254,9 @@
                     android:name="com.example.demo.fragment.detail.UnSocDetailFragment"
                     android:label="Detalle registro"
                     tools:layout="@layout/fragment_unsoc_add">
-
                     <argument
                         android:name="unSocActual"
                         app:argType="com.example.demo.model.UnidSocial" />
-
                     <action
                         android:id="@+id/goToUnSocListFromUnSocDetailAction"
                         app:destination="@id/unsoc_list_fragment"
@@ -270,6 +264,9 @@
                         app:exitAnim="@android:anim/fade_out"
                         app:popEnterAnim="@android:anim/fade_in"
                         app:popExitAnim="@android:anim/fade_out" />
+                    <action
+                        android:id="@+id/goToGrafDesdeUnSocAction"
+                        app:destination="@id/statistics_fragment" />
                 </fragment>
 
                 <fragment
@@ -308,7 +305,9 @@
         android:name="com.example.demo.fragment.statistics.StatisticsFragment"
         android:label="Estadísticas"
         tools:layout="@layout/fragment_statistics" >
-
+        <argument
+            android:name="entidad"
+            app:argType="android.os.Parcelable" />
     </fragment>
     <fragment
         android:id="@+id/topics_fragment"

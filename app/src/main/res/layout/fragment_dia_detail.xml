@@ -12,11 +12,21 @@
         android:layout_height="wrap_content"
         android:layout_marginVertical="10dp"
         android:hint="ID dia" />
+
+    <ImageButton
+        android:id="@+id/icono"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_graficar"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintTop_toBottomOf="@id/id_dia"/>
     <TextView
         android:id="@+id/origen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/id_dia"
+        app:layout_constraintTop_toBottomOf="@id/icono"
         android:layout_marginVertical="10dp"
         android:hint="datos obtenido en {dispositivo}" />
 

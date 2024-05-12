@@ -23,11 +23,10 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        _binding!!.censosButton.setOnClickListener { gotoCensos() }
-        _binding!!.topicosButton.setOnClickListener { goToMyTopics() }
-        _binding!!.regulationsButton.setOnClickListener { showRegulations() }
-        _binding!!.goToStatisticsButton.setOnClickListener { goToStatistics() }
-        _binding!!.logOutButton.setOnClickListener { logOut() }
+        binding.censosButton.setOnClickListener { gotoCensos() }
+        binding.topicosButton.setOnClickListener { goToMyTopics() }
+        binding.regulationsButton.setOnClickListener { showRegulations() }
+        binding.logOutButton.setOnClickListener { logOut() }
 
         return binding.root
     }
@@ -38,10 +37,6 @@ class HomeFragment : Fragment() {
 
     private fun goToMyTopics() {
         findNavController().navigate(R.id.goToTopicsAction)
-    }
-
-    private fun goToStatistics() {
-        findNavController().navigate(R.id.goToStatisticsAction)
     }
 
     private fun showRegulations() {

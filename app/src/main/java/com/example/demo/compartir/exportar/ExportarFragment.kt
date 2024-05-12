@@ -102,9 +102,9 @@ class ExportarFragment : Fragment() {
     }
 
     private fun enviarConcentrador() {
-        if(binding.radioWifi.isChecked)
+        if (binding.radioWifi.isChecked)
             comWF.levantarModal()
-        if(binding.radioBt.isChecked){
+        if (binding.radioBt.isChecked) {
             val listaParcel = prepararDatos()
             comBT.activarComoRTU(listaParcel)
         }

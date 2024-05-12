@@ -28,8 +28,9 @@ class ImportarWF(context: Context, private val callback: RegistroDistribuible) {
         nsdHelper.tearDown()
     }
 
-    fun activarComoMTU() {
+    fun activarComoMTU(): Int {
         mtuClienteWF = MTUClienteWF(callback)
         mtuClienteWF.startListening(nsdHelper.getSocket())
+        return port
     }
 }

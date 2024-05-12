@@ -54,7 +54,7 @@ class DevFragment : Fragment() {
                 val dias = bd.diaDao().getCount()
                 val recorr = bd.recorrDao().getCount()
                 val unsoc = bd.unSocDao().getCount()
-                withContext(Dispatchers.Main){
+                withContext(Dispatchers.Main) {
                     binding.dias.text = "$dias entidades Dia"
                     binding.recorr.text = "$recorr entidades Recorrido"
                     binding.unsoc.text = "$unsoc entidades Unid.Social"
@@ -98,12 +98,13 @@ class DevFragment : Fragment() {
                     .getDatabase(requireActivity().application, viewModelScope)
                     .unSocDao()
 
-                val idsRetornos: Array<UUID> =
+                val listDias: Array<UUID> =
                     datos.generarDias(diaDao).filterNotNull().toTypedArray()
-                datos.generarRecorridos(recorrDao, idsRetornos)
-                datos.generarUnidadesSociales(unSocDao)
+                val listRecorr: Array<UUID> =
+                    datos.generarRecorridos(recorrDao, listDias).filterNotNull().toTypedArray()
+                datos.generarUnidadesSociales(unSocDao, listRecorr)
 
-                withContext(Dispatchers.Main){
+                withContext(Dispatchers.Main) {
                     estadoBD()
                 }
             }

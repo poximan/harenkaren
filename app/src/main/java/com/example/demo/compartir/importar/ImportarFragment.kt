@@ -68,9 +68,9 @@ class ImportarFragment : Fragment(), RegistroDistribuible {
     private fun clickWF() {
 
         comWF.descubrir()
-        comWF.activarComoMTU()
+        val port = comWF.activarComoMTU()
 
-        binding.idMasterBt.text = "En DESTINATARIOS buscame como ${comWF.miNombre()}"
+        binding.idMasterBt.text = "En DESTINATARIOS buscame como ${comWF.miNombre()}:$port"
         binding.recepcionBt.text = "esperando datos desde remota"
     }
 
@@ -90,16 +90,19 @@ class ImportarFragment : Fragment(), RegistroDistribuible {
         Log.i(TAG, "transformados a ${listaEntidadesPlanas.size} objetos desnomarlizados")
 
         val mapContador = sumarEntidades(listaEntidadesPlanas)
-        Log.i(TAG, "distribuidos en ${mapContador["dias"]} dias, ${mapContador["recorr"]} recorridos y ${mapContador["unidsoc"]} unidades sociales")
-
+        Log.i(
+            TAG,
+            "distribuidos en ${mapContador["dias"]} dias, ${mapContador["recorr"]} recorridos y ${mapContador["unidsoc"]} unidades sociales"
+        )
         insertarEntidades(listaEntidadesPlanas, mapContador)
         binding.recepcionBt.text = "Legaron desde dispositivo remoto $mapContador"
     }
 
-    private fun insertarEntidades(listaArribo: List<EntidadesPlanas>, mapContador: Map<String, Int>) {
-        // Crear un CoroutineScope
+    private fun insertarEntidades(
+        listaArribo: List<EntidadesPlanas>,
+        mapContador: Map<String, Int>
+    ) {
         val viewModelScope = viewLifecycleOwner.lifecycleScope
-
         viewModelScope.launch {
             withContext(Dispatchers.IO) {// Dispatchers.IO es el hilo background
 
@@ -109,18 +112,24 @@ class ImportarFragment : Fragment(), RegistroDistribuible {
                 val diasInsert = bd.diaDao().insertarDesnormalizado(listaArribo)
                 val recorrInsert = bd.recorrDao().insertarDesnormalizado(listaArribo)
                 val unSocInsert = bd.unSocDao().insertarDesnormalizado(listaArribo)
+
+                withContext(Dispatchers.IO) {
+                    mostrarResultado(listaArribo.size, mapContador, diasInsert, recorrInsert, unSocInsert)
+                }
             }
         }
     }
 
-    private fun mostrarResultado(lote: Int, aceptados: Int) {
-        val texto: String = when (aceptados) {
-            0 -> "De los $lote registos obtenidos desde el equipo remoto, se descartaran TODOS " +
-                    "porque ya existen en esta base de datos"
-            lote -> "Los $lote registos obtenidos desde el equipo remoto seran agregados a la base de datos"
-            else -> "De los $lote registos obtenidos desde el equipo remoto, se descartara $aceptados " +
-                    "porque ya existen en esta base de datos"
-        }
+    private fun mostrarResultado(
+        lote: Int,
+        mapContador: Map<String, Int>,
+        diasInsert: Int,
+        recorrInsert: Int,
+        unSocInsert: Int
+    ) {
+        val texto: String = "Los registros contabilizados en la importacion fueron $lote," +
+                " desglosados en ${mapContador["dias"]} dias, ${mapContador["recorr"]} recorridos y ${mapContador["unidsoc"]} unidades sociales. " +
+                "De ese lote, se insertaron efectivamente a esta BD $diasInsert dias, $recorrInsert recorridos y $unSocInsert unidades sociales."
 
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Nuevos registros")
@@ -134,8 +143,8 @@ class ImportarFragment : Fragment(), RegistroDistribuible {
 
     private fun sumarEntidades(entidades: List<EntidadesPlanas>): Map<String, Int> {
         val sumaDias = mutableMapOf<UUID, Int>()
-        val sumaRecorridos = mutableMapOf<Int, Int>()
-        val sumaUnidadesSociales = mutableMapOf<Int, Int>()
+        val sumaRecorridos = mutableMapOf<UUID, Int>()
+        val sumaUnidadesSociales = mutableMapOf<UUID, Int>()
 
         /*
         crea una nueva clave cada vez. si encuentra que ya existe hace +1. por lo tanto
@@ -145,7 +154,8 @@ class ImportarFragment : Fragment(), RegistroDistribuible {
         for (entidad in entidades) {
             sumaDias[entidad.dia_id] = (sumaDias[entidad.dia_id] ?: 0) + 1
             sumaRecorridos[entidad.recorr_id] = (sumaRecorridos[entidad.recorr_id] ?: 0) + 1
-            sumaUnidadesSociales[entidad.unsoc_id] = (sumaUnidadesSociales[entidad.unsoc_id] ?: 0) + 1
+            sumaUnidadesSociales[entidad.unsoc_id] =
+                (sumaUnidadesSociales[entidad.unsoc_id] ?: 0) + 1
         }
 
         val resultado = mutableMapOf<String, Int>()

@@ -12,6 +12,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.UUID
 
 class UnSocViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -45,31 +46,31 @@ class UnSocViewModel(application: Application) : AndroidViewModel(application) {
         repository.update(unidSocial)
     }
 
-    fun readConFK(id: Int): LiveData<List<UnidSocial>> {
+    fun readConFK(id: UUID): LiveData<List<UnidSocial>> {
         return repository.readConFK(id)
     }
 
-    fun readUnico(idUnSoc: Int): UnidSocial {
+    fun readUnico(idUnSoc: UUID): UnidSocial {
         return repository.readUnico(idUnSoc)
     }
 
-    fun getMaxRegistro(idRecorr: Int): Int {
+    fun getMaxRegistro(idRecorr: UUID): Int {
         return repository.getMaxRegistro(idRecorr)
     }
 
-    fun readSumRecorr(id: Int): UnidSocial {
+    fun readSumRecorr(id: UUID): UnidSocial {
         return repository.readSumUnSocByRecorrId(id)
     }
 
-    fun readSumDia(idContInst: Int): UnidSocial {
-        return repository.readSumUnSocByDiaId(idContInst)
+    fun readSumDia(id: UUID): UnidSocial {
+        return repository.readSumUnSocByDiaId(id)
     }
 
     fun readSumTotal(): UnidSocial {
         return repository.readSumTotal()
     }
 
-    fun readAsynConFK(idRecorr: Int, callback: (List<UnidSocial>) -> Unit) {
+    fun readAsynConFK(idRecorr: UUID, callback: (List<UnidSocial>) -> Unit) {
         CoroutineScope(Dispatchers.IO).launch {
             val result = repository.readAsynConFK(idRecorr)
             withContext(Dispatchers.Main) {

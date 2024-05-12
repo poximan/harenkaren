@@ -11,7 +11,7 @@ data class EntidadesPlanas(
     val dia_orden: Int,
     val dia_fecha: String,
     /* recorrido */
-    var recorr_id: Int,
+    var recorr_id: UUID,
     val recorr_id_dia: UUID,
     val recorr_orden: Int,
     val observador: String,
@@ -25,8 +25,8 @@ data class EntidadesPlanas(
     val meteo: String,
     val marea: String,
     /* unidad social */
-    val unsoc_id: Int,
-    var unsoc_id_recorr: Int,
+    val unsoc_id: UUID,
+    var unsoc_id_recorr: UUID,
     val unsoc_orden: Int,
     val pto_observacion: String,
     val ctx_social: String,
@@ -71,7 +71,7 @@ data class EntidadesPlanas(
         parcel.readInt(),
         parcel.readString()!!,
         /* recorrido */
-        parcel.readInt(),
+        UUID.fromString(parcel.readString()),
         UUID.fromString(parcel.readString()),
         parcel.readInt(),
         parcel.readString()!!,
@@ -85,8 +85,8 @@ data class EntidadesPlanas(
         parcel.readString()!!,
         parcel.readString()!!,
         /* unidad social */
-        parcel.readInt(),
-        parcel.readInt(),
+        UUID.fromString(parcel.readString()),
+        UUID.fromString(parcel.readString()),
         parcel.readInt(),
         parcel.readString()!!,
         parcel.readString()!!,
@@ -131,7 +131,7 @@ data class EntidadesPlanas(
         parcel.writeInt(dia_orden)
         parcel.writeString(dia_fecha)
         /* recorrido */
-        parcel.writeInt(recorr_id)
+        parcel.writeString(recorr_id.toString())
         parcel.writeString(recorr_id_dia.toString())
         parcel.writeInt(recorr_orden)
         parcel.writeString(observador)
@@ -145,8 +145,8 @@ data class EntidadesPlanas(
         parcel.writeString(meteo)
         parcel.writeString(marea)
         /* unidad social */
-        parcel.writeInt(unsoc_id)
-        parcel.writeInt(unsoc_id_recorr)
+        parcel.writeString(unsoc_id.toString())
+        parcel.writeString(unsoc_id_recorr.toString())
         parcel.writeInt(unsoc_orden)
         parcel.writeString(pto_observacion)
         parcel.writeString(ctx_social)
