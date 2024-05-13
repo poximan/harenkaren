@@ -117,7 +117,6 @@ class UnSocGralFragment : Fragment() {
 
         binding.getPosicion.setOnClickListener { getPosicionActual() }
         binding.photoButton.setOnClickListener { takePhoto() }
-        binding.mapOsm.setOnClickListener { usarMapaOSM() }
 
         binding.spinnerAddPtoObs.onItemSelectedListener = onItemSelectedListener
         binding.spinnerAddCtxSocial.onItemSelectedListener = onItemSelectedListener
@@ -195,11 +194,6 @@ class UnSocGralFragment : Fragment() {
         override fun afterTextChanged(s: Editable?) {
             cargarMap()
         }
-    }
-
-    private fun usarMapaOSM() {
-        val action = UnSocAddFragmentDirections.goToOSMFragmentAction(latLon)
-        findNavController().navigate(action)
     }
 
     private fun takePhoto() {

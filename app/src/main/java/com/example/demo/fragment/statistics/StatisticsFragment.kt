@@ -1,29 +1,22 @@
 package com.example.demo.fragment.statistics
 
-import android.graphics.Color
 import android.os.Bundle
-import android.os.Parcel
-import android.os.Parcelable
-import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
 import android.widget.AdapterView
-import android.widget.EditText
+import android.widget.CheckBox
 import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.demo.DevFragment
 import com.example.demo.R
 import com.example.demo.databinding.FragmentStatisticsBinding
-import com.example.demo.exception.NoExisteRegistroException
 import com.example.demo.model.Dia
-import com.example.demo.model.EntidadesPlanas
 import com.example.demo.model.Recorrido
 import com.example.demo.model.UnidSocial
 import com.example.demo.viewModel.UnSocViewModel
@@ -40,9 +33,7 @@ class StatisticsFragment : Fragment() {
     private var _binding: FragmentStatisticsBinding? = null
     private val binding get() = _binding!!
     private val args: StatisticsFragmentArgs by navArgs()
-
-    private val coloresDisponibles = mutableListOf<Int>()
-    private fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)
+    private var uuid: UUID = DevFragment.UUID_NULO
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,7 +43,6 @@ class StatisticsFragment : Fragment() {
 
         binding.goBackButton.setOnClickListener { goBack() }
         binding.granularidad.setOnItemSelectedListener { posicion -> contextoItemElegido(posicion) }
-        binding.granulOrden.setOnEnterPressedListener { tomarDatos() }
 
         return binding.root
     }
@@ -63,33 +53,26 @@ class StatisticsFragment : Fragment() {
         when (val entidad = args.entidad) {
             is Dia -> {
                 binding.granularidad.setSelection(2)
-                binding.granulOrden.text = entidad.id.toString().toEditable()
+                uuid = entidad.id
                 tomarDatos()
             }
             is Recorrido -> {
-                // Se recibió un objeto Recorrido
-                // Haz lo que necesites con el objeto Recorrido
+                binding.granularidad.setSelection(1)
+                uuid = entidad.id
+                tomarDatos()
             }
             is UnidSocial -> {
-                // Se recibió un objeto UnidSocial
-                // Haz lo que necesites con el objeto UnidSocial
+                binding.granularidad.setSelection(0)
+                uuid = entidad.id
+                tomarDatos()
             }
-            else -> {
-                // El tipo de objeto recibido no es compatible con tus tipos de entidad esperados
-                // Maneja este caso según tu lógica de negocio
-            }
+            else -> { }
         }
     }
 
     private fun contextoItemElegido(posicion: Int) {
-
-        if (posicion in 0..2) {
-            binding.granulOrden.visibility = View.VISIBLE
-            binding.granulOrden.text.clear()
-        } else {
+        if (posicion == 3)
             todosLosDias(UnSocViewModel(requireActivity().application))
-            binding.granulOrden.visibility = View.GONE
-        }
     }
 
     private fun tomarDatos() {
@@ -109,10 +92,9 @@ class StatisticsFragment : Fragment() {
     private fun unaUnidadSocial(viewModel: UnSocViewModel) {
 
         CoroutineScope(Dispatchers.IO).launch {
-            val uuid = UUID.fromString(binding.granulOrden.text.toString())
             val resultado = viewModel.readUnico(uuid)
             withContext(Dispatchers.Main) {
-                tratarResultado(resultado)
+                graficar(resultado)
             }
         }
     }
@@ -120,10 +102,9 @@ class StatisticsFragment : Fragment() {
     private fun unRecorrido(viewModel: UnSocViewModel) {
 
         CoroutineScope(Dispatchers.IO).launch {
-            val uuid = UUID.fromString(binding.granulOrden.text.toString())
             val resultado = viewModel.readSumRecorr(uuid)
             withContext(Dispatchers.Main) {
-                tratarResultado(resultado)
+                graficar(resultado)
             }
         }
     }
@@ -131,10 +112,9 @@ class StatisticsFragment : Fragment() {
     private fun unDia(viewModel: UnSocViewModel) {
 
         CoroutineScope(Dispatchers.IO).launch {
-            val uuid = UUID.fromString(binding.granulOrden.text.toString())
             val resultado = viewModel.readSumDia(uuid)
             withContext(Dispatchers.Main) {
-                tratarResultado(resultado)
+                graficar(resultado)
             }
         }
     }
@@ -144,26 +124,14 @@ class StatisticsFragment : Fragment() {
         CoroutineScope(Dispatchers.IO).launch {
             val resultado = viewModel.readSumTotal()
             withContext(Dispatchers.Main) {
-                tratarResultado(resultado)
+                graficar(resultado)
             }
         }
     }
 
-    private fun tratarResultado(resultado: UnidSocial) {
-        try {
-            view?.let {
-                if (resultado == null)
-                    throw NoExisteRegistroException()
-                graficar(it, resultado)
-            }
-        } catch (e: NoExisteRegistroException) {
-            Toast.makeText(activity, "No existe registro, verificar {#}", Toast.LENGTH_LONG).show()
-        }
-    }
+    private fun graficar(unidSocial: UnidSocial) {
 
-    private fun graficar(view: View, unidSocial: UnidSocial) {
-
-        val pieChart: PieChart = view.findViewById(R.id.piechart)
+        val pieChart: PieChart = view!!.findViewById(R.id.piechart)
         pieChart.clearChart()
 
         val contadores = unidSocial.getContadores()
@@ -173,11 +141,24 @@ class StatisticsFragment : Fragment() {
 
         val contadoresNoNulos = unidSocial.getContadoresNoNulos()
         for (atribString in contadoresNoNulos) {
+
             asignarValorPorReflexion(atribString, unidSocial)
-            setData(pieChart, atribString, unidSocial)
+            if(atribIsCheck(atribString)) {
+                pieChart.addPieSlice(setData(atribString, unidSocial))
+            }
         }
 
         pieChart.startAnimation()
+    }
+
+    private fun atribIsCheck(atribString: String): Boolean {
+
+        val capitalizar = if (atribString.startsWith('v')) 'V' else 'M'
+        val nombreCampo = "chk${capitalizar}${atribString.substring(1)}"
+        val field = binding.javaClass.getDeclaredField(nombreCampo)
+        val checkBox = field.get(binding) as CheckBox
+
+        return checkBox.isChecked
     }
 
     private fun ocultarEtiquetas(atribString: String) {
@@ -222,79 +203,49 @@ class StatisticsFragment : Fragment() {
         }
     }
 
-    private fun setData(pieChart: PieChart, atribString: String, unidSocial: UnidSocial) {
+    private fun setData(atribString: String, unidSocial: UnidSocial): PieModel {
 
         val valorAtributo = unidSocial.javaClass.getDeclaredField(atribString)
         valorAtributo.isAccessible = true
         // utilizar el objeto Field para obtener el valor del atributo en unidSocial.
         val valor = (valorAtributo.get(unidSocial) as Int).toFloat()
-
-        pieChart.addPieSlice(
-            PieModel(
-                valor,
-                Color.parseColor(String.format("#%06X", 0xFFFFFF and siguienteColor()))
-            )
-        )
+        return PieModel(atribString, valor, siguienteColor(atribString))
     }
 
-    private fun siguienteColor(): Int {
+    private fun siguienteColor(atribString: String): Int {
 
-        val colores = listOf(
-            R.color.clr_v_alfa_s4ad,
-            R.color.clr_v_alfa_sams,
-            R.color.clr_v_hembras_ad,
-            R.color.clr_v_crias,
-            R.color.clr_v_destetados,
-            R.color.clr_v_juveniles,
-            R.color.clr_v_s4ad_perif,
-            R.color.clr_v_s4ad_cerca,
-            R.color.clr_v_s4ad_lejos,
-            R.color.clr_v_otros_sams_perif,
-            R.color.clr_v_otros_sams_cerca,
-            R.color.clr_v_otros_sams_lejos,
-            R.color.clr_m_alfa_s4ad,
-            R.color.clr_m_alfa_sams,
-            R.color.clr_m_hembras_ad,
-            R.color.clr_m_crias,
-            R.color.clr_m_destetados,
-            R.color.clr_m_juveniles,
-            R.color.clr_m_s4ad_perif,
-            R.color.clr_m_s4ad_cerca,
-            R.color.clr_m_s4ad_lejos,
-            R.color.clr_m_otros_sams_perif,
-            R.color.clr_m_otros_sams_cerca,
-            R.color.clr_m_otros_sams_lejos
+        val coloresMap = mapOf(
+            "vAlfaS4Ad" to R.color.clr_v_alfa_s4ad,
+            "vAlfaSams" to R.color.clr_v_alfa_sams,
+            "vHembrasAd" to R.color.clr_v_hembras_ad,
+            "vCrias" to R.color.clr_v_crias,
+            "vDestetados" to R.color.clr_v_destetados,
+            "vJuveniles" to R.color.clr_v_juveniles,
+            "vS4AdPerif" to R.color.clr_v_s4ad_perif,
+            "vS4AdCerca" to R.color.clr_v_s4ad_cerca,
+            "vS4AdLejos" to R.color.clr_v_s4ad_lejos,
+            "vOtrosSamsPerif" to R.color.clr_v_otros_sams_perif,
+            "vOtrosSamsCerca" to R.color.clr_v_otros_sams_cerca,
+            "vOtrosSamsLejos" to R.color.clr_v_otros_sams_lejos,
+            "mAlfaS4Ad" to R.color.clr_m_alfa_s4ad,
+            "mAlfaSams" to R.color.clr_m_alfa_sams,
+            "mHembrasAd" to R.color.clr_m_hembras_ad,
+            "mCrias" to R.color.clr_m_crias,
+            "mDestetados" to R.color.clr_m_destetados,
+            "mJuveniles" to R.color.clr_m_juveniles,
+            "mS4AdPerif" to R.color.clr_m_s4ad_perif,
+            "mS4AdCerca" to R.color.clr_m_s4ad_cerca,
+            "mS4AdLejos" to R.color.clr_m_s4ad_lejos,
+            "mOtrosSamsPerif" to R.color.clr_m_otros_sams_perif,
+            "mOtrosSamsCerca" to R.color.clr_m_otros_sams_cerca,
+            "mOtrosSamsLejos" to R.color.clr_m_otros_sams_lejos
         )
 
-        // Filtrar los colores que aún no han sido utilizados
-        val coloresNoUtilizados = colores.filter { !coloresDisponibles.contains(it) }
-
-        if (coloresNoUtilizados.isEmpty()) {    // si no quedan disponibles
-            coloresDisponibles.clear()
-            return siguienteColor() // Volver a intentar pedir colore
-        }
-
-        // Obtener un color aleatorio de los colores no utilizados
-        val colorIndex = (coloresNoUtilizados.indices).random()
-        val colorId = coloresNoUtilizados[colorIndex]
-        coloresDisponibles.add(colorId)
-
-        return ContextCompat.getColor(requireContext(), colorId)
+        return ContextCompat.getColor(requireContext(), coloresMap[atribString]!!)
     }
 
     private fun goBack() {
         findNavController().popBackStack()
-    }
-
-    private fun EditText.setOnEnterPressedListener(action: () -> Unit) {
-        this.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                action.invoke()
-                true
-            } else {
-                false
-            }
-        }
     }
 
     private fun Spinner.setOnItemSelectedListener(action: (position: Int) -> Unit) {
@@ -309,7 +260,6 @@ class StatisticsFragment : Fragment() {
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                binding.granulOrden.visibility = View.GONE
             }
         }
     }

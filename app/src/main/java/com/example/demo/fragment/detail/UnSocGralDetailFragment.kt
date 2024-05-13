@@ -85,6 +85,7 @@ class UnSocGralDetailFragment : Fragment() {
         binding.helpTpoSustrato.setOnClickListener { tpoSustratoInfo() }
 
         binding.getPosicion.setOnClickListener { getPosicionActual() }
+        binding.icono.setOnClickListener { goGraficar() }
 
         binding.spinnerAddPtoObs.onItemSelectedListener = onItemSelectedListener
         binding.spinnerAddCtxSocial.onItemSelectedListener = onItemSelectedListener
@@ -127,6 +128,12 @@ class UnSocGralDetailFragment : Fragment() {
         }
     }
 
+    private fun goGraficar() {
+        val action =
+            UnSocDetailFragmentDirections.goToGrafDesdeUnSocAction(unSocEditable)
+        findNavController().navigate(action)
+    }
+
     private fun cargarDatos() {
         var indice = obtenerPosicionSpinner(unSocEditable.ptoObsUnSoc, binding.spinnerAddPtoObs)
         binding.spinnerAddPtoObs.setSelection(indice)
@@ -144,7 +151,6 @@ class UnSocGralDetailFragment : Fragment() {
 
         binding.linearLayout6.visibility = View.INVISIBLE
         binding.photoButton.visibility = View.INVISIBLE
-        binding.mapOsm.visibility = View.INVISIBLE
 
         binding.unSocComentario.addTextChangedListener(textWatcher)
     }

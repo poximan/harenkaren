@@ -176,7 +176,7 @@ interface UnSocDAO {
 
     @Query(
         "SELECT \n" +
-                "   unidsocial.id, id_recorrido, unidsocial.orden,\n" +
+                "   id, id_recorrido, orden,\n" +
                 "   pto_observacion, ctx_social, tpo_sustrato,\n" +
                 "   SUM(v_alfa_s4ad) AS v_alfa_s4ad,\n" +
                 "   SUM(v_alfa_sams) AS v_alfa_sams,\n" +
@@ -204,8 +204,6 @@ interface UnSocDAO {
                 "   SUM(m_otros_sams_lejos) AS m_otros_sams_lejos,\n" +
                 "   date, latitud, longitud, photo_path, comentario \n" +
                 "FROM unidsocial\n" +
-                "JOIN\n" +
-                "   recorrido ON unidsocial.id_recorrido = recorrido.id\n" +
                 "WHERE \n" +
                 "   unidsocial.id_recorrido = :idRecorr"
     )

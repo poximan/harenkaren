@@ -122,9 +122,12 @@ class DevFragment : Fragment() {
                     .getDatabase(requireActivity().application, viewModelScope)
                     .diaDao()
                 datos.vaciarDias(dao)
+
+                withContext(Dispatchers.Main) {
+                    estadoBD()
+                }
             }
         }
-        estadoBD()
     }
 
     private fun limpiarRecorr() {

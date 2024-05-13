@@ -269,6 +269,11 @@ data class UnidSocial(
         parcel.writeString(comentario)
     }
 
+    /**
+     * de todos los atributos de la clase, interesan los que llevan la cuenta
+     * de los animales censados. incluye categorias con cuentas =0
+     * @return una lista de atributos Int que llevan la cuenta de esa categoria
+     */
     fun getContadores(): List<String> {
 
         val atributos = mutableListOf<String>()
@@ -285,6 +290,11 @@ data class UnidSocial(
         return atributos
     }
 
+    /**
+     * de todos los atributos de la clase, interesan los que llevan la cuenta
+     * de los animales censados. solo incluye categorias con cuentas >0
+     * @return una lista de atributos Int que llevan la cuenta de esa categoria
+     */
     fun getContadoresNoNulos(): List<String> {
 
         val atributos = mutableListOf<String>()

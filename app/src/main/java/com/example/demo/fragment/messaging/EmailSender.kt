@@ -11,8 +11,7 @@ object EmailSender {
 
     fun sendEmail(cuerpo: String, archivoAdjunto: File, context: Context) {
 
-        val destinatarios = arrayOf("poxi_man@yahoo.com")
-        destinatarios.plus("harenkaren70@gmail.com")
+        val destinatarios = arrayOf("harenkaren70@gmail.com")
 
         val asunto = "respaldo censo"
         val uri =

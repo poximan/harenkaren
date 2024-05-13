@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.navArgs
 import com.example.demo.R
 import org.osmdroid.api.IMapController
 import org.osmdroid.config.Configuration
@@ -21,7 +20,6 @@ import org.osmdroid.views.overlay.Polyline
 
 class OSMFragment : Fragment(), MapEventsReceiver {
 
-    private val args: OSMFragmentArgs by navArgs()
     private lateinit var mapView: MapView
     private lateinit var mapController: IMapController
     private var clickedGeoPoint: GeoPoint? = null
@@ -59,7 +57,7 @@ class OSMFragment : Fragment(), MapEventsReceiver {
         super.onViewCreated(view, savedInstanceState)
 
         val routePoints = listOf(
-            GeoPoint(args.coordenadas.lat, args.coordenadas.lon)
+            GeoPoint(-42.504898,-64.401734)
         )
 
         val startPoint = routePoints.first()

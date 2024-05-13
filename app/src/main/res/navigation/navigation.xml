@@ -54,6 +54,13 @@
             app:popEnterAnim="@android:anim/fade_in"
             app:popExitAnim="@android:anim/fade_out" />
         <action
+            android:id="@+id/goToMapaAction"
+            app:destination="@id/osm_fragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
+        <action
             android:id="@+id/goToTopicsAction"
             app:destination="@id/topics_fragment"
             app:enterAnim="@android:anim/fade_in"
@@ -63,13 +70,6 @@
         <action
             android:id="@+id/goToDevAction"
             app:destination="@id/dev_fragment"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out"
-            app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/fade_out" />
-        <action
-            android:id="@+id/goToSolapas"
-            app:destination="@id/unsoc_add_fragment"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out"
             app:popEnterAnim="@android:anim/fade_in"
@@ -210,7 +210,6 @@
                         android:id="@+id/goToModoGrafico"
                         app:destination="@id/unsoc_listgraf_fragment" />
                 </fragment>
-
                 <fragment
                     android:id="@+id/unsoc_listgraf_fragment"
                     android:name="com.example.demo.fragment.list.UnSocListGrafFragment"
@@ -238,17 +237,9 @@
                         android:name="idRecorrido"
                         app:argType="java.util.UUID"/>
                     <action
-                        android:id="@+id/goToOSMFragmentAction"
-                        app:destination="@id/osm_fragment"
-                        app:enterAnim="@android:anim/fade_in"
-                        app:exitAnim="@android:anim/fade_out"
-                        app:popEnterAnim="@android:anim/fade_in"
-                        app:popExitAnim="@android:anim/fade_out" />
-                    <action
                         android:id="@+id/goToUnSocListFromSolapaAction"
                         app:destination="@id/unsoc_list_fragment" />
                 </fragment>
-
                 <fragment
                     android:id="@+id/unsoc_detail_fragment"
                     android:name="com.example.demo.fragment.detail.UnSocDetailFragment"
@@ -268,17 +259,6 @@
                         android:id="@+id/goToGrafDesdeUnSocAction"
                         app:destination="@id/statistics_fragment" />
                 </fragment>
-
-                <fragment
-                    android:id="@+id/osm_fragment"
-                    android:name="com.example.demo.fragment.maps.OSMFragment"
-                    android:label="Mapa OSM"
-                    tools:layout="@layout/fragment_osm">
-                    <argument
-                        android:name="coordenadas"
-                        app:argType="com.example.demo.model.LatLong" />
-                </fragment>
-
                 <activity
                     android:id="@+id/ptoObsUnSoc_activity"
                     android:name="com.example.demo.activity.PtoObsHelpActivity"
@@ -295,12 +275,6 @@
         </navigation>
     </navigation>
     <fragment
-        android:id="@+id/registerFragment"
-        android:name="com.example.demo.fragment.register.RegisterFragment"
-        android:label="Registro"
-        tools:layout="@layout/fragment_register" />
-
-    <fragment
         android:id="@+id/statistics_fragment"
         android:name="com.example.demo.fragment.statistics.StatisticsFragment"
         android:label="Estadísticas"
@@ -308,6 +282,12 @@
         <argument
             android:name="entidad"
             app:argType="android.os.Parcelable" />
+    </fragment>
+    <fragment
+        android:id="@+id/osm_fragment"
+        android:name="com.example.demo.fragment.maps.OSMFragment"
+        android:label="Mapa OSM"
+        tools:layout="@layout/fragment_osm">
     </fragment>
     <fragment
         android:id="@+id/topics_fragment"
@@ -320,22 +300,27 @@
         android:label="Para desarrollador"
         tools:layout="@layout/fragment_dev" />
     <fragment
-        android:id="@+id/about_fragment"
-        android:name="com.example.demo.fragment.info.AboutFragment"
-        tools:layout="@layout/fragment_about" />
+        android:id="@+id/registerFragment"
+        android:name="com.example.demo.fragment.register.RegisterFragment"
+        android:label="Registro"
+        tools:layout="@layout/fragment_register" />
     <fragment
         android:id="@+id/show_message_fragment"
         android:name="com.example.demo.fragment.messaging.ShowMessageFragment"
         android:label="Notificación recibida"
         tools:layout="@layout/fragment_show_message" />
     <fragment
-        android:id="@+id/export_fragment"
-        android:name="com.example.demo.compartir.exportar.ExportarFragment"
-        android:label="Exportar registros"
-        tools:layout="@layout/fragment_exportar" />
+        android:id="@+id/about_fragment"
+        android:name="com.example.demo.fragment.info.AboutFragment"
+        tools:layout="@layout/fragment_about" />
     <fragment
         android:id="@+id/import_fragment"
         android:name="com.example.demo.compartir.importar.ImportarFragment"
         android:label="Importar registros"
         tools:layout="@layout/fragment_importar" />
+    <fragment
+        android:id="@+id/export_fragment"
+        android:name="com.example.demo.compartir.exportar.ExportarFragment"
+        android:label="Exportar registros"
+        tools:layout="@layout/fragment_exportar" />
 </navigation>

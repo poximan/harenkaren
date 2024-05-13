@@ -113,7 +113,7 @@ class ImportarFragment : Fragment(), RegistroDistribuible {
                 val recorrInsert = bd.recorrDao().insertarDesnormalizado(listaArribo)
                 val unSocInsert = bd.unSocDao().insertarDesnormalizado(listaArribo)
 
-                withContext(Dispatchers.IO) {
+                withContext(Dispatchers.Main) {
                     mostrarResultado(listaArribo.size, mapContador, diasInsert, recorrInsert, unSocInsert)
                 }
             }
@@ -128,8 +128,8 @@ class ImportarFragment : Fragment(), RegistroDistribuible {
         unSocInsert: Int
     ) {
         val texto: String = "Los registros contabilizados en la importacion fueron $lote," +
-                " desglosados en ${mapContador["dias"]} dias, ${mapContador["recorr"]} recorridos y ${mapContador["unidsoc"]} unidades sociales. " +
-                "De ese lote, se insertaron efectivamente a esta BD $diasInsert dias, $recorrInsert recorridos y $unSocInsert unidades sociales."
+                " desglosados en:\n${mapContador["dias"]} dias, ${mapContador["recorr"]} recorridos y ${mapContador["unidsoc"]} unidades sociales.\n" +
+                "De ese lote, se insertaron a esta BD:\n$diasInsert dias, $recorrInsert recorridos y $unSocInsert unidades sociales."
 
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Nuevos registros")
