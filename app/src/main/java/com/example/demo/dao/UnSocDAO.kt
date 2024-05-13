@@ -11,7 +11,9 @@ import com.example.demo.DevFragment
 import com.example.demo.activity.MainActivity
 import com.example.demo.model.EntidadesPlanas
 import com.example.demo.model.UnidSocial
+import org.osmdroid.util.GeoPoint
 import java.nio.charset.StandardCharsets
+import java.util.ArrayList
 import java.util.UUID
 
 @Dao
@@ -282,4 +284,8 @@ interface UnSocDAO {
                 "    unidsocial\n"
     )
     fun getSumTotal(): UnidSocial
+
+    fun geoPoints(): Array<GeoPoint> {
+        return arrayOf(GeoPoint(-43.504898,-66.401734), GeoPoint(-43.504898,-66.401734))
+    }
 }

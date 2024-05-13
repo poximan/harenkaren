@@ -1,13 +1,12 @@
 package com.example.demo.fragment.statistics
 
 import android.os.Bundle
+import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.CheckBox
 import android.widget.LinearLayout
-import android.widget.Spinner
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -33,7 +32,10 @@ class StatisticsFragment : Fragment() {
     private var _binding: FragmentStatisticsBinding? = null
     private val binding get() = _binding!!
     private val args: StatisticsFragmentArgs by navArgs()
+
     private var uuid: UUID = DevFragment.UUID_NULO
+    private lateinit var unidSocial: UnidSocial
+    private var contadoresNoNulos: List<String> = emptyList()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,59 +44,83 @@ class StatisticsFragment : Fragment() {
         _binding = FragmentStatisticsBinding.inflate(inflater, container, false)
 
         binding.goBackButton.setOnClickListener { goBack() }
-        binding.granularidad.setOnItemSelectedListener { posicion -> contextoItemElegido(posicion) }
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        when (val entidad = args.entidad) {
-            is Dia -> {
-                binding.granularidad.setSelection(2)
-                uuid = entidad.id
-                tomarDatos()
-            }
-            is Recorrido -> {
-                binding.granularidad.setSelection(1)
-                uuid = entidad.id
-                tomarDatos()
-            }
-            is UnidSocial -> {
-                binding.granularidad.setSelection(0)
-                uuid = entidad.id
-                tomarDatos()
-            }
-            else -> { }
-        }
+        escuchadorEventosCheck(view)
+        tomarDatos()
     }
 
-    private fun contextoItemElegido(posicion: Int) {
-        if (posicion == 3)
-            todosLosDias(UnSocViewModel(requireActivity().application))
+    private fun escuchadorEventosCheck(view: View) {
+        view.findViewById<CheckBox>(R.id.chk_vAlfaS4Ad).setOnClickListener { tomarDatos() }
+        view.findViewById<CheckBox>(R.id.chk_vAlfaSams).setOnClickListener { tomarDatos() }
+        view.findViewById<CheckBox>(R.id.chk_vHembrasAd).setOnClickListener { tomarDatos() }
+        view.findViewById<CheckBox>(R.id.chk_vCrias).setOnClickListener { tomarDatos() }
+        view.findViewById<CheckBox>(R.id.chk_vDestetados).setOnClickListener { tomarDatos() }
+        view.findViewById<CheckBox>(R.id.chk_vJuveniles).setOnClickListener { tomarDatos() }
+        view.findViewById<CheckBox>(R.id.chk_vS4AdPerif).setOnClickListener { tomarDatos() }
+        view.findViewById<CheckBox>(R.id.chk_vS4AdCerca).setOnClickListener { tomarDatos() }
+        view.findViewById<CheckBox>(R.id.chk_vS4AdLejos).setOnClickListener { tomarDatos() }
+        view.findViewById<CheckBox>(R.id.chk_vOtrosSamsPerif).setOnClickListener { tomarDatos() }
+        view.findViewById<CheckBox>(R.id.chk_vOtrosSamsCerca).setOnClickListener { tomarDatos() }
+        view.findViewById<CheckBox>(R.id.chk_vOtrosSamsLejos).setOnClickListener { tomarDatos() }
+        view.findViewById<CheckBox>(R.id.chk_mAlfaS4Ad).setOnClickListener { tomarDatos() }
+        view.findViewById<CheckBox>(R.id.chk_mAlfaSams).setOnClickListener { tomarDatos() }
+        view.findViewById<CheckBox>(R.id.chk_mHembrasAd).setOnClickListener { tomarDatos() }
+        view.findViewById<CheckBox>(R.id.chk_mCrias).setOnClickListener { tomarDatos() }
+        view.findViewById<CheckBox>(R.id.chk_mDestetados).setOnClickListener { tomarDatos() }
+        view.findViewById<CheckBox>(R.id.chk_mJuveniles).setOnClickListener { tomarDatos() }
+        view.findViewById<CheckBox>(R.id.chk_mS4AdPerif).setOnClickListener { tomarDatos() }
+        view.findViewById<CheckBox>(R.id.chk_mS4AdCerca).setOnClickListener { tomarDatos() }
+        view.findViewById<CheckBox>(R.id.chk_mS4AdLejos).setOnClickListener { tomarDatos() }
+        view.findViewById<CheckBox>(R.id.chk_mOtrosSamsPerif).setOnClickListener { tomarDatos() }
+        view.findViewById<CheckBox>(R.id.chk_mOtrosSamsCerca).setOnClickListener { tomarDatos() }
+        view.findViewById<CheckBox>(R.id.chk_mOtrosSamsLejos).setOnClickListener { tomarDatos() }
     }
 
     private fun tomarDatos() {
 
-        val viewModel = UnSocViewModel(requireActivity().application)
+        if(!::unidSocial.isInitialized){
 
-        if (binding.granularidad.selectedItemPosition == 0)
-            unaUnidadSocial(viewModel)
-
-        if (binding.granularidad.selectedItemPosition == 1)
-            unRecorrido(viewModel)
-
-        if (binding.granularidad.selectedItemPosition == 2)
-            unDia(viewModel)
+            val viewModel = UnSocViewModel(requireActivity().application)
+            when (val entidad = args.entidad) {
+                is List<*> -> {
+                    when (entidad.firstOrNull()) {
+                        is Dia -> {
+                            binding.granularidad.text = "Granularidad: todos los dias"
+                            todosLosDias(viewModel)
+                        }
+                    }
+                }
+                is Dia -> {
+                    binding.granularidad.text = "Granularidad: todos los recorridos del dia"
+                    uuid = entidad.id
+                    unDia(viewModel)
+                }
+                is Recorrido -> {
+                    binding.granularidad.text = "Granularidad: todos los registros del recorrido"
+                    uuid = entidad.id
+                    unRecorrido(viewModel)
+                }
+                is UnidSocial -> {
+                    binding.granularidad.text = "Granularidad: una unidad social"
+                    uuid = entidad.id
+                    unaUnidadSocial(viewModel)
+                }
+                else -> { }
+            }
+        } else
+            graficar()
     }
 
     private fun unaUnidadSocial(viewModel: UnSocViewModel) {
 
         CoroutineScope(Dispatchers.IO).launch {
-            val resultado = viewModel.readUnico(uuid)
+            unidSocial = viewModel.readUnico(uuid)
             withContext(Dispatchers.Main) {
-                graficar(resultado)
+                graficar()
             }
         }
     }
@@ -102,9 +128,9 @@ class StatisticsFragment : Fragment() {
     private fun unRecorrido(viewModel: UnSocViewModel) {
 
         CoroutineScope(Dispatchers.IO).launch {
-            val resultado = viewModel.readSumRecorr(uuid)
+            unidSocial = viewModel.readSumRecorr(uuid)
             withContext(Dispatchers.Main) {
-                graficar(resultado)
+                graficar()
             }
         }
     }
@@ -112,9 +138,9 @@ class StatisticsFragment : Fragment() {
     private fun unDia(viewModel: UnSocViewModel) {
 
         CoroutineScope(Dispatchers.IO).launch {
-            val resultado = viewModel.readSumDia(uuid)
+            unidSocial = viewModel.readSumDia(uuid)
             withContext(Dispatchers.Main) {
-                graficar(resultado)
+                graficar()
             }
         }
     }
@@ -122,14 +148,14 @@ class StatisticsFragment : Fragment() {
     private fun todosLosDias(viewModel: UnSocViewModel) {
 
         CoroutineScope(Dispatchers.IO).launch {
-            val resultado = viewModel.readSumTotal()
+            unidSocial = viewModel.readSumTotal()
             withContext(Dispatchers.Main) {
-                graficar(resultado)
+                graficar()
             }
         }
     }
 
-    private fun graficar(unidSocial: UnidSocial) {
+    private fun graficar() {
 
         val pieChart: PieChart = view!!.findViewById(R.id.piechart)
         pieChart.clearChart()
@@ -139,26 +165,15 @@ class StatisticsFragment : Fragment() {
             ocultarEtiquetas(atribString)
         }
 
-        val contadoresNoNulos = unidSocial.getContadoresNoNulos()
+        contadoresNoNulos = unidSocial.getContadoresNoNulos()
         for (atribString in contadoresNoNulos) {
 
-            asignarValorPorReflexion(atribString, unidSocial)
+            asignarValorPorReflexion(atribString)
             if(atribIsCheck(atribString)) {
-                pieChart.addPieSlice(setData(atribString, unidSocial))
+                pieChart.addPieSlice(setData(atribString))
             }
         }
-
         pieChart.startAnimation()
-    }
-
-    private fun atribIsCheck(atribString: String): Boolean {
-
-        val capitalizar = if (atribString.startsWith('v')) 'V' else 'M'
-        val nombreCampo = "chk${capitalizar}${atribString.substring(1)}"
-        val field = binding.javaClass.getDeclaredField(nombreCampo)
-        val checkBox = field.get(binding) as CheckBox
-
-        return checkBox.isChecked
     }
 
     private fun ocultarEtiquetas(atribString: String) {
@@ -178,7 +193,7 @@ class StatisticsFragment : Fragment() {
         }
     }
 
-    private fun asignarValorPorReflexion(atribString: String, unidSocial: UnidSocial) {
+    private fun asignarValorPorReflexion(atribString: String) {
 
         // Genera el nombre del campo correspondiente al componente visual
         val capitalizar = if (atribString.startsWith('v')) 'V' else 'M'
@@ -203,7 +218,17 @@ class StatisticsFragment : Fragment() {
         }
     }
 
-    private fun setData(atribString: String, unidSocial: UnidSocial): PieModel {
+    private fun atribIsCheck(atribString: String): Boolean {
+
+        val capitalizar = if (atribString.startsWith('v')) 'V' else 'M'
+        val nombreCampo = "chk${capitalizar}${atribString.substring(1)}"
+        val field = binding.javaClass.getDeclaredField(nombreCampo)
+        val checkBox = field.get(binding) as CheckBox
+
+        return checkBox.isChecked
+    }
+
+    private fun setData(atribString: String): PieModel {
 
         val valorAtributo = unidSocial.javaClass.getDeclaredField(atribString)
         valorAtributo.isAccessible = true
@@ -246,21 +271,5 @@ class StatisticsFragment : Fragment() {
 
     private fun goBack() {
         findNavController().popBackStack()
-    }
-
-    private fun Spinner.setOnItemSelectedListener(action: (position: Int) -> Unit) {
-        this.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                action.invoke(position)
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
-        }
     }
 }

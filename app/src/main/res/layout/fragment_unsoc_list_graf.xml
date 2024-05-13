@@ -30,12 +30,12 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="44dp"
         android:clickable="true"
-        app:backgroundTint="@android:color/background_light"
+        app:backgroundTint="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/homeActionButton"
         app:layout_constraintEnd_toStartOf="@id/new_unsoc_button"
         app:maxImageSize="35dp"
-        app:srcCompat="@drawable/ic_rotar" />
+        app:srcCompat="@drawable/ic_graficar" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/new_unsoc_button"

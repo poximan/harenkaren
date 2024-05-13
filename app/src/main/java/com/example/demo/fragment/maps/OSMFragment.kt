@@ -7,7 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.example.demo.R
+import com.example.demo.database.HarenKarenRoomDatabase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.osmdroid.api.IMapController
 import org.osmdroid.config.Configuration
 import org.osmdroid.events.MapEventsReceiver
@@ -24,14 +29,19 @@ class OSMFragment : Fragment(), MapEventsReceiver {
     private lateinit var mapController: IMapController
     private var clickedGeoPoint: GeoPoint? = null
 
-    // Método llamado cuando se crea la vista del fragmento
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflar el diseño de la vista del fragmento
         val view = inflater.inflate(R.layout.fragment_osm, container, false)
+        Configuration.getInstance().userAgentValue = "AGENTE_OSM_HARENKAREN"
+
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         // Inicializar el mapa
         mapView = view.findViewById(R.id.mapView)
@@ -47,38 +57,46 @@ class OSMFragment : Fragment(), MapEventsReceiver {
         val mapEventsOverlay = MapEventsOverlay(this)
         mapView.overlays.add(0, mapEventsOverlay)
 
-        // Establecer el agente de usuario para OSMDroid
-        Configuration.getInstance().userAgentValue = "AGENTE_OSM_HARENKAREN"
-
-        return view
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
         val routePoints = listOf(
             GeoPoint(-42.504898,-64.401734)
         )
 
-        val startPoint = routePoints.first()
-        mapController.setCenter(startPoint)
+        val viewModelScope = viewLifecycleOwner.lifecycleScope
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {// Dispatchers.IO es el hilo background
 
-        // Agregar marcador en el punto
-        val marker = Marker(mapView)
-        marker.position = startPoint
-        marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
-        marker.icon = requireContext().resources.getDrawable(R.mipmap.ic_cachorris)
-        marker.title = "Punto"
-        mapView.overlays.add(marker)
+                val bd = HarenKarenRoomDatabase
+                    .getDatabase(requireActivity().application, viewModelScope)
+                val geoPoints = bd.unSocDao().geoPoints()
 
-        val polyline = Polyline().apply {
-            setPoints(routePoints)
-            color = Color.RED
-            width = 5.0f
+                withContext(Dispatchers.Main) {
+                    routePoints.plus(geoPoints)
+
+                    val startPoint = routePoints.first()
+                    mapController.setCenter(startPoint)
+
+                    // Agregar marcador en el punto
+                    val marker = Marker(mapView)
+                    marker.position = startPoint
+                    marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+                    marker.icon = requireContext().resources.getDrawable(R.mipmap.ic_cachorris)
+                    marker.title = "Punto"
+                    mapView.overlays.add(marker)
+
+                    val polyline = Polyline().apply {
+                        setPoints(routePoints)
+                        color = Color.RED
+                        width = 5.0f
+                        snippet = "prueba1"
+                        subDescription = "prueba2"
+                        title = "prueba3"
+                    }
+
+                    mapView.overlays.add(polyline)
+                    mapView.invalidate()
+                }
+            }
         }
-
-        mapView.overlays.add(polyline)
-        mapView.invalidate() // Actualizar el mapa
     }
 
     override fun onResume() {
@@ -102,7 +120,6 @@ class OSMFragment : Fragment(), MapEventsReceiver {
             val toastText = "Lat.: $latitude, Long.: $longitude"
             Toast.makeText(requireContext(), toastText, Toast.LENGTH_SHORT).show()
         }
-
         return true     // el evento ha sido manejado
     }
 
