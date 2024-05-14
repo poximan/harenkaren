@@ -285,7 +285,7 @@ interface UnSocDAO {
     )
     fun getSumTotal(): UnidSocial
 
-    fun geoPoints(): Array<GeoPoint> {
-        return arrayOf(GeoPoint(-43.504898,-66.401734), GeoPoint(-43.504898,-66.401734))
+    fun geoPoints(): List<GeoPoint> {
+        return listOf(GeoPoint(-43.504898,-66.401734), GeoPoint(-43.504898,-66.401734))
     }
 }
