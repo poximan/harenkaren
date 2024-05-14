@@ -18,6 +18,8 @@
     <string name="lejos">Lejos(50-100m)</string>
 
     <string name="para_desarrollador">Desarrollador</string>
+
+    <string name="formato_dia">yyyy/MM/dd</string>
     <string name="formato_fecha">yyyy/MM/dd - HH:mm:ss</string>
 
 </resources>

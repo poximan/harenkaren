@@ -83,7 +83,7 @@ class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
 
     private fun getCurrentDate(): String {
 
-        val formato = requireContext().resources.getString(R.string.formato_fecha)
+        val formato = requireContext().resources.getString(R.string.formato_dia)
 
         val dateFormat = SimpleDateFormat(formato, Locale.getDefault())
         val currentDate = Calendar.getInstance().time

@@ -21,13 +21,13 @@ class DevDatos {
                 celularId = idUnivoco,
                 id = DevFragment.UUID_NULO,
                 orden = 0,
-                fecha = "2023/10/19 - 08:20:48"
+                fecha = "2023/10/19"
             ),
             Dia(
                 celularId = idUnivoco,
                 id = DevFragment.UUID_NULO,
                 orden = 0,
-                fecha = "2023/10/20 - 12:17:13"
+                fecha = "2023/10/20"
             )
         )
         val listUUID = Array<UUID?>(diaList.size) { null }

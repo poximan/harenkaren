@@ -56,7 +56,7 @@ class RegisterFragment : Fragment(), UsuarioCallback {
             false
         })
 
-        _binding!!.editTextPassword2.setOnTouchListener(OnTouchListener { v, event ->
+        _binding!!.editTextPassword2.setOnTouchListener(OnTouchListener { _, event ->
             val DRAWABLE_RIGHT = 2
             if (event.action == MotionEvent.ACTION_UP) {
                 if (event.rawX >= _binding!!.editTextPassword2.right - _binding!!.editTextPassword2.compoundDrawables

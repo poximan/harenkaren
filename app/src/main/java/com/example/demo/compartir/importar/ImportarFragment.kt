@@ -114,7 +114,13 @@ class ImportarFragment : Fragment(), RegistroDistribuible {
                 val unSocInsert = bd.unSocDao().insertarDesnormalizado(listaArribo)
 
                 withContext(Dispatchers.Main) {
-                    mostrarResultado(listaArribo.size, mapContador, diasInsert, recorrInsert, unSocInsert)
+                    mostrarResultado(
+                        listaArribo.size,
+                        mapContador,
+                        diasInsert,
+                        recorrInsert,
+                        unSocInsert
+                    )
                 }
             }
         }

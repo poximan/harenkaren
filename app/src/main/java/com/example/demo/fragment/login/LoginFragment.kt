@@ -146,8 +146,8 @@ class LoginFragment : Fragment(), UsuarioCallback {
     }
 
     private fun snack(view: View, text: String) {
-        val view: View = view.findViewById(R.id.vista_login)
-        val snackbar = Snackbar.make(view, text, Snackbar.LENGTH_LONG)
+        val viewLocal: View = view.findViewById(R.id.vista_login)
+        val snackbar = Snackbar.make(viewLocal, text, Snackbar.LENGTH_LONG)
         snackbar.show()
     }
 }

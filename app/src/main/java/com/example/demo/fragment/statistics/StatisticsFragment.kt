@@ -1,7 +1,6 @@
 package com.example.demo.fragment.statistics
 
 import android.os.Bundle
-import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -82,7 +81,7 @@ class StatisticsFragment : Fragment() {
 
     private fun tomarDatos() {
 
-        if(!::unidSocial.isInitialized){
+        if (!::unidSocial.isInitialized) {
 
             val viewModel = UnSocViewModel(requireActivity().application)
             when (val entidad = args.entidad) {
@@ -94,22 +93,26 @@ class StatisticsFragment : Fragment() {
                         }
                     }
                 }
+
                 is Dia -> {
                     binding.granularidad.text = "Granularidad: todos los recorridos del dia"
                     uuid = entidad.id
                     unDia(viewModel)
                 }
+
                 is Recorrido -> {
                     binding.granularidad.text = "Granularidad: todos los registros del recorrido"
                     uuid = entidad.id
                     unRecorrido(viewModel)
                 }
+
                 is UnidSocial -> {
                     binding.granularidad.text = "Granularidad: una unidad social"
                     uuid = entidad.id
                     unaUnidadSocial(viewModel)
                 }
-                else -> { }
+
+                else -> {}
             }
         } else
             graficar()
@@ -169,7 +172,7 @@ class StatisticsFragment : Fragment() {
         for (atribString in contadoresNoNulos) {
 
             asignarValorPorReflexion(atribString)
-            if(atribIsCheck(atribString)) {
+            if (atribIsCheck(atribString)) {
                 pieChart.addPieSlice(setData(atribString))
             }
         }

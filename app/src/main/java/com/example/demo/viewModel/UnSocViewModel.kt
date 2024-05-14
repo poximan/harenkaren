@@ -18,7 +18,6 @@ class UnSocViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository: UnSocRepository
     private val repositoryPropagado: RecorrRepository
-    private val allUnSoc: LiveData<List<UnidSocial>>
 
     init {
         val unSocDao = HarenKarenRoomDatabase
@@ -28,8 +27,6 @@ class UnSocViewModel(application: Application) : AndroidViewModel(application) {
         val recorrDao = HarenKarenRoomDatabase
             .getDatabase(application, viewModelScope).recorrDao()
         repositoryPropagado = RecorrRepository(recorrDao)
-
-        allUnSoc = repository.unSocListAll
     }
 
     fun insert(unidSocial: UnidSocial) = CoroutineScope(Dispatchers.IO).launch(Dispatchers.IO) {

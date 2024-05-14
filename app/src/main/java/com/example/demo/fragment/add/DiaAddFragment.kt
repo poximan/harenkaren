@@ -61,7 +61,7 @@ class DiaAddFragment : Fragment() {
     private fun dataDesdeIU(): Dia {
 
         val celularId = MainActivity.obtenerAndroidID()
-        val formato = requireContext().resources.getString(R.string.formato_fecha)
+        val formato = requireContext().resources.getString(R.string.formato_dia)
         val timeStamp = SimpleDateFormat(formato).format(Date())
 
         val uuid = DevFragment.UUID_NULO

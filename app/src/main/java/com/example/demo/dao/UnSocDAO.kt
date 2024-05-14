@@ -1,6 +1,5 @@
 package com.example.demo.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -11,16 +10,14 @@ import com.example.demo.DevFragment
 import com.example.demo.activity.MainActivity
 import com.example.demo.model.EntidadesPlanas
 import com.example.demo.model.UnidSocial
-import org.osmdroid.util.GeoPoint
 import java.nio.charset.StandardCharsets
-import java.util.ArrayList
 import java.util.UUID
 
 @Dao
 interface UnSocDAO {
 
     @Query("SELECT * from unidsocial ORDER BY id DESC")
-    fun getAll(): LiveData<List<UnidSocial>>
+    fun getAll(): List<UnidSocial>
 
     @Query("SELECT * FROM unidsocial WHERE unidsocial.id = :id")
     fun getUnSocByUUID(id: UUID): UnidSocial
@@ -284,8 +281,4 @@ interface UnSocDAO {
                 "    unidsocial\n"
     )
     fun getSumTotal(): UnidSocial
-
-    fun geoPoints(): List<GeoPoint> {
-        return listOf(GeoPoint(-43.504898,-66.401734), GeoPoint(-43.504898,-66.401734))
-    }
 }

@@ -8,8 +8,6 @@ import java.util.UUID
 
 class UnSocRepository(private val dao: UnSocDAO) {
 
-    val unSocListAll: LiveData<List<UnidSocial>> = dao.getAll()
-
     fun insert(unidSocial: UnidSocial) {
         dao.insertConUUID(unidSocial)
     }

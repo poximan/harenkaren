@@ -6,11 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.demo.R
-import com.example.demo.database.DevDatos
 import com.example.demo.database.HarenKarenRoomDatabase
+import com.example.demo.model.UnidSocial
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -21,6 +23,7 @@ import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.MapEventsOverlay
+import org.osmdroid.views.overlay.Marker
 import org.osmdroid.views.overlay.Polyline
 
 class OSMFragment : Fragment(), MapEventsReceiver {
@@ -60,25 +63,7 @@ class OSMFragment : Fragment(), MapEventsReceiver {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val routePoints = listOf(
-            GeoPoint(-42.079241, -63.765547),
-            GeoPoint(-42.083023, -63.753115),
-            GeoPoint(-42.096113, -63.740619),
-            GeoPoint(-42.109932, -63.732213),
-            GeoPoint(-42.120723, -63.726459),
-        )
-
-        val startPoint = routePoints.first()
-        mapController.setCenter(startPoint)
-
-        val polyline = Polyline().apply {
-            setPoints(routePoints)
-            color = Color.RED
-            width = 5.0f
-        }
-
-        mapView.overlays.add(polyline)
-        mapView.invalidate() // Actualizar el mapa
+        getPosiciones()
     }
 
     private fun getPosiciones() {
@@ -88,10 +73,29 @@ class OSMFragment : Fragment(), MapEventsReceiver {
             .getDatabase(requireActivity().application, viewModelScope)
             .unSocDao()
 
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {// Dispatchers.IO es el hilo background
+        CoroutineScope(Dispatchers.IO).launch {
 
+            val unidSociales =
+                unsSocDAO.getAll().sortedWith(compareBy({ it.recorrId }, { it.orden }))
+            withContext(Dispatchers.Main) {
 
+                var routePoints = emptyList<GeoPoint>()
+                var recorr = unidSociales.first().recorrId
+
+                for (unSoc in unidSociales) {
+                    if (recorr != unSoc.recorrId) {
+                        agregarPolilinea(routePoints)
+                        routePoints = emptyList()
+                        recorr = unSoc.recorrId
+                    }
+                    // acumular el recorrido en transito. sera insertado al mapa cuando aparezca uno nuevo
+                    routePoints = routePoints.plus(geo(unSoc))
+                    agregarMarcador(unSoc)  // los puntos se insertan en cada pasada "mapView.overlays.add"
+                }
+                agregarPolilinea(routePoints)
+                val startPoint = routePoints.first()
+                mapController.setCenter(startPoint)
+                mapView.invalidate() // Actualizar el mapa
             }
         }
     }
@@ -104,6 +108,42 @@ class OSMFragment : Fragment(), MapEventsReceiver {
     override fun onPause() {
         super.onPause()
         mapView.onPause()
+    }
+
+    private fun agregarPolilinea(routePoints: List<GeoPoint>) {
+        val polyline = Polyline().apply {
+            setPoints(routePoints)
+            color = Color.RED
+            width = 5.0f
+        }
+        mapView.overlays.add(polyline)
+    }
+
+    private fun agregarMarcador(unSoc: UnidSocial) {
+        val punto = GeoPoint(unSoc.latitud, unSoc.longitud)
+        val marker = Marker(mapView)
+        marker.position = punto
+        marker.icon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_marker)
+
+        val infoWindow = CustomMarkerInfoWindow(
+            R.layout.map_bubble_lay, mapView,
+            unSoc.getContadoresNoNulos().toString()
+        )
+
+        marker.setOnMarkerClickListener { _, _ ->
+            if (infoWindow.isOpen) {
+                infoWindow.close()
+            } else {
+                marker.showInfoWindow()
+            }
+            true
+        }
+        marker.infoWindow = infoWindow
+        mapView.overlays.add(marker)
+    }
+
+    private fun geo(unSoc: UnidSocial): GeoPoint {
+        return GeoPoint(unSoc.latitud, unSoc.longitud)
     }
 
     // un toque en el mapa

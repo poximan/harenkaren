@@ -88,7 +88,7 @@ class RecorrDetailFragment : Fragment() {
 
     private fun goGraficar() {
         val action =
-           RecorrDetailFragmentDirections.goToGrafDesdeRecorrAction(args.recorrActual)
+            RecorrDetailFragmentDirections.goToGrafDesdeRecorrAction(args.recorrActual)
         findNavController().navigate(action)
     }
 
@@ -128,24 +128,13 @@ class RecorrDetailFragment : Fragment() {
     }
 
     private fun verUnidadSocial() {
-        val action = args.recorrActual.id?.let {
-            RecorrDetailFragmentDirections.goToUnSocListFromRecorrDetailAction(
-                it
-            )
-        }
-        if (action != null) {
-            findNavController().navigate(action)
-        }
+        val action =
+            RecorrDetailFragmentDirections.goToUnSocListFromRecorrDetailAction(args.recorrActual.id)
+        findNavController().navigate(action)
     }
 
     private fun goBack() {
-        val action = args.recorrActual.diaId.let {
-            RecorrDetailFragmentDirections.goToRecorrListAction(
-                it
-            )
-        }
-        if (action != null) {
-            findNavController().navigate(action)
-        }
+        val action = RecorrDetailFragmentDirections.goToRecorrListAction(args.recorrActual.diaId)
+        findNavController().navigate(action)
     }
 }
