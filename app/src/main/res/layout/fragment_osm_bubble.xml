@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="100dp"
+    android:layout_height="100dp"
+    android:orientation="horizontal"
+    android:background="@android:color/white"
+    android:padding="4dp">
+
+    <TextView
+        android:id="@+id/snippet"
+        android:layout_width="50dp"
+        android:layout_height="100dp"
+        android:textSize="12sp"
+        android:textColor="@android:color/black"
+        android:hint="info extra" />
+
+    <org.eazegraph.lib.charts.StackedBarChart
+        android:id="@+id/stackchartmap"
+        android:layout_width="50dp"
+        android:layout_height="100dp"
+        app:egBarWidth="100dp"/>
+
+</LinearLayout>

@@ -2,6 +2,7 @@ package com.example.demo.fragment.maps
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.eazegraph.lib.charts.StackedBarChart
 import org.osmdroid.api.IMapController
 import org.osmdroid.config.Configuration
 import org.osmdroid.events.MapEventsReceiver
@@ -31,6 +33,7 @@ class OSMFragment : Fragment(), MapEventsReceiver {
     private lateinit var mapView: MapView
     private lateinit var mapController: IMapController
     private var clickedGeoPoint: GeoPoint? = null
+    private lateinit var stackchart: StackedBarChart
 
     // Método llamado cuando se crea la vista del fragmento
     override fun onCreateView(
@@ -62,23 +65,23 @@ class OSMFragment : Fragment(), MapEventsReceiver {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         getPosiciones()
     }
 
     private fun getPosiciones() {
 
         val viewModelScope = viewLifecycleOwner.lifecycleScope
-        val unsSocDAO = HarenKarenRoomDatabase
+        val unSocDAO = HarenKarenRoomDatabase
             .getDatabase(requireActivity().application, viewModelScope)
             .unSocDao()
 
+        // ---------> HILO BACKGOUND
         CoroutineScope(Dispatchers.IO).launch {
-
             val unidSociales =
-                unsSocDAO.getAll().sortedWith(compareBy({ it.recorrId }, { it.orden }))
-            withContext(Dispatchers.Main) {
+                unSocDAO.getAll().sortedWith(compareBy({ it.recorrId }, { it.orden }))
 
+            // ---------> HILO PRINCIPAL
+            withContext(Dispatchers.Main) {
                 var routePoints = emptyList<GeoPoint>()
                 var recorr = unidSociales.first().recorrId
 
@@ -90,7 +93,16 @@ class OSMFragment : Fragment(), MapEventsReceiver {
                     }
                     // acumular el recorrido en transito. sera insertado al mapa cuando aparezca uno nuevo
                     routePoints = routePoints.plus(geo(unSoc))
-                    agregarMarcador(unSoc)  // los puntos se insertan en cada pasada "mapView.overlays.add"
+
+                    // ---------> HILO BACKGOUND
+                    withContext(Dispatchers.IO) {
+
+                        val total = unSocDAO.getMaxRegistro(unSoc.recorrId)
+                        // ---------> HILO PRINCIPAL
+                        withContext(Dispatchers.Main) {
+                            agregarMarcador(unSoc, total)  // los puntos se insertan en cada pasada "mapView.overlays.add"
+                        }
+                    }
                 }
                 agregarPolilinea(routePoints)
                 val startPoint = routePoints.first()
@@ -119,15 +131,21 @@ class OSMFragment : Fragment(), MapEventsReceiver {
         mapView.overlays.add(polyline)
     }
 
-    private fun agregarMarcador(unSoc: UnidSocial) {
+    private fun agregarMarcador(unSoc: UnidSocial, total: Int) {
+
         val punto = GeoPoint(unSoc.latitud, unSoc.longitud)
         val marker = Marker(mapView)
         marker.position = punto
         marker.icon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_marker)
 
+        val inflater = LayoutInflater.from(requireContext())
+        val view = inflater.inflate(R.layout.fragment_osm_bubble, null)
+        stackchart = view.findViewById(R.id.stackchartmap)
+
         val infoWindow = CustomMarkerInfoWindow(
-            R.layout.map_bubble_lay, mapView,
-            unSoc.getContadoresNoNulos().toString()
+            requireContext(),
+            R.layout.fragment_osm_bubble, mapView,
+            stackchart, unSoc, total
         )
 
         marker.setOnMarkerClickListener { _, _ ->
