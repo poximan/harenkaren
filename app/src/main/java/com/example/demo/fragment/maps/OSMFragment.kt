@@ -2,7 +2,6 @@ package com.example.demo.fragment.maps
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +16,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.eazegraph.lib.charts.StackedBarChart
 import org.osmdroid.api.IMapController
 import org.osmdroid.config.Configuration
 import org.osmdroid.events.MapEventsReceiver
@@ -33,7 +31,6 @@ class OSMFragment : Fragment(), MapEventsReceiver {
     private lateinit var mapView: MapView
     private lateinit var mapController: IMapController
     private var clickedGeoPoint: GeoPoint? = null
-    private lateinit var stackchart: StackedBarChart
 
     // Método llamado cuando se crea la vista del fragmento
     override fun onCreateView(
@@ -138,14 +135,10 @@ class OSMFragment : Fragment(), MapEventsReceiver {
         marker.position = punto
         marker.icon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_marker)
 
-        val inflater = LayoutInflater.from(requireContext())
-        val view = inflater.inflate(R.layout.fragment_osm_bubble, null)
-        stackchart = view.findViewById(R.id.stackchartmap)
 
         val infoWindow = CustomMarkerInfoWindow(
-            requireContext(),
-            R.layout.fragment_osm_bubble, mapView,
-            stackchart, unSoc, total
+            requireContext(), unSoc, total,
+            R.layout.fragment_osm_bubble, mapView
         )
 
         marker.setOnMarkerClickListener { _, _ ->

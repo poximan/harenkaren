@@ -1,76 +1,84 @@
 package com.example.demo.fragment.maps
 
 import android.content.Context
+import android.graphics.Color
+import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.View
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.example.demo.R
 import com.example.demo.model.UnidSocial
-import org.eazegraph.lib.charts.StackedBarChart
-import org.eazegraph.lib.models.BarModel
-import org.eazegraph.lib.models.StackedBarModel
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.infowindow.InfoWindow
 
 class CustomMarkerInfoWindow(
     private val context: Context,
-    private val layoutResId: Int,
-    private val mapView: MapView,
-    private val stackchart: StackedBarChart,
     private val unSoc: UnidSocial,
-    private val total: Int
+    private val total: Int,
+    layoutResId: Int,
+    mapView: MapView
 ) : InfoWindow(layoutResId, mapView) {
 
     override fun onOpen(item: Any?) {
-        val inflater =
-            mapView.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        mView = inflater.inflate(layoutResId, null)
+        // Inflar la vista del layout personalizado
+        val view = LayoutInflater.from(context).inflate(R.layout.fragment_osm_bubble, null)
+        val linearLayout = view.findViewById<LinearLayout>(R.id.osm_bubble)
 
-        val txtSnippet = mView.findViewById<TextView>(R.id.snippet)
-        txtSnippet.text = unSoc.getContadoresNoNulos().toString()
+        val contadoresNoNulos = unSoc.getContadoresNoNulos()
+        for (atribString in contadoresNoNulos) {
 
-        stackchart.clearChart()
-        stackchart.addBar(armarResumen(unSoc, total))
-        stackchart.startAnimation()
+            val valorAtributo = unSoc.javaClass.getDeclaredField(atribString)
+            valorAtributo.isAccessible = true
+            // utilizar el objeto Field para obtener el valor del atributo en unidSocial.
+            val valor = valorAtributo.get(unSoc) as Int
+
+            val barra = apilarBarra(atribString, valor)
+            linearLayout.addView(barra)
+        }
+
+        mView = view
     }
 
     override fun onClose() {
         // Realizar acciones cuando se cierra la ventana de información del marcador
     }
 
-    private fun armarResumen(unidSocial: UnidSocial, total: Int): StackedBarModel {
+    private fun apilarBarra(atribString: String, valor: Int): LinearLayout {
 
-        var acumulado = 0
-        val stackBarModel = StackedBarModel()
+        // Crear un nuevo LinearLayout para contener el View y el TextView
+        val nestedLinearLayout = LinearLayout(context)
+        nestedLinearLayout.orientation = LinearLayout.HORIZONTAL
+        val nestedLayoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        nestedLinearLayout.layoutParams = nestedLayoutParams
 
-        val contadoresNoNulos = unidSocial.getContadoresNoNulos()
-        for (atribString in contadoresNoNulos) {
-            acumulado += setData(stackBarModel, atribString, unidSocial)
-        }
-        if (total != 0)
-            cerrarSet(stackBarModel, total - acumulado)
+        // Crear y configurar el cuadrado azul
+        val squareView = View(context)
+        squareView.setBackgroundColor(siguienteColor(atribString))
+        val squareLayoutParams = LinearLayout.LayoutParams(20, valor*2)
+        squareLayoutParams.gravity = Gravity.CENTER_VERTICAL // Centrar verticalmente
+        squareView.layoutParams = squareLayoutParams
 
-        stackBarModel.legendLabel = "id${unidSocial.orden}($acumulado)"
-        return stackBarModel
-    }
+        // Crear y configurar el TextView
+        val textView = TextView(context)
+        textView.text = "$atribString($valor)"
+        textView.textSize = 10f
+        val textLayoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        textLayoutParams.gravity = Gravity.CENTER_VERTICAL // Centrar verticalmente
+        textLayoutParams.leftMargin=8
+        textView.layoutParams = textLayoutParams
 
-    private fun setData(
-        stackBarModel: StackedBarModel,
-        atribString: String,
-        unidSocial: UnidSocial
-    ): Int {
-
-        val valorAtributo = unidSocial.javaClass.getDeclaredField(atribString)
-        valorAtributo.isAccessible = true
-        // utilizar el objeto Field para obtener el valor del atributo en unidSocial.
-        val valor = valorAtributo.get(unidSocial) as Int
-
-        stackBarModel.addBar(BarModel(atribString, valor.toFloat(), siguienteColor(atribString)))
-        return valor
-    }
-
-    private fun cerrarSet(stackBarModel: StackedBarModel, diferencia: Int) {
-        stackBarModel.addBar(BarModel("vacio", diferencia.toFloat(), 0))
+        // Agregar el View y el TextView al nuevo LinearLayout
+        nestedLinearLayout.addView(squareView)
+        nestedLinearLayout.addView(textView)
+        return nestedLinearLayout
     }
 
     private fun siguienteColor(atribString: String): Int {
