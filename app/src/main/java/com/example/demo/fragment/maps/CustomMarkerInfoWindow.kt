@@ -59,14 +59,18 @@ class CustomMarkerInfoWindow(
         // Crear y configurar el cuadrado azul
         val squareView = View(context)
         squareView.setBackgroundColor(siguienteColor(atribString))
-        val squareLayoutParams = LinearLayout.LayoutParams(20, valor*2)
+        val squareLayoutParams = LinearLayout.LayoutParams(20, valor*4)
         squareLayoutParams.gravity = Gravity.CENTER_VERTICAL // Centrar verticalmente
         squareView.layoutParams = squareLayoutParams
 
         // Crear y configurar el TextView
         val textView = TextView(context)
         textView.text = "$atribString($valor)"
-        textView.textSize = 10f
+        textView.textSize = when {
+            valor < 8f -> 8f
+            valor > 12f -> 12f
+            else -> valor.toFloat()
+        }
         val textLayoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.WRAP_CONTENT,
             LinearLayout.LayoutParams.WRAP_CONTENT
