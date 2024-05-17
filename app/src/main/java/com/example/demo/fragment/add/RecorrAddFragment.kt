@@ -7,6 +7,8 @@ import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,6 +41,10 @@ class RecorrAddFragment : Fragment() {
 
     private var indicatorLight: ImageView? = null
     private val latLonIni = LatLong()
+
+    private val handler = Handler(Looper.getMainLooper())
+    private var isRunning = false
+    private lateinit var imageChangerRunnable: Runnable
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -73,7 +79,7 @@ class RecorrAddFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        indicatorLight = view.findViewById(R.id.gpsLightRecorr)
+        indicatorLight = binding.gpsLightRecorr
     }
 
     override fun onDestroyView() {
@@ -102,19 +108,18 @@ class RecorrAddFragment : Fragment() {
     private fun getPosicionActual() {
 
         locationManager = requireActivity().getSystemService(LocationManager::class.java)
-
         if (checkLocationPermission()) {
-            indicatorLight?.setImageResource(R.drawable.indicator_off)
 
+            startImageChanger()
             locationManager.requestSingleUpdate(
                 LocationManager.GPS_PROVIDER,
                 object : LocationListener {
                     override fun onLocationChanged(location: Location) {
-                        indicatorLight?.setImageResource(R.drawable.indicator_on)
+                        stopImageChanger()
                         updateLocationViews(location.latitude, location.longitude)
                     }
 
-                    override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {}
+                    override fun onStatusChanged(provider: String, status: Int, extras: Bundle) { }
                     override fun onProviderEnabled(provider: String) {}
                     override fun onProviderDisabled(provider: String) {
                         val message =
@@ -175,5 +180,42 @@ class RecorrAddFragment : Fragment() {
                 UnSocGralFragment.DbConstants.PERMISSION_REQUEST_LOCATION
             )
         }
+    }
+
+    private fun startImageChanger() {
+        isRunning = true
+        imageChangerRunnable = object : Runnable {
+            private var isImageChanged = false
+
+            override fun run() {
+                if (isRunning) {
+                    // Cambiar la imagen
+                    if (isImageChanged) {
+                        indicatorLight!!.setImageResource(R.drawable.indicator_on)
+                        binding.latitudIni.text = "geoposicionando..."
+                        binding.latitudIni.setTextColor(ContextCompat.getColor(requireContext(), R.color.purple_700))
+                    } else {
+                        indicatorLight!!.setImageResource(R.drawable.indicator_off)
+                        binding.latitudIni.text = "geoposicionando..."
+                        binding.latitudIni.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+                    }
+                    isImageChanged = !isImageChanged
+
+                    // Ejecutar de nuevo después de 500ms
+                    handler.postDelayed(this, 800)
+                }
+            }
+        }
+
+        // Iniciar el runnable
+        Thread {
+            handler.post(imageChangerRunnable)
+        }.start()
+    }
+
+    private fun stopImageChanger() {
+        isRunning = false
+        handler.removeCallbacks(imageChangerRunnable)
+        indicatorLight!!.setImageResource(R.drawable.indicator_on)
     }
 }
