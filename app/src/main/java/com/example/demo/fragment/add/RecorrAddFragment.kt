@@ -189,7 +189,6 @@ class RecorrAddFragment : Fragment() {
 
             override fun run() {
                 if (isRunning) {
-                    // Cambiar la imagen
                     if (isImageChanged) {
                         indicatorLight!!.setImageResource(R.drawable.indicator_on)
                         binding.latitudIni.text = "geoposicionando..."
@@ -200,14 +199,11 @@ class RecorrAddFragment : Fragment() {
                         binding.latitudIni.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
                     }
                     isImageChanged = !isImageChanged
-
-                    // Ejecutar de nuevo después de 500ms
                     handler.postDelayed(this, 800)
                 }
             }
         }
 
-        // Iniciar el runnable
         Thread {
             handler.post(imageChangerRunnable)
         }.start()

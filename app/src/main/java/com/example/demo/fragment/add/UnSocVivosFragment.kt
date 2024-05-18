@@ -6,6 +6,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -110,7 +111,6 @@ class UnSocVivosFragment : Fragment() {
     }
 
     private fun observarCtxSocial() {
-        // si en la solapa general se eligio pareja solitaria
         sharedViewModel.lastSelectedValue.observe(viewLifecycleOwner) { ctxElegido ->
             vistaPjaSolitaria(ctxElegido)
             vistaGrupoHarenes(ctxElegido)
@@ -140,33 +140,23 @@ class UnSocVivosFragment : Fragment() {
     private fun vistaPjaSolitaria(ctxElegido: String) {
         val ctxSocial = resources.getStringArray(R.array.op_contexto_social)
 
-        if (ctxElegido == ctxSocial[4]) {
+        if (ctxElegido == ctxSocial[4]) {   // pareja solitaria
             binding.vHembrasAd.removeTextChangedListener(textWatcher)
+
             when (binding.root.findFocus()?.id) {
                 R.id.vAlfaS4Ad -> {
-                    if (!binding.vAlfaS4Ad.text.isNullOrEmpty() && binding.vAlfaS4Ad.text.toString()
-                            .toInt() > 1
-                    ) {
-                        Toast.makeText(
-                            activity,
-                            "Solo se permite [0,1] si es pareja solitaria",
-                            Toast.LENGTH_LONG
-                        ).show()
-                        binding.vAlfaS4Ad.text = "1".toEditable()
-                    }
+                    validarDominante(
+                        binding.vAlfaS4Ad,
+                        binding.vAlfaSams,
+                        textWatcher
+                    )
                 }
-
                 R.id.vAlfaSams -> {
-                    if (!binding.vAlfaSams.text.isNullOrEmpty() && binding.vAlfaSams.text.toString()
-                            .toInt() > 1
-                    ) {
-                        Toast.makeText(
-                            activity,
-                            "Solo se permite [0,1] si es pareja solitaria",
-                            Toast.LENGTH_LONG
-                        ).show()
-                        binding.vAlfaSams.text = "1".toEditable()
-                    }
+                    validarDominante(
+                        binding.vAlfaSams,
+                        binding.vAlfaS4Ad,
+                        textWatcher
+                    )
                 }
             }
             binding.vHembrasAd.text = "1".toEditable()
@@ -175,6 +165,43 @@ class UnSocVivosFragment : Fragment() {
             binding.vHembrasAd.addTextChangedListener(textWatcher)
             binding.vHembrasAd.isEnabled = true
         }
+    }
+
+    private fun validarDominante(
+        editTextPrimario: EditText,
+        editTextSecundario: EditText,
+        watcher: TextWatcher
+    ) {
+        // Deshabilitar el evento para mirar sin alterar
+        editTextSecundario.removeTextChangedListener(watcher)
+
+        var texto = ""
+        try {   // si usuario borra antes de ingresar un nuevo numero, entonces campo==""
+            if (editTextPrimario.text.toString().toInt() > 1)
+                texto = "Solo se permite [0,1] si es pareja solitaria"
+
+            if (editTextPrimario.text.toString().toInt() == 1 && (
+                        !editTextSecundario.text.isNullOrEmpty() && editTextSecundario.text.toString()
+                            .toInt() > 0)
+            )
+                texto = "En pareja solitaria solo AlfaS4Ad=1 o AlfaSams=1, eligí uno solo"
+        } catch (e: NumberFormatException) {}
+
+        if (texto.isNotEmpty()) {
+            Toast.makeText(
+                activity,
+                texto,
+                Toast.LENGTH_LONG
+            ).show()
+
+            // deshabilitar momentaneamente el evento para editar
+            editTextPrimario.removeTextChangedListener(watcher)
+            editTextPrimario.text = "0".toEditable()
+            editTextPrimario.addTextChangedListener(watcher)
+        }
+
+        // Se devuelve gestión de evento
+        editTextSecundario.addTextChangedListener(watcher)
     }
 
     override fun toString(): String {

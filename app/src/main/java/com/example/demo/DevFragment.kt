@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.demo.database.DevDatos
 import com.example.demo.database.HarenKarenRoomDatabase
 import com.example.demo.databinding.FragmentDevBinding
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -34,18 +36,27 @@ class DevFragment : Fragment() {
         binding.poblarBd.setOnClickListener { poblar() }
         binding.usuario.setOnClickListener { altaUsuario() }
 
+        binding.reventarEsquema.setOnClickListener { borrarEsquema() }
+
         binding.limpiarDias.setOnClickListener { limpiarDias() }
         binding.limpiarRecorr.setOnClickListener { limpiarRecorr() }
         binding.limpiarUnsoc.setOnClickListener { limpiarUnidSoc() }
-
         estadoBD()
+
         return binding.root
     }
 
     private fun estadoBD() {
         val viewModelScope = viewLifecycleOwner.lifecycleScope
 
-        viewModelScope.launch {
+        // Define el manejador de excepciones
+        val exceptionHandler = CoroutineExceptionHandler { _, exception ->
+            if (exception is IllegalStateException) {
+                Toast.makeText(context, "El gestor de BD no puede verificar la integridad de los datos", Toast.LENGTH_LONG).show()
+            }
+        }
+
+        viewModelScope.launch(exceptionHandler) {
             withContext(Dispatchers.IO) {// Dispatchers.IO es el hilo background
 
                 val bd = HarenKarenRoomDatabase
@@ -160,5 +171,17 @@ class DevFragment : Fragment() {
             }
         }
         estadoBD()
+    }
+
+    private fun borrarEsquema(){
+
+        val viewModelScope = viewLifecycleOwner.lifecycleScope
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {// Dispatchers.IO es el hilo background
+                HarenKarenRoomDatabase
+                    .deleteDatabase(requireActivity().application, "haren_database")
+                HarenKarenRoomDatabase.getDatabase(requireActivity().application, viewModelScope)
+            }
+        }
     }
 }

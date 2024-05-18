@@ -57,5 +57,9 @@ abstract class HarenKarenRoomDatabase : RoomDatabase() {
         private class DatabaseCallback(
             private val scope: CoroutineScope
         ) : Callback()
+
+        fun deleteDatabase(context: Context, dbName: String) {
+            context.deleteDatabase(dbName)
+        }
     }
 }
