@@ -42,6 +42,7 @@ class UnSocVivosFragment : Fragment() {
 
         binding.vAlfaS4Ad.addTextChangedListener(textWatcher)
         binding.vAlfaSams.addTextChangedListener(textWatcher)
+        binding.vHembrasAd.addTextChangedListener(textWatcher)
         binding.vCrias.addTextChangedListener(textWatcher)
         binding.vDestetados.addTextChangedListener(textWatcher)
         binding.vJuveniles.addTextChangedListener(textWatcher)
@@ -111,70 +112,128 @@ class UnSocVivosFragment : Fragment() {
     }
 
     private fun observarCtxSocial() {
+        val ctxSocial = resources.getStringArray(R.array.op_contexto_social)
         sharedViewModel.lastSelectedValue.observe(viewLifecycleOwner) { ctxElegido ->
-            vistaPjaSolitaria(ctxElegido)
-            vistaGrupoHarenes(ctxElegido)
+
+            when (ctxElegido) {
+                ctxSocial[1] -> vistaHaren()
+                ctxSocial[2] -> vistaHarenSinAlfa()
+                ctxSocial[3] -> vistaGrupoHarenes()
+                ctxSocial[4] -> vistaPjaSolitaria()
+            }
         }
     }
 
-    private fun vistaGrupoHarenes(ctxElegido: String) {
-        val ctxSocial = resources.getStringArray(R.array.op_contexto_social)
+    private fun vistaHaren() {
+        when (binding.root.findFocus()?.id) {
+            R.id.vAlfaS4Ad -> {
+                validarDominante(
+                    binding.vAlfaS4Ad,
+                    binding.vAlfaSams
+                )
+            }
+            R.id.vAlfaSams -> {
+                validarDominante(
+                    binding.vAlfaSams,
+                    binding.vAlfaS4Ad
+                )
+            }
+            R.id.vHembrasAd -> {
+                if(!binding.vHembrasAd.text.isNullOrEmpty() &&
+                    binding.vHembrasAd.text.toString().toInt() < 2)
+                    Toast.makeText(
+                        activity,
+                        "Para Haren, las hembras deben ser >= 2",
+                        Toast.LENGTH_LONG
+                    ).show()
+            }
+        }
+    }
 
-        if (ctxElegido == ctxSocial[3]) {
-            var contMacho = 0
+    private fun vistaHarenSinAlfa() {
 
-            if (!binding.vAlfaS4Ad.text.isNullOrEmpty())
-                contMacho += binding.vAlfaS4Ad.text.toString().toInt()
-            if (!binding.vAlfaSams.text.isNullOrEmpty())
-                contMacho += binding.vAlfaSams.text.toString().toInt()
+        var contMacho = 0
 
-            if (contMacho < 2)
+        if (!binding.vAlfaS4Ad.text.isNullOrEmpty())
+            contMacho += binding.vAlfaS4Ad.text.toString().toInt()
+        if (!binding.vAlfaSams.text.isNullOrEmpty())
+            contMacho += binding.vAlfaSams.text.toString().toInt()
+
+        if (contMacho > 0)
+            Toast.makeText(
+                activity,
+                "Para haren sin alfa, no deben haber machos dominantes",
+                Toast.LENGTH_LONG
+            ).show()
+
+        forzarValor("0", binding.vAlfaS4Ad)
+        forzarValor("0", binding.vAlfaSams)
+
+        if(!binding.vHembrasAd.text.isNullOrEmpty() &&
+            binding.vHembrasAd.text.toString().toInt() < 2)
+            Toast.makeText(
+                activity,
+                "Para Haren sin alfa, las hembras deben ser >= 2",
+                Toast.LENGTH_LONG
+            ).show()
+    }
+
+    private fun vistaGrupoHarenes() {
+
+        var contMacho = 0
+
+        if (!binding.vAlfaS4Ad.text.isNullOrEmpty())
+            contMacho += binding.vAlfaS4Ad.text.toString().toInt()
+        if (!binding.vAlfaSams.text.isNullOrEmpty())
+            contMacho += binding.vAlfaSams.text.toString().toInt()
+
+        if (contMacho < 2)
+            Toast.makeText(
+                activity,
+                "Para grupo de harenes, la suma de los machos dominantes debe ser >=2",
+                Toast.LENGTH_LONG
+            ).show()
+
+        if(!binding.vHembrasAd.text.isNullOrEmpty() &&
+            binding.vHembrasAd.text.toString().toInt() < 2)
+            Toast.makeText(
+                activity,
+                "Para grupo de harenes, las hembras deben ser >= 2",
+                Toast.LENGTH_LONG
+            ).show()
+    }
+
+    private fun vistaPjaSolitaria() {
+
+        when (binding.root.findFocus()?.id) {
+            R.id.vAlfaS4Ad -> {
+                validarDominante(
+                    binding.vAlfaS4Ad,
+                    binding.vAlfaSams
+                )
+            }
+            R.id.vAlfaSams -> {
+                validarDominante(
+                    binding.vAlfaSams,
+                    binding.vAlfaS4Ad
+                )
+            }
+            R.id.vHembrasAd -> {
                 Toast.makeText(
                     activity,
-                    "Para grupo de harenes, la suma de los machos dominantes deben ser >=2",
+                    "Este campo no es editable para pareja solitaria",
                     Toast.LENGTH_LONG
                 ).show()
-        }
-    }
-
-    private fun vistaPjaSolitaria(ctxElegido: String) {
-        val ctxSocial = resources.getStringArray(R.array.op_contexto_social)
-
-        if (ctxElegido == ctxSocial[4]) {   // pareja solitaria
-            binding.vHembrasAd.removeTextChangedListener(textWatcher)
-
-            when (binding.root.findFocus()?.id) {
-                R.id.vAlfaS4Ad -> {
-                    validarDominante(
-                        binding.vAlfaS4Ad,
-                        binding.vAlfaSams,
-                        textWatcher
-                    )
-                }
-                R.id.vAlfaSams -> {
-                    validarDominante(
-                        binding.vAlfaSams,
-                        binding.vAlfaS4Ad,
-                        textWatcher
-                    )
-                }
             }
-            binding.vHembrasAd.text = "1".toEditable()
-            binding.vHembrasAd.isEnabled = false
-        } else {
-            binding.vHembrasAd.addTextChangedListener(textWatcher)
-            binding.vHembrasAd.isEnabled = true
         }
+        // para pareja solitaria, siempre hembra==1
+        forzarValor("1", binding.vHembrasAd)
     }
 
     private fun validarDominante(
         editTextPrimario: EditText,
-        editTextSecundario: EditText,
-        watcher: TextWatcher
+        editTextSecundario: EditText
     ) {
-        // Deshabilitar el evento para mirar sin alterar
-        editTextSecundario.removeTextChangedListener(watcher)
-
         var texto = ""
         try {   // si usuario borra antes de ingresar un nuevo numero, entonces campo==""
             if (editTextPrimario.text.toString().toInt() > 1)
@@ -184,7 +243,7 @@ class UnSocVivosFragment : Fragment() {
                         !editTextSecundario.text.isNullOrEmpty() && editTextSecundario.text.toString()
                             .toInt() > 0)
             )
-                texto = "En pareja solitaria solo AlfaS4Ad=1 o AlfaSams=1, eligí uno solo"
+                texto = "Debe ser AlfaS4Ad=1 o AlfaSams=1, eligí uno solo"
         } catch (e: NumberFormatException) {}
 
         if (texto.isNotEmpty()) {
@@ -194,14 +253,14 @@ class UnSocVivosFragment : Fragment() {
                 Toast.LENGTH_LONG
             ).show()
 
-            // deshabilitar momentaneamente el evento para editar
-            editTextPrimario.removeTextChangedListener(watcher)
-            editTextPrimario.text = "0".toEditable()
-            editTextPrimario.addTextChangedListener(watcher)
+            forzarValor("0", editTextPrimario)
         }
+    }
 
-        // Se devuelve gestión de evento
-        editTextSecundario.addTextChangedListener(watcher)
+    private fun forzarValor(valor: String, categoria: EditText) {
+        categoria.removeTextChangedListener(textWatcher)
+        categoria.text = valor.toEditable()
+        categoria.addTextChangedListener(textWatcher)
     }
 
     override fun toString(): String {
