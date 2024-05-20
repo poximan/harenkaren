@@ -42,20 +42,6 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.theNavHostFragment) as NavHostFragment
         val navController = navHostFragment.navController
 
-        val extras = intent.getStringExtra("KEY")
-        if (extras != null && extras == "NOTIFICATION") {
-            val notificationBody = intent.getStringExtra("body1")
-            val notificationTitle = intent.getStringExtra("title")
-
-            val bundle = Bundle().apply {
-                putString("notificationTitle", notificationTitle)
-                putString("notificationBody", notificationBody)
-            }
-
-            val destinationId = R.id.show_message_fragment
-            navController.navigate(destinationId, bundle)
-        }
-
         NavigationUI.setupWithNavController(binding.navView, navController)
         appBarConfiguration = AppBarConfiguration(navController.graph)
         NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)

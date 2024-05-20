@@ -132,15 +132,18 @@ class UnSocVivosFragment : Fragment() {
                     binding.vAlfaSams
                 )
             }
+
             R.id.vAlfaSams -> {
                 validarDominante(
                     binding.vAlfaSams,
                     binding.vAlfaS4Ad
                 )
             }
+
             R.id.vHembrasAd -> {
-                if(!binding.vHembrasAd.text.isNullOrEmpty() &&
-                    binding.vHembrasAd.text.toString().toInt() < 2)
+                if (!binding.vHembrasAd.text.isNullOrEmpty() &&
+                    binding.vHembrasAd.text.toString().toInt() < 2
+                )
                     Toast.makeText(
                         activity,
                         "Para Haren, las hembras deben ser >= 2",
@@ -169,8 +172,9 @@ class UnSocVivosFragment : Fragment() {
         forzarValor("0", binding.vAlfaS4Ad)
         forzarValor("0", binding.vAlfaSams)
 
-        if(!binding.vHembrasAd.text.isNullOrEmpty() &&
-            binding.vHembrasAd.text.toString().toInt() < 2)
+        if (!binding.vHembrasAd.text.isNullOrEmpty() &&
+            binding.vHembrasAd.text.toString().toInt() < 2
+        )
             Toast.makeText(
                 activity,
                 "Para Haren sin alfa, las hembras deben ser >= 2",
@@ -194,8 +198,9 @@ class UnSocVivosFragment : Fragment() {
                 Toast.LENGTH_LONG
             ).show()
 
-        if(!binding.vHembrasAd.text.isNullOrEmpty() &&
-            binding.vHembrasAd.text.toString().toInt() < 2)
+        if (!binding.vHembrasAd.text.isNullOrEmpty() &&
+            binding.vHembrasAd.text.toString().toInt() < 2
+        )
             Toast.makeText(
                 activity,
                 "Para grupo de harenes, las hembras deben ser >= 2",
@@ -212,12 +217,14 @@ class UnSocVivosFragment : Fragment() {
                     binding.vAlfaSams
                 )
             }
+
             R.id.vAlfaSams -> {
                 validarDominante(
                     binding.vAlfaSams,
                     binding.vAlfaS4Ad
                 )
             }
+
             R.id.vHembrasAd -> {
                 Toast.makeText(
                     activity,
@@ -244,7 +251,8 @@ class UnSocVivosFragment : Fragment() {
                             .toInt() > 0)
             )
                 texto = "Debe ser AlfaS4Ad=1 o AlfaSams=1, eligí uno solo"
-        } catch (e: NumberFormatException) {}
+        } catch (e: NumberFormatException) {
+        }
 
         if (texto.isNotEmpty()) {
             Toast.makeText(

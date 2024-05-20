@@ -52,7 +52,11 @@ class DevFragment : Fragment() {
         // Define el manejador de excepciones
         val exceptionHandler = CoroutineExceptionHandler { _, exception ->
             if (exception is IllegalStateException) {
-                Toast.makeText(context, "El gestor de BD no puede verificar la integridad de los datos", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    context,
+                    "El gestor de BD no puede verificar la integridad de los datos",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
 
@@ -173,7 +177,7 @@ class DevFragment : Fragment() {
         estadoBD()
     }
 
-    private fun borrarEsquema(){
+    private fun borrarEsquema() {
 
         val viewModelScope = viewLifecycleOwner.lifecycleScope
         viewModelScope.launch {

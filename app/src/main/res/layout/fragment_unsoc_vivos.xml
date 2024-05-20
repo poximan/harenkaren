@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -72,6 +71,7 @@
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/linearLayout5"
             android:layout_width="match_parent"
@@ -85,6 +85,7 @@
                 android:layout_height="5dp"
                 android:background="?android:attr/listDivider" />
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/linearLayout6"
             android:layout_width="match_parent"
@@ -105,7 +106,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="hembra Ad"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/vHembrasAd"
@@ -139,7 +140,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="crias"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/vCrias"
@@ -167,7 +168,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="destetado"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/vDestetados"
@@ -190,7 +191,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="juvenil"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/vJuveniles"
@@ -201,6 +202,7 @@
 
             </LinearLayout>
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/linearLayout7"
             android:layout_width="match_parent"
@@ -215,6 +217,7 @@
                 android:background="?android:attr/listDivider" />
 
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/linearLayout8"
             android:layout_width="match_parent"
@@ -235,7 +238,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/s4_ad"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -321,6 +324,7 @@
             </LinearLayout>
 
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/linearLayout9"
             android:layout_width="match_parent"
@@ -335,6 +339,7 @@
                 android:background="?android:attr/listDivider" />
 
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/linearLayout10"
             android:layout_width="match_parent"
@@ -355,7 +360,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/Sams"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -380,7 +385,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:imeOptions="actionNext"
-                            android:inputType="number"/>
+                            android:inputType="number" />
 
                     </LinearLayout>
 
@@ -434,7 +439,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:imeOptions="actionDone"
-                            android:inputType="number"/>
+                            android:inputType="number" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

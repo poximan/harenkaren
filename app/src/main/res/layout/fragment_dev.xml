@@ -19,22 +19,26 @@
             android:text="Poblar BD"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent" />
+
         <TextView
             android:id="@+id/dias"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="dias"/>
+            android:hint="dias" />
+
         <TextView
             android:id="@+id/recorr"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="recorridos"/>
+            android:hint="recorridos" />
+
         <TextView
             android:id="@+id/unsoc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="unidades sociales"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginBottom="20dp" />
+
         <Button
             android:id="@+id/usuario"
             android:layout_width="wrap_content"
@@ -44,34 +48,39 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:orientation="vertical"
         app:layout_constraintRight_toRightOf="parent">
+
         <Button
             android:id="@+id/limpiar_dias"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Limpiar\nDias"/>
+            android:text="Limpiar\nDias" />
+
         <Button
             android:id="@+id/limpiar_recorr"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Limpiar\nrecorr."/>
+            android:text="Limpiar\nrecorr." />
+
         <Button
             android:id="@+id/limpiar_unsoc"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Limpiar\nunid.soc."/>
+            android:text="Limpiar\nunid.soc." />
+
         <Button
             android:id="@+id/reventar_esquema"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Reventar\nesquema\n(y rearmar)"/>
+            android:text="Reventar\nesquema\n(y rearmar)" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -95,8 +95,7 @@
             android:id="@+id/dia_add_fragment"
             android:name="com.example.demo.fragment.add.DiaAddFragment"
             android:label="Nuevo dia"
-            tools:layout="@layout/fragment_dia_add">
-        </fragment>
+            tools:layout="@layout/fragment_dia_add"></fragment>
         <fragment
             android:id="@+id/dia_detail_fragment"
             android:name="com.example.demo.fragment.detail.DiaDetailFragment"
@@ -235,7 +234,7 @@
                     tools:layout="@layout/fragment_unsoc_add">
                     <argument
                         android:name="idRecorrido"
-                        app:argType="java.util.UUID"/>
+                        app:argType="java.util.UUID" />
                     <action
                         android:id="@+id/goToUnSocListFromSolapaAction"
                         app:destination="@id/unsoc_list_fragment" />
@@ -278,7 +277,7 @@
         android:id="@+id/statistics_fragment"
         android:name="com.example.demo.fragment.statistics.StatisticsFragment"
         android:label="Estadísticas"
-        tools:layout="@layout/fragment_statistics" >
+        tools:layout="@layout/fragment_statistics">
         <argument
             android:name="entidad"
             app:argType="android.os.Parcelable" />
@@ -287,8 +286,7 @@
         android:id="@+id/osm_fragment"
         android:name="com.example.demo.fragment.maps.OSMFragment"
         android:label="Mapa OSM"
-        tools:layout="@layout/fragment_osm">
-    </fragment>
+        tools:layout="@layout/fragment_osm"></fragment>
     <fragment
         android:id="@+id/topics_fragment"
         android:name="com.example.demo.fragment.topics.TopicsFragment"
@@ -304,11 +302,6 @@
         android:name="com.example.demo.fragment.register.RegisterFragment"
         android:label="Registro"
         tools:layout="@layout/fragment_register" />
-    <fragment
-        android:id="@+id/show_message_fragment"
-        android:name="com.example.demo.fragment.messaging.ShowMessageFragment"
-        android:label="Notificación recibida"
-        tools:layout="@layout/fragment_show_message" />
     <fragment
         android:id="@+id/about_fragment"
         android:name="com.example.demo.fragment.info.AboutFragment"

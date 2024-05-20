@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<paths xmlns:android="http://schemas.android.com/apk/res/android">
+<paths>
     <files-path
         name="exportar-csv"
-        path="."/>
+        path="." />
     <external-path
         name="fotos"
-        path="Android/data/com.example.demo/"/>
+        path="Android/data/com.example.demo/" />
 </paths>
 

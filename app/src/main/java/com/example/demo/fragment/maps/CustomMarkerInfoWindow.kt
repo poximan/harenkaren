@@ -1,7 +1,6 @@
 package com.example.demo.fragment.maps
 
 import android.content.Context
-import android.graphics.Color
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -59,7 +58,7 @@ class CustomMarkerInfoWindow(
         // Crear y configurar el cuadrado azul
         val squareView = View(context)
         squareView.setBackgroundColor(siguienteColor(atribString))
-        val squareLayoutParams = LinearLayout.LayoutParams(20, valor*4)
+        val squareLayoutParams = LinearLayout.LayoutParams(20, valor * 4)
         squareLayoutParams.gravity = Gravity.CENTER_VERTICAL // Centrar verticalmente
         squareView.layoutParams = squareLayoutParams
 
@@ -76,7 +75,7 @@ class CustomMarkerInfoWindow(
             LinearLayout.LayoutParams.WRAP_CONTENT
         )
         textLayoutParams.gravity = Gravity.CENTER_VERTICAL // Centrar verticalmente
-        textLayoutParams.leftMargin=8
+        textLayoutParams.leftMargin = 8
         textView.layoutParams = textLayoutParams
 
         // Agregar el View y el TextView al nuevo LinearLayout

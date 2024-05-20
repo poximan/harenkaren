@@ -119,7 +119,7 @@ class RecorrAddFragment : Fragment() {
                         updateLocationViews(location.latitude, location.longitude)
                     }
 
-                    override fun onStatusChanged(provider: String, status: Int, extras: Bundle) { }
+                    override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {}
                     override fun onProviderEnabled(provider: String) {}
                     override fun onProviderDisabled(provider: String) {
                         val message =
@@ -192,11 +192,21 @@ class RecorrAddFragment : Fragment() {
                     if (isImageChanged) {
                         indicatorLight!!.setImageResource(R.drawable.indicator_on)
                         binding.latitudIni.text = "geoposicionando..."
-                        binding.latitudIni.setTextColor(ContextCompat.getColor(requireContext(), R.color.purple_700))
+                        binding.latitudIni.setTextColor(
+                            ContextCompat.getColor(
+                                requireContext(),
+                                R.color.purple_700
+                            )
+                        )
                     } else {
                         indicatorLight!!.setImageResource(R.drawable.indicator_off)
                         binding.latitudIni.text = "geoposicionando..."
-                        binding.latitudIni.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+                        binding.latitudIni.setTextColor(
+                            ContextCompat.getColor(
+                                requireContext(),
+                                R.color.black
+                            )
+                        )
                     }
                     isImageChanged = !isImageChanged
                     handler.postDelayed(this, 800)

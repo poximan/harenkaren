@@ -97,7 +97,10 @@ class OSMFragment : Fragment(), MapEventsReceiver {
                         val total = unSocDAO.getMaxRegistro(unSoc.recorrId)
                         // ---------> HILO PRINCIPAL
                         withContext(Dispatchers.Main) {
-                            agregarMarcador(unSoc, total)  // los puntos se insertan en cada pasada "mapView.overlays.add"
+                            agregarMarcador(
+                                unSoc,
+                                total
+                            )  // los puntos se insertan en cada pasada "mapView.overlays.add"
                         }
                     }
                 }
