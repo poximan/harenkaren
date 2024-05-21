@@ -20,9 +20,8 @@ class UnSocRepository(private val dao: UnSocDAO) {
         return dao.getUnSocByUUID(id)
     }
 
-    fun readConFK(idRecorr: UUID): LiveData<List<UnidSocial>> {
-        val listaIntermedia = dao.getUnSocByRecorrId(idRecorr)
-        return convertirAData(listaIntermedia)
+    fun readConFK(idRecorr: UUID): List<UnidSocial> {
+        return dao.getUnSocByRecorrId(idRecorr)
     }
 
     fun getMaxRegistro(idRecorr: UUID): Int {

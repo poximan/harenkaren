@@ -2,7 +2,6 @@ package com.example.demo.viewModel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.example.demo.database.HarenKarenRoomDatabase
 import com.example.demo.model.UnidSocial
@@ -43,7 +42,7 @@ class UnSocViewModel(application: Application) : AndroidViewModel(application) {
         repository.update(unidSocial)
     }
 
-    fun readConFK(id: UUID): LiveData<List<UnidSocial>> {
+    fun readConFK(id: UUID): List<UnidSocial> {
         return repository.readConFK(id)
     }
 

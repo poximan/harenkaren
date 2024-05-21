@@ -149,11 +149,7 @@ class UnSocListFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
         CoroutineScope(Dispatchers.IO).launch {
             val unSocListAsync = unSocViewModel.readConFK(args.idRecorrido)
             withContext(Dispatchers.Main) {
-                unSocListAsync.observe(
-                    viewLifecycleOwner
-                ) { elem ->
-                    elem?.let { unSocAdapter.setUnSoc(it) }
-                }
+                unSocAdapter.setUnSoc(unSocListAsync)
             }
         }
     }
@@ -165,13 +161,10 @@ class UnSocListFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
 
         CoroutineScope(Dispatchers.IO).launch {
             val unSocListAsync = unSocViewModel.readConFK(args.idRecorrido)
+
             withContext(Dispatchers.Main) {
-                unSocListAsync.observe(
-                    viewLifecycleOwner
-                ) { unSocList ->
-                    val filteredList = remove(unSocList, date)
-                    unSocList?.let { unSocAdapter.setUnSoc(filteredList) }
-                }
+                val filteredList = remove(unSocListAsync, date)
+                unSocAdapter.setUnSoc(filteredList)
             }
         }
     }

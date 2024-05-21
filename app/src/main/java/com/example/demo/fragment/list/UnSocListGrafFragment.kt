@@ -10,14 +10,22 @@ import android.webkit.WebView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.navGraphViewModels
 import com.example.demo.R
+import com.example.demo.adapter.UnSocListGrafAdapter
 import com.example.demo.databinding.FragmentUnsocListGrafBinding
+import com.example.demo.viewModel.UnSocViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStreamWriter
 
 class UnSocListGrafFragment : Fragment() {
 
+    private val unSocViewModel: UnSocViewModel by navGraphViewModels(R.id.app_navigation)
     private val args: UnSocListFragmentArgs by navArgs()
 
     private var _binding: FragmentUnsocListGrafBinding? = null
@@ -63,6 +71,15 @@ class UnSocListGrafFragment : Fragment() {
     }
 
     private fun generateDynamicHtml(): String {
+
+        val unSocAdapter = UnSocListGrafAdapter(requireContext())
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val unSocListAsync = unSocViewModel.readConFK(args.idRecorrido)
+            withContext(Dispatchers.Main) {
+                unSocAdapter.setUnSoc(unSocListAsync)
+            }
+        }
 
         val staticHtmlIni = """
             <!DOCTYPE html>

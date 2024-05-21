@@ -45,11 +45,7 @@ class _UnSocListGrafFragment : Fragment() {
             val total = unSocViewModel.getMaxRegistro(args.idRecorrido)
 
             withContext(Dispatchers.Main) {
-                unSocListAsync.observe(
-                    viewLifecycleOwner
-                ) { elem ->
-                    elem?.let { unSocAdapter.setUnSoc(it, stackchart, total) }
-                }
+                unSocAdapter.setUnSoc(unSocListAsync)
             }
         }
     }
