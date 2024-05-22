@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.navGraphViewModels
@@ -15,6 +16,8 @@ import com.example.demo.R
 import com.example.demo.adapter.UnSocListGrafAdapter
 import com.example.demo.databinding.FragmentUnsocListGrafBinding
 import com.example.demo.viewModel.UnSocViewModel
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStreamWriter
@@ -48,23 +51,19 @@ class UnSocListGrafFragment : Fragment() {
         webView.settings.javaScriptEnabled = true
         webView.settings.allowFileAccess = true
 
-        graficar()
+        val unSocAdapter = UnSocListGrafAdapter(args.idRecorrido)
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            val dynamicHtml = unSocAdapter.contenidoHTML(unSocViewModel)
+            contenedorHTML(dynamicHtml) // Aquí debes definir cómo se usa `graficar` con el HTML generado.
+        }
     }
 
-    private fun graficar() {
+    private fun contenedorHTML(dynamicHtml: String) {
 
         val fileName = "index.html"
-        val file = File(
-            requireContext().filesDir,
-            fileName
-        )
-
-        if (!file.exists()) {
-            file.createNewFile()
-        }
-
-        val unSocAdapter = UnSocListGrafAdapter(args.idRecorrido)
-        val dynamicHtml = unSocAdapter.graficar(unSocViewModel)
+        val file = File(requireContext().filesDir, fileName)
+        file.createNewFile()
 
         val fileOutputStream = FileOutputStream(file)
         val outputStreamWriter = OutputStreamWriter(fileOutputStream)

@@ -2,23 +2,19 @@ package com.example.demo.adapter
 
 import com.example.demo.model.UnidSocial
 import com.example.demo.viewModel.UnSocViewModel
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.UUID
 
 class UnSocListGrafAdapter(private val idRecorrido: UUID) {
 
-    fun graficar(unSocViewModel: UnSocViewModel): String {
-        var ret = ""
-        CoroutineScope(Dispatchers.IO).launch {
-            val unSocListAsync = unSocViewModel.readConFK(idRecorrido)
-            withContext(Dispatchers.Main) {
-                ret = generarHTML(unSocListAsync)
-            }
+    suspend fun contenidoHTML(unSocViewModel: UnSocViewModel): String {
+        val unSocListAsync = withContext(Dispatchers.IO) {
+            unSocViewModel.readConFK(idRecorrido)
         }
-        return ret
+        return withContext(Dispatchers.Main) {
+            generarHTML(unSocListAsync)
+        }
     }
 
     private fun generarHTML(unidSocialList: List<UnidSocial>): String {
