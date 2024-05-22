@@ -37,8 +37,8 @@ class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
         setHasOptionsMenu(true)
         _binding = FragmentDiaListBinding.inflate(inflater, container, false)
 
-        _binding!!.homeActionButton.setOnClickListener { goHome() }
-        _binding!!.newRecorrButton.setOnClickListener { nvoDia() }
+        binding.homeActionButton.setOnClickListener { goHome() }
+        binding.newRecorrButton.setOnClickListener { nvoDia() }
 
         diaList = binding.listDia
         loadFullList()
@@ -170,7 +170,10 @@ class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
             .observe(
                 viewLifecycleOwner
             ) { elem ->
-                elem?.let { diaAdapter.setDia(it) }
+                elem?.let {
+                    val sortedList = it.sortedBy { dia -> dia.orden }
+                    diaAdapter.setDia(sortedList)
+                }
             }
     }
 
@@ -183,8 +186,11 @@ class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
             .observe(
                 viewLifecycleOwner
             ) { elem ->
-                val filteredList = remove(elem, date)
-                elem?.let { diaAdapter.setDia(filteredList) }
+                elem?.let {
+                    val filteredList = remove(elem, date)
+                    val sortedList = filteredList.sortedBy { dia -> dia.orden }
+                    diaAdapter.setDia(sortedList)
+                }
             }
     }
 

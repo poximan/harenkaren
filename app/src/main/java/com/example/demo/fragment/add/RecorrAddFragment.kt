@@ -38,7 +38,6 @@ class RecorrAddFragment : Fragment() {
     private lateinit var model: RecorrViewModel
 
     private lateinit var locationManager: LocationManager
-
     private var indicatorLight: ImageView? = null
     private val latLonIni = LatLong()
 
@@ -134,6 +133,23 @@ class RecorrAddFragment : Fragment() {
         }
     }
 
+    private fun updateLocationViews(latitud: Double, longitud: Double) {
+
+        latLonIni.lat = latitud
+        latLonIni.lon = longitud
+
+        mostrarEnPantalla()
+    }
+
+    private fun mostrarEnPantalla() {
+
+        val lat = String.format("%.6f", latLonIni.lat)
+        val lon = String.format("%.6f", latLonIni.lon)
+
+        binding.latitudIni.text = lat
+        binding.longitudIni.text = lon
+    }
+
     private fun checkLocationPermission(): Boolean {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val fineLocationPermission =
@@ -151,23 +167,6 @@ class RecorrAddFragment : Fragment() {
         } else {
             true
         }
-    }
-
-    private fun updateLocationViews(latitud: Double, longitud: Double) {
-
-        latLonIni.lat = latitud
-        latLonIni.lon = longitud
-
-        mostrarEnPantalla()
-    }
-
-    private fun mostrarEnPantalla() {
-
-        val lat = String.format("%.6f", latLonIni.lat)
-        val lon = String.format("%.6f", latLonIni.lon)
-
-        binding.latitudIni.text = lat
-        binding.longitudIni.text = lon
     }
 
     private fun requestLocationPermission() {

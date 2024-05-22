@@ -17,7 +17,6 @@ import com.example.demo.adapter.UnSocListGrafAdapter
 import com.example.demo.databinding.FragmentUnsocListGrafBinding
 import com.example.demo.viewModel.UnSocViewModel
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStreamWriter
@@ -55,7 +54,7 @@ class UnSocListGrafFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             val dynamicHtml = unSocAdapter.contenidoHTML(unSocViewModel)
-            contenedorHTML(dynamicHtml) // Aquí debes definir cómo se usa `graficar` con el HTML generado.
+            contenedorHTML(dynamicHtml)
         }
     }
 

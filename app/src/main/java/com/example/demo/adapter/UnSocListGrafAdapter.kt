@@ -22,17 +22,24 @@ class UnSocListGrafAdapter(private val idRecorrido: UUID) {
         val staticHtmlIni = """
             <!DOCTYPE html>
             <html>
-            <head>
-                <meta charset="UTF-8">
-                <script src="file:///android_asset/plotly-2.32.0.min.js"></script>
-            </head>
-            <body>
-            <div id="chart" style="width: 100%; height: 100%;"></div>
-            <script>
+                <head>
+                    <meta charset="UTF-8">
+                    <script src="file:///android_asset/plotly-2.32.0.min.js"></script>
+                    <style>
+                        body, html {                            
+                            width: 100%;
+                            height: 92%;
+                            overflow: hidden;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div id="chart" style="width: 100%; height: 100%;"></div>
+                    <script>
         """.trimIndent()
 
         // Parte dinámica del HTML (trazas)
-        val (traces, data) = generarCategorias(unidSocialList)
+        val (traces, data, yval) = generarCategorias(unidSocialList)
         val dynamicHtml = StringBuilder()
         for (trace in traces) {
             dynamicHtml.append(trace).append("\n")
@@ -45,12 +52,16 @@ class UnSocListGrafAdapter(private val idRecorrido: UUID) {
         // Parte estática final del HTML
         val staticHtmlEnd = """
 
-                var layout = {
-                    barmode: 'stack',
-                };
-                Plotly.newPlot('chart', data, layout);
-            </script>
-            </body>
+                        var layout = {
+                            margin: { t: 15, r: 0, b: 0, l: 15 },
+                            barmode: 'stack',
+                            yaxis: {
+                                tickvals: $yval
+                            }
+                        };
+                        Plotly.newPlot('chart', data, layout);
+                    </script>
+                </body>
             </html>
         """.trimIndent()
 
@@ -58,39 +69,52 @@ class UnSocListGrafAdapter(private val idRecorrido: UUID) {
         return staticHtmlIni + dynamicHtml.toString() + dataStr + staticHtmlEnd
     }
 
-    private fun generarCategorias(unidSocialList: List<UnidSocial>): Pair<List<String>, String> {
-
-        for (unidSocial in unidSocialList) {
-            val contadores = unidSocial.getContadores()
-            for (atribString in contadores) {
-                // obtengo un objeto Field
-                val valorAtributo = unidSocial.javaClass.getDeclaredField(atribString)
-                valorAtributo.isAccessible = true
-                // utilizar el objeto Field para obtener el valor del atributo en unidSocial.
-                val valor = valorAtributo.get(unidSocial)
-            }
-        }
+    private fun generarCategorias(unidSocialList: List<UnidSocial>): Triple<List<String>, String, String> {
 
         val traceList = mutableListOf<String>()
         val dataList = mutableListOf<String>()
 
-        // Generar 24 trazas
-        for (i in 1..24) {
+        var yval = ""
+        val contadores = unidSocialList.first().getContadores()
+        for (atribString in contadores) {
+
+            var xval = ""
+            yval = ""
+            var xtext = ""
+
+            for (unidSocial in unidSocialList) {
+                val valorAtributo = unidSocial.javaClass.getDeclaredField(atribString)
+                valorAtributo.isAccessible = true
+                val valor = valorAtributo.get(unidSocial)
+
+                xval += "'$valor', "
+                yval += "'${unidSocial.orden}', "
+                xtext += "'$atribString', "
+            }
+            xval = xval.dropLast(2) // sacar el ultimo ", "
+            xval = "[$xval]"
+
+            yval = yval.dropLast(2)
+            yval = "[$yval]"
+
+            xtext = xtext.dropLast(2)
+            xtext = "[$xtext]"
+
             val trace = """
                 
-            var trace$i = {
-                x: [20, 14, 23, 31, 8, 15],
-                y: ['reg6', 'reg5', 'reg4','reg3', 'reg2', 'reg1'],
-                text: ['vJuveniles', 'vDestetados', 'vCrias', 'vHembrasAd', 'vAlfaSams', 'vBeta'],
-                name: 'Trace $i',
+            var $atribString = {
+                x: $xval,
+                y: $yval,
+                text: $xtext,
+                name: '$atribString',
                 orientation: 'h',
                 type: 'bar'
             };
         """.trimIndent()
-            val data = "trace$i"
+            val data = "$atribString"
             traceList.add(trace)
             dataList.add(data)
         }
-        return Pair(traceList, dataList.joinToString(", "))
+        return Triple(traceList, dataList.joinToString(", "), yval)
     }
 }

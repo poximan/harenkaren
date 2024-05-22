@@ -13,6 +13,8 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.os.Handler
+import android.os.Looper
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
@@ -71,6 +73,10 @@ class UnSocGralFragment : Fragment() {
     private lateinit var locationManager: LocationManager
     private var indicatorLight: ImageView? = null
     private val latLon = LatLong()
+
+    private val handler = Handler(Looper.getMainLooper())
+    private var isRunning = false
+    private lateinit var imageChangerRunnable: Runnable
 
     fun newInstance(
         colectarFunc: KFunction2<Int, Map<String, Any>, Unit>
@@ -207,34 +213,17 @@ class UnSocGralFragment : Fragment() {
         }
     }
 
-    private fun updateLocationViews(latitud: Double, longitud: Double) {
-        latLon.lat = latitud
-        latLon.lon = longitud
-
-        mostrarEnPantalla()
-        cargarMap()
-    }
-
-    private fun mostrarEnPantalla() {
-        val lat = String.format("%.6f", latLon.lat)
-        val lon = String.format("%.6f", latLon.lon)
-
-        binding.latitud.text = lat
-        binding.longitud.text = lon
-    }
-
     private fun getPosicionActual() {
 
         locationManager = requireActivity().getSystemService(LocationManager::class.java)
-
         if (checkLocationPermission()) {
-            indicatorLight?.setImageResource(R.drawable.indicator_off)
 
+            startImageChanger()
             locationManager.requestSingleUpdate(
                 LocationManager.GPS_PROVIDER,
                 object : LocationListener {
                     override fun onLocationChanged(location: Location) {
-                        indicatorLight?.setImageResource(R.drawable.indicator_on)
+                        stopImageChanger()
                         updateLocationViews(location.latitude, location.longitude)
                     }
 
@@ -251,6 +240,22 @@ class UnSocGralFragment : Fragment() {
         } else {
             requestLocationPermission()
         }
+    }
+
+    private fun updateLocationViews(latitud: Double, longitud: Double) {
+        latLon.lat = latitud
+        latLon.lon = longitud
+
+        mostrarEnPantalla()
+        cargarMap()
+    }
+
+    private fun mostrarEnPantalla() {
+        val lat = String.format("%.6f", latLon.lat)
+        val lon = String.format("%.6f", latLon.lon)
+
+        binding.latitud.text = lat
+        binding.longitud.text = lon
     }
 
     private fun ptoObsUnidadSocialInfo() {
@@ -457,6 +462,49 @@ class UnSocGralFragment : Fragment() {
                 DbConstants.PERMISSION_REQUEST_LOCATION
             )
         }
+    }
+
+    private fun startImageChanger() {
+        isRunning = true
+        imageChangerRunnable = object : Runnable {
+            private var isImageChanged = false
+
+            override fun run() {
+                if (isRunning) {
+                    if (isImageChanged) {
+                        indicatorLight!!.setImageResource(R.drawable.indicator_on)
+                        binding.latitud.text = "geoposicionando..."
+                        binding.latitud.setTextColor(
+                            ContextCompat.getColor(
+                                requireContext(),
+                                R.color.purple_700
+                            )
+                        )
+                    } else {
+                        indicatorLight!!.setImageResource(R.drawable.indicator_off)
+                        binding.latitud.text = "geoposicionando..."
+                        binding.latitud.setTextColor(
+                            ContextCompat.getColor(
+                                requireContext(),
+                                R.color.black
+                            )
+                        )
+                    }
+                    isImageChanged = !isImageChanged
+                    handler.postDelayed(this, 800)
+                }
+            }
+        }
+
+        Thread {
+            handler.post(imageChangerRunnable)
+        }.start()
+    }
+
+    private fun stopImageChanger() {
+        isRunning = false
+        handler.removeCallbacks(imageChangerRunnable)
+        indicatorLight!!.setImageResource(R.drawable.indicator_on)
     }
 
     override fun toString(): String {

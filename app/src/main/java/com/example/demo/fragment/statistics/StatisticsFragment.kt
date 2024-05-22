@@ -88,30 +88,22 @@ class StatisticsFragment : Fragment() {
                 is List<*> -> {
                     when (entidad.firstOrNull()) {
                         is Dia -> {
-                            binding.granularidad.text = "Granularidad: todos los dias"
                             todosLosDias(viewModel)
                         }
                     }
                 }
-
                 is Dia -> {
-                    binding.granularidad.text = "Granularidad: todos los recorridos del dia"
                     uuid = entidad.id
                     unDia(viewModel)
                 }
-
                 is Recorrido -> {
-                    binding.granularidad.text = "Granularidad: todos los registros del recorrido"
                     uuid = entidad.id
                     unRecorrido(viewModel)
                 }
-
                 is UnidSocial -> {
-                    binding.granularidad.text = "Granularidad: una unidad social"
                     uuid = entidad.id
                     unaUnidadSocial(viewModel)
                 }
-
                 else -> {}
             }
         } else
