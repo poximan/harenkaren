@@ -25,8 +25,9 @@ class HomeFragment : Fragment() {
 
         binding.censosButton.setOnClickListener { gotoCensos() }
         binding.mapaButton.setOnClickListener { gotoMapas() }
-        binding.topicosButton.setOnClickListener { goToMyTopics() }
-        binding.desarrolloButton.setOnClickListener { showRegulations() }
+        binding.reportesButton.setOnClickListener { goToReportes() }
+        binding.ayudaButton.setOnClickListener { goToAyuda() }
+        binding.desarrolloButton.setOnClickListener { gotoDesarrollo() }
         binding.logOutButton.setOnClickListener { logOut() }
 
         return binding.root
@@ -40,11 +41,15 @@ class HomeFragment : Fragment() {
         findNavController().navigate(R.id.goToMapaAction)
     }
 
-    private fun goToMyTopics() {
-        findNavController().navigate(R.id.goToTopicsAction)
+    private fun goToReportes() {
+        findNavController().navigate(R.id.goToRepAction)
     }
 
-    private fun showRegulations() {
+    private fun goToAyuda() {
+        findNavController().navigate(R.id.goToAyudaAction)
+    }
+
+    private fun gotoDesarrollo() {
         findNavController().navigate(R.id.goToDevAction)
     }
 

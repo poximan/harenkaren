@@ -61,8 +61,15 @@
             app:popEnterAnim="@android:anim/fade_in"
             app:popExitAnim="@android:anim/fade_out" />
         <action
-            android:id="@+id/goToTopicsAction"
-            app:destination="@id/topics_fragment"
+            android:id="@+id/goToRepAction"
+            app:destination="@id/reportes_fragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/goToAyudaAction"
+            app:destination="@id/ayuda_fragment"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out"
             app:popEnterAnim="@android:anim/fade_in"
@@ -286,12 +293,17 @@
         android:id="@+id/osm_fragment"
         android:name="com.example.demo.fragment.maps.OSMFragment"
         android:label="Mapa OSM"
-        tools:layout="@layout/fragment_osm"></fragment>
+        tools:layout="@layout/fragment_osm"/>
     <fragment
-        android:id="@+id/topics_fragment"
-        android:name="com.example.demo.fragment.topics.TopicsFragment"
-        android:label="Mis tópicos"
-        tools:layout="@layout/fragment_topics" />
+        android:id="@+id/reportes_fragment"
+        android:name="com.example.demo.fragment.statistics.ReportesFragment"
+        android:label="Reportes"
+        tools:layout="@layout/fragment_reportes" />
+    <fragment
+        android:id="@+id/ayuda_fragment"
+        android:name="com.example.demo.fragment.info.AyudaFragment"
+        android:label="Ayuda"
+        tools:layout="@layout/fragment_ayuda" />
     <fragment
         android:id="@+id/dev_fragment"
         android:name="com.example.demo.DevFragment"

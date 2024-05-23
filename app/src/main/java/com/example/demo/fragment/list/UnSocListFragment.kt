@@ -10,10 +10,13 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.navGraphViewModels
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.demo.R
 import com.example.demo.adapter.UnSocListAdapter
@@ -47,6 +50,13 @@ class UnSocListFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
         binding.cambiarActionButton.setOnClickListener { cambiarVista() }
 
         unSocList = binding.listUnSoc
+        val layoutManager = LinearLayoutManager(requireContext())
+        unSocList.layoutManager = layoutManager
+        val dividerDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.divider)
+        val dividerItemDecoration = DividerItemDecoration(unSocList.context, layoutManager.orientation)
+        dividerItemDecoration.setDrawable(dividerDrawable!!)
+        unSocList.addItemDecoration(dividerItemDecoration)
+
         loadFullList()
 
         return binding.root

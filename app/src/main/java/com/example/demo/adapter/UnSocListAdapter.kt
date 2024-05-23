@@ -92,9 +92,9 @@ class UnSocListAdapter(
         return buildString {
             append("Gral --> ")
 
-            if (unidSocial.ptoObsUnSoc.isNotEmpty() == true) append("*Pto.obs.: ${unidSocial.ptoObsUnSoc} ")
-            if (unidSocial.ctxSocial.isNotEmpty() == true) append("*Ctx.soc: ${unidSocial.ctxSocial} ")
-            if (unidSocial.tpoSustrato.isNotEmpty() == true) append("*Pya: ${unidSocial.tpoSustrato} ")
+            if (unidSocial.ptoObsUnSoc.isNotEmpty()) append("*Pto.obs.: ${unidSocial.ptoObsUnSoc} ")
+            if (unidSocial.ctxSocial.isNotEmpty()) append("*Ctx.soc: ${unidSocial.ctxSocial} ")
+            if (unidSocial.tpoSustrato.isNotEmpty()) append("*Pya: ${unidSocial.tpoSustrato} ")
             append("\n")
 
             append("vivos --> ")
@@ -132,6 +132,9 @@ class UnSocListAdapter(
             } else append("\n")
 
             if (unidSocial.comentario?.isNotEmpty() == true) append("*Comentario: ${unidSocial.comentario}")
+            if (endsWith("\n")) {
+                delete(length - "\n".length, length)
+            }
         }
     }
 

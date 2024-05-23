@@ -140,7 +140,7 @@ class OSMFragment : Fragment(), MapEventsReceiver {
 
 
         val infoWindow = CustomMarkerInfoWindow(
-            requireContext(), unSoc, total,
+            requireContext(), unSoc,
             R.layout.fragment_osm_bubble, mapView
         )
 

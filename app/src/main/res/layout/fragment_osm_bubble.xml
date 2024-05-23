@@ -5,4 +5,14 @@
     android:layout_height="100dp"
     android:orientation="vertical"
     android:background="@android:color/white"
-    android:padding="4dp"></LinearLayout>
+    android:padding="4dp">
+
+    <ImageButton
+        android:id="@+id/close_button"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_gravity="right"
+        android:background="?attr/selectableItemBackground"
+        android:src="@android:drawable/ic_menu_close_clear_cancel" />
+
+</LinearLayout>

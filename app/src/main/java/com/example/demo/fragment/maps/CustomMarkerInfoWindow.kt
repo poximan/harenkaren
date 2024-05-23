@@ -3,7 +3,9 @@ package com.example.demo.fragment.maps
 import android.content.Context
 import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -15,15 +17,41 @@ import org.osmdroid.views.overlay.infowindow.InfoWindow
 class CustomMarkerInfoWindow(
     private val context: Context,
     private val unSoc: UnidSocial,
-    private val total: Int,
     layoutResId: Int,
     mapView: MapView
 ) : InfoWindow(layoutResId, mapView) {
 
+    private var initialX = 0f
+    private var initialY = 0f
+    private var offsetX = 0f
+    private var offsetY = 0f
+
     override fun onOpen(item: Any?) {
         // Inflar la vista del layout personalizado
         val view = LayoutInflater.from(context).inflate(R.layout.fragment_osm_bubble, null)
+
         val linearLayout = view.findViewById<LinearLayout>(R.id.osm_bubble)
+        val btnCerrar = view.findViewById<ImageButton>(R.id.close_button)
+        btnCerrar.setOnClickListener { close() }
+
+        view.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    initialX = v.x - event.rawX
+                    initialY = v.y - event.rawY
+                }
+                MotionEvent.ACTION_MOVE -> {
+                    offsetX = event.rawX + initialX
+                    offsetY = event.rawY + initialY
+                    v.animate()
+                        .x(offsetX)
+                        .y(offsetY)
+                        .setDuration(0)
+                        .start()
+                }
+            }
+            true
+        }
 
         val contadoresNoNulos = unSoc.getContadoresNoNulos()
         for (atribString in contadoresNoNulos) {
