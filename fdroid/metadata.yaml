@@ -1,0 +1,41 @@
+Categories:
+  - Science & Education
+License: GPL-3.0-only
+SourceCode: https://github.com/poximan/harenkaren/
+IssueTracker: https://github.com/poximan/harenkaren/issues
+
+AutoName: harenkaren
+Summary: censado mamiferos y analisis datos
+Description: |-
+  habitualmente los trabajos en campo implican el uso de papel y lápiz, lo más portable por mucho.
+  esta app pretende (con exagerado optimismo) ser un digno reemplazo de aquello. en este sentido,
+  la navegabilidad de pantallas busca guiar al censista en la definición de los datos,
+  desde lo general a lo particular. asi el usuario primeramente dará de alta un Dia (como unidad
+  de tiempo en que sucede un acto de censar), dentro de este definirá Recorridos (como descriptor
+  de áreas geográficas donde sucede el acto de censar) y finalmente agregará tantos Registros
+  como unidades sociales observe en campo.
+
+  datos:
+  la persistencia de datos se basa en SQLite, pero no mediante su API sino a través de la biblioteca
+  nativa ROOM, la cual incorpora verificación de consultas en tiempo de compilación y uso de anotaciones
+  (paradigma declarativo)
+
+  id's:
+  se utilizó un modelo de UUID para distinguir unívocamente cada entidad, pensando en que se trata de
+  datos distribuidos, y que deben ser distinguibles incluso fuera del ámbito donde fueron creados
+
+RepoType: git
+Repo: https://github.com/poximan/harenkaren/
+
+Builds:
+  - versionName: harenbeta
+    versionCode: 1.0
+    commit: v1.0
+    subdir: app
+    gradle:
+      - yes
+
+AutoUpdateMode: Version
+UpdateCheckMode: Tags
+CurrentVersion: harenbeta
+CurrentVersionCode: 1.0
