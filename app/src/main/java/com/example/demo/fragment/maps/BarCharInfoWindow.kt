@@ -14,7 +14,7 @@ import com.example.demo.model.UnidSocial
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.infowindow.InfoWindow
 
-class CustomMarkerInfoWindow(
+class BarCharInfoWindow(
     private val context: Context,
     private val unSoc: UnidSocial,
     layoutResId: Int,

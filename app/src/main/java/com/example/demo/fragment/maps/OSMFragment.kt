@@ -138,20 +138,26 @@ class OSMFragment : Fragment(), MapEventsReceiver {
         marker.position = punto
         marker.icon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_marker)
 
-
-        val infoWindow = CustomMarkerInfoWindow(
+        val infoWindow = BarCharInfoWindow(
             requireContext(), unSoc,
             R.layout.fragment_osm_bubble, mapView
+        )
+
+        val heatmapInfoWindow = HeatmapInfoWindow(
+            requireContext(), unSoc,
+            R.layout.fragment_osm_heat, mapView
         )
 
         marker.setOnMarkerClickListener { _, _ ->
             if (infoWindow.isOpen) {
                 infoWindow.close()
+                heatmapInfoWindow.open(marker, punto, 0, 0)
             } else {
                 marker.showInfoWindow()
             }
             true
         }
+
         marker.infoWindow = infoWindow
         mapView.overlays.add(marker)
     }
