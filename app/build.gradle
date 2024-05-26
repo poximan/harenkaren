@@ -65,9 +65,10 @@ dependencies {
     implementation("androidx.recyclerview:recyclerview:1.2.1")
     implementation("androidx.recyclerview:recyclerview-selection:1.1.0")
 
-    // mapas OSM
+    // mapas OSM (gson para mapa de calor)
     implementation 'org.osmdroid:osmdroid-android:6.1.10'
     implementation 'org.osmdroid:osmdroid-mapsforge:6.1.10'
+    implementation 'com.google.code.gson:gson:2.8.9'
 
     implementation("androidx.navigation:navigation-fragment:2.4.2")
     implementation("androidx.navigation:navigation-ui:2.4.2")

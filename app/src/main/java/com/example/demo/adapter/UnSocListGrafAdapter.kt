@@ -36,7 +36,7 @@ class UnSocListGrafAdapter(private val idRecorrido: UUID) {
                 <body>
                     <div id="chart" style="width: 100%; height: 100%;"></div>
                     <script>
-        """.trimIndent()
+                    """.trimIndent()
 
         // Parte dinámica del HTML (trazas)
         val (traces, data, yval) = generarCategorias(unidSocialList)

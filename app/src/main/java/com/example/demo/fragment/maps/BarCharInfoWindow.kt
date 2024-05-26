@@ -86,7 +86,7 @@ class BarCharInfoWindow(
         // Crear y configurar el cuadrado azul
         val squareView = View(context)
         squareView.setBackgroundColor(siguienteColor(atribString))
-        val squareLayoutParams = LinearLayout.LayoutParams(20, valor * 4)
+        val squareLayoutParams = LinearLayout.LayoutParams(20, valor * 2)
         squareLayoutParams.gravity = Gravity.CENTER_VERTICAL // Centrar verticalmente
         squareView.layoutParams = squareLayoutParams
 

@@ -27,13 +27,12 @@ import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.MapEventsOverlay
 import org.osmdroid.views.overlay.Marker
-import org.osmdroid.views.overlay.Overlay
 import org.osmdroid.views.overlay.Polyline
 
 class OSMFragment : Fragment(), MapEventsReceiver {
 
     private lateinit var unSocDAO: UnSocDAO
-    private lateinit var unidSociales: List<UnidSocial>
+    private lateinit var unSocList: List<UnidSocial>
 
     private lateinit var mapController: IMapController
     private lateinit var chkMapaCalor: CheckBox
@@ -89,15 +88,15 @@ class OSMFragment : Fragment(), MapEventsReceiver {
 
         // ---------> HILO BACKGOUND
         CoroutineScope(Dispatchers.IO).launch {
-            unidSociales =
+            unSocList =
                 unSocDAO.getAll().sortedWith(compareBy({ it.recorrId }, { it.orden }))
 
             // ---------> HILO PRINCIPAL
             withContext(Dispatchers.Main) {
                 var routePoints = emptyList<GeoPoint>()
-                var recorr = unidSociales.first().recorrId
+                var recorr = unSocList.first().recorrId
 
-                for (unSoc in unidSociales) {
+                for (unSoc in unSocList) {
                     if (recorr != unSoc.recorrId) {
                         agregarPolilinea(routePoints)
                         routePoints = emptyList()
@@ -136,7 +135,7 @@ class OSMFragment : Fragment(), MapEventsReceiver {
 
     private fun agregarMarcador(unSoc: UnidSocial) {
 
-        val punto = GeoPoint(unSoc.latitud, unSoc.longitud)
+        val punto = geo(unSoc)
         val marker = Marker(mapView)
         marker.position = punto
         marker.icon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_marker)
@@ -163,8 +162,9 @@ class OSMFragment : Fragment(), MapEventsReceiver {
         if (isChecked) {
             webView.visibility = View.VISIBLE
             mapView.visibility = View.GONE
-            val mapaCalor = MapaCalor(webView)
-            mapaCalor.mostrarMapaCalor()
+
+            val mapaCalor = MapaCalor(webView, mapView.mapCenter as GeoPoint)
+            mapaCalor.mostrarMapaCalor(unSocList)
         } else {
             webView.visibility = View.GONE
             mapView.visibility = View.VISIBLE
