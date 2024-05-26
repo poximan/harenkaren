@@ -65,6 +65,7 @@ dependencies {
     implementation("androidx.recyclerview:recyclerview:1.2.1")
     implementation("androidx.recyclerview:recyclerview-selection:1.1.0")
 
+    // mapas OSM
     implementation 'org.osmdroid:osmdroid-android:6.1.10'
     implementation 'org.osmdroid:osmdroid-mapsforge:6.1.10'
 

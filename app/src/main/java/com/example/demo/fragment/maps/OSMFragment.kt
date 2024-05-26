@@ -5,11 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebView
+import android.widget.CheckBox
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.demo.R
+import com.example.demo.dao.UnSocDAO
 import com.example.demo.database.HarenKarenRoomDatabase
 import com.example.demo.model.UnidSocial
 import kotlinx.coroutines.CoroutineScope
@@ -24,13 +27,18 @@ import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.MapEventsOverlay
 import org.osmdroid.views.overlay.Marker
+import org.osmdroid.views.overlay.Overlay
 import org.osmdroid.views.overlay.Polyline
 
 class OSMFragment : Fragment(), MapEventsReceiver {
 
-    private lateinit var mapView: MapView
+    private lateinit var unSocDAO: UnSocDAO
+    private lateinit var unidSociales: List<UnidSocial>
+
     private lateinit var mapController: IMapController
-    private var clickedGeoPoint: GeoPoint? = null
+    private lateinit var chkMapaCalor: CheckBox
+    private lateinit var mapView: MapView
+    private lateinit var webView: WebView
 
     // Método llamado cuando se crea la vista del fragmento
     override fun onCreateView(
@@ -57,24 +65,31 @@ class OSMFragment : Fragment(), MapEventsReceiver {
         // Establecer el agente de usuario para OSMDroid
         Configuration.getInstance().userAgentValue = "AGENTE_OSM_HARENKAREN"
 
+        webView = view.findViewById(R.id.webViewHeat)
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        chkMapaCalor = view.findViewById(R.id.chk_mapacalor)
+        chkMapaCalor.setOnCheckedChangeListener { _, isChecked ->
+            actualizarMapaCalor(isChecked)
+        }
+
+        val viewModelScope = viewLifecycleOwner.lifecycleScope
+        unSocDAO = HarenKarenRoomDatabase
+            .getDatabase(requireActivity().application, viewModelScope)
+            .unSocDao()
+
         getPosiciones()
     }
 
     private fun getPosiciones() {
 
-        val viewModelScope = viewLifecycleOwner.lifecycleScope
-        val unSocDAO = HarenKarenRoomDatabase
-            .getDatabase(requireActivity().application, viewModelScope)
-            .unSocDao()
-
         // ---------> HILO BACKGOUND
         CoroutineScope(Dispatchers.IO).launch {
-            val unidSociales =
+            unidSociales =
                 unSocDAO.getAll().sortedWith(compareBy({ it.recorrId }, { it.orden }))
 
             // ---------> HILO PRINCIPAL
@@ -90,19 +105,7 @@ class OSMFragment : Fragment(), MapEventsReceiver {
                     }
                     // acumular el recorrido en transito. sera insertado al mapa cuando aparezca uno nuevo
                     routePoints = routePoints.plus(geo(unSoc))
-
-                    // ---------> HILO BACKGOUND
-                    withContext(Dispatchers.IO) {
-
-                        val total = unSocDAO.getMaxRegistro(unSoc.recorrId)
-                        // ---------> HILO PRINCIPAL
-                        withContext(Dispatchers.Main) {
-                            agregarMarcador(
-                                unSoc,
-                                total
-                            )  // los puntos se insertan en cada pasada "mapView.overlays.add"
-                        }
-                    }
+                    agregarMarcador(unSoc)  // los puntos se insertan en cada pasada "mapView.overlays.add"
                 }
                 agregarPolilinea(routePoints)
                 val startPoint = routePoints.first()
@@ -131,7 +134,7 @@ class OSMFragment : Fragment(), MapEventsReceiver {
         mapView.overlays.add(polyline)
     }
 
-    private fun agregarMarcador(unSoc: UnidSocial, total: Int) {
+    private fun agregarMarcador(unSoc: UnidSocial) {
 
         val punto = GeoPoint(unSoc.latitud, unSoc.longitud)
         val marker = Marker(mapView)
@@ -143,15 +146,9 @@ class OSMFragment : Fragment(), MapEventsReceiver {
             R.layout.fragment_osm_bubble, mapView
         )
 
-        val heatmapInfoWindow = HeatmapInfoWindow(
-            requireContext(), unSoc,
-            R.layout.fragment_osm_heat, mapView
-        )
-
         marker.setOnMarkerClickListener { _, _ ->
             if (infoWindow.isOpen) {
                 infoWindow.close()
-                heatmapInfoWindow.open(marker, punto, 0, 0)
             } else {
                 marker.showInfoWindow()
             }
@@ -162,14 +159,24 @@ class OSMFragment : Fragment(), MapEventsReceiver {
         mapView.overlays.add(marker)
     }
 
+    private fun actualizarMapaCalor(isChecked: Boolean) {
+        if (isChecked) {
+            webView.visibility = View.VISIBLE
+            mapView.visibility = View.GONE
+            val mapaCalor = MapaCalor(webView)
+            mapaCalor.mostrarMapaCalor()
+        } else {
+            webView.visibility = View.GONE
+            mapView.visibility = View.VISIBLE
+        }
+    }
+
     private fun geo(unSoc: UnidSocial): GeoPoint {
         return GeoPoint(unSoc.latitud, unSoc.longitud)
     }
 
     // un toque en el mapa
     override fun singleTapConfirmedHelper(p: GeoPoint?): Boolean {
-        // Guardar las coordenadas en clickedGeoPoint
-        clickedGeoPoint = p
 
         p?.let { geoPoint ->
             val latitude = String.format("%.6f", geoPoint.latitude)
