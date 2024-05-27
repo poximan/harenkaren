@@ -23,9 +23,10 @@ class MapaCalor(private val webView: WebView, private val geoPoint: GeoPoint) {
         val gson = Gson()
         val jsonUnSocList = gson.toJson(unSocList.map {
             mapOf(
-                "lat" to it.latitud,
+                "lat" to "-"+it.latitud.toString().substring(1),
                 "lon" to it.longitud,
-                "mag" to it.vHembrasAd + it.vCrias
+                "mag" to it.vHembrasAd + it.vCrias,
+                "suma" to "vHembrasAd+vCrias"
             )
         })
 
@@ -47,6 +48,7 @@ class MapaCalor(private val webView: WebView, private val geoPoint: GeoPoint) {
                     """.trimIndent()
 
         val dynamicHtml = """
+            
                     <script>
                         function unpack(rows, key) {
                             return rows.map(function (row) {
@@ -59,10 +61,12 @@ class MapaCalor(private val webView: WebView, private val geoPoint: GeoPoint) {
                             lat: unpack(rows, "lat"),
                             lon: unpack(rows, "lon"),
                             z: unpack(rows, "mag"),
+                            text: unpack(rows, "suma"),
+                            hoverinfo: "lat+lon+z+text",
+                            hovertemplate: "lat: %{lat:.6f}<br>lon: %{lon:.6f}<br>suma: %{z}<br>%{text}<extra></extra>",
                             radius: 20,
                             type: "densitymapbox",
-                            coloraxis: "coloraxis",
-                            hoverinfo: "all"
+                            coloraxis: "coloraxis"
                         }];
                         """.trimIndent()
 

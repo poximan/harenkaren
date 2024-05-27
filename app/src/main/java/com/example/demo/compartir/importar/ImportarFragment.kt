@@ -37,6 +37,7 @@ class ImportarFragment : Fragment(), RegistroDistribuible {
 
         binding.radioBt.setOnClickListener { clickBT() }
         binding.radioWifi.setOnClickListener { clickWF() }
+        binding.importarBtn.setOnClickListener { agregarCSV() }
 
         comBT = ImportarBT(requireContext(), this)
         comWF = ImportarWF(requireContext(), this)
@@ -72,6 +73,10 @@ class ImportarFragment : Fragment(), RegistroDistribuible {
 
         binding.idMasterBt.text = "En DESTINATARIOS buscame como ${comWF.miNombre()}:$port"
         binding.recepcionBt.text = "esperando datos desde remota"
+    }
+
+    private fun agregarCSV() {
+        TODO("Not yet implemented")
     }
 
     private fun desparcelarLista(parcelables: ArrayList<Parcelable>): List<EntidadesPlanas> {
