@@ -1,6 +1,7 @@
 package com.example.demo.compartir.importar
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
 import android.util.Log
@@ -28,6 +29,8 @@ class ImportarFragment : Fragment(), RegistroDistribuible {
 
     private lateinit var comBT: ImportarBT
     private lateinit var comWF: ImportarWF
+
+    private lateinit var leerCSV: LeerCSV
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -76,7 +79,13 @@ class ImportarFragment : Fragment(), RegistroDistribuible {
     }
 
     private fun agregarCSV() {
-        TODO("Not yet implemented")
+        leerCSV = LeerCSV(requireActivity())
+        leerCSV.pickCSVFile()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        leerCSV.onActivityResult(requestCode, resultCode, data)
     }
 
     private fun desparcelarLista(parcelables: ArrayList<Parcelable>): List<EntidadesPlanas> {
