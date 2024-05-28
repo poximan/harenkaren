@@ -10,15 +10,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.example.demo.DevFragment
+import com.example.demo.activity.MainActivity
 import com.example.demo.database.HarenKarenRoomDatabase
 import com.example.demo.databinding.FragmentImportarBinding
 import com.example.demo.model.EntidadesPlanas
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.nio.charset.StandardCharsets
 import java.util.UUID
 
-class ImportarFragment : Fragment(), RegistroDistribuible {
+class ImportarFragment : Fragment(), RegistroDistribuible, ListaImportable {
 
     companion object {
         const val TAG = "compartir"
@@ -46,6 +49,13 @@ class ImportarFragment : Fragment(), RegistroDistribuible {
         comWF = ImportarWF(requireContext(), this)
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        leerCSV = LeerCSV(requireContext(), this)
+        leerCSV.registerLauncher()
     }
 
     override fun onDestroy() {
@@ -79,13 +89,7 @@ class ImportarFragment : Fragment(), RegistroDistribuible {
     }
 
     private fun agregarCSV() {
-        leerCSV = LeerCSV(requireActivity())
         leerCSV.pickCSVFile()
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        leerCSV.onActivityResult(requestCode, resultCode, data)
     }
 
     private fun desparcelarLista(parcelables: ArrayList<Parcelable>): List<EntidadesPlanas> {
@@ -98,18 +102,37 @@ class ImportarFragment : Fragment(), RegistroDistribuible {
         return listaEntidades
     }
 
-    override fun onMessageReceived(lista: ArrayList<Parcelable>) {
+    private fun desmapearLista(mapas: ArrayList<Map<String, String>>): List<EntidadesPlanas> {
+        val listaEntidades = mutableListOf<EntidadesPlanas>()
+        for (map in mapas) {
 
-        val listaEntidadesPlanas = desparcelarLista(lista)
-        Log.i(TAG, "transformados a ${listaEntidadesPlanas.size} objetos desnomarlizados")
+            val base = DevFragment.UUID_NULO
+            val nombre = MainActivity.obtenerAndroidID()
 
-        val mapContador = sumarEntidades(listaEntidadesPlanas)
-        Log.i(
-            TAG,
-            "distribuidos en ${mapContador["dias"]} dias, ${mapContador["recorr"]} recorridos y ${mapContador["unidsoc"]} unidades sociales"
-        )
-        insertarEntidades(listaEntidadesPlanas, mapContador)
-        binding.recepcionBt.text = "Legaron desde dispositivo remoto $mapContador"
+            val diaId = UUID.nameUUIDFromBytes("$base:$nombre".toByteArray(StandardCharsets.UTF_8))
+            val recorrId = UUID.nameUUIDFromBytes("$base:$nombre".toByteArray(StandardCharsets.UTF_8))
+            val unidSocId = UUID.nameUUIDFromBytes("$base:$nombre".toByteArray(StandardCharsets.UTF_8))
+
+            val lat0: Double = if (!map["lat0"].isNullOrEmpty()) {
+                map["lat0"]!!.toDouble()
+            } else { 0.0 }
+
+            val lon0: Double = if (!map["lon0"].isNullOrEmpty()) {
+                map["lon0"]!!.toDouble()
+            } else { 0.0 }
+
+            val entidadPlanta = EntidadesPlanas(
+                "cel_no_aplica", diaId, map["orden"]!!.toInt(), map["fecha"]!!,
+                recorrId, diaId, map["orden"]!!.toInt(), "observador_desc", map["fecha"]!!, map["fecha"]!!,
+                lat0, lon0, lat0, lon0, map["playa"]!!, "meteo_desc", "marea_desc",
+                unidSocId, recorrId, map["orden"]!!.toInt(), "pto_obs_desc", map["referencia"]!!, "tpo_sust_desc",
+                map["machosContados"]!!.toInt(), 0, map["hembrasContadas"]!!.toInt(), 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                map["fecha"]!!, lat0, lon0, "foto_desc", map["tipo"]!!
+            )
+            listaEntidades.add(entidadPlanta)
+        }
+        return listaEntidades
     }
 
     private fun insertarEntidades(
@@ -184,5 +207,31 @@ class ImportarFragment : Fragment(), RegistroDistribuible {
         resultado["unidsoc"] = sumaUnidadesSociales.size
 
         return resultado
+    }
+
+    // callback del arribo de objetos parcelados, obtenidos desde otra app
+    override fun onMessageReceived(message: ArrayList<Parcelable>) {
+
+        val listaEntidadesPlanas = desparcelarLista(message)
+        Log.i(TAG, "transformados a ${listaEntidadesPlanas.size} objetos desnomarlizados")
+
+        val mapContador = sumarEntidades(listaEntidadesPlanas)
+        Log.i(
+            TAG,
+            "distribuidos en ${mapContador["dias"]} dias, ${mapContador["recorr"]} recorridos y ${mapContador["unidsoc"]} unidades sociales"
+        )
+        insertarEntidades(listaEntidadesPlanas, mapContador)
+        binding.recepcionBt.text = "Legaron desde dispositivo remoto $mapContador"
+    }
+
+    // callback del importador de csv's
+    override fun onPelosReceived(message: ArrayList<Map<String, String>>) {
+        val listaEntidadesPlanas = desmapearLista(message)
+        val mapContador = sumarEntidades(listaEntidadesPlanas)
+        Log.i(
+            TAG,
+            "distribuidos en ${mapContador["dias"]} dias, ${mapContador["recorr"]} recorridos y ${mapContador["unidsoc"]} unidades sociales"
+        )
+        insertarEntidades(listaEntidadesPlanas, mapContador)
     }
 }

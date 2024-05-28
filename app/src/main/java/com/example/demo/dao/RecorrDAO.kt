@@ -31,7 +31,7 @@ interface RecorrDAO {
    otro dispositivo, se usa insertConUUID(elem) para asignar UUID unico.
    */
     fun insertConUUID(elem: Recorrido): UUID {
-
+        // TODO ver si es $elem.id o ${elem.id}
         if (elem.id == DevFragment.UUID_NULO) {
             val nombre = MainActivity.obtenerAndroidID()
             val uuid =
