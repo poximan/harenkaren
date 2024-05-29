@@ -65,12 +65,6 @@
             android:exported="false"
             android:taskAffinity="" />
 
-        <activity
-            android:name=".activity.ShowMessageActivity"
-            android:exported="false"
-            android:label="@string/title_activity_show_message"
-            android:theme="@style/Theme.Demo" />
-
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

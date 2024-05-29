@@ -2,8 +2,67 @@ package com.example.demo.servicios
 
 import android.content.Context
 import com.example.demo.R
+import java.util.ArrayList
+import java.util.UUID
 
 class ETL(private val context: Context) {
+
+    private val idMapDia = mutableMapOf<String, UUID>()
+    private val idMapRecorr = mutableMapOf<String, ArrayList<String>>()
+    private val idMapUnSoc = mutableMapOf<String, ArrayList<String>>()
+
+    fun extraerDiaId(fila: Map<String, String>): UUID {
+
+        val idAnterior = fila["fecha"]!!
+        var idNuevo = idMapDia[idAnterior]
+
+        if (idNuevo == null) {
+            idNuevo = GestorUUID.obtenerUUID(fila.toString())
+            idMapDia[idAnterior] = idNuevo
+        }
+        return idNuevo
+    }
+
+    fun extraerRecorrId(fila: Map<String, String>): UUID {
+
+        val idDia = fila["fecha"]!!
+
+        var recorrList = idMapRecorr[idDia]
+        if (recorrList == null)
+            recorrList = ArrayList()
+
+        val recorrActual = fila["playa"]!!
+        var recorr = recorrList.find { it.contains(recorrActual, ignoreCase = true) }
+
+        if(recorr == null) {
+            recorr = "$recorrActual@${GestorUUID.obtenerUUID("")}"
+            recorrList.add(recorr)
+            idMapRecorr[idDia] = recorrList
+        }
+
+        val uuid = recorr.split("@")
+        return UUID.fromString(uuid[1])
+    }
+
+    fun extraerUnSocId(fila: Map<String, String>): UUID {
+        val idRecorr = fila["playa"]!!
+
+        var unSocList = idMapUnSoc[idRecorr]
+        if (unSocList == null)
+            unSocList = ArrayList()
+
+        val unSocActual = fila["playa"]!!
+        var recorr = unSocList.find { it.contains(unSocActual, ignoreCase = true) }
+
+        if(recorr == null) {
+            recorr = "$recorrActual@${GestorUUID.obtenerUUID("")}"
+            recorrList.add(recorr)
+            idMapRecorr[idRecorr] = recorrList
+        }
+
+        val uuid = recorr.split("@")
+        return UUID.fromString(uuid[1])
+    }
 
     fun transformarFecha(fecha: String): String {
         val fechaOficial = FechaOficial(context)
@@ -12,7 +71,7 @@ class ETL(private val context: Context) {
 
     fun transformarLatLon(latlon: String?): Double {
        return if (!latlon.isNullOrEmpty())
-           latlon!!.toDouble()
+           latlon.toDouble()
        else
            0.0
     }

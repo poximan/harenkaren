@@ -9,13 +9,14 @@ import com.example.demo.dao.UsuarioDAO
 import com.example.demo.model.Dia
 import com.example.demo.model.Recorrido
 import com.example.demo.model.UnidSocial
+import com.example.demo.servicios.GestorUUID
 import java.util.UUID
 
 class DevDatos {
 
     fun generarDias(diaDAO: DiaDAO): Array<UUID?> {
 
-        val idCelular = MainActivity.obtenerAndroidID()
+        val idCelular = GestorUUID.obtenerAndroidID()
         val diaList = listOf<Dia>(
             Dia(
                 celularId = idCelular,

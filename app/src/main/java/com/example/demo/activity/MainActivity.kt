@@ -2,7 +2,6 @@ package com.example.demo.activity
 
 import android.content.ContentResolver
 import android.os.Bundle
-import android.provider.Settings
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -11,8 +10,6 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.example.demo.R
 import com.example.demo.databinding.ActivityMainBinding
-import java.nio.charset.StandardCharsets
-import java.util.UUID
 
 private lateinit var binding: ActivityMainBinding
 private lateinit var appBarConfiguration: AppBarConfiguration
@@ -21,17 +18,7 @@ private lateinit var drawerLayout: DrawerLayout
 class MainActivity : AppCompatActivity() {
 
     companion object {
-        private lateinit var resolver: ContentResolver
-
-        fun obtenerAndroidID(): String {
-            val androidID = Settings.Secure.getString(resolver, Settings.Secure.ANDROID_ID)
-            return androidID + "@" + android.os.Build.MANUFACTURER + "-" + android.os.Build.MODEL
-        }
-
-        fun obtenerUUID(cadena: String): UUID {
-            val tt = System.currentTimeMillis()
-            return UUID.nameUUIDFromBytes("$cadena:$tt".toByteArray(StandardCharsets.UTF_8))
-        }
+        lateinit var resolver: ContentResolver
     }
 
     private val mapaParesOrigenDestino: MutableMap<Int, Int> = mutableMapOf()

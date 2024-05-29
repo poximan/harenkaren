@@ -13,6 +13,7 @@ import com.example.demo.R
 import com.example.demo.activity.MainActivity
 import com.example.demo.databinding.FragmentDiaAddBinding
 import com.example.demo.model.Dia
+import com.example.demo.servicios.GestorUUID
 import com.example.demo.viewModel.DiaViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -60,7 +61,7 @@ class DiaAddFragment : Fragment() {
 
     private fun dataDesdeIU(): Dia {
 
-        val celularId = MainActivity.obtenerAndroidID()
+        val celularId = GestorUUID.obtenerAndroidID()
         val formato = requireContext().resources.getString(R.string.formato_dia)
         val timeStamp = SimpleDateFormat(formato).format(Date())
 

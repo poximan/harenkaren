@@ -14,6 +14,7 @@ import com.example.demo.database.HarenKarenRoomDatabase
 import com.example.demo.databinding.FragmentImportarBinding
 import com.example.demo.model.EntidadesPlanas
 import com.example.demo.servicios.ETL
+import com.example.demo.servicios.GestorUUID
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -101,15 +102,16 @@ class ImportarFragment : Fragment(), RegistroDistribuible, ListaImportable {
     }
 
     private fun desmapearLista(mapas: ArrayList<Map<String, String>>): List<EntidadesPlanas> {
+
         val listaEntidades = mutableListOf<EntidadesPlanas>()
+        val etl = ETL(requireContext())
+
         for (map in mapas) {
 
-            // puede ser una cadena vacia. no es obligatorio un string descriptivo
-            val diaId = MainActivity.obtenerUUID("")
-            val recorrId = MainActivity.obtenerUUID("")
-            val unidSocId = MainActivity.obtenerUUID("")
-
-            val etl = ETL(requireContext())
+            val diaId = etl.extraerDiaId(map)
+            println(map["fecha"]+" - "+diaId)
+            val recorrId = etl.extraerRecorrId(map)
+            val unidSocId =etl.extraerUnSocId(map)
 
             val fechaTransformada = etl.transformarFecha(map["fecha"]!!)
             val lat0 = etl.transformarLatLon(map["lat0"])

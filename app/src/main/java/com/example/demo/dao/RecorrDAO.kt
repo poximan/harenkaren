@@ -11,6 +11,7 @@ import com.example.demo.DevFragment
 import com.example.demo.activity.MainActivity
 import com.example.demo.model.EntidadesPlanas
 import com.example.demo.model.Recorrido
+import com.example.demo.servicios.GestorUUID
 import java.nio.charset.StandardCharsets
 import java.util.UUID
 
@@ -32,7 +33,7 @@ interface RecorrDAO {
    */
     fun insertConUUID(elem: Recorrido): UUID {
         if (elem.id == DevFragment.UUID_NULO)
-            elem.id =  MainActivity.obtenerUUID(elem.toString())
+            elem.id =  GestorUUID.obtenerUUID(elem.toString())
 
         insertConUltInst(elem)
         return elem.id

@@ -7,6 +7,7 @@ import android.util.Log
 import com.example.demo.activity.MainActivity
 import com.example.demo.compartir.exportar.ExportarWF
 import com.example.demo.compartir.exportar.ServiceListDialog
+import com.example.demo.servicios.GestorUUID
 import java.net.ServerSocket
 
 class NsdHelper(private val context: Context) {
@@ -216,7 +217,7 @@ class NsdHelper(private val context: Context) {
     }
 
     private fun androidID(): String {
-        return MainActivity.obtenerAndroidID().substringAfter("@")
+        return GestorUUID.obtenerAndroidID().substringAfter("@")
     }
 
     private fun presentarAmigable(serviceInfo: NsdServiceInfo): String {
