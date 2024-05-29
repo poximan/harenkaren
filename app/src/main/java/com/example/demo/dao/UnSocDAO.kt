@@ -31,13 +31,9 @@ interface UnSocDAO {
    otro dispositivo, se usa insertConUUID(elem) para asignar UUID unico.
    */
     fun insertConUUID(elem: UnidSocial): UUID {
-        // TODO ver si es $elem.id o ${elem.id}
-        if (elem.id == DevFragment.UUID_NULO) {
-            val nombre = MainActivity.obtenerAndroidID()
-            val uuid =
-                UUID.nameUUIDFromBytes("$elem.id:$nombre".toByteArray(StandardCharsets.UTF_8))
-            elem.id = uuid
-        }
+        if (elem.id == DevFragment.UUID_NULO)
+            elem.id =  MainActivity.obtenerUUID(elem.toString())
+
         insertConUltInst(elem)
         return elem.id
     }

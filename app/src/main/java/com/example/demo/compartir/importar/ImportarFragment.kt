@@ -1,7 +1,6 @@
 package com.example.demo.compartir.importar
 
 import android.app.AlertDialog
-import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
 import android.util.Log
@@ -10,15 +9,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.example.demo.DevFragment
 import com.example.demo.activity.MainActivity
 import com.example.demo.database.HarenKarenRoomDatabase
 import com.example.demo.databinding.FragmentImportarBinding
 import com.example.demo.model.EntidadesPlanas
+import com.example.demo.servicios.ETL
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.nio.charset.StandardCharsets
 import java.util.UUID
 
 class ImportarFragment : Fragment(), RegistroDistribuible, ListaImportable {
@@ -106,29 +104,28 @@ class ImportarFragment : Fragment(), RegistroDistribuible, ListaImportable {
         val listaEntidades = mutableListOf<EntidadesPlanas>()
         for (map in mapas) {
 
-            val base = DevFragment.UUID_NULO
-            val nombre = MainActivity.obtenerAndroidID()
+            // puede ser una cadena vacia. no es obligatorio un string descriptivo
+            val diaId = MainActivity.obtenerUUID("")
+            val recorrId = MainActivity.obtenerUUID("")
+            val unidSocId = MainActivity.obtenerUUID("")
 
-            val diaId = UUID.nameUUIDFromBytes("$base:$nombre".toByteArray(StandardCharsets.UTF_8))
-            val recorrId = UUID.nameUUIDFromBytes("$base:$nombre".toByteArray(StandardCharsets.UTF_8))
-            val unidSocId = UUID.nameUUIDFromBytes("$base:$nombre".toByteArray(StandardCharsets.UTF_8))
+            val etl = ETL(requireContext())
 
-            val lat0: Double = if (!map["lat0"].isNullOrEmpty()) {
-                map["lat0"]!!.toDouble()
-            } else { 0.0 }
-
-            val lon0: Double = if (!map["lon0"].isNullOrEmpty()) {
-                map["lon0"]!!.toDouble()
-            } else { 0.0 }
+            val fechaTransformada = etl.transformarFecha(map["fecha"]!!)
+            val lat0 = etl.transformarLatLon(map["lat0"])
+            val lon0 = etl.transformarLatLon(map["lon0"])
+            val ptoObs = etl.transformarPtoObservacion("")
+            val ctxSocial = etl.transformarCtxSocial(map["referencia"]!!)
+            val sustrato = etl.transformarSustrato("")
 
             val entidadPlanta = EntidadesPlanas(
-                "cel_no_aplica", diaId, map["orden"]!!.toInt(), map["fecha"]!!,
-                recorrId, diaId, map["orden"]!!.toInt(), "observador_desc", map["fecha"]!!, map["fecha"]!!,
+                "cel_no_aplica", diaId, map["orden"]!!.toInt(), fechaTransformada,
+                recorrId, diaId, map["orden"]!!.toInt(), "observador_desc", fechaTransformada, fechaTransformada,
                 lat0, lon0, lat0, lon0, map["playa"]!!, "meteo_desc", "marea_desc",
-                unidSocId, recorrId, map["orden"]!!.toInt(), "pto_obs_desc", map["referencia"]!!, "tpo_sust_desc",
+                unidSocId, recorrId, map["orden"]!!.toInt(), ptoObs, ctxSocial, sustrato,
                 map["machosContados"]!!.toInt(), 0, map["hembrasContadas"]!!.toInt(), 0, 0, 0, 0, 0, 0, 0, 0, 0,
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                map["fecha"]!!, lat0, lon0, "foto_desc", map["tipo"]!!
+                fechaTransformada, lat0, lon0, "foto_desc", map["tipo"]!!
             )
             listaEntidades.add(entidadPlanta)
         }

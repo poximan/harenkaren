@@ -11,6 +11,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.example.demo.R
 import com.example.demo.databinding.ActivityMainBinding
+import java.nio.charset.StandardCharsets
+import java.util.UUID
 
 private lateinit var binding: ActivityMainBinding
 private lateinit var appBarConfiguration: AppBarConfiguration
@@ -24,6 +26,11 @@ class MainActivity : AppCompatActivity() {
         fun obtenerAndroidID(): String {
             val androidID = Settings.Secure.getString(resolver, Settings.Secure.ANDROID_ID)
             return androidID + "@" + android.os.Build.MANUFACTURER + "-" + android.os.Build.MODEL
+        }
+
+        fun obtenerUUID(cadena: String): UUID {
+            val tt = System.currentTimeMillis()
+            return UUID.nameUUIDFromBytes("$cadena:$tt".toByteArray(StandardCharsets.UTF_8))
         }
     }
 

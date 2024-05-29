@@ -15,16 +15,16 @@ class DevDatos {
 
     fun generarDias(diaDAO: DiaDAO): Array<UUID?> {
 
-        val idUnivoco = MainActivity.obtenerAndroidID()
+        val idCelular = MainActivity.obtenerAndroidID()
         val diaList = listOf<Dia>(
             Dia(
-                celularId = idUnivoco,
+                celularId = idCelular,
                 id = DevFragment.UUID_NULO,
                 orden = 0,
                 fecha = "2023/10/19"
             ),
             Dia(
-                celularId = idUnivoco,
+                celularId = idCelular,
                 id = DevFragment.UUID_NULO,
                 orden = 0,
                 fecha = "2023/10/20"
