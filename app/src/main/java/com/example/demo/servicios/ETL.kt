@@ -45,23 +45,7 @@ class ETL(private val context: Context) {
     }
 
     fun extraerUnSocId(fila: Map<String, String>): UUID {
-        val idRecorr = fila["playa"]!!
-
-        var unSocList = idMapUnSoc[idRecorr]
-        if (unSocList == null)
-            unSocList = ArrayList()
-
-        val unSocActual = fila["playa"]!!
-        var recorr = unSocList.find { it.contains(unSocActual, ignoreCase = true) }
-
-        if(recorr == null) {
-            recorr = "$recorrActual@${GestorUUID.obtenerUUID("")}"
-            recorrList.add(recorr)
-            idMapRecorr[idRecorr] = recorrList
-        }
-
-        val uuid = recorr.split("@")
-        return UUID.fromString(uuid[1])
+        return GestorUUID.obtenerUUID("")
     }
 
     fun transformarFecha(fecha: String): String {

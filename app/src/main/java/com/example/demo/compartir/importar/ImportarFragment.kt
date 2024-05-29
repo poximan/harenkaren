@@ -109,7 +109,6 @@ class ImportarFragment : Fragment(), RegistroDistribuible, ListaImportable {
         for (map in mapas) {
 
             val diaId = etl.extraerDiaId(map)
-            println(map["fecha"]+" - "+diaId)
             val recorrId = etl.extraerRecorrId(map)
             val unidSocId =etl.extraerUnSocId(map)
 
