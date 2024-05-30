@@ -6,7 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.CheckBox
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -35,9 +38,12 @@ class OSMFragment : Fragment(), MapEventsReceiver {
     private lateinit var unSocList: List<UnidSocial>
 
     private lateinit var mapController: IMapController
-    private lateinit var chkMapaCalor: CheckBox
     private lateinit var mapView: MapView
     private lateinit var webView: WebView
+
+    private lateinit var chkMapaCalor: CheckBox
+    private lateinit var filtroAnio: Spinner
+    private val listaAnios = (2002..2022).toList()
 
     // Método llamado cuando se crea la vista del fragmento
     override fun onCreateView(
@@ -63,8 +69,14 @@ class OSMFragment : Fragment(), MapEventsReceiver {
 
         // Establecer el agente de usuario para OSMDroid
         Configuration.getInstance().userAgentValue = "AGENTE_OSM_HARENKAREN"
-
+        filtroAnio = view.findViewById(R.id.filtroAnio)
         webView = view.findViewById(R.id.webViewHeat)
+
+        // Configurar el Spinner
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, listaAnios)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        filtroAnio.adapter = adapter
+
         return view
     }
 
@@ -81,35 +93,58 @@ class OSMFragment : Fragment(), MapEventsReceiver {
             .getDatabase(requireActivity().application, viewModelScope)
             .unSocDao()
 
-        getPosiciones()
+        configurarFiltroAnio(view)
     }
 
-    private fun getPosiciones() {
+    private fun configurarFiltroAnio(view: View) {
+
+        filtroAnio.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                val anioSeleccionado = listaAnios[position]
+                getPosiciones(anioSeleccionado)
+            }
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
+
+        val defaultPosition = listaAnios.size - 1
+        filtroAnio.setSelection(defaultPosition)
+        filtroAnio.onItemSelectedListener?.onItemSelected(
+            filtroAnio,
+            view,
+            defaultPosition,
+            filtroAnio.getItemIdAtPosition(defaultPosition)
+        )
+    }
+
+    private fun getPosiciones(anio: Int) {
 
         // ---------> HILO BACKGOUND
         CoroutineScope(Dispatchers.IO).launch {
             unSocList =
-                unSocDAO.getAll().sortedWith(compareBy({ it.recorrId }, { it.orden }))
+                unSocDAO.getAllPorAnio(anio).sortedWith(compareBy({ it.recorrId }, { it.orden }))
 
             // ---------> HILO PRINCIPAL
             withContext(Dispatchers.Main) {
-                var routePoints = emptyList<GeoPoint>()
-                var recorr = unSocList.first().recorrId
+                if(unSocList.isNotEmpty()) {
 
-                for (unSoc in unSocList) {
-                    if (recorr != unSoc.recorrId) {
-                        agregarPolilinea(routePoints)
-                        routePoints = emptyList()
-                        recorr = unSoc.recorrId
+                    var routePoints = emptyList<GeoPoint>()
+                    var recorr = unSocList.first().recorrId
+
+                    for (unSoc in unSocList) {
+                        if (recorr != unSoc.recorrId) {
+                            agregarPolilinea(routePoints)
+                            routePoints = emptyList()
+                            recorr = unSoc.recorrId
+                        }
+                        // acumular el recorrido en transito. sera insertado al mapa cuando aparezca uno nuevo
+                        routePoints = routePoints.plus(geo(unSoc))
+                        agregarMarcador(unSoc)  // los puntos se insertan en cada pasada "mapView.overlays.add"
                     }
-                    // acumular el recorrido en transito. sera insertado al mapa cuando aparezca uno nuevo
-                    routePoints = routePoints.plus(geo(unSoc))
-                    agregarMarcador(unSoc)  // los puntos se insertan en cada pasada "mapView.overlays.add"
+                    agregarPolilinea(routePoints)
+                    val startPoint = routePoints.first()
+                    mapController.setCenter(startPoint)
+                    mapView.invalidate() // Actualizar el mapa
                 }
-                agregarPolilinea(routePoints)
-                val startPoint = routePoints.first()
-                mapController.setCenter(startPoint)
-                mapView.invalidate() // Actualizar el mapa
             }
         }
     }

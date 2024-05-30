@@ -171,7 +171,7 @@ class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
                 viewLifecycleOwner
             ) { elem ->
                 elem?.let {
-                    val sortedList = it.sortedBy { dia -> dia.orden }
+                    val sortedList = it.sortedBy { dia -> dia.fecha }
                     diaAdapter.setDia(sortedList)
                 }
             }

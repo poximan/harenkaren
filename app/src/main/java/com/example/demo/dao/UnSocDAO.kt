@@ -7,12 +7,10 @@ import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
 import com.example.demo.DevFragment
-import com.example.demo.activity.MainActivity
 import com.example.demo.exception.UUIDRepetidoException
 import com.example.demo.model.EntidadesPlanas
 import com.example.demo.model.UnidSocial
 import com.example.demo.servicios.GestorUUID
-import java.nio.charset.StandardCharsets
 import java.util.UUID
 
 @Dao
@@ -28,13 +26,16 @@ interface UnSocDAO {
     @Query("SELECT * FROM unidsocial WHERE unidsocial.id_recorrido = :idRecorrido")
     fun getUnSocByRecorrId(idRecorrido: UUID): List<UnidSocial>
 
+    @Query("SELECT * FROM unidsocial WHERE substr(date, 0, 5) = :anio")
+    fun getAllPorAnio(anio: Int): List<UnidSocial>
+
     /*
    cuando se da de alta una entidad que no existio nunca en este ni en ningun
    otro dispositivo, se usa insertConUUID(elem) para asignar UUID unico.
    */
     fun insertConUUID(elem: UnidSocial): UUID {
         if (elem.id == DevFragment.UUID_NULO)
-            elem.id =  GestorUUID.obtenerUUID(elem.toString())
+            elem.id =  GestorUUID.obtenerUUID()
 
         insertConUltInst(elem)
         return elem.id

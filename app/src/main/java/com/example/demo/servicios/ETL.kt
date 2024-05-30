@@ -7,12 +7,10 @@ import java.util.UUID
 
 class ETL(private val context: Context) {
 
-    private val LAT_CENPAT = -42.785147
-    private val LON_CENPAT = -65.008660
+    private val LAT_CENPAT = "-42.785147"
+    private val LON_CENPAT = "-65.008660"
     private val idMapDia = mutableMapOf<String, UUID>()
     private val idMapRecorr = mutableMapOf<String, ArrayList<String>>()
-
-    private var  pasadas = 0
 
     fun extraerDiaId(fila: Map<String, String>): UUID {
         // el discrinador de dia es facil de ver
@@ -20,7 +18,7 @@ class ETL(private val context: Context) {
         var idNuevo = idMapDia[idAnterior]
 
         if (idNuevo == null) {
-            idNuevo = GestorUUID.obtenerUUID(fila.toString())
+            idNuevo = GestorUUID.obtenerUUID()
             idMapDia[idAnterior] = idNuevo
         }
         return idNuevo
@@ -39,9 +37,8 @@ class ETL(private val context: Context) {
             it.split("@").firstOrNull()?.contains(recorrActual, ignoreCase = true) == true
         }
 
-        pasadas++
         if(recorr == null) {
-            recorr = "$recorrActual@${GestorUUID.obtenerUUID("")}"
+            recorr = "$recorrActual@${GestorUUID.obtenerUUID()}"
             recorrList.add(recorr)
             idMapRecorr[idDia] = recorrList
         }
@@ -51,7 +48,7 @@ class ETL(private val context: Context) {
     }
 
     fun extraerUnSocId(fila: Map<String, String>): UUID {
-        return GestorUUID.obtenerUUID("")
+        return GestorUUID.obtenerUUID()
     }
 
     fun transformarFecha(fecha: String): String {
@@ -59,18 +56,12 @@ class ETL(private val context: Context) {
         return fechaOficial.transformar(fecha)
     }
 
-    fun transformarLat(latlon: String?): Double {
-       return if (!latlon.isNullOrEmpty())
-           latlon.toDouble()
-       else
-           LAT_CENPAT
+    fun transformarLat(lat: String): Double {
+        return lat.toDouble()
     }
 
-    fun transformarLon(latlon: String?): Double {
-        return if (!latlon.isNullOrEmpty())
-            latlon.toDouble()
-        else
-            LON_CENPAT
+    fun transformarLon(lon: String): Double {
+        return lon.toDouble()
     }
 
     fun transformarPtoObservacion(referencia: String): String {
@@ -103,7 +94,29 @@ class ETL(private val context: Context) {
     }
 
     fun ordenar(mapas: List<Map<String, String>>): List<Map<String, String>> {
-        return sortCSV(mapas, "lat0", "lon0")
+
+        val mapasPiolis = rellenarNulos(mapas, "lat0", LAT_CENPAT)
+        val mapotas = rellenarNulos(mapasPiolis, "lon0", LAT_CENPAT)
+        return sortCSV(mapotas, "lat0", "lon0")
+    }
+
+    fun rellenarNulos(
+        mapas: List<Map<String, String>>,
+        clave: String,
+        valorDefecto: String
+    ): List<Map<String, String>> {
+        var ultimoValorNoNulo: String = valorDefecto
+
+        return mapas.map { mapa ->
+            val nuevoMapa = mapa.toMutableMap()
+            val valorActual = mapa[clave]
+            if (valorActual.isNullOrEmpty()) {
+                nuevoMapa[clave] = ultimoValorNoNulo
+            } else {
+                ultimoValorNoNulo = valorActual
+            }
+            nuevoMapa.toMap()
+        }
     }
 
     private fun sortCSV(csvData: List<Map<String, String>>, primaryKey: String, secondaryKey: String): List<Map<String, String>> {

@@ -8,11 +8,9 @@ import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
 import com.example.demo.DevFragment
-import com.example.demo.activity.MainActivity
 import com.example.demo.model.EntidadesPlanas
 import com.example.demo.model.Recorrido
 import com.example.demo.servicios.GestorUUID
-import java.nio.charset.StandardCharsets
 import java.util.UUID
 
 @Dao
@@ -33,7 +31,7 @@ interface RecorrDAO {
    */
     fun insertConUUID(elem: Recorrido): UUID {
         if (elem.id == DevFragment.UUID_NULO)
-            elem.id =  GestorUUID.obtenerUUID(elem.toString())
+            elem.id =  GestorUUID.obtenerUUID()
 
         insertConUltInst(elem)
         return elem.id
