@@ -8,6 +8,7 @@ import androidx.room.Transaction
 import androidx.room.Update
 import com.example.demo.DevFragment
 import com.example.demo.activity.MainActivity
+import com.example.demo.exception.UUIDRepetidoException
 import com.example.demo.model.EntidadesPlanas
 import com.example.demo.model.UnidSocial
 import com.example.demo.servicios.GestorUUID
@@ -79,7 +80,8 @@ interface UnSocDAO {
             if (existe == null) {
                 insertConUltInst(unSoc)
                 insertsEfectivos += 1
-            }
+            } else
+                throw UUIDRepetidoException()
         }
         return insertsEfectivos
     }

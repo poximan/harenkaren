@@ -7,12 +7,15 @@ import java.util.UUID
 
 class ETL(private val context: Context) {
 
+    private val LAT_CENPAT = -42.785147
+    private val LON_CENPAT = -65.008660
     private val idMapDia = mutableMapOf<String, UUID>()
     private val idMapRecorr = mutableMapOf<String, ArrayList<String>>()
-    private val idMapUnSoc = mutableMapOf<String, ArrayList<String>>()
+
+    private var  pasadas = 0
 
     fun extraerDiaId(fila: Map<String, String>): UUID {
-
+        // el discrinador de dia es facil de ver
         val idAnterior = fila["fecha"]!!
         var idNuevo = idMapDia[idAnterior]
 
@@ -31,9 +34,12 @@ class ETL(private val context: Context) {
         if (recorrList == null)
             recorrList = ArrayList()
 
-        val recorrActual = fila["playa"]!!
-        var recorr = recorrList.find { it.contains(recorrActual, ignoreCase = true) }
+        val recorrActual = fila["libreta"]!!    // ¿cual es el discrinador de recorrido?
+        var recorr = recorrList.find {
+            it.split("@").firstOrNull()?.contains(recorrActual, ignoreCase = true) == true
+        }
 
+        pasadas++
         if(recorr == null) {
             recorr = "$recorrActual@${GestorUUID.obtenerUUID("")}"
             recorrList.add(recorr)
@@ -53,11 +59,18 @@ class ETL(private val context: Context) {
         return fechaOficial.transformar(fecha)
     }
 
-    fun transformarLatLon(latlon: String?): Double {
+    fun transformarLat(latlon: String?): Double {
        return if (!latlon.isNullOrEmpty())
            latlon.toDouble()
        else
-           0.0
+           LAT_CENPAT
+    }
+
+    fun transformarLon(latlon: String?): Double {
+        return if (!latlon.isNullOrEmpty())
+            latlon.toDouble()
+        else
+            LON_CENPAT
     }
 
     fun transformarPtoObservacion(referencia: String): String {
@@ -87,5 +100,13 @@ class ETL(private val context: Context) {
 
     private fun getOpcionesSustrato(): Array<String> {
         return context.resources.getStringArray(R.array.op_tipo_sustrato)
+    }
+
+    fun ordenar(mapas: List<Map<String, String>>): List<Map<String, String>> {
+        return sortCSV(mapas, "lat0", "lon0")
+    }
+
+    private fun sortCSV(csvData: List<Map<String, String>>, primaryKey: String, secondaryKey: String): List<Map<String, String>> {
+        return csvData.sortedWith(compareBy({ it[primaryKey] }, { it[secondaryKey] }))
     }
 }

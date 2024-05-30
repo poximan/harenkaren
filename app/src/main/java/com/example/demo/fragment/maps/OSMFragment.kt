@@ -163,8 +163,14 @@ class OSMFragment : Fragment(), MapEventsReceiver {
             webView.visibility = View.VISIBLE
             mapView.visibility = View.GONE
 
-            val mapaCalor = MapaCalor(webView, mapView.mapCenter as GeoPoint)
-            mapaCalor.mostrarMapaCalor(unSocList)
+            if(::unSocList.isInitialized){
+                val mapaCalor = MapaCalor(webView, mapView.mapCenter as GeoPoint)
+                mapaCalor.mostrarMapaCalor(unSocList)
+            } else{
+                Toast.makeText(activity, "Aguarda la carga de esta pantalla", Toast.LENGTH_LONG).show()
+                chkMapaCalor.isChecked = false
+            }
+
         } else {
             webView.visibility = View.GONE
             mapView.visibility = View.VISIBLE

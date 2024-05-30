@@ -36,7 +36,7 @@ class LeerCSV(private val context: Context, private val callback: ListaImportabl
     fun pickCSVFile() {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
             addCategory(Intent.CATEGORY_OPENABLE)
-            type = "text/csv" // Tipo MIME para archivos CSV
+            type = "text/*" // Tipo MIME para archivos CSV
         }
         pickCSVFileLauncher.launch(intent)
     }

@@ -9,12 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.example.demo.activity.MainActivity
 import com.example.demo.database.HarenKarenRoomDatabase
 import com.example.demo.databinding.FragmentImportarBinding
 import com.example.demo.model.EntidadesPlanas
 import com.example.demo.servicios.ETL
-import com.example.demo.servicios.GestorUUID
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -105,16 +103,17 @@ class ImportarFragment : Fragment(), RegistroDistribuible, ListaImportable {
 
         val listaEntidades = mutableListOf<EntidadesPlanas>()
         val etl = ETL(requireContext())
+        val mapasOrd = etl.ordenar(mapas)
 
-        for (map in mapas) {
+        for (map in mapasOrd) {
 
             val diaId = etl.extraerDiaId(map)
             val recorrId = etl.extraerRecorrId(map)
-            val unidSocId =etl.extraerUnSocId(map)
+            val unidSocId = etl.extraerUnSocId(map)
 
             val fechaTransformada = etl.transformarFecha(map["fecha"]!!)
-            val lat0 = etl.transformarLatLon(map["lat0"])
-            val lon0 = etl.transformarLatLon(map["lon0"])
+            val lat0 = etl.transformarLat(map["lat0"])
+            val lon0 = etl.transformarLon(map["lon0"])
             val ptoObs = etl.transformarPtoObservacion("")
             val ctxSocial = etl.transformarCtxSocial(map["referencia"]!!)
             val sustrato = etl.transformarSustrato("")
