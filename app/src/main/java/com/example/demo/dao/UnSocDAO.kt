@@ -11,6 +11,9 @@ import com.example.demo.exception.UUIDRepetidoException
 import com.example.demo.model.EntidadesPlanas
 import com.example.demo.model.UnidSocial
 import com.example.demo.servicios.GestorUUID
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.UUID
 
 @Dao
@@ -70,19 +73,20 @@ interface UnSocDAO {
     @Update
     fun update(unidSocial: UnidSocial)
 
-    @Transaction
     fun insertarDesnormalizado(listaEntidadesPlanas: List<EntidadesPlanas>): Int {
         var insertsEfectivos = 0
         listaEntidadesPlanas.forEach { entidadPlana ->
-
             val unSoc = entidadPlana.getUnidSocial()
-            val existe = getUnSocByUUID(unSoc.id)
 
-            if (existe == null) {
-                insertConUltInst(unSoc)
-                insertsEfectivos += 1
-            } else
-                throw UUIDRepetidoException()
+            CoroutineScope(Dispatchers.IO).launch {
+                val existe = getUnSocByUUID(unSoc.id)
+
+                if (existe == null) {
+                    insertConUltInst(unSoc)
+                    insertsEfectivos += 1
+                } else
+                    throw UUIDRepetidoException()
+            }
         }
         return insertsEfectivos
     }

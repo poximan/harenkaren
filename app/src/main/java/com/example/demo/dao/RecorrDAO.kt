@@ -11,6 +11,9 @@ import com.example.demo.DevFragment
 import com.example.demo.model.EntidadesPlanas
 import com.example.demo.model.Recorrido
 import com.example.demo.servicios.GestorUUID
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.UUID
 
 @Dao
@@ -66,17 +69,18 @@ interface RecorrDAO {
     @Update
     fun update(recorrido: Recorrido): Int
 
-    @Transaction
     fun insertarDesnormalizado(listaEntidadesPlanas: List<EntidadesPlanas>): Int {
         var insertsEfectivos = 0
         listaEntidadesPlanas.forEach { entidadPlana ->
-
             val recorr = entidadPlana.getRecorrido()
-            val existe = getRecorrByUUID(recorr.id)
 
-            if (existe == null) {
-                insertConUltInst(recorr)
-                insertsEfectivos += 1
+            CoroutineScope(Dispatchers.IO).launch {
+                val existe = getRecorrByUUID(recorr.id)
+
+                if (existe == null) {
+                    insertConUltInst(recorr)
+                    insertsEfectivos += 1
+                }
             }
         }
         return insertsEfectivos

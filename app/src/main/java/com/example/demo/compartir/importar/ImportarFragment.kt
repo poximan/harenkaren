@@ -13,9 +13,6 @@ import com.example.demo.database.HarenKarenRoomDatabase
 import com.example.demo.databinding.FragmentImportarBinding
 import com.example.demo.model.EntidadesPlanas
 import com.example.demo.servicios.ETL
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.util.UUID
 
 class ImportarFragment : Fragment(), RegistroDistribuible, ListaImportable {
@@ -182,98 +179,97 @@ class ImportarFragment : Fragment(), RegistroDistribuible, ListaImportable {
         mapContador: Map<String, Int>
     ) {
         val viewModelScope = viewLifecycleOwner.lifecycleScope
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {// Dispatchers.IO es el hilo background
+        val bd = HarenKarenRoomDatabase
+            .getDatabase(requireActivity().application, viewModelScope)
 
-                val bd = HarenKarenRoomDatabase
-                    .getDatabase(requireActivity().application, viewModelScope)
+        val diasInsert = bd.diaDao().insertarDesnormalizado(listaArribo)
+        val recorrInsert = bd.recorrDao().insertarDesnormalizado(listaArribo)
+        val unSocInsert = bd.unSocDao().insertarDesnormalizado(listaArribo)
 
-                val diasInsert = bd.diaDao().insertarDesnormalizado(listaArribo)
-                val recorrInsert = bd.recorrDao().insertarDesnormalizado(listaArribo)
-                val unSocInsert = bd.unSocDao().insertarDesnormalizado(listaArribo)
-
-                withContext(Dispatchers.Main) {
-                    mostrarResultado(
-                        listaArribo.size,
-                        mapContador,
-                        diasInsert,
-                        recorrInsert,
-                        unSocInsert
-                    )
-                }
-            }
-        }
-    }
-
-    private fun mostrarResultado(
-        lote: Int,
-        mapContador: Map<String, Int>,
-        diasInsert: Int,
-        recorrInsert: Int,
-        unSocInsert: Int
-    ) {
-        val texto: String = "Los registros contabilizados en la importacion fueron $lote," +
-                " desglosados en:\n${mapContador["dias"]} dias, ${mapContador["recorr"]} recorridos y ${mapContador["unidsoc"]} unidades sociales.\n" +
-                "De ese lote, se insertaron a esta BD:\n$diasInsert dias, $recorrInsert recorridos y $unSocInsert unidades sociales."
-
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle("Nuevos registros")
-        builder.setMessage(texto)
-        builder.setPositiveButton("OK") { dialog, _ ->
-            dialog.dismiss()
-        }
-        val dialog = builder.create()
-        dialog.show()
-    }
-
-    private fun sumarEntidades(entidades: List<EntidadesPlanas>): Map<String, Int> {
-        val sumaDias = mutableMapOf<UUID, Int>()
-        val sumaRecorridos = mutableMapOf<UUID, Int>()
-        val sumaUnidadesSociales = mutableMapOf<UUID, Int>()
-
-        /*
-        crea una nueva clave cada vez. si encuentra que ya existe hace +1. por lo tanto
-        hay doble utilidad aqui, se sabe cuantos valores distintos hay (por la distribucion
-        de las claves) y se sabe qué concentracion en cada clave (por el +1)
-         */
-        for (entidad in entidades) {
-            sumaDias[entidad.dia_id] = (sumaDias[entidad.dia_id] ?: 0) + 1
-            sumaRecorridos[entidad.recorr_id] = (sumaRecorridos[entidad.recorr_id] ?: 0) + 1
-            sumaUnidadesSociales[entidad.unsoc_id] =
-                (sumaUnidadesSociales[entidad.unsoc_id] ?: 0) + 1
-        }
-
-        val resultado = mutableMapOf<String, Int>()
-        resultado["dias"] = sumaDias.size
-        resultado["recorr"] = sumaRecorridos.size
-        resultado["unidsoc"] = sumaUnidadesSociales.size
-
-        return resultado
-    }
-
-    // callback del arribo de objetos parcelados, obtenidos desde otra app
-    override fun onMessageReceived(message: ArrayList<Parcelable>) {
-
-        val listaEntidadesPlanas = desparcelarLista(message)
-        Log.i(TAG, "transformados a ${listaEntidadesPlanas.size} objetos desnomarlizados")
-
-        val mapContador = sumarEntidades(listaEntidadesPlanas)
-        Log.i(
-            TAG,
-            "distribuidos en ${mapContador["dias"]} dias, ${mapContador["recorr"]} recorridos y ${mapContador["unidsoc"]} unidades sociales"
+        mostrarResultado(
+            listaArribo.size,
+            mapContador,
+            diasInsert,
+            recorrInsert,
+            unSocInsert
         )
-        insertarEntidades(listaEntidadesPlanas, mapContador)
-        binding.recepcionBt.text = "Legaron desde dispositivo remoto $mapContador"
     }
 
-    // callback del importador de csv's
-    override fun onPelosReceived(message: ArrayList<Map<String, String>>) {
-        val listaEntidadesPlanas = desmapearLista(message)
-        val mapContador = sumarEntidades(listaEntidadesPlanas)
-        Log.i(
-            TAG,
-            "distribuidos en ${mapContador["dias"]} dias, ${mapContador["recorr"]} recorridos y ${mapContador["unidsoc"]} unidades sociales"
-        )
-        insertarEntidades(listaEntidadesPlanas, mapContador)
+private fun mostrarResultado(
+    lote: Int,
+    mapContador: Map<String, Int>,
+    diasInsert: Int,
+    recorrInsert: Int,
+    unSocInsert: Int
+) {
+    val texto: String = "Los registros contabilizados en la importacion fueron $lote," +
+            " desglosados en:\n${mapContador["dias"]} dias, ${mapContador["recorr"]} recorridos y ${mapContador["unidsoc"]} unidades sociales.\n" +
+            "De ese lote, se insertaron a esta BD:\n$diasInsert dias, $recorrInsert recorridos y $unSocInsert unidades sociales."
+
+    val builder = AlertDialog.Builder(requireContext())
+    builder.setTitle("Nuevos registros")
+    builder.setMessage(texto)
+    builder.setPositiveButton("OK") { dialog, _ ->
+        dialog.dismiss()
     }
+    val dialog = builder.create()
+    dialog.show()
+}
+
+private fun sumarEntidades(entidades: List<EntidadesPlanas>): Map<String, Int> {
+    val sumaDias = mutableMapOf<UUID, Int>()
+    val sumaRecorridos = mutableMapOf<UUID, Int>()
+    val sumaUnidadesSociales = mutableMapOf<UUID, Int>()
+
+    /*
+    crea una nueva clave cada vez. si encuentra que ya existe hace +1. por lo tanto
+    hay doble utilidad aqui, se sabe cuantos valores distintos hay (por la distribucion
+    de las claves) y se sabe qué concentracion en cada clave (por el +1)
+     */
+    for (entidad in entidades) {
+        sumaDias[entidad.dia_id] = (sumaDias[entidad.dia_id] ?: 0) + 1
+        sumaRecorridos[entidad.recorr_id] = (sumaRecorridos[entidad.recorr_id] ?: 0) + 1
+        sumaUnidadesSociales[entidad.unsoc_id] =
+            (sumaUnidadesSociales[entidad.unsoc_id] ?: 0) + 1
+    }
+
+    val resultado = mutableMapOf<String, Int>()
+    resultado["dias"] = sumaDias.size
+    resultado["recorr"] = sumaRecorridos.size
+    resultado["unidsoc"] = sumaUnidadesSociales.size
+
+    return resultado
+}
+
+// callback del arribo de objetos parcelados, obtenidos desde otra app
+override fun onMessageReceived(message: ArrayList<Parcelable>) {
+
+    val listaEntidadesPlanas = desparcelarLista(message)
+    Log.i(TAG, "transformados a ${listaEntidadesPlanas.size} objetos desnomarlizados")
+
+    val mapContador = sumarEntidades(listaEntidadesPlanas)
+    Log.i(
+        TAG,
+        "distribuidos en ${mapContador["dias"]} dias, ${mapContador["recorr"]} recorridos y ${mapContador["unidsoc"]} unidades sociales"
+    )
+    insertarEntidades(listaEntidadesPlanas, mapContador)
+    binding.recepcionBt.text = "Llegaron desde dispositivo remoto $mapContador"
+}
+
+// callback del importador de csv's
+override fun onPelosReceived(message: ArrayList<Map<String, String>>) {
+    val listaEntidadesPlanas = desmapearLista(message)
+    val mapContador = sumarEntidades(listaEntidadesPlanas)
+    Log.i(
+        TAG,
+        "distribuidos en ${mapContador["dias"]} dias, ${mapContador["recorr"]} recorridos y ${mapContador["unidsoc"]} unidades sociales"
+    )
+    insertarEntidades(listaEntidadesPlanas, mapContador)
+    binding.recepcionBt.text = "Agregados desde archivo externo $mapContador"
+}
+
+override fun progreso(valor: Float) {
+    binding.recepcionBt.text =
+        "extrayendo lineas desde csv... ${valor.toString().substringBefore(".")}%"
+}
 }

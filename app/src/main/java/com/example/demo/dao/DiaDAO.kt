@@ -11,6 +11,10 @@ import com.example.demo.DevFragment
 import com.example.demo.model.Dia
 import com.example.demo.model.EntidadesPlanas
 import com.example.demo.servicios.GestorUUID
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.UUID
 
 @Dao
@@ -62,17 +66,24 @@ interface DiaDAO {
     @Update
     fun update(recorrido: Dia): Int
 
-    @Transaction
     fun insertarDesnormalizado(listaEntidadesPlanas: List<EntidadesPlanas>): Int {
         var insertsEfectivos = 0
+        var ultimoInsertado: UUID? = null
+
         listaEntidadesPlanas.forEach { entidadPlana ->
-
             val dia = entidadPlana.getDia()
-            val existe = getDiaByUUID(dia.id)
+            if (dia.id != ultimoInsertado){
 
-            if (existe == null) {
-                insertConUltInst(dia)
-                insertsEfectivos += 1
+                CoroutineScope(Dispatchers.IO).launch {
+                    ultimoInsertado = getDiaByUUID(dia.id).id ?: null
+
+                    if (ultimoInsertado == null) {
+                        insertConUltInst(dia)
+                        withContext(Dispatchers.Main){
+                            insertsEfectivos += 1
+                        }
+                    }
+                }
             }
         }
         return insertsEfectivos
