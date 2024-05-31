@@ -92,18 +92,22 @@ class StatisticsFragment : Fragment() {
                         }
                     }
                 }
+
                 is Dia -> {
                     uuid = entidad.id
                     unDia(viewModel)
                 }
+
                 is Recorrido -> {
                     uuid = entidad.id
                     unRecorrido(viewModel)
                 }
+
                 is UnidSocial -> {
                     uuid = entidad.id
                     unaUnidadSocial(viewModel)
                 }
+
                 else -> {}
             }
         } else

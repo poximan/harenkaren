@@ -27,7 +27,7 @@ interface UnSocDAO {
     fun getUnSocByRecorrId(idRecorrido: UUID): List<UnidSocial>
 
     @Query("SELECT * FROM unidsocial WHERE substr(date, 0, 5) = :anio")
-    fun getAllPorAnio(anio: Int): List<UnidSocial>
+    fun getAllPorAnio(anio: String): List<UnidSocial>
 
     /*
    cuando se da de alta una entidad que no existio nunca en este ni en ningun
@@ -35,7 +35,7 @@ interface UnSocDAO {
    */
     fun insertConUUID(elem: UnidSocial): UUID {
         if (elem.id == DevFragment.UUID_NULO)
-            elem.id =  GestorUUID.obtenerUUID()
+            elem.id = GestorUUID.obtenerUUID()
 
         insertConUltInst(elem)
         return elem.id

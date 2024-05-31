@@ -23,7 +23,7 @@ class MapaCalor(private val webView: WebView, private val geoPoint: GeoPoint) {
         val gson = Gson()
         val jsonUnSocList = gson.toJson(unSocList.map {
             mapOf(
-                "lat" to "-"+it.latitud.toString().substring(1),
+                "lat" to "-" + it.latitud.toString().substring(1),
                 "lon" to it.longitud,
                 "mag" to it.vHembrasAd + it.vCrias,
                 "suma" to "vHembrasAd+vCrias"

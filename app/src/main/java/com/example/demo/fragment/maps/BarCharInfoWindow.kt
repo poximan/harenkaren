@@ -40,6 +40,7 @@ class BarCharInfoWindow(
                     initialX = v.x - event.rawX
                     initialY = v.y - event.rawY
                 }
+
                 MotionEvent.ACTION_MOVE -> {
                     offsetX = event.rawX + initialX
                     offsetY = event.rawY + initialY

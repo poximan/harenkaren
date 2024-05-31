@@ -1,7 +1,6 @@
 package com.example.demo.database
 
 import com.example.demo.DevFragment
-import com.example.demo.activity.MainActivity
 import com.example.demo.dao.DiaDAO
 import com.example.demo.dao.RecorrDAO
 import com.example.demo.dao.UnSocDAO

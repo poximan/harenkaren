@@ -31,7 +31,7 @@ interface RecorrDAO {
    */
     fun insertConUUID(elem: Recorrido): UUID {
         if (elem.id == DevFragment.UUID_NULO)
-            elem.id =  GestorUUID.obtenerUUID()
+            elem.id = GestorUUID.obtenerUUID()
 
         insertConUltInst(elem)
         return elem.id

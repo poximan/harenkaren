@@ -293,7 +293,7 @@
         android:id="@+id/osm_fragment"
         android:name="com.example.demo.fragment.maps.OSMFragment"
         android:label="Mapa OSM"
-        tools:layout="@layout/fragment_osm"/>
+        tools:layout="@layout/fragment_osm" />
     <fragment
         android:id="@+id/reportes_fragment"
         android:name="com.example.demo.fragment.statistics.ReportesFragment"

@@ -60,7 +60,7 @@ class LeerCSV(private val context: Context, private val callback: ListaImportabl
                 val row = line?.split(",")?.map { it.trim() }
                 if (row != null && headers != null) {
                     val map = headers.zip(row).toMap()
-                    if(map.size == headers.size)
+                    if (map.size == headers.size)
                         csvData.add(map)
                 }
             }

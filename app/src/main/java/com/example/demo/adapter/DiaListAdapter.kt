@@ -39,7 +39,7 @@ class DiaListAdapter(
 
         fun bind(dia: Dia) {
             itemView.setOnClickListener { itemClickListener.onItemClick(dia) }
-            numDia.text = (diaList.indexOf(dia)+1).toString()
+            numDia.text = (diaList.indexOf(dia) + 1).toString()
             fecha.text = dia.fecha
         }
     }

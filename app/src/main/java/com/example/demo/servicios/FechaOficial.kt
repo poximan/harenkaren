@@ -24,7 +24,8 @@ class FechaOficial(private val context: Context) {
                     // Formatear la fecha en el nuevo formato y devolverla
                     return formatoSalida.format(date)
                 }
-            } catch (e: ParseException) { }
+            } catch (e: ParseException) {
+            }
         }
         return "Fecha inválida"
     }

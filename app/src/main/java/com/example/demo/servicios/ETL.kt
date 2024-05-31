@@ -2,7 +2,6 @@ package com.example.demo.servicios
 
 import android.content.Context
 import com.example.demo.R
-import java.util.ArrayList
 import java.util.UUID
 
 class ETL(private val context: Context) {
@@ -37,7 +36,7 @@ class ETL(private val context: Context) {
             it.split("@").firstOrNull()?.contains(recorrActual, ignoreCase = true) == true
         }
 
-        if(recorr == null) {
+        if (recorr == null) {
             recorr = "$recorrActual@${GestorUUID.obtenerUUID()}"
             recorrList.add(recorr)
             idMapRecorr[idDia] = recorrList
@@ -119,7 +118,11 @@ class ETL(private val context: Context) {
         }
     }
 
-    private fun sortCSV(csvData: List<Map<String, String>>, primaryKey: String, secondaryKey: String): List<Map<String, String>> {
+    private fun sortCSV(
+        csvData: List<Map<String, String>>,
+        primaryKey: String,
+        secondaryKey: String
+    ): List<Map<String, String>> {
         return csvData.sortedWith(compareBy({ it[primaryKey] }, { it[secondaryKey] }))
     }
 }

@@ -56,14 +56,5 @@
         app:layout_constraintTop_toBottomOf="@id/ayuda_button"
         android:background="@drawable/boton_redondeado" />
 
-    <Button
-        android:id="@+id/logOutButton"
-        android:layout_width="120dp"
-        android:layout_height="50dp"
-        android:text="Salir"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
 

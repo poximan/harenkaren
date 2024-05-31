@@ -65,7 +65,7 @@ class OSMFragment : Fragment(), MapEventsReceiver {
 
         // Agregar receptor de eventos de clic en el mapa
         val mapEventsOverlay = MapEventsOverlay(this)
-        mapView.overlays.add(0, mapEventsOverlay)
+        mapView.overlays.add(mapEventsOverlay)
 
         // Establecer el agente de usuario para OSMDroid
         Configuration.getInstance().userAgentValue = "AGENTE_OSM_HARENKAREN"
@@ -73,7 +73,8 @@ class OSMFragment : Fragment(), MapEventsReceiver {
         webView = view.findViewById(R.id.webViewHeat)
 
         // Configurar el Spinner
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, listaAnios)
+        val adapter =
+            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, listaAnios)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         filtroAnio.adapter = adapter
 
@@ -99,15 +100,24 @@ class OSMFragment : Fragment(), MapEventsReceiver {
     private fun configurarFiltroAnio(view: View) {
 
         filtroAnio.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
                 val anioSeleccionado = listaAnios[position]
+                println("año $anioSeleccionado")
                 getPosiciones(anioSeleccionado)
             }
+
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
 
+        // Forzar la llamada manualmente al método onItemSelected
         val defaultPosition = listaAnios.size - 1
         filtroAnio.setSelection(defaultPosition)
+
         filtroAnio.onItemSelectedListener?.onItemSelected(
             filtroAnio,
             view,
@@ -121,11 +131,12 @@ class OSMFragment : Fragment(), MapEventsReceiver {
         // ---------> HILO BACKGOUND
         CoroutineScope(Dispatchers.IO).launch {
             unSocList =
-                unSocDAO.getAllPorAnio(anio).sortedWith(compareBy({ it.recorrId }, { it.orden }))
+                unSocDAO.getAllPorAnio(anio.toString())
+                    .sortedWith(compareBy({ it.recorrId }, { it.orden }))
 
             // ---------> HILO PRINCIPAL
             withContext(Dispatchers.Main) {
-                if(unSocList.isNotEmpty()) {
+                if (unSocList.isNotEmpty()) {
 
                     var routePoints = emptyList<GeoPoint>()
                     var recorr = unSocList.first().recorrId
@@ -198,11 +209,12 @@ class OSMFragment : Fragment(), MapEventsReceiver {
             webView.visibility = View.VISIBLE
             mapView.visibility = View.GONE
 
-            if(::unSocList.isInitialized){
+            if (::unSocList.isInitialized) {
                 val mapaCalor = MapaCalor(webView, mapView.mapCenter as GeoPoint)
                 mapaCalor.mostrarMapaCalor(unSocList)
-            } else{
-                Toast.makeText(activity, "Aguarda la carga de esta pantalla", Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(activity, "Aguarda la carga de esta pantalla", Toast.LENGTH_LONG)
+                    .show()
                 chkMapaCalor.isChecked = false
             }
 
@@ -225,7 +237,6 @@ class OSMFragment : Fragment(), MapEventsReceiver {
             val toastText = "Lat.: $latitude, Long.: $longitude"
             Toast.makeText(requireContext(), toastText, Toast.LENGTH_SHORT).show()
         }
-
         return true     // el evento ha sido manejado
     }
 

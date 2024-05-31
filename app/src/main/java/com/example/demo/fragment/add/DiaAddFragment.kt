@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.demo.DevFragment
 import com.example.demo.R
-import com.example.demo.activity.MainActivity
 import com.example.demo.databinding.FragmentDiaAddBinding
 import com.example.demo.model.Dia
 import com.example.demo.servicios.GestorUUID

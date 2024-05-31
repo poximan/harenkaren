@@ -53,7 +53,8 @@ class UnSocListFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
         val layoutManager = LinearLayoutManager(requireContext())
         unSocList.layoutManager = layoutManager
         val dividerDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.divider)
-        val dividerItemDecoration = DividerItemDecoration(unSocList.context, layoutManager.orientation)
+        val dividerItemDecoration =
+            DividerItemDecoration(unSocList.context, layoutManager.orientation)
         dividerItemDecoration.setDrawable(dividerDrawable!!)
         unSocList.addItemDecoration(dividerItemDecoration)
 

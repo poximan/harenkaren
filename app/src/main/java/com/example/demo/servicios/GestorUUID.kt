@@ -19,7 +19,7 @@ class GestorUUID {
 
         fun obtenerUUID(): UUID {
             actual = UUID.randomUUID()
-            if(actual != ultimo)
+            if (actual != ultimo)
                 ultimo = actual
             else
                 throw UUIDRepetidoException()
