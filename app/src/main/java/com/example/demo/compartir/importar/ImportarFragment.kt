@@ -13,6 +13,9 @@ import com.example.demo.database.HarenKarenRoomDatabase
 import com.example.demo.databinding.FragmentImportarBinding
 import com.example.demo.model.EntidadesPlanas
 import com.example.demo.servicios.ETL
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.UUID
 
 class ImportarFragment : Fragment(), RegistroDistribuible, ListaImportable {
@@ -182,17 +185,24 @@ class ImportarFragment : Fragment(), RegistroDistribuible, ListaImportable {
         val bd = HarenKarenRoomDatabase
             .getDatabase(requireActivity().application, viewModelScope)
 
-        val diasInsert = bd.diaDao().insertarDesnormalizado(listaArribo)
-        val recorrInsert = bd.recorrDao().insertarDesnormalizado(listaArribo)
-        val unSocInsert = bd.unSocDao().insertarDesnormalizado(listaArribo)
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
 
-        mostrarResultado(
-            listaArribo.size,
-            mapContador,
-            diasInsert,
-            recorrInsert,
-            unSocInsert
-        )
+                val diasInsert = bd.diaDao().insertarDesnormalizado(listaArribo)
+                val recorrInsert = bd.recorrDao().insertarDesnormalizado(listaArribo)
+                val unSocInsert = bd.unSocDao().insertarDesnormalizado(listaArribo)
+
+                withContext(Dispatchers.Main) {
+                    mostrarResultado(
+                        listaArribo.size,
+                        mapContador,
+                        diasInsert,
+                        recorrInsert,
+                        unSocInsert
+                    )
+                }
+            }
+        }
     }
 
 private fun mostrarResultado(

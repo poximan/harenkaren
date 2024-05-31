@@ -14,6 +14,7 @@ import com.example.demo.servicios.GestorUUID
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.UUID
 
 @Dao
@@ -76,17 +77,15 @@ interface UnSocDAO {
     fun insertarDesnormalizado(listaEntidadesPlanas: List<EntidadesPlanas>): Int {
         var insertsEfectivos = 0
         listaEntidadesPlanas.forEach { entidadPlana ->
+
             val unSoc = entidadPlana.getUnidSocial()
+            val existe = getUnSocByUUID(unSoc.id)
 
-            CoroutineScope(Dispatchers.IO).launch {
-                val existe = getUnSocByUUID(unSoc.id)
-
-                if (existe == null) {
-                    insertConUltInst(unSoc)
-                    insertsEfectivos += 1
-                } else
-                    throw UUIDRepetidoException()
-            }
+            if (existe == null) {
+                insertConUltInst(unSoc)
+                insertsEfectivos += 1
+            } else
+                throw UUIDRepetidoException()
         }
         return insertsEfectivos
     }

@@ -15,7 +15,7 @@ class MapaCalor(private val webView: WebView, private val geoPoint: GeoPoint) {
         webSettings.javaScriptEnabled = true
 
         val htmlContent = generarHTML(unSocList)
-        webView.loadDataWithBaseURL(null, htmlContent, "text/html", "UTF-8", null)
+        webView.loadDataWithBaseURL("file:///android_asset/index.html", htmlContent, "text/html", "UTF-8", null)
     }
 
     private fun generarHTML(unSocList: List<UnidSocial>): String {
@@ -35,7 +35,7 @@ class MapaCalor(private val webView: WebView, private val geoPoint: GeoPoint) {
             <html>
                 <head>
                     <meta charset="UTF-8">
-                    <script src="file:///android_asset/plotly-2.32.0.min.js"></script>
+                    <script src="plotly-2.32.0.min.js"></script>
                     <style>
                         html, body {
                             width: 100%;

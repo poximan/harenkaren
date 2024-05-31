@@ -67,23 +67,20 @@ interface DiaDAO {
     fun update(recorrido: Dia): Int
 
     fun insertarDesnormalizado(listaEntidadesPlanas: List<EntidadesPlanas>): Int {
+        var ultimoID: UUID? = null
         var insertsEfectivos = 0
-        var ultimoInsertado: UUID? = null
 
         listaEntidadesPlanas.forEach { entidadPlana ->
             val dia = entidadPlana.getDia()
-            if (dia.id != ultimoInsertado){
 
-                CoroutineScope(Dispatchers.IO).launch {
-                    ultimoInsertado = getDiaByUUID(dia.id).id ?: null
+            if(dia.id != ultimoID) {
+                val existe = getDiaByUUID(dia.id)
 
-                    if (ultimoInsertado == null) {
-                        insertConUltInst(dia)
-                        withContext(Dispatchers.Main){
-                            insertsEfectivos += 1
-                        }
-                    }
+                if (existe == null) {
+                    insertConUltInst(dia)
+                    insertsEfectivos += 1
                 }
+                ultimoID = dia.id
             }
         }
         return insertsEfectivos
