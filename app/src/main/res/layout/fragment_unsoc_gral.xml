@@ -9,21 +9,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageButton
-            android:id="@+id/icono"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_graficar"
-            android:background="@color/colorAccent"
-            android:layout_marginBottom="20dp"
-            android:clickable="true" />
-
         <LinearLayout
             android:id="@+id/linearLayout1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@id/icono">
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -44,7 +34,6 @@
                 android:src="@drawable/ic_help" />
 
         </LinearLayout>
-
         <LinearLayout
             android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
@@ -72,7 +61,6 @@
                 android:src="@drawable/ic_help" />
 
         </LinearLayout>
-
         <LinearLayout
             android:id="@+id/linearLayout3"
             android:layout_width="match_parent"
@@ -100,7 +88,6 @@
                 android:src="@drawable/ic_help" />
 
         </LinearLayout>
-
         <LinearLayout
             android:id="@+id/linearLayout4"
             android:layout_width="match_parent"
@@ -120,7 +107,6 @@
                 android:hint="opcional"
                 android:inputType="textMultiLine" />
         </LinearLayout>
-
         <LinearLayout
             android:id="@+id/linearLayout5"
             android:layout_width="match_parent"
@@ -187,7 +173,6 @@
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-
         <LinearLayout
             android:id="@+id/linearLayout6"
             android:layout_width="match_parent"
@@ -207,7 +192,6 @@
                 android:layout_height="wrap_content"
                 android:paddingRight="5dp" />
         </LinearLayout>
-
         <Button
             android:id="@+id/photoButton"
             android:layout_width="wrap_content"
@@ -215,5 +199,16 @@
             app:layout_constraintTop_toBottomOf="@id/linearLayout6"
             app:layout_constraintLeft_toLeftOf="parent"
             android:text="foto" />
+        <ImageButton
+            android:id="@+id/icono"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_graficar"
+            android:background="@color/colorAccent"
+            android:clickable="true"
+            app:layout_constraintTop_toBottomOf="@id/photoButton"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

@@ -45,9 +45,6 @@ class RecorrDetailFragment : Fragment() {
         val mareasArrayAdapter = ArrayAdapter(view.context, R.layout.dropdown_item, estadosMarea)
         binding.spinnerMarea.adapter = mareasArrayAdapter
 
-        binding.idRecorr.text =
-            "ID unico de recorrido = " + args.recorrActual.id.toString().toEditable()
-
         binding.editObservador.text = args.recorrActual.observador.toEditable()
         binding.areaRecorr.text = args.recorrActual.areaRecorrida.toEditable()
         binding.meteo.text = args.recorrActual.meteo.toEditable()
@@ -72,7 +69,6 @@ class RecorrDetailFragment : Fragment() {
         binding.volverButton.setOnClickListener { goBack() }
         binding.verUnSocButton.setOnClickListener { verUnidadSocial() }
         binding.confirmarButton.setOnClickListener { guardarCambios() }
-        binding.icono.setOnClickListener { goGraficar() }
 
         // Habilitar o deshabilitar los componentes según el estado del checkbox
         binding.checkBox.setOnCheckedChangeListener { _, isChecked ->
@@ -84,12 +80,6 @@ class RecorrDetailFragment : Fragment() {
         }
 
         return view
-    }
-
-    private fun goGraficar() {
-        val action =
-            RecorrDetailFragmentDirections.goToGrafDesdeRecorrAction(args.recorrActual)
-        findNavController().navigate(action)
     }
 
     private fun guardarCambios() {

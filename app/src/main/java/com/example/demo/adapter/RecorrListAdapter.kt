@@ -3,13 +3,14 @@ package com.example.demo.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.demo.R
 import com.example.demo.model.Recorrido
 
 class RecorrListAdapter(
-    private val itemClickListener: OnRecorrClickListener
+    private val itemListener: OnRecorrClickListener
 ) : RecyclerView.Adapter<RecorrListAdapter.RecorrViewHolder>() {
 
     private var recorridoList = emptyList<Recorrido>()
@@ -39,9 +40,18 @@ class RecorrListAdapter(
         private val meteo: TextView = view.findViewById(R.id.text_meteo)
         private val marea: TextView = view.findViewById(R.id.text_marea)
         private val fecha: TextView = view.findViewById(R.id.textViewTimestamp)
+        private val icono: ImageView = view.findViewById(R.id.grafRecorr)
+
+        init {
+            view.setOnClickListener {
+                itemListener.onItemClick(recorridoList[adapterPosition])
+            }
+            icono.setOnClickListener {
+                itemListener.onIconClick(recorridoList[adapterPosition])
+            }
+        }
 
         fun bind(recorrido: Recorrido) {
-            itemView.setOnClickListener { itemClickListener.onItemClick(recorrido) }
 
             id.text = recorrido.orden.toString()
             observador.text = "Observador: " + recorrido.observador
@@ -56,5 +66,6 @@ class RecorrListAdapter(
 
     interface OnRecorrClickListener {
         fun onItemClick(elem: Recorrido)
+        fun onIconClick(elem: Recorrido)
     }
 }

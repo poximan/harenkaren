@@ -25,21 +25,17 @@ class DiaDetailFragment : Fragment() {
     ): View {
         _binding = FragmentDiaDetailBinding.inflate(inflater, container, false)
 
-        binding.idDia.text = "ID unico de dia = " + args.diaActual.id.toString().toEditable()
+        binding.idDia.text =
+            "Hasta el momento, esta vista no posee datos adicionales." +
+                    " De seguir asi esta pantalla desaparecerá. Por el momento se deja" +
+                    " preventivamente, en caso que se requieran agregar datos no previsto ahora"
         val origen = args.diaActual.celularId.substringAfter("@")
         binding.origen.text = "Generado en = " + origen.toEditable()
 
-        binding.icono.setOnClickListener { goGraficar() }
         binding.volverButton.setOnClickListener { goBack() }
         binding.verRecorrButton.setOnClickListener { verRecorrido() }
 
         return binding.root
-    }
-
-    private fun goGraficar() {
-        val action =
-            DiaDetailFragmentDirections.goToGrafDesdeDiaAction(args.diaActual)
-        findNavController().navigate(action)
     }
 
     private fun verRecorrido() {

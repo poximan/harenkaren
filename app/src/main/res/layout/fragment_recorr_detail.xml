@@ -29,22 +29,6 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
-                        android:id="@+id/id_recorr"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:hint="ID recorrido" />
-
-                    <ImageButton
-                        android:id="@+id/icono"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_graficar"
-                        android:background="@color/colorAccent"
-                        android:layout_marginBottom="20dp"
-                        android:clickable="true" />
-
-                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Observador" />

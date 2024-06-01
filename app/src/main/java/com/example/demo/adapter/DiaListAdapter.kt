@@ -3,16 +3,17 @@ package com.example.demo.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.demo.R
 import com.example.demo.model.Dia
 
 class DiaListAdapter(
-    private val itemClickListener: OnDiaClickListener
+    private val itemListener: OnDiaClickListener
 ) : RecyclerView.Adapter<DiaListAdapter.DiaViewHolder>() {
 
-    private var diaList = emptyList<Dia>()
+    private var diaList: List<Dia> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DiaViewHolder {
         val view = LayoutInflater
@@ -23,7 +24,8 @@ class DiaListAdapter(
 
     override fun onBindViewHolder(holder: DiaViewHolder, position: Int) {
         val dia = diaList[position]
-        holder.bind(dia)
+        holder.numDia.text = position.toString()
+        holder.timestamp.text = dia.fecha
     }
 
     internal fun setDia(diaList: List<Dia>) {
@@ -33,14 +35,17 @@ class DiaListAdapter(
 
     inner class DiaViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        private val numDia: TextView = view.findViewById(R.id.num_dia)
-        private val fecha: TextView = view.findViewById(R.id.textViewTimestamp)
-        private var posicion = 1
+        val numDia: TextView = view.findViewById(R.id.num_dia)
+        val timestamp: TextView = view.findViewById(R.id.textViewTimestamp)
+        private val icono: ImageView = view.findViewById(R.id.grafDia)
 
-        fun bind(dia: Dia) {
-            itemView.setOnClickListener { itemClickListener.onItemClick(dia) }
-            numDia.text = (diaList.indexOf(dia) + 1).toString()
-            fecha.text = dia.fecha
+        init {
+            view.setOnClickListener {
+                itemListener.onItemClick(diaList[adapterPosition])
+            }
+            icono.setOnClickListener {
+                itemListener.onIconClick(diaList[adapterPosition])
+            }
         }
     }
 
@@ -48,5 +53,6 @@ class DiaListAdapter(
 
     interface OnDiaClickListener {
         fun onItemClick(elem: Dia)
+        fun onIconClick(dia: Dia)
     }
 }

@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.demo.R
 import com.example.demo.adapter.RecorrListAdapter
 import com.example.demo.databinding.FragmentRecorrListBinding
+import com.example.demo.model.Dia
 import com.example.demo.model.Recorrido
 import com.example.demo.viewModel.RecorrViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -52,6 +53,11 @@ class RecorrListFragment : Fragment(), RecorrListAdapter.OnRecorrClickListener {
 
     override fun onItemClick(elem: Recorrido) {
         val action = RecorrListFragmentDirections.goToRecorrDetailAction(elem)
+        findNavController().navigate(action)
+    }
+
+    override fun onIconClick(elem: Recorrido) {
+        val action = RecorrListFragmentDirections.goToGrafDdeRecorrListAction(elem)
         findNavController().navigate(action)
     }
 

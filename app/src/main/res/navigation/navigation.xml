@@ -97,6 +97,10 @@
             <action
                 android:id="@+id/goToNvoDiaAction"
                 app:destination="@id/dia_add_fragment" />
+            <action
+                android:id="@+id/goToGrafDdeDiaListAction"
+                app:destination="@id/statistics_fragment" />
+
         </fragment>
         <fragment
             android:id="@+id/dia_add_fragment"
@@ -152,6 +156,9 @@
                 <action
                     android:id="@+id/goToNewRecorrAction"
                     app:destination="@id/recorr_add_fragment" />
+                <action
+                    android:id="@+id/goToGrafDdeRecorrListAction"
+                    app:destination="@id/statistics_fragment" />
             </fragment>
             <fragment
                 android:id="@+id/recorr_add_fragment"
@@ -292,7 +299,7 @@
     <fragment
         android:id="@+id/osm_fragment"
         android:name="com.example.demo.fragment.maps.OSMFragment"
-        android:label="Mapa OSM"
+        android:label="Mapa"
         tools:layout="@layout/fragment_osm" />
     <fragment
         android:id="@+id/reportes_fragment"

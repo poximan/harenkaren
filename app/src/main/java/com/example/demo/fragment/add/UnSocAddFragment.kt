@@ -47,18 +47,6 @@ class UnSocAddFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        /*
-        elimnar el elemento ID porque no tiene sentido aca
-        la entidad todavia no existe
-        */
-        val textView: TextView = view.findViewById(R.id.id_unsoc)
-        val parentView: ViewGroup = textView.parent as ViewGroup
-        parentView.removeView(textView)
-    }
-
     private fun confirmarAlta() {
 
         val model: UnSocViewModel = ViewModelProvider(this)[UnSocViewModel::class.java]
