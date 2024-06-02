@@ -64,7 +64,7 @@ class MapaCalor(private val webView: WebView, private val geoPoint: GeoPoint) {
                             text: unpack(rows, "suma"),
                             hoverinfo: "lat+lon+z+text",
                             hovertemplate: "lat: %{lat:.6f}<br>lon: %{lon:.6f}<br>suma: %{z}<br>%{text}<extra></extra>",
-                            radius: 20,
+                            radius: 25,
                             type: "densitymapbox",
                             coloraxis: "coloraxis"
                         }];
@@ -79,10 +79,14 @@ class MapaCalor(private val webView: WebView, private val geoPoint: GeoPoint) {
                                     lat: ${geoPoint.latitude}, 
                                     lon: ${geoPoint.longitude} 
                                 },
-                                style: "open-street-map",
-                                zoom: 9
+                                style: "carto-darkmatter",
+                                zoom: 8
                             },
-                            coloraxis: { colorscale: "Hot" }
+                           coloraxis: { colorscale: [
+                              [0.0, "#E6E6FA"],
+                              [0.5, "#800080"],
+                              [1.0, "#4B0082"]
+                           ]}
                         };
                         Plotly.newPlot("myDiv", data, layout);
                     </script>

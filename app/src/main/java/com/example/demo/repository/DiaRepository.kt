@@ -3,6 +3,7 @@ package com.example.demo.repository
 import androidx.lifecycle.LiveData
 import com.example.demo.dao.DiaDAO
 import com.example.demo.model.Dia
+import java.util.UUID
 
 class DiaRepository(private val diaDao: DiaDAO) {
 
@@ -14,5 +15,9 @@ class DiaRepository(private val diaDao: DiaDAO) {
 
     fun update(elem: Dia) {
         diaDao.update(elem)
+    }
+
+    fun contarUnSocPorDia(id: UUID): Int {
+        return diaDao.contarUnSocPorDia(id)
     }
 }

@@ -9,8 +9,8 @@
 
     <ImageButton
         android:id="@+id/close_button"
-        android:layout_width="10dp"
-        android:layout_height="10dp"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
         android:layout_gravity="right"
         android:background="?attr/selectableItemBackground"
         android:src="@android:drawable/ic_menu_close_clear_cancel" />

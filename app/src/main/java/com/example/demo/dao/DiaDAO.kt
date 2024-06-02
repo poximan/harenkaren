@@ -11,10 +11,6 @@ import com.example.demo.DevFragment
 import com.example.demo.model.Dia
 import com.example.demo.model.EntidadesPlanas
 import com.example.demo.servicios.GestorUUID
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.util.UUID
 
 @Dao
@@ -24,6 +20,15 @@ interface DiaDAO {
 
     @Query("SELECT * from dia WHERE id = :idDia")
     fun getDiaByUUID(idDia: UUID): Dia
+
+    @Query("""
+        SELECT COUNT(*) AS contador
+        FROM unidsocial us
+        JOIN recorrido r ON us.id_recorrido = r.id
+        JOIN dia d ON r.id_dia = d.id
+        WHERE d.id = :id
+    """ )
+    fun contarUnSocPorDia(id: UUID): Int
 
     /*
     cuando se da de alta una entidad que no existio nunca en este ni en ningun

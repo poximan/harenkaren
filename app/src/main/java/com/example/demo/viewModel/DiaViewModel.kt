@@ -10,6 +10,7 @@ import com.example.demo.repository.DiaRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.UUID
 
 class DiaViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -29,6 +30,10 @@ class DiaViewModel(application: Application) : AndroidViewModel(application) {
 
     fun update(dia: Dia) = CoroutineScope(Dispatchers.IO).launch {
         repository.update(dia)
+    }
+
+    fun contarUnSocPorDia(id: UUID): Int {
+        return repository.contarUnSocPorDia(id)
     }
 }
 

@@ -96,9 +96,8 @@ class OSMFragment : Fragment(), MapEventsReceiver {
         super.onViewCreated(view, savedInstanceState)
 
         chkMapaCalor = view.findViewById(R.id.chk_mapacalor)
-        chkMapaCalor.setOnCheckedChangeListener { _, isChecked ->
-            val item = filtroAnio.selectedItemPosition
-            filtroAnio.setSelection(item)
+        chkMapaCalor.setOnCheckedChangeListener { _, _ ->
+            lanzarEventoSpinner(view)
         }
 
         unSocDAO = HarenKarenRoomDatabase
@@ -119,18 +118,23 @@ class OSMFragment : Fragment(), MapEventsReceiver {
             ) {
                 val anioSeleccionado = anios[position]
                 getInvolucrados(anioSeleccionado) {
-                    if(chkMapaCalor.isChecked)
-                        verMapaCalor(true, it)
-                    else
-                        verMapaRecorridos(it)
+                    resolverVisibildiad(it)
                 }
             }
-
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
 
         // Forzar la llamada manualmente al método onItemSelected
-        val defaultPosition = anios.size - 1
+        lanzarEventoSpinner(view)
+    }
+
+    private fun lanzarEventoSpinner(view: View) {
+
+        var defaultPosition: Int = if (filtroAnio.selectedItemPosition < 0)
+            anios.size - 1
+        else
+            filtroAnio.selectedItemPosition
+
         filtroAnio.setSelection(defaultPosition)
 
         filtroAnio.onItemSelectedListener?.onItemSelected(
@@ -155,21 +159,22 @@ class OSMFragment : Fragment(), MapEventsReceiver {
         }
     }
 
-    private fun verMapaCalor(isChecked: Boolean, unSocList: List<UnidSocial>) {
-        if (isChecked) {
-            webView.visibility = View.VISIBLE
+    private fun resolverVisibildiad(unSocList: List<UnidSocial>) {
+        if(chkMapaCalor.isChecked){
             mapView.visibility = View.GONE
-
             val mapaCalor = MapaCalor(webView, mapView.mapCenter as GeoPoint)
             mapaCalor.mostrarMapaCalor(unSocList)
+        }
 
-        } else {
+        else{
             webView.visibility = View.GONE
-            mapView.visibility = View.VISIBLE
+            mostrarMapaRecorridos(unSocList)
         }
     }
 
-    private fun verMapaRecorridos(unSocList: List<UnidSocial>) {
+    private fun mostrarMapaRecorridos(unSocList: List<UnidSocial>) {
+
+        mapView.visibility = View.VISIBLE
 
         var routePoints = emptyList<GeoPoint>()
         var recorr = unSocList.first().recorrId
@@ -188,9 +193,19 @@ class OSMFragment : Fragment(), MapEventsReceiver {
             agregarMarcador(unSoc)  // los puntos se insertan en cada pasada "mapView.overlays.add"
         }
         agregarPolilinea(routePoints)
-        val startPoint = routePoints.first()
-        mapController.setCenter(startPoint)
-        mapView.invalidate() // Actualizar el mapa
+
+        val currentCenter = mapView.mapCenter as GeoPoint
+        // Verificar si currentCenter es (0.0, 0.0, 0.0)
+        var startPoint: GeoPoint = if (currentCenter.latitude == 0.0 && currentCenter.longitude == 0.0) {
+            routePoints.first()
+        } else {
+            currentCenter
+        }
+
+        val currentZoomLevel = mapView.zoomLevelDouble
+        mapView.invalidate() // Actualizar la vista del mapa
+        mapView.controller.setZoom(currentZoomLevel)
+        mapView.controller.setCenter(startPoint) // Restaurar el centro del mapa
     }
 
     override fun onResume() {

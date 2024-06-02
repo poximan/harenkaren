@@ -10,6 +10,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
@@ -17,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.demo.R
 import com.example.demo.adapter.DiaListAdapter
 import com.example.demo.databinding.FragmentDiaListBinding
-import com.example.demo.fragment.detail.DiaDetailFragmentDirections
 import com.example.demo.model.Dia
 import com.example.demo.viewModel.DiaViewModel
 import java.text.SimpleDateFormat
@@ -48,8 +48,12 @@ class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
     }
 
     override fun onItemClick(dia: Dia) {
-        val action = DiaListFragmentDirections.goToDiaDetailAction(dia)
-        findNavController().navigate(action)
+
+        if(diaViewModel.contarUnSocPorDia(dia.id) > 0){
+            val action = DiaListFragmentDirections.goToDiaDetailAction(dia)
+            findNavController().navigate(action)
+        } else
+            Toast.makeText(activity, "No existen registros asociados a este dia", Toast.LENGTH_LONG).show()
     }
 
     override fun onIconClick(dia: Dia) {
