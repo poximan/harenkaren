@@ -35,15 +35,17 @@ import org.osmdroid.views.overlay.Polyline
 class OSMFragment : Fragment(), MapEventsReceiver {
 
     private lateinit var unSocDAO: UnSocDAO
-    private lateinit var unSocList: List<UnidSocial>
 
     private lateinit var mapController: IMapController
     private lateinit var mapView: MapView
+    private var polylines = mutableListOf<Polyline>()
+    private var markers = mutableListOf<Marker>()
+
     private lateinit var webView: WebView
 
     private lateinit var chkMapaCalor: CheckBox
     private lateinit var filtroAnio: Spinner
-    private val listaAnios = (2002..2022).toList()
+    private lateinit var anios: List<Int>
 
     // Método llamado cuando se crea la vista del fragmento
     override fun onCreateView(
@@ -70,14 +72,23 @@ class OSMFragment : Fragment(), MapEventsReceiver {
         // Establecer el agente de usuario para OSMDroid
         Configuration.getInstance().userAgentValue = "AGENTE_OSM_HARENKAREN"
         filtroAnio = view.findViewById(R.id.filtroAnio)
+
         webView = view.findViewById(R.id.webViewHeat)
 
-        // Configurar el Spinner
-        val adapter =
-            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, listaAnios)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        filtroAnio.adapter = adapter
+        val diaDAO = HarenKarenRoomDatabase
+            .getDatabase(requireActivity().application, viewLifecycleOwner.lifecycleScope)
+            .diaDao()
 
+        CoroutineScope(Dispatchers.IO).launch {
+            anios = diaDAO.getTodosAnios()
+            withContext(Dispatchers.Main) {
+                // Configurar el Spinner
+                val adapter =
+                    ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, anios)
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                filtroAnio.adapter = adapter
+            }
+        }
         return view
     }
 
@@ -86,12 +97,12 @@ class OSMFragment : Fragment(), MapEventsReceiver {
 
         chkMapaCalor = view.findViewById(R.id.chk_mapacalor)
         chkMapaCalor.setOnCheckedChangeListener { _, isChecked ->
-            actualizarMapaCalor(isChecked)
+            val item = filtroAnio.selectedItemPosition
+            filtroAnio.setSelection(item)
         }
 
-        val viewModelScope = viewLifecycleOwner.lifecycleScope
         unSocDAO = HarenKarenRoomDatabase
-            .getDatabase(requireActivity().application, viewModelScope)
+            .getDatabase(requireActivity().application, viewLifecycleOwner.lifecycleScope)
             .unSocDao()
 
         configurarFiltroAnio(view)
@@ -106,16 +117,20 @@ class OSMFragment : Fragment(), MapEventsReceiver {
                 position: Int,
                 id: Long
             ) {
-                val anioSeleccionado = listaAnios[position]
-                println("año $anioSeleccionado")
-                getPosiciones(anioSeleccionado)
+                val anioSeleccionado = anios[position]
+                getInvolucrados(anioSeleccionado) {
+                    if(chkMapaCalor.isChecked)
+                        verMapaCalor(true, it)
+                    else
+                        verMapaRecorridos(it)
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
 
         // Forzar la llamada manualmente al método onItemSelected
-        val defaultPosition = listaAnios.size - 1
+        val defaultPosition = anios.size - 1
         filtroAnio.setSelection(defaultPosition)
 
         filtroAnio.onItemSelectedListener?.onItemSelected(
@@ -126,38 +141,56 @@ class OSMFragment : Fragment(), MapEventsReceiver {
         )
     }
 
-    private fun getPosiciones(anio: Int) {
-
+    private fun getInvolucrados(anio: Int, callback: (List<UnidSocial>) -> Unit) {
+        var unSocList: List<UnidSocial>
         // ---------> HILO BACKGOUND
         CoroutineScope(Dispatchers.IO).launch {
             unSocList =
-                unSocDAO.getAllPorAnio(anio.toString())
-                    .sortedWith(compareBy({ it.recorrId }, { it.orden }))
+                unSocDAO.getAllPorAnio(anio.toString()).sortedWith(compareBy({ it.recorrId }, { it.orden }))
 
             // ---------> HILO PRINCIPAL
             withContext(Dispatchers.Main) {
-                if (unSocList.isNotEmpty()) {
-
-                    var routePoints = emptyList<GeoPoint>()
-                    var recorr = unSocList.first().recorrId
-
-                    for (unSoc in unSocList) {
-                        if (recorr != unSoc.recorrId) {
-                            agregarPolilinea(routePoints)
-                            routePoints = emptyList()
-                            recorr = unSoc.recorrId
-                        }
-                        // acumular el recorrido en transito. sera insertado al mapa cuando aparezca uno nuevo
-                        routePoints = routePoints.plus(geo(unSoc))
-                        agregarMarcador(unSoc)  // los puntos se insertan en cada pasada "mapView.overlays.add"
-                    }
-                    agregarPolilinea(routePoints)
-                    val startPoint = routePoints.first()
-                    mapController.setCenter(startPoint)
-                    mapView.invalidate() // Actualizar el mapa
-                }
+                callback(unSocList)
             }
         }
+    }
+
+    private fun verMapaCalor(isChecked: Boolean, unSocList: List<UnidSocial>) {
+        if (isChecked) {
+            webView.visibility = View.VISIBLE
+            mapView.visibility = View.GONE
+
+            val mapaCalor = MapaCalor(webView, mapView.mapCenter as GeoPoint)
+            mapaCalor.mostrarMapaCalor(unSocList)
+
+        } else {
+            webView.visibility = View.GONE
+            mapView.visibility = View.VISIBLE
+        }
+    }
+
+    private fun verMapaRecorridos(unSocList: List<UnidSocial>) {
+
+        var routePoints = emptyList<GeoPoint>()
+        var recorr = unSocList.first().recorrId
+
+        removerPolilinea()
+        removerMarcadores()
+
+        for (unSoc in unSocList) {
+            if (recorr != unSoc.recorrId) {
+                agregarPolilinea(routePoints)
+                routePoints = emptyList()
+                recorr = unSoc.recorrId
+            }
+            // acumular el recorrido en transito. sera insertado al mapa cuando aparezca uno nuevo
+            routePoints = routePoints.plus(geo(unSoc))
+            agregarMarcador(unSoc)  // los puntos se insertan en cada pasada "mapView.overlays.add"
+        }
+        agregarPolilinea(routePoints)
+        val startPoint = routePoints.first()
+        mapController.setCenter(startPoint)
+        mapView.invalidate() // Actualizar el mapa
     }
 
     override fun onResume() {
@@ -177,6 +210,21 @@ class OSMFragment : Fragment(), MapEventsReceiver {
             width = 5.0f
         }
         mapView.overlays.add(polyline)
+        polylines.add(polyline)
+    }
+
+    private fun removerPolilinea() {
+        if (polylines.isNotEmpty()) {
+            polylines.forEach { mapView.overlays.remove(it) }
+            polylines.clear()
+        }
+    }
+
+    private fun removerMarcadores() {
+        if (markers.isNotEmpty()) {
+            markers.forEach { mapView.overlays.remove(it) }
+            markers.clear()
+        }
     }
 
     private fun agregarMarcador(unSoc: UnidSocial) {
@@ -199,29 +247,9 @@ class OSMFragment : Fragment(), MapEventsReceiver {
             }
             true
         }
-
         marker.infoWindow = infoWindow
         mapView.overlays.add(marker)
-    }
-
-    private fun actualizarMapaCalor(isChecked: Boolean) {
-        if (isChecked) {
-            webView.visibility = View.VISIBLE
-            mapView.visibility = View.GONE
-
-            if (::unSocList.isInitialized) {
-                val mapaCalor = MapaCalor(webView, mapView.mapCenter as GeoPoint)
-                mapaCalor.mostrarMapaCalor(unSocList)
-            } else {
-                Toast.makeText(activity, "Aguarda la carga de esta pantalla", Toast.LENGTH_LONG)
-                    .show()
-                chkMapaCalor.isChecked = false
-            }
-
-        } else {
-            webView.visibility = View.GONE
-            mapView.visibility = View.VISIBLE
-        }
+        markers.add(marker)
     }
 
     private fun geo(unSoc: UnidSocial): GeoPoint {

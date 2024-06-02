@@ -6,8 +6,6 @@ import java.util.UUID
 
 class ETL(private val context: Context) {
 
-    private val LAT_CENPAT = "-42.785147"
-    private val LON_CENPAT = "-65.008660"
     private val idMapDia = mutableMapOf<String, UUID>()
     private val idMapRecorr = mutableMapOf<String, ArrayList<String>>()
 
@@ -93,13 +91,10 @@ class ETL(private val context: Context) {
     }
 
     fun ordenar(mapas: List<Map<String, String>>): List<Map<String, String>> {
-
-        val mapasPiolis = rellenarNulos(mapas, "lat0", LAT_CENPAT)
-        val mapotas = rellenarNulos(mapasPiolis, "lon0", LAT_CENPAT)
-        return sortCSV(mapotas, "lat0", "lon0")
+        return sortCSV(mapas, "lat0", "lon0")
     }
 
-    fun rellenarNulos(
+    private fun rellenarNulos(
         mapas: List<Map<String, String>>,
         clave: String,
         valorDefecto: String

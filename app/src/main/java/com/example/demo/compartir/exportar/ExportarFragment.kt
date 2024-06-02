@@ -1,14 +1,11 @@
 package com.example.demo.compartir.exportar
 
-import android.Manifest
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.demo.database.HarenKarenRoomDatabase
@@ -24,7 +21,6 @@ class ExportarFragment : Fragment() {
     private var _binding: FragmentExportarBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var comBT: ExportarBT
     private lateinit var comWF: ExportarWF
 
     override fun onCreateView(
@@ -35,11 +31,8 @@ class ExportarFragment : Fragment() {
 
         binding.emailBtn.setOnClickListener { enviarMedioExterno() }
         binding.medioBtn.setOnClickListener { enviarConcentrador() }
-
-        binding.radioBt.setOnClickListener { clickBT() }
         binding.radioWifi.setOnClickListener { clickWF() }
 
-        comBT = ExportarBT(requireContext(), binding.txtMasterBt.text.toString())
         comWF = ExportarWF(requireContext())
 
         return binding.root
@@ -57,31 +50,7 @@ class ExportarFragment : Fragment() {
         }
     }
 
-    private fun clickBT() {
-        apagarServNSD()
-
-        binding.txtMasterBt.isEnabled = true
-        binding.medioBtn.text = "enviar por BT"
-
-        val datosConcatenados = StringBuilder()
-        for (elemento in comBT.obtenerDispositivosEmparejados()) {
-            if (ActivityCompat.checkSelfPermission(
-                    requireContext(),
-                    Manifest.permission.BLUETOOTH_CONNECT
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                return
-            }
-            datosConcatenados.append("MAC: ${elemento.address}, Alias: ${elemento.name}\n")
-        }
-        binding.recepcionBt.text = datosConcatenados.toString()
-    }
-
     private fun clickWF() {
-
-        binding.txtMasterBt.isEnabled = false
-        binding.medioBtn.text = "destinatarios"
-
         val listaParcel = prepararDatos()
         comWF.descubrir(listaParcel)
     }
@@ -104,10 +73,6 @@ class ExportarFragment : Fragment() {
     private fun enviarConcentrador() {
         if (binding.radioWifi.isChecked)
             comWF.levantarModal()
-        if (binding.radioBt.isChecked) {
-            val listaParcel = prepararDatos()
-            comBT.activarComoRTU(listaParcel)
-        }
     }
 
     private suspend fun getEntidades(): List<EntidadesPlanas> {

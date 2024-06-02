@@ -92,29 +92,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="seleccione medio" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="ID destino" />
-
-            <EditText
-                android:id="@+id/txt_master_bt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:hint="alias bluetooth del concentrador"
-                android:enabled="false" />
-        </LinearLayout>
+            android:text="destinatarios" />
 
         <TextView
-            android:id="@+id/recepcion_bt"
+            android:id="@+id/envio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>

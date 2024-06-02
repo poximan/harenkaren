@@ -40,7 +40,6 @@ class CreadorCSV {
                     "${entidad.m_otros_sams_cerca},${entidad.m_otros_sams_lejos},${entidad.unsoc_fecha}," +
                     "${entidad.unsoc_latitud},${entidad.unsoc_longitud},${entidad.photo_path},${entidad.comentario}"
         }
-
         return header + csvRows
     }
 
