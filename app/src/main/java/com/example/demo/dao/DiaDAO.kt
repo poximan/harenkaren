@@ -21,15 +21,6 @@ interface DiaDAO {
     @Query("SELECT * from dia WHERE id = :idDia")
     fun getDiaByUUID(idDia: UUID): Dia
 
-    @Query("""
-        SELECT COUNT(*) AS contador
-        FROM unidsocial us
-        JOIN recorrido r ON us.id_recorrido = r.id
-        JOIN dia d ON r.id_dia = d.id
-        WHERE d.id = :id
-    """ )
-    fun contarUnSocPorDia(id: UUID): Int
-
     /*
     cuando se da de alta una entidad que no existio nunca en este ni en ningun
     otro dispositivo, se usa insertConUUID(elem) para asignar UUID unico.

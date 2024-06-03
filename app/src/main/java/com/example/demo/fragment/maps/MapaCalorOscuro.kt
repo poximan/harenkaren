@@ -7,7 +7,7 @@ import com.example.demo.model.UnidSocial
 import com.google.gson.Gson
 import org.osmdroid.util.GeoPoint
 
-class MapaCalor(private val webView: WebView, private val geoPoint: GeoPoint) {
+class MapaCalorOscuro(private val webView: WebView, private val geoPoint: GeoPoint) {
 
     fun mostrarMapaCalor(unSocList: List<UnidSocial>) {
         webView.visibility = View.VISIBLE
@@ -79,10 +79,10 @@ class MapaCalor(private val webView: WebView, private val geoPoint: GeoPoint) {
                                     lat: ${geoPoint.latitude}, 
                                     lon: ${geoPoint.longitude} 
                                 },
-                                style: "carto-positron",
+                                style: "carto-darkmatter",
                                 zoom: 8
                             },
-                           coloraxis: { colorscale: 'RdBu' }
+                           coloraxis: { colorscale: "Surface" }
                         };
                         Plotly.newPlot("myDiv", data, layout);
                     </script>
@@ -94,3 +94,11 @@ class MapaCalor(private val webView: WebView, private val geoPoint: GeoPoint) {
         return staticHtmlIni + dynamicHtml + staticHtmlEnd
     }
 }
+
+/*
+coloraxis: { colorscale: [
+                              [0.0, "#E6E6FA"],
+                              [0.5, "#800080"],
+                              [1.0, "#4B0082"]
+                           ]}
+ */

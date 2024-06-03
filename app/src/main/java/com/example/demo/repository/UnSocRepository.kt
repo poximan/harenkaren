@@ -28,12 +28,26 @@ class UnSocRepository(private val dao: UnSocDAO) {
         return dao.getMaxRegistro(idRecorr)
     }
 
-    fun readSumUnSocByRecorrId(id: UUID): UnidSocial {
-        return dao.getSumUnSocByRecorrId(id)
+    /*
+    SQL para graficar
+     */
+    fun readSumUnSocByDiaId(id: UUID): UnidSocial? {
+        return try {
+            dao.getTotalByDiaId(id)
+        } catch (e: NullPointerException) {
+            null
+        }
     }
 
-    fun readSumUnSocByDiaId(id: UUID): UnidSocial {
-        return dao.getTotalByDiaId(id)
+    /*
+    SQL para graficar
+     */
+    fun readSumUnSocByRecorrId(id: UUID): UnidSocial? {
+        return try {
+            dao.getTotalByRecorrId(id)
+        } catch (e: NullPointerException) {
+            null
+        }
     }
 
     fun readSumTotal(): UnidSocial {

@@ -162,7 +162,7 @@ class OSMFragment : Fragment(), MapEventsReceiver {
     private fun resolverVisibildiad(unSocList: List<UnidSocial>) {
         if(chkMapaCalor.isChecked){
             mapView.visibility = View.GONE
-            val mapaCalor = MapaCalor(webView, mapView.mapCenter as GeoPoint)
+            val mapaCalor = MapaCalorOscuro(webView, mapView.mapCenter as GeoPoint)
             mapaCalor.mostrarMapaCalor(unSocList)
         }
 

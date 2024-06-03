@@ -48,12 +48,8 @@ class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
     }
 
     override fun onItemClick(dia: Dia) {
-
-        if(diaViewModel.contarUnSocPorDia(dia.id) > 0){
-            val action = DiaListFragmentDirections.goToDiaDetailAction(dia)
-            findNavController().navigate(action)
-        } else
-            Toast.makeText(activity, "No existen registros asociados a este dia", Toast.LENGTH_LONG).show()
+        val action = DiaListFragmentDirections.goToDiaDetailAction(dia)
+        findNavController().navigate(action)
     }
 
     override fun onIconClick(dia: Dia) {

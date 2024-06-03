@@ -60,6 +60,7 @@ class UnSocListGrafAdapter(private val idRecorrido: UUID) {
                             }
                         };
                         Plotly.newPlot('chart', data, layout);
+                        
                     </script>
                 </body>
             </html>
@@ -105,10 +106,11 @@ class UnSocListGrafAdapter(private val idRecorrido: UUID) {
             var $atribString = {
                 x: $xval,
                 y: $yval,
-                text: $xtext,
+                text: $xtext,                
                 name: '$atribString',
                 orientation: 'h',
-                type: 'bar'
+                type: 'bar',
+                hovertemplate: 'reg=%{y}<br>%{text}=%{x}'
             };
         """.trimIndent()
             val data = "$atribString"

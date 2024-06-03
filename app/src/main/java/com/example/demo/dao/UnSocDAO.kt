@@ -11,10 +11,6 @@ import com.example.demo.exception.UUIDRepetidoException
 import com.example.demo.model.EntidadesPlanas
 import com.example.demo.model.UnidSocial
 import com.example.demo.servicios.GestorUUID
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.util.UUID
 
 @Dao
@@ -178,41 +174,6 @@ interface UnSocDAO {
 
     @Query(
         "SELECT \n" +
-                "   id, id_recorrido, orden,\n" +
-                "   pto_observacion, ctx_social, tpo_sustrato,\n" +
-                "   SUM(v_alfa_s4ad) AS v_alfa_s4ad,\n" +
-                "   SUM(v_alfa_sams) AS v_alfa_sams,\n" +
-                "   SUM(v_hembras_ad) AS v_hembras_ad,\n" +
-                "   SUM(v_crias) AS v_crias,\n" +
-                "   SUM(v_destetados) AS v_destetados,\n" +
-                "   SUM(v_juveniles) AS v_juveniles,\n" +
-                "   SUM(v_s4ad_perif) AS v_s4ad_perif,\n" +
-                "   SUM(v_s4ad_cerca) AS v_s4ad_cerca,\n" +
-                "   SUM(v_s4ad_lejos) AS v_s4ad_lejos,\n" +
-                "   SUM(v_otros_sams_perif) AS v_otros_sams_perif,\n" +
-                "   SUM(v_otros_sams_cerca) AS v_otros_sams_cerca,\n" +
-                "   SUM(v_otros_sams_lejos) AS v_otros_sams_lejos,\n" +
-                "   SUM(m_alfa_s4ad) AS m_alfa_s4ad,\n" +
-                "   SUM(m_alfa_sams) AS m_alfa_sams,\n" +
-                "   SUM(m_hembras_ad) AS m_hembras_ad,\n" +
-                "   SUM(m_crias) AS m_crias,\n" +
-                "   SUM(m_destetados) AS m_destetados,\n" +
-                "   SUM(m_juveniles) AS m_juveniles,\n" +
-                "   SUM(m_s4ad_perif) AS m_s4ad_perif,\n" +
-                "   SUM(m_s4ad_cerca) AS m_s4ad_cerca,\n" +
-                "   SUM(m_s4ad_lejos) AS m_s4ad_lejos,\n" +
-                "   SUM(m_otros_sams_perif) AS m_otros_sams_perif,\n" +
-                "   SUM(m_otros_sams_cerca) AS m_otros_sams_cerca,\n" +
-                "   SUM(m_otros_sams_lejos) AS m_otros_sams_lejos,\n" +
-                "   date, latitud, longitud, photo_path, comentario \n" +
-                "FROM unidsocial\n" +
-                "WHERE \n" +
-                "   unidsocial.id_recorrido = :idRecorr"
-    )
-    fun getSumUnSocByRecorrId(idRecorr: UUID): UnidSocial
-
-    @Query(
-        "SELECT \n" +
                 "   unidsocial.id, id_recorrido, unidsocial.orden,\n" +
                 "   pto_observacion, ctx_social, tpo_sustrato,\n" +
                 "   SUM(v_alfa_s4ad) AS v_alfa_s4ad,\n" +
@@ -250,6 +211,41 @@ interface UnSocDAO {
                 "   dia.id = :id"
     )
     fun getTotalByDiaId(id: UUID): UnidSocial
+
+    @Query(
+        "SELECT \n" +
+                "   id, id_recorrido, orden,\n" +
+                "   pto_observacion, ctx_social, tpo_sustrato,\n" +
+                "   SUM(v_alfa_s4ad) AS v_alfa_s4ad,\n" +
+                "   SUM(v_alfa_sams) AS v_alfa_sams,\n" +
+                "   SUM(v_hembras_ad) AS v_hembras_ad,\n" +
+                "   SUM(v_crias) AS v_crias,\n" +
+                "   SUM(v_destetados) AS v_destetados,\n" +
+                "   SUM(v_juveniles) AS v_juveniles,\n" +
+                "   SUM(v_s4ad_perif) AS v_s4ad_perif,\n" +
+                "   SUM(v_s4ad_cerca) AS v_s4ad_cerca,\n" +
+                "   SUM(v_s4ad_lejos) AS v_s4ad_lejos,\n" +
+                "   SUM(v_otros_sams_perif) AS v_otros_sams_perif,\n" +
+                "   SUM(v_otros_sams_cerca) AS v_otros_sams_cerca,\n" +
+                "   SUM(v_otros_sams_lejos) AS v_otros_sams_lejos,\n" +
+                "   SUM(m_alfa_s4ad) AS m_alfa_s4ad,\n" +
+                "   SUM(m_alfa_sams) AS m_alfa_sams,\n" +
+                "   SUM(m_hembras_ad) AS m_hembras_ad,\n" +
+                "   SUM(m_crias) AS m_crias,\n" +
+                "   SUM(m_destetados) AS m_destetados,\n" +
+                "   SUM(m_juveniles) AS m_juveniles,\n" +
+                "   SUM(m_s4ad_perif) AS m_s4ad_perif,\n" +
+                "   SUM(m_s4ad_cerca) AS m_s4ad_cerca,\n" +
+                "   SUM(m_s4ad_lejos) AS m_s4ad_lejos,\n" +
+                "   SUM(m_otros_sams_perif) AS m_otros_sams_perif,\n" +
+                "   SUM(m_otros_sams_cerca) AS m_otros_sams_cerca,\n" +
+                "   SUM(m_otros_sams_lejos) AS m_otros_sams_lejos,\n" +
+                "   date, latitud, longitud, photo_path, comentario \n" +
+                "FROM unidsocial\n" +
+                "WHERE \n" +
+                "   unidsocial.id_recorrido = :idRecorr"
+    )
+    fun getTotalByRecorrId(idRecorr: UUID): UnidSocial
 
     @Query(
         "SELECT \n" +

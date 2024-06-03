@@ -1,5 +1,6 @@
 package com.example.demo.fragment.statistics
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -33,7 +34,7 @@ class StatisticsFragment : Fragment() {
     private val args: StatisticsFragmentArgs by navArgs()
 
     private var uuid: UUID = DevFragment.UUID_NULO
-    private lateinit var unidSocial: UnidSocial
+    private var unidSocial: UnidSocial? = null
     private var contadoresNoNulos: List<String> = emptyList()
 
     override fun onCreateView(
@@ -81,7 +82,12 @@ class StatisticsFragment : Fragment() {
 
     private fun tomarDatos() {
 
-        if (!::unidSocial.isInitialized) {
+        /*
+        es importante diferenciar si es la primera vez que se entra a la pantalla o ya viene estando
+        e interactua. cuando el usuario cambia un filtro la pregunta se reestructura pero
+        con el mismo set de datos, no hace falta volver a hacer la consulta a BD
+         */
+        if (unidSocial == null) {
 
             val viewModel = UnSocViewModel(requireActivity().application)
             when (val entidad = args.entidad) {
@@ -114,20 +120,10 @@ class StatisticsFragment : Fragment() {
             graficar()
     }
 
-    private fun unaUnidadSocial(viewModel: UnSocViewModel) {
+    private fun todosLosDias(viewModel: UnSocViewModel) {
 
         CoroutineScope(Dispatchers.IO).launch {
-            unidSocial = viewModel.readUnico(uuid)
-            withContext(Dispatchers.Main) {
-                graficar()
-            }
-        }
-    }
-
-    private fun unRecorrido(viewModel: UnSocViewModel) {
-
-        CoroutineScope(Dispatchers.IO).launch {
-            unidSocial = viewModel.readSumRecorr(uuid)
+            unidSocial = viewModel.readSumTotal()
             withContext(Dispatchers.Main) {
                 graficar()
             }
@@ -139,15 +135,33 @@ class StatisticsFragment : Fragment() {
         CoroutineScope(Dispatchers.IO).launch {
             unidSocial = viewModel.readSumDia(uuid)
             withContext(Dispatchers.Main) {
-                graficar()
+                if (unidSocial != null) {
+                    graficar()
+                } else {
+                    showErrorDialog("No existen registros asociados para el dia seleccionado")
+                }
             }
         }
     }
 
-    private fun todosLosDias(viewModel: UnSocViewModel) {
+    private fun unRecorrido(viewModel: UnSocViewModel) {
 
         CoroutineScope(Dispatchers.IO).launch {
-            unidSocial = viewModel.readSumTotal()
+            unidSocial = viewModel.readSumRecorr(uuid)
+            withContext(Dispatchers.Main) {
+                if (unidSocial != null) {
+                    graficar()
+                } else {
+                    showErrorDialog("No existen registros asociados para el recorrido seleccionado")
+                }
+            }
+        }
+    }
+
+    private fun unaUnidadSocial(viewModel: UnSocViewModel) {
+
+        CoroutineScope(Dispatchers.IO).launch {
+            unidSocial = viewModel.readUnico(uuid)
             withContext(Dispatchers.Main) {
                 graficar()
             }
@@ -159,12 +173,12 @@ class StatisticsFragment : Fragment() {
         val pieChart: PieChart = view!!.findViewById(R.id.piechart)
         pieChart.clearChart()
 
-        val contadores = unidSocial.getContadores()
+        val contadores = unidSocial!!.getContadores()
         for (atribString in contadores) {
             ocultarEtiquetas(atribString)
         }
 
-        contadoresNoNulos = unidSocial.getContadoresNoNulos()
+        contadoresNoNulos = unidSocial!!.getContadoresNoNulos()
         for (atribString in contadoresNoNulos) {
 
             asignarValorPorReflexion(atribString)
@@ -206,7 +220,7 @@ class StatisticsFragment : Fragment() {
             val textView = field.get(binding) as TextView
 
             // obtengo un objeto Field
-            val valorAtributo = unidSocial.javaClass.getDeclaredField(atribString)
+            val valorAtributo = unidSocial!!.javaClass.getDeclaredField(atribString)
             valorAtributo.isAccessible = true
             // utilizar el objeto Field para obtener el valor del atributo en unidSocial.
             val valor = valorAtributo.get(unidSocial)
@@ -229,7 +243,7 @@ class StatisticsFragment : Fragment() {
 
     private fun setData(atribString: String): PieModel {
 
-        val valorAtributo = unidSocial.javaClass.getDeclaredField(atribString)
+        val valorAtributo = unidSocial!!.javaClass.getDeclaredField(atribString)
         valorAtributo.isAccessible = true
         // utilizar el objeto Field para obtener el valor del atributo en unidSocial.
         val valor = (valorAtributo.get(unidSocial) as Int).toFloat()
@@ -270,5 +284,16 @@ class StatisticsFragment : Fragment() {
 
     private fun goBack() {
         findNavController().popBackStack()
+    }
+
+    private fun showErrorDialog(mensaje: String) {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Error")
+            .setMessage(mensaje)
+            .setPositiveButton("Volver") { dialog, _ ->
+                dialog.dismiss()
+                goBack()
+            }
+            .show()
     }
 }
