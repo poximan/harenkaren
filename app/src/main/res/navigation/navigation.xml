@@ -92,49 +92,13 @@
             android:label="Fechas"
             tools:layout="@layout/fragment_dia_list">
             <action
-                android:id="@+id/goToDiaDetailAction"
-                app:destination="@id/dia_detail_fragment" />
-            <action
-                android:id="@+id/goToNvoDiaAction"
-                app:destination="@id/dia_add_fragment" />
+                android:id="@+id/goToRecorrListAction"
+                app:destination="@id/recorrido" />
             <action
                 android:id="@+id/goToGrafDdeDiaListAction"
                 app:destination="@id/statistics_fragment" />
-
         </fragment>
-        <fragment
-            android:id="@+id/dia_add_fragment"
-            android:name="com.example.demo.fragment.add.DiaAddFragment"
-            android:label="Nuevo dia"
-            tools:layout="@layout/fragment_dia_add">
 
-        </fragment>
-        <fragment
-            android:id="@+id/dia_detail_fragment"
-            android:name="com.example.demo.fragment.detail.DiaDetailFragment"
-            android:label="Detalle dia"
-            tools:layout="@layout/fragment_dia_detail">
-
-            <argument
-                android:name="diaActual"
-                app:argType="com.example.demo.model.Dia" />
-
-            <action
-                android:id="@+id/goToDiaListAction"
-                app:destination="@id/dia_list_fragment"
-                app:enterAnim="@android:anim/fade_in"
-                app:exitAnim="@android:anim/fade_out"
-                app:popEnterAnim="@android:anim/fade_in"
-                app:popExitAnim="@android:anim/fade_out" />
-
-            <action
-                android:id="@+id/goToRecorrListFromDiaDetailAction"
-                app:destination="@id/recorrido"
-                app:enterAnim="@android:anim/fade_in"
-                app:exitAnim="@android:anim/fade_out"
-                app:popEnterAnim="@android:anim/fade_in"
-                app:popExitAnim="@android:anim/fade_out" />
-        </fragment>
         <navigation
             android:id="@+id/recorrido"
             app:startDestination="@id/recorr_list_fragment">

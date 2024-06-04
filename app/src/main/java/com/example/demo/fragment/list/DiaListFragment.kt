@@ -15,12 +15,15 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
+import com.example.demo.DevFragment
 import com.example.demo.R
 import com.example.demo.adapter.DiaListAdapter
 import com.example.demo.databinding.FragmentDiaListBinding
 import com.example.demo.model.Dia
+import com.example.demo.servicios.GestorUUID
 import com.example.demo.viewModel.DiaViewModel
 import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
 
 class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
@@ -48,7 +51,7 @@ class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
     }
 
     override fun onItemClick(dia: Dia) {
-        val action = DiaListFragmentDirections.goToDiaDetailAction(dia)
+        val action = DiaListFragmentDirections.goToRecorrListAction(dia.id)
         findNavController().navigate(action)
     }
 
@@ -62,9 +65,9 @@ class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
     }
 
     private fun nvoDia() {
-        val currentDate = getCurrentDate()
 
         diaViewModel.allDia.observe(viewLifecycleOwner) { elem ->
+            val currentDate = getCurrentDate()
             val entryExists = elem.any { it.fecha == currentDate }
 
             if (entryExists) {
@@ -74,26 +77,18 @@ class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
                 builder.setMessage("Ya existe una entrada para este dia. ¿Desea continuar de todos modos?")
 
                 builder.setPositiveButton("Sí") { _, _ ->
-                    findNavController().navigate(R.id.goToNvoDiaAction)
+                    confirmarDia(currentDate)
                 }
-                builder.setNegativeButton("No") { _, _ -> } // no hacer nada
+                builder.setNegativeButton("No") { _, _ ->
+                } // no hacer nada
 
                 val dialog = builder.create()
                 dialog.show()
             } else {
-                // Si no se encuentra ninguna entrada con la fecha actual, crear
-                findNavController().navigate(R.id.goToNvoDiaAction)
+                // Si no se encuentra ninguna entrada con la fecha actual
+                confirmarDia(currentDate)
             }
         }
-    }
-
-    private fun getCurrentDate(): String {
-
-        val formato = requireContext().resources.getString(R.string.formato_dia)
-
-        val dateFormat = SimpleDateFormat(formato, Locale.getDefault())
-        val currentDate = Calendar.getInstance().time
-        return dateFormat.format(currentDate)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -209,5 +204,22 @@ class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
             }
         }
         return result
+    }
+
+    private fun confirmarDia(currentDate: String){
+        val dia = dataDesdeIU(currentDate)
+        diaViewModel.insert(dia)
+        Toast.makeText(activity, "Dia agregado correctamente", Toast.LENGTH_LONG).show()
+    }
+
+    private fun dataDesdeIU(timestamp: String): Dia {
+        val celularId = GestorUUID.obtenerAndroidID()
+        val uuid = DevFragment.UUID_NULO
+        return Dia(celularId, uuid, 0, timestamp)
+    }
+
+    private fun getCurrentDate(): String {
+        val formato = requireContext().resources.getString(R.string.formato_dia)
+        return SimpleDateFormat(formato).format(Date())
     }
 }
