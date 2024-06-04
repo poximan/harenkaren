@@ -110,7 +110,7 @@ class UnSocListGrafAdapter(private val idRecorrido: UUID) {
                 name: '$atribString',
                 orientation: 'h',
                 type: 'bar',
-                hovertemplate: 'reg=%{y}<br>%{text}=%{x}'
+                hovertemplate: 'reg n°%{y}<br>%{text}=%{x}'
             };
         """.trimIndent()
             val data = "$atribString"

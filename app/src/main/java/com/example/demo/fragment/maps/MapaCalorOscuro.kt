@@ -15,7 +15,13 @@ class MapaCalorOscuro(private val webView: WebView, private val geoPoint: GeoPoi
         webSettings.javaScriptEnabled = true
 
         val htmlContent = generarHTML(unSocList)
-        webView.loadDataWithBaseURL("file:///android_asset/index.html", htmlContent, "text/html", "UTF-8", null)
+        webView.loadDataWithBaseURL(
+            "file:///android_asset/index.html",
+            htmlContent,
+            "text/html",
+            "UTF-8",
+            null
+        )
     }
 
     private fun generarHTML(unSocList: List<UnidSocial>): String {
@@ -82,7 +88,16 @@ class MapaCalorOscuro(private val webView: WebView, private val geoPoint: GeoPoi
                                 style: "carto-darkmatter",
                                 zoom: 8
                             },
-                           coloraxis: { colorscale: "Surface" }
+                            coloraxis: {
+                                colorscale: [
+                                    [0.0, "#4B0082"],  // Violeta (mínima)
+                                    [0.8, "#FF7F00"],  // Transición (naranja)
+                                    [1.0, "#FFD700"]   // Amarillo (máxima)
+                                ],
+                                colorbar: {
+                                    title: 'Colorbar'
+                                }
+                            },
                         };
                         Plotly.newPlot("myDiv", data, layout);
                     </script>

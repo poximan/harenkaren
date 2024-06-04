@@ -9,6 +9,7 @@ import android.webkit.WebView
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.CheckBox
+import android.widget.RadioButton
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -160,13 +161,24 @@ class OSMFragment : Fragment(), MapEventsReceiver {
     }
 
     private fun resolverVisibildiad(unSocList: List<UnidSocial>) {
-        if(chkMapaCalor.isChecked){
-            mapView.visibility = View.GONE
-            val mapaCalor = MapaCalorOscuro(webView, mapView.mapCenter as GeoPoint)
-            mapaCalor.mostrarMapaCalor(unSocList)
-        }
+        val claro = (view!!.findViewById(R.id.radioMapCla) as RadioButton).isChecked
+        val oscuro = (view!!.findViewById(R.id.radioMapOsc) as RadioButton).isChecked
 
+        if(chkMapaCalor.isChecked && (claro || oscuro)){
+            mapView.visibility = View.GONE
+
+            if(claro){
+                val mapaCalor = MapaCalor(webView, mapView.mapCenter as GeoPoint)
+                mapaCalor.mostrarMapaCalor(unSocList)
+            } else {
+                val mapaCalor = MapaCalorOscuro(webView, mapView.mapCenter as GeoPoint)
+                mapaCalor.mostrarMapaCalor(unSocList)
+            }
+        }
         else{
+            if(chkMapaCalor.isChecked)
+                Toast.makeText(activity, "Elegite un tipo de mapa de calor, capo", Toast.LENGTH_LONG).show()
+
             webView.visibility = View.GONE
             mostrarMapaRecorridos(unSocList)
         }
