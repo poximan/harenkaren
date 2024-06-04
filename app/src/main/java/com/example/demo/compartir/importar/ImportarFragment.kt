@@ -103,7 +103,7 @@ class ImportarFragment : Fragment(), RegistroDistribuible, ListaImportable {
             val recorrId = etl.extraerRecorrId(map)
             val unidSocId = etl.extraerUnSocId(map)
 
-            val fechaTransformada = etl.transformarFecha(map["fecha"]!!)
+            val fechaTransformada = etl.transformarFecha(map["fecha"]!!).substringBefore(" - ")
             val lat0 = etl.transformarLat(map["lat0"]!!)
             val lon0 = etl.transformarLon(map["lon0"]!!)
             val ptoObs = etl.transformarPtoObservacion("")
