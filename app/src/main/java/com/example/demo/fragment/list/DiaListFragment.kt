@@ -65,9 +65,10 @@ class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
     }
 
     private fun nvoDia() {
+        val currentDate = getCurrentDate()
 
         diaViewModel.allDia.observe(viewLifecycleOwner) { elem ->
-            val currentDate = getCurrentDate()
+
             val entryExists = elem.any { it.fecha == currentDate }
 
             if (entryExists) {
