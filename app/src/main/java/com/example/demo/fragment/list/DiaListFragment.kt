@@ -24,7 +24,6 @@ import com.example.demo.servicios.GestorUUID
 import com.example.demo.viewModel.DiaViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
-import java.util.Locale
 
 class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
 
@@ -66,30 +65,7 @@ class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
 
     private fun nvoDia() {
         val currentDate = getCurrentDate()
-
-        diaViewModel.allDia.observe(viewLifecycleOwner) { elem ->
-
-            val entryExists = elem.any { it.fecha == currentDate }
-
-            if (entryExists) {
-                // Si se encuentra una entrada con la fecha actual, mostrar un AlertDialog
-                val builder = AlertDialog.Builder(requireContext())
-                builder.setTitle("Dia en curso")
-                builder.setMessage("Ya existe una entrada para este dia. ¿Desea continuar de todos modos?")
-
-                builder.setPositiveButton("Sí") { _, _ ->
-                    confirmarDia(currentDate)
-                }
-                builder.setNegativeButton("No") { _, _ ->
-                } // no hacer nada
-
-                val dialog = builder.create()
-                dialog.show()
-            } else {
-                // Si no se encuentra ninguna entrada con la fecha actual
-                confirmarDia(currentDate)
-            }
-        }
+        confirmarDia(currentDate)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -97,23 +73,19 @@ class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
         return when (item.itemId) {
             R.id.filtro_ejecutar -> {
                 filtrar()
                 true
             }
-
             R.id.filtro_limpiar -> {
                 loadFullList()
                 true
             }
-
             R.id.ayuda -> {
                 mostrarAyuda()
                 true
             }
-
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -137,11 +109,9 @@ class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
             "Esta pantalla representa una lista de dias, " +
                     "en donde cada dia esta representado por una fila.\n$texto"
         )
-
         builder.setPositiveButton("OK") { dialog, _ ->
             dialog.dismiss()
         }
-
         val dialog = builder.create()
         dialog.show()
     }
