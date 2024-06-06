@@ -18,28 +18,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Haren (H)" />
+            android:text="@string/ctx_haren" />
 
         <RadioButton
             android:id="@+id/ctxGpoHarenRadioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Grupo de Harenes (GH)" />
+            android:text="@string/ctx_gpoHarenes" />
 
         <RadioButton
             android:id="@+id/ctxPjaSolitariaRadioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Pareja Solitaria (PS)" />
+            android:text="@string/ctx_pjaSolitaria" />
 
         <RadioButton
             android:id="@+id/ctxIndivSoloRadioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Individuos Solos (S)" />
+            android:text="@string/ctx_indivSolo" />
 
     </RadioGroup>
 </androidx.constraintlayout.widget.ConstraintLayout>

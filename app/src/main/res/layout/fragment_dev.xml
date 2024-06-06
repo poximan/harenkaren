@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Poblar BD"
+            android:text="@string/dev_poblar"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent" />
 
@@ -24,19 +24,19 @@
             android:id="@+id/dias"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="dias" />
+            android:hint="@string/dev_dias" />
 
         <TextView
             android:id="@+id/recorr"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="recorridos" />
+            android:hint="@string/dev_recorr"  />
 
         <TextView
             android:id="@+id/unsoc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="unidades sociales"
+            android:hint="@string/dev_unsoc"
             android:layout_marginBottom="20dp" />
 
         <Button
@@ -44,7 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="alta usr"
+            android:text="@string/dev_usr"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent" />
     </LinearLayout>

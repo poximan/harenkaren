@@ -15,13 +15,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Extraer todos los registros, y compartir fuera de la app" />
+            android:text="@string/exp_mensajeCompartir" />
 
         <Button
             android:id="@+id/email_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="compartir"
+            android:text="@string/exp_compartir"
             android:layout_marginBottom="40dp" />
     </LinearLayout>
 
@@ -32,12 +32,10 @@
         android:gravity="bottom"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@id/linearLayout1">
-
         <View
             android:layout_width="match_parent"
             android:layout_height="5dp"
             android:background="?android:attr/listDivider" />
-
     </LinearLayout>
 
     <LinearLayout
@@ -47,36 +45,32 @@
         android:gravity="center"
         app:layout_constraintTop_toBottomOf="@id/linearLayout2"
         android:orientation="vertical">
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Entregar los registros realizados con este dispositivo. \nEsta app funcionara como terminal"
+            android:text="@string/exp_compartirPar"
             android:layout_marginBottom="20dp" />
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Eliga medio para comunicarse" />
+            android:text="@string/exp_compartirParMedio" />
 
         <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-
             <RadioButton
                 android:id="@+id/radio_bt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="bluetooth" />
-
+                android:text="@string/exp_bluetooth" />
             <RadioButton
                 android:id="@+id/radio_wifi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="wifi" />
+                android:text="@string/exp_wifi" />
         </RadioGroup>
 
     </LinearLayout>
@@ -92,7 +86,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="destinatarios" />
+            android:text="@string/exp_destinatario" />
 
         <TextView
             android:id="@+id/envio"

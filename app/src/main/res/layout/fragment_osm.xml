@@ -13,29 +13,14 @@
             android:id="@+id/chk_mapacalor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="mapa calor"/>
-
-        <RadioGroup
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginRight="20dp">
-            <RadioButton
-                android:id="@+id/radioMapCla"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="claro"/>
-            <RadioButton
-                android:id="@+id/radioMapOsc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="oscuro"/>
-        </RadioGroup>
 
         <Spinner
             android:id="@+id/filtroAnio"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:gravity="right"/>
     </LinearLayout>
 
     <org.osmdroid.views.MapView

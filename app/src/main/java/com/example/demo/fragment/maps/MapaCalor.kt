@@ -89,8 +89,6 @@ class MapaCalor(private val webView: WebView, private val geoPoint: GeoPoint) {
                 </body>
             </html>
         """.trimIndent()
-
-        println(staticHtmlIni + dynamicHtml + staticHtmlEnd)
         return staticHtmlIni + dynamicHtml + staticHtmlEnd
     }
 }

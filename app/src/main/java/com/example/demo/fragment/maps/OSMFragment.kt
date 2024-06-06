@@ -9,7 +9,6 @@ import android.webkit.WebView
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.CheckBox
-import android.widget.RadioButton
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -161,24 +160,13 @@ class OSMFragment : Fragment(), MapEventsReceiver {
     }
 
     private fun resolverVisibildiad(unSocList: List<UnidSocial>) {
-        val claro = (view!!.findViewById(R.id.radioMapCla) as RadioButton).isChecked
-        val oscuro = (view!!.findViewById(R.id.radioMapOsc) as RadioButton).isChecked
-
-        if(chkMapaCalor.isChecked && (claro || oscuro)){
+        if(chkMapaCalor.isChecked){
             mapView.visibility = View.GONE
 
-            if(claro){
-                val mapaCalor = MapaCalor(webView, mapView.mapCenter as GeoPoint)
-                mapaCalor.mostrarMapaCalor(unSocList)
-            } else {
-                val mapaCalor = MapaCalorOscuro(webView, mapView.mapCenter as GeoPoint)
-                mapaCalor.mostrarMapaCalor(unSocList)
-            }
+            val mapaCalor = MapaCalor(webView, mapView.mapCenter as GeoPoint)
+            mapaCalor.mostrarMapaCalor(unSocList)
         }
         else{
-            if(chkMapaCalor.isChecked)
-                Toast.makeText(activity, "Elegite un tipo de mapa de calor, capo", Toast.LENGTH_LONG).show()
-
             webView.visibility = View.GONE
             mostrarMapaRecorridos(unSocList)
         }
@@ -189,35 +177,39 @@ class OSMFragment : Fragment(), MapEventsReceiver {
         mapView.visibility = View.VISIBLE
 
         var routePoints = emptyList<GeoPoint>()
-        var recorr = unSocList.first().recorrId
+        try {
+            var recorr = unSocList.first().recorrId
 
-        removerPolilinea()
-        removerMarcadores()
+            removerPolilinea()
+            removerMarcadores()
 
-        for (unSoc in unSocList) {
-            if (recorr != unSoc.recorrId) {
-                agregarPolilinea(routePoints)
-                routePoints = emptyList()
-                recorr = unSoc.recorrId
+            for (unSoc in unSocList) {
+                if (recorr != unSoc.recorrId) {
+                    agregarPolilinea(routePoints)
+                    routePoints = emptyList()
+                    recorr = unSoc.recorrId
+                }
+                // acumular el recorrido en transito. sera insertado al mapa cuando aparezca uno nuevo
+                routePoints = routePoints.plus(geo(unSoc))
+                agregarMarcador(unSoc)  // los puntos se insertan en cada pasada "mapView.overlays.add"
             }
-            // acumular el recorrido en transito. sera insertado al mapa cuando aparezca uno nuevo
-            routePoints = routePoints.plus(geo(unSoc))
-            agregarMarcador(unSoc)  // los puntos se insertan en cada pasada "mapView.overlays.add"
-        }
-        agregarPolilinea(routePoints)
+            agregarPolilinea(routePoints)
 
-        val currentCenter = mapView.mapCenter as GeoPoint
-        // Verificar si currentCenter es (0.0, 0.0, 0.0)
-        var startPoint: GeoPoint = if (currentCenter.latitude == 0.0 && currentCenter.longitude == 0.0) {
-            routePoints.first()
-        } else {
-            currentCenter
-        }
+            val currentCenter = mapView.mapCenter as GeoPoint
+            // Verificar si currentCenter es (0.0, 0.0, 0.0)
+            var startPoint: GeoPoint = if (currentCenter.latitude == 0.0 && currentCenter.longitude == 0.0) {
+                routePoints.first()
+            } else {
+                currentCenter
+            }
 
-        val currentZoomLevel = mapView.zoomLevelDouble
-        mapView.invalidate() // Actualizar la vista del mapa
-        mapView.controller.setZoom(currentZoomLevel)
-        mapView.controller.setCenter(startPoint) // Restaurar el centro del mapa
+            val currentZoomLevel = mapView.zoomLevelDouble
+            mapView.invalidate() // Actualizar la vista del mapa
+            mapView.controller.setZoom(currentZoomLevel)
+            mapView.controller.setCenter(startPoint) // Restaurar el centro del mapa
+        } catch (e: NoSuchElementException){
+            Toast.makeText(requireContext(), "Para el año elegido, algun de los recorridos no posee registros asociados", Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onResume() {
