@@ -43,8 +43,14 @@ class ExpandListAdapter(
         return false
     }
 
-    override fun getGroupView(groupPosition: Int, isExpanded: Boolean, convertView: View?, parent: ViewGroup?): View {
-        val groupView = convertView ?: LayoutInflater.from(context).inflate(R.layout.group_layout, parent, false)
+    override fun getGroupView(
+        groupPosition: Int,
+        isExpanded: Boolean,
+        convertView: View?,
+        parent: ViewGroup?
+    ): View {
+        val groupView = convertView ?: LayoutInflater.from(context)
+            .inflate(R.layout.group_layout, parent, false)
 
         val groupName = groupView.findViewById<TextView>(R.id.groupName)
         groupName.text = getGroup(groupPosition).toString()
@@ -59,13 +65,20 @@ class ExpandListAdapter(
         return groupView
     }
 
-    override fun getChildView(groupPosition: Int, childPosition: Int, isLastChild: Boolean, convertView: View?, parent: ViewGroup?): View {
-        val childView = convertView ?: LayoutInflater.from(context).inflate(R.layout.child_layout, parent, false)
+    override fun getChildView(
+        groupPosition: Int,
+        childPosition: Int,
+        isLastChild: Boolean,
+        convertView: View?,
+        parent: ViewGroup?
+    ): View {
+        val childView = convertView ?: LayoutInflater.from(context)
+            .inflate(R.layout.child_layout, parent, false)
 
         val childName = childView.findViewById<TextView>(R.id.childName)
         childName.text = getChild(groupPosition, childPosition).toString()
 
-        Log.i("hijo","este es un hijo")
+        Log.i("hijo", "este es un hijo")
         return childView
     }
 

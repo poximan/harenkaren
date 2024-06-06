@@ -9,8 +9,8 @@
         android:id="@+id/censos_button"
         android:layout_width="240dp"
         android:layout_height="55dp"
-        android:text="@string/home_censos"
         android:drawableLeft="@drawable/ic_censos"
+        android:text="@string/home_censos"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -19,8 +19,8 @@
         android:id="@+id/mapa_button"
         android:layout_width="240dp"
         android:layout_height="55dp"
-        android:text="@string/home_mapa"
         android:drawableLeft="@drawable/gps"
+        android:text="@string/home_mapa"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/censos_button" />
@@ -29,8 +29,8 @@
         android:id="@+id/reportes_button"
         android:layout_width="240dp"
         android:layout_height="55dp"
-        android:text="Reportes"
         android:drawableLeft="@drawable/reportes"
+        android:text="@string/home_reportes"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/mapa_button" />
@@ -39,8 +39,8 @@
         android:id="@+id/ayuda_button"
         android:layout_width="240dp"
         android:layout_height="55dp"
-        android:text="Ayuda"
         android:drawableLeft="@drawable/ic_help"
+        android:text="@string/home_ayuda"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/reportes_button" />
@@ -49,12 +49,12 @@
         android:id="@+id/desarrolloButton"
         android:layout_width="wrap_content"
         android:layout_height="55dp"
-        android:text="@string/para_desarrollador"
         android:layout_marginTop="40dp"
+        android:background="@drawable/boton_redondeado"
+        android:text="@string/varias_desarrollador"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ayuda_button"
-        android:background="@drawable/boton_redondeado" />
+        app:layout_constraintTop_toBottomOf="@id/ayuda_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

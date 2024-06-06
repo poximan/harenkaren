@@ -121,6 +121,7 @@ class OSMFragment : Fragment(), MapEventsReceiver {
                     resolverVisibildiad(it)
                 }
             }
+
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
 
@@ -150,7 +151,8 @@ class OSMFragment : Fragment(), MapEventsReceiver {
         // ---------> HILO BACKGOUND
         CoroutineScope(Dispatchers.IO).launch {
             unSocList =
-                unSocDAO.getAllPorAnio(anio.toString()).sortedWith(compareBy({ it.recorrId }, { it.orden }))
+                unSocDAO.getAllPorAnio(anio.toString())
+                    .sortedWith(compareBy({ it.recorrId }, { it.orden }))
 
             // ---------> HILO PRINCIPAL
             withContext(Dispatchers.Main) {
@@ -160,13 +162,12 @@ class OSMFragment : Fragment(), MapEventsReceiver {
     }
 
     private fun resolverVisibildiad(unSocList: List<UnidSocial>) {
-        if(chkMapaCalor.isChecked){
+        if (chkMapaCalor.isChecked) {
             mapView.visibility = View.GONE
 
             val mapaCalor = MapaCalor(webView, mapView.mapCenter as GeoPoint)
             mapaCalor.mostrarMapaCalor(unSocList)
-        }
-        else{
+        } else {
             webView.visibility = View.GONE
             mostrarMapaRecorridos(unSocList)
         }
@@ -197,18 +198,23 @@ class OSMFragment : Fragment(), MapEventsReceiver {
 
             val currentCenter = mapView.mapCenter as GeoPoint
             // Verificar si currentCenter es (0.0, 0.0, 0.0)
-            var startPoint: GeoPoint = if (currentCenter.latitude == 0.0 && currentCenter.longitude == 0.0) {
-                routePoints.first()
-            } else {
-                currentCenter
-            }
+            var startPoint: GeoPoint =
+                if (currentCenter.latitude == 0.0 && currentCenter.longitude == 0.0) {
+                    routePoints.first()
+                } else {
+                    currentCenter
+                }
 
             val currentZoomLevel = mapView.zoomLevelDouble
             mapView.invalidate() // Actualizar la vista del mapa
             mapView.controller.setZoom(currentZoomLevel)
             mapView.controller.setCenter(startPoint) // Restaurar el centro del mapa
-        } catch (e: NoSuchElementException){
-            Toast.makeText(requireContext(), "Para el año elegido, algun de los recorridos no posee registros asociados", Toast.LENGTH_SHORT).show()
+        } catch (e: NoSuchElementException) {
+            Toast.makeText(
+                requireContext(),
+                "Para el año elegido, algun de los recorridos no posee registros asociados",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 

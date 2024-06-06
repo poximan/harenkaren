@@ -13,15 +13,15 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nombre" />
+            android:text="@string/reg_nombre" />
 
         <EditText
             android:id="@+id/editTextFirstName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
             android:hint="Nombre"
-            android:inputType="textPersonName"
-            android:layout_marginBottom="20dp" />
+            android:inputType="textPersonName" />
 
         <TextView
             android:layout_width="match_parent"
@@ -32,9 +32,9 @@
             android:id="@+id/editTextLastName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
             android:hint="Apellido"
-            android:inputType="textPersonName"
-            android:layout_marginBottom="20dp" />
+            android:inputType="textPersonName" />
 
         <TextView
             android:layout_width="match_parent"
@@ -45,9 +45,9 @@
             android:id="@+id/editTextEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
             android:hint="Email"
-            android:inputType="textEmailAddress"
-            android:layout_marginBottom="20dp" />
+            android:inputType="textEmailAddress" />
 
         <TextView
             android:layout_width="match_parent"
@@ -58,10 +58,10 @@
             android:id="@+id/editTextPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
             android:drawableRight="@drawable/visible_on"
             android:hint="Contraseña"
-            android:inputType="textPassword"
-            android:layout_marginBottom="20dp" />
+            android:inputType="textPassword" />
 
         <TextView
             android:layout_width="match_parent"

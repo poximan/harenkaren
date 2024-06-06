@@ -14,13 +14,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="mapa calor"/>
+            android:text="@string/osm_mapacalor" />
 
         <Spinner
             android:id="@+id/filtroAnio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="right"/>
+            android:gravity="right" />
     </LinearLayout>
 
     <org.osmdroid.views.MapView

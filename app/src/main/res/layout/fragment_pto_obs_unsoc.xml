@@ -18,14 +18,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="alto" />
+            android:text="@string/pto_alto" />
 
         <RadioButton
             android:id="@+id/unsocBajoRadioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="bajo" />
+            android:text="@string/pto_bajo" />
 
     </RadioGroup>
 </androidx.constraintlayout.widget.ConstraintLayout>

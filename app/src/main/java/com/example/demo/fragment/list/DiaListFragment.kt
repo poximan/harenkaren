@@ -78,14 +78,17 @@ class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
                 filtrar()
                 true
             }
+
             R.id.filtro_limpiar -> {
                 loadFullList()
                 true
             }
+
             R.id.ayuda -> {
                 mostrarAyuda()
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -177,7 +180,7 @@ class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
         return result
     }
 
-    private fun confirmarDia(currentDate: String){
+    private fun confirmarDia(currentDate: String) {
         val dia = dataDesdeIU(currentDate)
         diaViewModel.insert(dia)
         Toast.makeText(activity, "Dia agregado correctamente", Toast.LENGTH_LONG).show()

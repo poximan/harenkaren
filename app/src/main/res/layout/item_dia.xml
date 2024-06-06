@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
@@ -10,11 +9,11 @@
         android:id="@+id/num_dia"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="1"
         android:minWidth="40dp"
         android:minHeight="40dp"
-        android:hint="1"
-        android:textSize="16dp"
-        android:gravity="center" />
+        android:textSize="16dp" />
 
     <TextView
         android:id="@+id/textViewTimestamp"
@@ -27,9 +26,9 @@
         android:id="@+id/grafDia"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_graficar"
+        android:layout_gravity="center"
         android:background="@color/colorAccent"
         android:clickable="true"
-        android:layout_gravity="center"/>
+        android:src="@drawable/ic_graficar" />
 
 </LinearLayout>

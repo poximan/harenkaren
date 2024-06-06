@@ -11,10 +11,6 @@ import com.example.demo.DevFragment
 import com.example.demo.model.EntidadesPlanas
 import com.example.demo.model.Recorrido
 import com.example.demo.servicios.GestorUUID
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.util.UUID
 
 @Dao

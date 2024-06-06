@@ -5,8 +5,6 @@
     <string name="contexto_social">Ctx.soc. (Ref):</string>
     <string name="tipo_sustrato">Sustrato (Pya)</string>
 
-    <string name="title_activity_show_message">ShowMessageActivity</string>
-
     <string name="fecha_unsoc">Fecha observacion</string>
     <string name="sub_ad_metodo_seleccion">dominante (\u03B1)</string>
 
@@ -17,14 +15,15 @@
     <string name="cercano">Cerca(10-50m)</string>
     <string name="lejos">Lejos(50-100m)</string>
 
-    <string name="para_desarrollador">&lt;Desarrollador/&gt;</string>
-
     <string name="formato_dia">yyyy/MM/dd</string>
     <string name="formato_fecha">yyyy/MM/dd - HH:mm:ss</string>
 
     <string name="about">
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     </string>
+
+    <!-- uso en varios lugares -->
+    <string name="varias_desarrollador">"Desarrollador"</string>
 
     <!-- fragment_ctx_social -->
     <string name="ctx_haren">Haren (H)</string>
@@ -41,18 +40,65 @@
 
     <!-- fragment_exportar -->
     <string name="exp_mensajeCompartir">Extraer todos los registros, y compartir fuera de la app</string>
-    <string name="exp_compartir">Extraer todos los registros, y compartir fuera de la app</string>
-    <string name="exp_compartirPar">Entregar los registros realizados con este dispositivo. \nEsta app funcionara como terminal</string>
+    <string name="exp_compartir">Compartir</string>
+    <string name="exp_compartirConUnPar">Entregar los registros realizados con este dispositivo. \nEsta app funcionara como terminal</string>
     <string name="exp_compartirParMedio">"Eliga medio para comunicarse"</string>
     <string name="exp_bluetooth">"bluetooth"</string>
     <string name="exp_wifi">"wifi"</string>
-    <string name="exp_destinatario">"destinatarios"</string>
+    <string name="exp_destinatario">"Destinatarios"</string>
 
     <!-- fragment_home -->
     <string name="home_censos">censos</string>
     <string name="home_mapa">Mapa recorridos</string>
-    <string name="home_compartirPar">Entregar los registros realizados con este dispositivo. \nEsta app funcionara como terminal</string>
-    <string name="home_compartirParMedio">"Eliga medio para comunicarse"</string>
-    <string name="home_bluetooth">"bluetooth"</string>
+    <string name="home_reportes">Reportes</string>
+    <string name="home_ayuda">"Ayuda"</string>
+
+    <!-- fragment_importar -->
+    <string name="imp_mensajeCargar">Agregar registros desde csv</string>
+    <string name="imp_cargar">Cargar archivo</string>
+    <string name="imp_compartirConUnPar">Pedir los registros realizados en otro dispositivo. \nEsta app funcionará como concentrador</string>
+    <string name="imp_misdatos">"Mis datos para conexion"</string>
+
+    <!-- fragment_inicio -->
+    <string name="ini_bienvenido">Bienvenido</string>
+    <string name="ini_ingresar">Ingresar</string>
+    <string name="ini_nuevo">Soy nuev@</string>
+
+    <!-- fragment_login -->
+    <string name="log_email">Ingrese email</string>
+    <string name="log_contrasenia">Ingrese contraseña</string>
+    <string name="log_huella">Usar huella</string>
+    <string name="log_fallalog">Usuario y/o contraseña incorrecta</string>
+    <string name="log_cancelar">Cancelar</string>
+    <string name="log_in">Ingresar</string>
+
+    <!-- fragment_osm -->
+    <string name="osm_mapacalor">Mapa calor</string>
+
+    <!-- fragment_pto_obs_unsoc -->
+    <string name="pto_alto">Alto</string>
+    <string name="pto_bajo">Bajo</string>
+
+    <!-- fragment_recorr_add -->
+    <string name="rec_obsevador">Observador</string>
+    <string name="rec_area">Area recorrida</string>
+    <string name="rec_meteo">Condiciones climaticas</string>
+    <string name="rec_marea">Estado de la marea</string>
+    <string name="rec_gps">GPS</string>
+    <string name="rec_lat">Latitud</string>
+    <string name="rec_lon">Longitud</string>
+
+    <!-- fragment_recorr_detail -->
+    <string name="rec_editar">Editar</string>
+    <string name="rec_horaini">Hora inicio</string>
+    <string name="rec_gpsini">GPS inicio ==></string>
+    <string name="rec_horafin">Hora fin</string>
+    <string name="rec_gpsfin">GPS fin ==></string>
+    <string name="rec_confirmar">Confirmar</string>
+    <string name="rec_volver">Volver</string>
+    <string name="rec_registros">Registros</string>
+
+    <!-- fragment_register -->
+    <string name="reg_nombre">Nombre</string>
 
 </resources>

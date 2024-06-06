@@ -62,9 +62,11 @@ interface DiaDAO {
     @Update
     fun update(recorrido: Dia): Int
 
-    @Query("SELECT DISTINCT SUBSTR(fecha, 1, 4) AS year\n" +
-            "FROM Dia\n" +
-            "ORDER BY year")
+    @Query(
+        "SELECT DISTINCT SUBSTR(fecha, 1, 4) AS year\n" +
+                "FROM Dia\n" +
+                "ORDER BY year"
+    )
     fun getTodosAnios(): List<Int>
 
     fun insertarDesnormalizado(listaEntidadesPlanas: List<EntidadesPlanas>): Int {
@@ -74,7 +76,7 @@ interface DiaDAO {
         listaEntidadesPlanas.forEach { entidadPlana ->
             val dia = entidadPlana.getDia()
 
-            if(dia.id != ultimoID) {
+            if (dia.id != ultimoID) {
                 val existe = getDiaByUUID(dia.id)
 
                 if (existe == null) {

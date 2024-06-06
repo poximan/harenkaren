@@ -15,14 +15,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Agregar registros desde csv" />
+            android:text="@string/imp_mensajeCargar" />
 
         <Button
             android:id="@+id/importar_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="cargar archivo"
-            android:layout_marginBottom="40dp" />
+            android:layout_marginBottom="40dp"
+            android:text="@string/imp_cargar" />
     </LinearLayout>
 
     <LinearLayout
@@ -44,20 +44,20 @@
         android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/linearLayout2"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout2">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:text="Pedir los registros realizados en otro dispositivo. \nEsta app funcionará como concentrador" />
+            android:text="@string/imp_compartirConUnPar" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Eliga medio para comunicarse" />
+            android:text="@string/exp_compartirParMedio" />
 
         <RadioGroup
             android:layout_width="match_parent"
@@ -69,14 +69,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="bluetooth" />
+                android:text="@string/exp_bluetooth" />
 
             <RadioButton
                 android:id="@+id/radio_wifi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="wifi" />
+                android:text="@string/exp_wifi" />
         </RadioGroup>
 
     </LinearLayout>
@@ -92,7 +92,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:text="mis datos para conexion" />
+            android:text="@string/imp_misdatos" />
 
         <TextView
             android:id="@+id/recepcion"

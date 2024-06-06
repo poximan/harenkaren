@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/vista_login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/vista_login"
     android:layout_margin="30dp">
 
     <LinearLayout
@@ -17,8 +17,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="100dp"
-            android:textSize="20dp"
-            android:text="Ingrese Email" />
+            android:text="@string/log_email"
+            android:textSize="20dp" />
 
         <EditText
             android:id="@+id/email"
@@ -34,34 +34,34 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="40dp"
-            android:textSize="20dp"
-            android:text="Ingrese Contraseña" />
+            android:text="@string/log_contrasenia"
+            android:textSize="20dp" />
 
         <EditText
             android:id="@+id/pass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
             android:backgroundTint="@color/black"
             android:drawableRight="@drawable/visible_on"
             android:hint="Contraseña"
             android:inputType="textPassword"
-            android:layout_marginBottom="20dp"
             android:text="hdonato" />
 
         <Button
             android:id="@+id/huella"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Usar huella"
+            android:layout_gravity="center"
             android:layout_marginTop="20dp"
-            android:layout_gravity="center" />
+            android:text="@string/log_huella" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/loginFailedTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Usuario y/o contraseña incorrecta"
+        android:text="@string/log_fallalog"
         android:textSize="20dp"
         android:textStyle="bold"
         android:visibility="gone"
@@ -71,7 +71,7 @@
         android:id="@+id/cancelButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cancelar"
+        android:text="@string/log_cancelar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
 
@@ -79,7 +79,7 @@
         android:id="@+id/loginButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ingresar"
+        android:text="@string/log_in"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 

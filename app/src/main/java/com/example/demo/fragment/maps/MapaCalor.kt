@@ -15,7 +15,13 @@ class MapaCalor(private val webView: WebView, private val geoPoint: GeoPoint) {
         webSettings.javaScriptEnabled = true
 
         val htmlContent = generarHTML(unSocList)
-        webView.loadDataWithBaseURL("file:///android_asset/index.html", htmlContent, "text/html", "UTF-8", null)
+        webView.loadDataWithBaseURL(
+            "file:///android_asset/index.html",
+            htmlContent,
+            "text/html",
+            "UTF-8",
+            null
+        )
     }
 
     private fun generarHTML(unSocList: List<UnidSocial>): String {

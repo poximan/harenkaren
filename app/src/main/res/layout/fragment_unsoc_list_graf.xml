@@ -17,8 +17,8 @@
         android:clickable="true"
         app:backgroundTint="@android:color/background_light"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@id/webView"
         app:layout_constraintEnd_toStartOf="@id/cambiarActionButton"
+        app:layout_constraintStart_toStartOf="@id/webView"
         app:maxImageSize="35dp"
         app:srcCompat="@drawable/ic_home" />
 
@@ -30,8 +30,8 @@
         android:clickable="true"
         app:backgroundTint="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/homeActionButton"
         app:layout_constraintEnd_toStartOf="@id/new_unsoc_button"
+        app:layout_constraintStart_toEndOf="@id/homeActionButton"
         app:maxImageSize="35dp"
         app:srcCompat="@drawable/ic_graficar" />
 
@@ -42,9 +42,9 @@
         android:layout_marginBottom="44dp"
         android:clickable="true"
         app:backgroundTint="@android:color/background_light"
-        app:layout_constraintStart_toEndOf="@id/cambiarActionButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/webView"
+        app:layout_constraintStart_toEndOf="@id/cambiarActionButton"
         app:maxImageSize="35dp"
         app:srcCompat="@drawable/ic_add" />
 

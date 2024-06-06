@@ -25,12 +25,12 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fadeScrollbars="false"
             android:layout_weight="1"
+            android:fadeScrollbars="false"
             android:scrollbarThumbVertical="@drawable/scrollbar_thumb"
             android:scrollbarTrackVertical="@drawable/scrollbar_track">
 
-        <LinearLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -49,8 +49,8 @@
                         android:id="@+id/txt_vAlfaS4Ad"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="10dp"
-                        android:hint="alfa S4/Ad" />
+                        android:hint="alfa S4/Ad"
+                        android:paddingLeft="10dp" />
 
                     <CheckBox
                         android:id="@+id/chk_vAlfaS4Ad"
@@ -339,8 +339,8 @@
                         android:id="@+id/txt_mAlfaS4Ad"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="10dp"
-                        android:hint="alfa S4/Ad" />
+                        android:hint="alfa S4/Ad"
+                        android:paddingLeft="10dp" />
 
                     <CheckBox
                         android:id="@+id/chk_mAlfaS4Ad"

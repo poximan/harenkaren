@@ -3,8 +3,8 @@
     android:id="@+id/osm_bubble"
     android:layout_width="100dp"
     android:layout_height="100dp"
-    android:orientation="vertical"
     android:background="@android:color/white"
+    android:orientation="vertical"
     android:padding="4dp">
 
     <ImageButton

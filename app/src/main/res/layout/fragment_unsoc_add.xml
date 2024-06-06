@@ -7,16 +7,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:layout_marginHorizontal="10dp"
         android:gravity="center_horizontal"
-        android:layout_marginHorizontal="10dp">
+        android:orientation="vertical">
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabTextColor="@color/tab_color_font"
-            app:tabBackground="@color/tab_color" />
+            app:tabBackground="@color/tab_color"
+            app:tabTextColor="@color/tab_color_font" />
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewPager"

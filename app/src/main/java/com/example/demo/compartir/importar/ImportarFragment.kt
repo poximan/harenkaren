@@ -69,8 +69,9 @@ class ImportarFragment : Fragment(), RegistroDistribuible, ListaImportable {
         comWF.descubrir()
         val port = comWF.activarComoMTU()
 
-        binding.idMaster.text = "En el dispositivo que quiere entregar sus registros, anda a Exportar y presiona DESTINATARIOS." +
-                "Ahi buscame como ${comWF.miNombre()}:$port"
+        binding.idMaster.text =
+            "En el dispositivo que quiere entregar sus registros, anda a Exportar y presiona DESTINATARIOS." +
+                    "Ahi buscame como ${comWF.miNombre()}:$port"
         binding.recepcion.text = "esperando datos desde remota"
     }
 

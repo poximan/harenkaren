@@ -61,7 +61,8 @@ class LeerCSV(private val context: Context, private val callback: ListaImportabl
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val fileSize = context.contentResolver.openFileDescriptor(uri, "r")?.statSize ?: 1 // Evitar división por cero
+                val fileSize = context.contentResolver.openFileDescriptor(uri, "r")?.statSize
+                    ?: 1 // Evitar división por cero
                 var bytesRead = line?.length?.toFloat() ?: 0f
 
                 // Leer el resto del archivo
