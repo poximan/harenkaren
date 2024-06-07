@@ -51,8 +51,18 @@ class DevFragment : Fragment() {
 
         estadoBD()
         logcat()
+        setupScrollListener()
 
         return binding.root
+    }
+
+    private fun setupScrollListener() {
+        val scrollView = binding.logcatScrollView
+        scrollView.viewTreeObserver.addOnScrollChangedListener {
+            if (scrollView.scrollY == 0) {
+                logcat()
+            }
+        }
     }
 
     private fun estadoBD() {
@@ -95,7 +105,7 @@ class DevFragment : Fragment() {
         var line: String?
 
         while (bufferedReader.readLine().also { line = it } != null) {
-            val parts = line?.split(" ")
+            val parts = line?.split("\\s+".toRegex())
             if (parts != null && parts.size >= 5 && (parts[4] == "E" || parts[4] == "W")) {
                 val spannable = SpannableString(line)
                 if(parts[4] == "E")
