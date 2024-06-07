@@ -17,28 +17,30 @@
             android:id="@+id/ctxHarenRadioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="@string/ctx_haren" />
+
+        <RadioButton
+            android:id="@+id/ctxHarenSinRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ctx_harenSAlfa" />
 
         <RadioButton
             android:id="@+id/ctxGpoHarenRadioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
             android:text="@string/ctx_gpoHarenes" />
 
         <RadioButton
             android:id="@+id/ctxPjaSolitariaRadioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
             android:text="@string/ctx_pjaSolitaria" />
 
         <RadioButton
             android:id="@+id/ctxIndivSoloRadioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
             android:text="@string/ctx_indivSolo" />
 
     </RadioGroup>

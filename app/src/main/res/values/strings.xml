@@ -1,19 +1,7 @@
 <resources>
     <string name="app_name">Haren Karen</string>
 
-    <string name="punto_obs_unsoc">Punto observ.:</string>
-    <string name="contexto_social">Ctx.soc. (Ref):</string>
-    <string name="tipo_sustrato">Sustrato (Pya)</string>
-
     <string name="fecha_unsoc">Fecha observacion</string>
-    <string name="sub_ad_metodo_seleccion">dominante (\u03B1)</string>
-
-    <string name="s4_ad">S4/Ad</string>
-    <string name="Sams">Sams</string>
-
-    <string name="periferico"><![CDATA[Perif.(<10m)]]></string>
-    <string name="cercano">Cerca(10-50m)</string>
-    <string name="lejos">Lejos(50-100m)</string>
 
     <string name="formato_dia">yyyy/MM/dd</string>
     <string name="formato_fecha">yyyy/MM/dd - HH:mm:ss</string>
@@ -22,11 +10,23 @@
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     </string>
 
+    <!-- ****************************************************************** -->
+    <!-- ****** incrustados en layouts ************************************ -->
+    <!-- ****************************************************************** -->
+
     <!-- uso en varios lugares -->
     <string name="varias_desarrollador">"Desarrollador"</string>
+    <string name="varias_cancelar">Cancelar</string>
+    <string name="varias_volver">Volver</string>
+    <string name="varias_seleccione">Seleccione...</string>
+    <string name="varias_confirmar">Confirmar</string>
+    <string name="varias_gps">GPS</string>
+    <string name="varias_lat">Latitud</string>
+    <string name="varias_lon">Longitud</string>
 
     <!-- fragment_ctx_social -->
     <string name="ctx_haren">Haren (H)</string>
+    <string name="ctx_harenSAlfa">Haren s/Alfa (HsA)</string>
     <string name="ctx_gpoHarenes">Grupo de Harenes (GH)</string>
     <string name="ctx_pjaSolitaria">Pareja Solitaria (PS)</string>
     <string name="ctx_indivSolo">Individuos Solos (S)</string>
@@ -37,6 +37,12 @@
     <string name="dev_recorr">Recorridos</string>
     <string name="dev_unsoc">Unid.Sociales</string>
     <string name="dev_usr">Alta usr</string>
+    <string name="dev_logcat">Loggato</string>
+    <string name="dev_limpdias">Limp.dias</string>
+    <string name="dev_limprecorr">Limpiar\nrecorr.</string>
+    <string name="dev_limpUnsoc">Limpiar\nunid.soc.</string>
+    <string name="dev_rearmar">Rearmar\nesquema</string>
+
 
     <!-- fragment_exportar -->
     <string name="exp_mensajeCompartir">Extraer todos los registros, y compartir fuera de la app</string>
@@ -69,7 +75,6 @@
     <string name="log_contrasenia">Ingrese contraseña</string>
     <string name="log_huella">Usar huella</string>
     <string name="log_fallalog">Usuario y/o contraseña incorrecta</string>
-    <string name="log_cancelar">Cancelar</string>
     <string name="log_in">Ingresar</string>
 
     <!-- fragment_osm -->
@@ -84,9 +89,6 @@
     <string name="rec_area">Area recorrida</string>
     <string name="rec_meteo">Condiciones climaticas</string>
     <string name="rec_marea">Estado de la marea</string>
-    <string name="rec_gps">GPS</string>
-    <string name="rec_lat">Latitud</string>
-    <string name="rec_lon">Longitud</string>
 
     <!-- fragment_recorr_detail -->
     <string name="rec_editar">Editar</string>
@@ -94,11 +96,57 @@
     <string name="rec_gpsini">GPS inicio ==></string>
     <string name="rec_horafin">Hora fin</string>
     <string name="rec_gpsfin">GPS fin ==></string>
-    <string name="rec_confirmar">Confirmar</string>
-    <string name="rec_volver">Volver</string>
     <string name="rec_registros">Registros</string>
 
     <!-- fragment_register -->
     <string name="reg_nombre">Nombre</string>
+    <string name="reg_apellido">Apellido</string>
+    <string name="reg_email">Email</string>
+    <string name="reg_contrasenia">Contraseña</string>
+    <string name="reg_repcontrasenia">Repita Contraseña</string>
+    <string name="reg_nocoincide">Las contraseñas no coinciden</string>
+    <string name="reg_registrar">Registrar</string>
+
+    <!-- fragment_tpo_sustrato -->
+    <string name="tpo_arena">arena(A)</string>
+    <string name="tpo_cRodado">canto rodado(CR)</string>
+    <string name="tpo_mezcla">mezcla(M)</string>
+    <string name="tpo_restinga">restinga(R)</string>
+
+    <!-- fragment_unsoc_gral -->
+    <string name="socg_ptoObs">Punto observ.:</string>
+    <string name="socg_ctxSoc">Contexto soc.(Ref):</string>
+    <string name="socg_tpoSust">Sustrato(Pya):</string>
+    <string name="socg_comentario">Comentario:</string>
+    <string name="socg_opcional">Opcional</string>
+    <string name="socg_foto">Foto</string>
+
+    <!-- fragment_unsoc_muertos -->
+    <string name="socm_dominante">Dominante (\u03B1)</string>
+    <string name="socm_s4_ad">S4/Ad</string>
+    <string name="socm_sams">Sams</string>
+    <string name="socm_hembras">Hembra Ad</string>
+    <string name="socm_crias">Crias</string>
+    <string name="socm_destetado">Destetado</string>
+    <string name="socm_juvenil">Juvenil</string>
+    <string name="socm_periferico"><![CDATA[Perif.(<10m)]]></string>
+    <string name="socm_cercano">Cerca(10-50m)</string>
+    <string name="socm_lejos">Lejos(50-100m)</string>
+
+    <!-- ****************************************************************** -->
+    <!-- ****** fuera de layouts ****************************************** -->
+    <!-- ****************************************************************** -->
+
+    <string name="mar_muybaja">Muy baja</string>
+    <string name="mar_baja">Baja</string>
+    <string name="mar_bajabaj">Baja, bajando</string>
+    <string name="mar_bajasub">Baja, subiendo</string>
+    <string name="mar_mediabaj">Media, bajando</string>
+    <string name="mar_media">Media</string>
+    <string name="mar_mediasub">Media, subiendo</string>
+    <string name="mar_altabaj">Alta, bajando</string>
+    <string name="mar_altasub">Alta, subiendo</string>
+    <string name="mar_alta">Alta</string>
+    <string name="mar_muyalta">Muy alta</string>
 
 </resources>

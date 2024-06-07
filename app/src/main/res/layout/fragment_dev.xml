@@ -9,78 +9,87 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        app:layout_constraintLeft_toLeftOf="parent">
-
-        <Button
-            android:id="@+id/poblar_bd"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/dev_poblar"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/dev_botones">
 
         <TextView
             android:id="@+id/dias"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/dev_dias" />
-
         <TextView
             android:id="@+id/recorr"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/dev_recorr" />
-
         <TextView
             android:id="@+id/unsoc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:hint="@string/dev_unsoc" />
-
-        <Button
-            android:id="@+id/usuario"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/dev_usr"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent" />
+            android:layout_height="wrap_content"
+            android:hint="@string/dev_unsoc"
+            android:layout_marginBottom="10dp"/>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/logcat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textIsSelectable="true"
+                android:hint="@string/dev_logcat" />
+        </ScrollView>
+
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/dev_botones"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:orientation="vertical"
         app:layout_constraintRight_toRightOf="parent">
 
         <Button
+            android:id="@+id/poblar_bd"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:text="@string/dev_poblar"
+            android:background="#80FFFFFF"
+            android:layout_marginBottom="10dp"/>
+        <Button
+            android:id="@+id/usuario"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:text="@string/dev_usr"
+            android:background="#80FFFFFF"
+            android:layout_marginBottom="10dp"/>
+        <Button
             android:id="@+id/limpiar_dias"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Limpiar\nDias" />
-
+            android:layout_height="35dp"
+            android:text="@string/dev_limpdias"
+            android:background="#80FFFFFF"
+            android:layout_marginBottom="10dp"/>
         <Button
             android:id="@+id/limpiar_recorr"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Limpiar\nrecorr." />
-
+            android:layout_height="52dp"
+            android:text="@string/dev_limprecorr"
+            android:background="#80FFFFFF"
+            android:layout_marginBottom="10dp"/>
         <Button
             android:id="@+id/limpiar_unsoc"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Limpiar\nunid.soc." />
-
+            android:layout_height="52dp"
+            android:text="@string/dev_limpUnsoc"
+            android:background="#80FFFFFF"
+            android:layout_marginBottom="10dp"/>
         <Button
             android:id="@+id/reventar_esquema"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Reventar\nesquema\n(y rearmar)" />
+            android:layout_height="52dp"
+            android:text="@string/dev_rearmar"
+            android:background="#80FFFFFF"
+            android:layout_marginBottom="10dp"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

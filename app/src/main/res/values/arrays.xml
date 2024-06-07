@@ -1,47 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="op_punto_obs_unsoc">
-        <item>Seleccione...</item>
-        <item id="alto">Alto</item>
-        <item id="bajo">Bajo</item>
+        <item>@string/varias_seleccione</item>
+        <item>@string/pto_alto</item>
+        <item>@string/pto_bajo</item>
     </string-array>
 
     <string-array name="op_contexto_social">
-        <item>Seleccione...</item>
-        <item id="H">haren(H)</item>
-        <item id="HsA">haren s/alfa(HsA)</item>
-        <item id="GH">gpo. harenes(GH)</item>
-        <item id="PS">pja. solitaria(PS)</item>
-        <item id="S">indiv. solos(S)</item>
+        <item>@string/varias_seleccione</item>
+        <item>@string/ctx_haren</item>
+        <item>@string/ctx_harenSAlfa</item>
+        <item>@string/ctx_gpoHarenes</item>
+        <item>@string/ctx_pjaSolitaria</item>
+        <item>@string/ctx_indivSolo</item>
     </string-array>
 
     <string-array name="op_tipo_sustrato">
-        <item>Seleccione...</item>
-        <item id="A">arena(A)</item>
-        <item id="CR">canto rodado(CR)</item>
-        <item id="M">mezcla(M)</item>
-        <item id="R">restinga(R)</item>
-    </string-array>
-
-    <string-array name="opciones_granularidad">
-        <item>Unidad Social {#}</item>
-        <item>Unidades.Soc. del recorrido {#}</item>
-        <item>Recorridos del dia {#}</item>
-        <item>Todos los dias</item>
+        <item>@string/varias_seleccione</item>
+        <item>@string/tpo_arena</item>
+        <item>@string/tpo_cRodado</item>
+        <item>@string/tpo_mezcla</item>
+        <item>@string/tpo_restinga</item>
     </string-array>
 
     <string-array name="estado_marea">
-        <item>Seleccione...</item>
-        <item>Muy Baja</item>
-        <item>Baja</item>
-        <item>Baja, bajando</item>
-        <item>Baja, subiendo</item>
-        <item>Media, bajando</item>
-        <item>Media</item>
-        <item>Media, subiendo</item>
-        <item>Alta, bajando</item>
-        <item>Alta, subiendo</item>
-        <item>Alta</item>
-        <item>Muy alta</item>
+        <item>@string/varias_seleccione</item>
+        <item>@string/mar_muybaja</item>
+        <item>@string/mar_baja</item>
+        <item>@string/mar_bajabaj</item>
+        <item>@string/mar_bajasub</item>
+        <item>@string/mar_mediabaj</item>
+        <item>@string/mar_media</item>
+        <item>@string/mar_mediasub</item>
+        <item>@string/mar_altabaj</item>
+        <item>@string/mar_altasub</item>
+        <item>@string/mar_alta</item>
+        <item>@string/mar_muyalta</item>
     </string-array>
 </resources>

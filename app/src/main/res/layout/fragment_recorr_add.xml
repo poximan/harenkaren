@@ -100,7 +100,7 @@
                 android:id="@+id/getPosicionIni"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/rec_gps" />
+                android:text="@string/varias_gps" />
 
             <ImageView
                 android:id="@+id/gpsLightRecorr"
@@ -124,7 +124,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="5dp"
-                        android:text="@string/rec_lat" />
+                        android:text="@string/varias_lat" />
 
                     <TextView
                         android:id="@+id/latitudIni"
@@ -142,7 +142,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="5dp"
-                        android:text="@string/rec_lon" />
+                        android:text="@string/varias_lon" />
 
                     <TextView
                         android:id="@+id/longitudIni"

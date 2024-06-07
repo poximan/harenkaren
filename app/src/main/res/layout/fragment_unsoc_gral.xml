@@ -19,7 +19,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="@string/punto_obs_unsoc" />
+                android:text="@string/socg_ptoObs" />
 
             <Spinner
                 android:id="@+id/spinnerAddPtoObs"
@@ -46,7 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="@string/contexto_social"
+                android:text="@string/socg_ctxSoc"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <Spinner
@@ -74,7 +74,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="@string/tipo_sustrato"
+                android:text="@string/socg_tpoSust"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <Spinner
@@ -101,13 +101,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10px"
-                android:text="Comentario:" />
+                android:text="@string/socg_comentario" />
 
             <EditText
                 android:id="@+id/unSocComentario"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="opcional"
+                android:hint="@string/socg_opcional"
                 android:inputType="textMultiLine" />
         </LinearLayout>
 
@@ -123,7 +123,7 @@
                 android:id="@+id/getPosicion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="gps" />
+                android:text="@string/varias_gps" />
 
             <ImageView
                 android:id="@+id/gpsLightUnSoc"
@@ -147,7 +147,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="5dp"
-                        android:text="latitud:" />
+                        android:text="@string/varias_lat" />
 
                     <TextView
                         android:id="@+id/latitud"
@@ -166,7 +166,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="5dp"
-                        android:text="longitud:" />
+                        android:text="@string/varias_lon" />
 
                     <TextView
                         android:id="@+id/longitud"
@@ -202,7 +202,7 @@
             android:id="@+id/photoButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="foto"
+            android:text="@string/socg_foto"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/linearLayout6" />
 

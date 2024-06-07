@@ -117,7 +117,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="5dp"
-                            android:text="@string/rec_lat" />
+                            android:text="@string/varias_lat" />
 
                         <TextView
                             android:id="@+id/latitud_ini"
@@ -136,7 +136,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="5dp"
-                            android:text="@string/rec_lon" />
+                            android:text="@string/varias_lon" />
 
                         <TextView
                             android:id="@+id/longitud_ini"
@@ -182,7 +182,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="5dp"
-                            android:text="@string/rec_lat" />
+                            android:text="@string/varias_lat" />
 
                         <TextView
                             android:id="@+id/latitud_fin"
@@ -201,7 +201,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="5dp"
-                            android:text="@string/rec_lon" />
+                            android:text="@string/varias_lon" />
 
                         <TextView
                             android:id="@+id/longitud_fin"
@@ -219,7 +219,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:enabled="false"
-                android:text="@string/rec_confirmar" />
+                android:text="@string/varias_confirmar" />
         </LinearLayout>
 
         <Button
@@ -227,7 +227,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:text="@string/rec_volver"
+            android:text="@string/varias_volver"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/linearLayout2" />
 

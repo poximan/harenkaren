@@ -1,6 +1,11 @@
 package com.example.demo
 
+import android.graphics.Color
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +19,8 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.BufferedReader
+import java.io.InputStreamReader
 import java.util.UUID
 
 class DevFragment : Fragment() {
@@ -41,7 +48,9 @@ class DevFragment : Fragment() {
         binding.limpiarDias.setOnClickListener { limpiarDias() }
         binding.limpiarRecorr.setOnClickListener { limpiarRecorr() }
         binding.limpiarUnsoc.setOnClickListener { limpiarUnidSoc() }
+
         estadoBD()
+        logcat()
 
         return binding.root
     }
@@ -76,6 +85,30 @@ class DevFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun logcat() {
+        val process = Runtime.getRuntime().exec("logcat -d -t 150")
+        val bufferedReader = BufferedReader(InputStreamReader(process.inputStream))
+
+        val log = SpannableStringBuilder()
+        var line: String?
+
+        while (bufferedReader.readLine().also { line = it } != null) {
+            val parts = line?.split(" ")
+            if (parts != null && parts.size >= 5 && (parts[4] == "E" || parts[4] == "W")) {
+                val spannable = SpannableString(line)
+                if(parts[4] == "E")
+                    spannable.setSpan(ForegroundColorSpan(Color.RED), 0, line!!.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                if(parts[4] == "W")
+                    spannable.setSpan(ForegroundColorSpan(Color.MAGENTA), 0, line!!.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+                log.append(spannable).append("\n")
+            } else {
+                log.append(line).append("\n")
+            }
+        }
+        binding.logcat.text = log
     }
 
     private fun altaUsuario() {

@@ -26,7 +26,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Apellido" />
+            android:text="@string/reg_apellido" />
 
         <EditText
             android:id="@+id/editTextLastName"
@@ -39,20 +39,20 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Email" />
+            android:text="@string/reg_email" />
 
         <EditText
             android:id="@+id/editTextEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:hint="Email"
+            android:hint="@string/reg_email"
             android:inputType="textEmailAddress" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Contraseña" />
+            android:text="@string/reg_contrasenia" />
 
         <EditText
             android:id="@+id/editTextPassword"
@@ -60,20 +60,20 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:drawableRight="@drawable/visible_on"
-            android:hint="Contraseña"
+            android:hint="@string/reg_contrasenia"
             android:inputType="textPassword" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Repita Contraseña" />
+            android:text="@string/reg_repcontrasenia" />
 
         <EditText
             android:id="@+id/editTextPassword2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableRight="@drawable/visible_on"
-            android:hint="Contraseña"
+            android:hint="@string/reg_contrasenia"
             android:inputType="textPassword" />
     </LinearLayout>
 
@@ -81,7 +81,7 @@
         android:id="@+id/loginFailedTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Las contraseñas no coinciden"
+        android:text="@string/reg_nocoincide"
         android:textColor="@color/red"
         android:textSize="20dp"
         android:textStyle="bold"
@@ -91,7 +91,7 @@
         android:id="@+id/cancelButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cancelar"
+        android:text="@string/varias_cancelar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
 
@@ -99,7 +99,7 @@
         android:id="@+id/registerButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Registrar"
+        android:text="@string/reg_registrar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 

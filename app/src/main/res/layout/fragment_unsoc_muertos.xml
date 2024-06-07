@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -18,7 +19,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/sub_ad_metodo_seleccion"
+                android:text="@string/socm_dominante"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -38,7 +39,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="@string/s4_ad" />
+                        android:text="@string/socm_s4_ad" />
 
                     <EditText
                         android:id="@+id/mAlfaS4Ad"
@@ -59,7 +60,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="@string/Sams" />
+                        android:text="@string/socm_sams" />
 
                     <EditText
                         android:id="@+id/mAlfaSams"
@@ -105,7 +106,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="hembra Ad"
+                    android:text="@string/socm_hembras"
                     android:textStyle="bold" />
 
                 <EditText
@@ -139,7 +140,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="crias"
+                        android:text="@string/socm_crias"
                         android:textStyle="bold" />
 
                     <EditText
@@ -167,7 +168,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="destetado"
+                    android:text="@string/socm_destetado"
                     android:textStyle="bold" />
 
                 <EditText
@@ -190,7 +191,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="juvenil"
+                    android:text="@string/socm_juvenil"
                     android:textStyle="bold" />
 
                 <EditText
@@ -237,7 +238,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@string/s4_ad"
+                    android:text="@string/socm_s4_ad"
                     android:textStyle="bold" />
 
                 <LinearLayout
@@ -256,7 +257,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="@string/periferico" />
+                            android:text="@string/socm_periferico" />
 
                         <EditText
                             android:id="@+id/mS4AdPerif"
@@ -283,7 +284,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="@string/cercano" />
+                            android:text="@string/socm_cercano" />
 
                         <EditText
                             android:id="@+id/mS4AdCerca"
@@ -310,7 +311,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="@string/lejos" />
+                            android:text="@string/socm_lejos" />
 
                         <EditText
                             android:id="@+id/mS4AdLejos"
@@ -359,7 +360,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@string/Sams"
+                    android:text="@string/socm_sams"
                     android:textStyle="bold" />
 
                 <LinearLayout
@@ -378,7 +379,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="@string/periferico" />
+                            android:text="@string/socm_periferico" />
 
                         <EditText
                             android:id="@+id/mOtrosSamsPerif"
@@ -405,7 +406,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="@string/cercano" />
+                            android:text="@string/socm_cercano" />
 
                         <EditText
                             android:id="@+id/mOtrosSamsCerca"
@@ -432,7 +433,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="@string/lejos" />
+                            android:text="@string/socm_lejos" />
 
                         <EditText
                             android:id="@+id/mOtrosSamsLejos"
@@ -444,6 +445,5 @@
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
