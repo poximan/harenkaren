@@ -40,6 +40,7 @@ class AyudaFragment : Fragment() {
 
     private fun initData(): HashMap<String, List<String>> {
         val expandableListData = HashMap<String, List<String>>()
+
         val firstItem = listOf("Detalle 1", "Detalle 2", "Detalle 3")
         val secondItem = listOf("Detalle A", "Detalle B", "Detalle C")
         val thirdItem = listOf("Detalle X", "Detalle Y", "Detalle Z")

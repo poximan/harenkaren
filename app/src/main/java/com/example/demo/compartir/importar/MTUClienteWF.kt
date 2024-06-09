@@ -22,9 +22,7 @@ class MTUClienteWF(private val callback: RegistroDistribuible) {
 
             var lista: ArrayList<Parcelable>? = null
             try {
-                println("Esperando conexión...")
                 val socket = serverSocket.accept()
-                println("Conexión establecida.")
 
                 // Recibir los bytes del socket
                 val inputStream = socket.inputStream

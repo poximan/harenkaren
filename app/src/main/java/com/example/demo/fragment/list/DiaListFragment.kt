@@ -95,26 +95,22 @@ class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
 
     private fun mostrarAyuda() {
 
+        val context = requireContext()
         val texto: String = when (diaViewModel.allDia.value?.size) {
-            0 -> "Aun no has agregado ningun dia, y por lo tanto la lista esta vacia. Hacé click en (+) para agregarlo"
-            1 -> "Ahora hay un solo dia dado de alta. Cuando agregues mas, notaras la lista. Hace click en el dia" +
-                    " existente para administrar sus recorridos"
-
-            else -> {
-                "Hace click en la fila que representa el dia de interes, para poder continuar a su detalle. " +
-                        "Allí podrás adminstrar los recorridos asociados a la fecha que seleccionaste"
-            }
+            0 -> context.getString(R.string.dia_mostrarAyuda0)
+            1 -> context.getString(R.string.dia_mostrarAyuda1)
+            else -> context.getString(R.string.dia_mostrarAyudaElse)
         }
 
         val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle("Fechas")
+        builder.setTitle(context.getString(R.string.dia_mostrarAyudaTit))
         builder.setMessage(
-            "Esta pantalla representa una lista de dias, " +
-                    "en donde cada dia esta representado por una fila.\n$texto"
+            "${context.getString(R.string.dia_mostrarAyudaMarco)}\n$texto"
         )
         builder.setPositiveButton("OK") { dialog, _ ->
             dialog.dismiss()
         }
+
         val dialog = builder.create()
         dialog.show()
     }
@@ -183,7 +179,9 @@ class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
     private fun confirmarDia(currentDate: String) {
         val dia = dataDesdeIU(currentDate)
         diaViewModel.insert(dia)
-        Toast.makeText(activity, "Dia agregado correctamente", Toast.LENGTH_LONG).show()
+
+        val context = requireContext()
+        Toast.makeText(context, context.getString(R.string.dia_confirmar), Toast.LENGTH_LONG).show()
     }
 
     private fun dataDesdeIU(timestamp: String): Dia {

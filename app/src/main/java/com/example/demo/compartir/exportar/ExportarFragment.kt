@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.example.demo.R
 import com.example.demo.database.HarenKarenRoomDatabase
 import com.example.demo.databinding.FragmentExportarBinding
 import com.example.demo.fragment.messaging.EmailSender
@@ -65,7 +66,7 @@ class ExportarFragment : Fragment() {
         var listaEntidadesPlanas = runBlocking { getEntidades() }
         var datosEMAIL = CreadorCSV().empaquetarCSV(requireContext(), listaEntidadesPlanas)
         val cuerpo =
-            "este es un respaldo de los ${listaEntidadesPlanas.size} registros contenidos en la app"
+            "${requireContext().getString(R.string.exp_enviarExterno)} ${listaEntidadesPlanas.size}"
 
         EmailSender.sendEmail(cuerpo, datosEMAIL, requireContext())
     }

@@ -72,8 +72,8 @@ class DevFragment : Fragment() {
         val exceptionHandler = CoroutineExceptionHandler { _, exception ->
             if (exception is IllegalStateException) {
                 Toast.makeText(
-                    context,
-                    "El gestor de BD no puede verificar la integridad de los datos",
+                    requireContext(),
+                    requireContext().getString(R.string.dev_E_estadoDB),
                     Toast.LENGTH_LONG
                 ).show()
             }
@@ -89,9 +89,9 @@ class DevFragment : Fragment() {
                 val recorr = bd.recorrDao().getCount()
                 val unsoc = bd.unSocDao().getCount()
                 withContext(Dispatchers.Main) {
-                    binding.dias.text = "$dias entidades Dia"
-                    binding.recorr.text = "$recorr entidades Recorrido"
-                    binding.unsoc.text = "$unsoc entidades Unid.Social"
+                    binding.dias.text = "$dias ${requireContext().getString(R.string.dev_estadoDB_entidad)} ${requireContext().getString(R.string.dev_estadoDB_dia)}"
+                    binding.recorr.text = "$recorr ${requireContext().getString(R.string.dev_estadoDB_entidad)} ${requireContext().getString(R.string.dev_estadoDB_recorr)}"
+                    binding.unsoc.text = "$unsoc  ${requireContext().getString(R.string.dev_estadoDB_entidad)} ${requireContext().getString(R.string.dev_estadoDB_unsoc)}"
                 }
             }
         }
@@ -126,7 +126,7 @@ class DevFragment : Fragment() {
 
         viewModelScope.launch {
             withContext(Dispatchers.IO) {// Dispatchers.IO es el hilo background
-                val datos = DevDatos()
+                val datos = DevDatos(requireContext())
 
                 val dao = HarenKarenRoomDatabase
                     .getDatabase(requireActivity().application, viewModelScope)
@@ -143,7 +143,7 @@ class DevFragment : Fragment() {
 
         viewModelScope.launch {
             withContext(Dispatchers.IO) {// Dispatchers.IO es el hilo background
-                val datos = DevDatos()
+                val datos = DevDatos(requireContext())
 
                 // Obtener los DAOs
                 val diaDao = HarenKarenRoomDatabase
@@ -175,7 +175,7 @@ class DevFragment : Fragment() {
 
         viewModelScope.launch {
             withContext(Dispatchers.IO) {// Dispatchers.IO es el hilo background
-                val datos = DevDatos()
+                val datos = DevDatos(requireContext())
                 val dao = HarenKarenRoomDatabase
                     .getDatabase(requireActivity().application, viewModelScope)
                     .diaDao()
@@ -194,7 +194,7 @@ class DevFragment : Fragment() {
 
         viewModelScope.launch {
             withContext(Dispatchers.IO) {// Dispatchers.IO es el hilo background
-                val datos = DevDatos()
+                val datos = DevDatos(requireContext())
                 val dao = HarenKarenRoomDatabase
                     .getDatabase(requireActivity().application, viewModelScope)
                     .recorrDao()
@@ -210,7 +210,7 @@ class DevFragment : Fragment() {
 
         viewModelScope.launch {
             withContext(Dispatchers.IO) {// Dispatchers.IO es el hilo background
-                val datos = DevDatos()
+                val datos = DevDatos(requireContext())
                 val dao = HarenKarenRoomDatabase
                     .getDatabase(requireActivity().application, viewModelScope)
                     .unSocDao()

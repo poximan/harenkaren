@@ -110,23 +110,18 @@ class UnSocListFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
 
     private fun mostrarAyuda() {
 
+        val context = requireContext()
         unSocViewModel.readAsynConFK(args.idRecorrido) {
             val texto: String = when (it.size) {
-                0 -> "Aun no has agregado ningun registro, y por lo tanto la lista esta vacia. Hacé click en (+) para agregarlo"
-                1 -> "Ahora hay un solo registro dado de alta. Cuando agregues mas, notaras la lista. Hace click en el registro" +
-                        " existente para ver su detalle"
-
-                else -> {
-                    "Hace click en la fila que representa el registro de interes, para poder continuar a su detalle. " +
-                            "Allí podrás revisar los valores definidos durante la observacion de esa unidad social"
-                }
+                0 -> context.getString(R.string.soc_mostrarAyuda0)
+                1 -> context.getString(R.string.soc_mostrarAyuda1)
+                else -> context.getString(R.string.soc_mostrarAyudaElse)
             }
 
             val builder = AlertDialog.Builder(requireContext())
-            builder.setTitle("Registros")
+            builder.setTitle(context.getString(R.string.soc_mostrarAyudaTit))
             builder.setMessage(
-                "Esta pantalla muestra una lista de los registros, " +
-                        "en donde cada registro esta representado por una fila.\n$texto"
+                "${context.getString(R.string.soc_mostrarAyudaMarco)}\n$texto"
             )
 
             builder.setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }

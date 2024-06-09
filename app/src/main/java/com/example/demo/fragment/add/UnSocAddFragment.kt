@@ -37,7 +37,7 @@ class UnSocAddFragment : Fragment() {
         val uuid = DevFragment.UUID_NULO
         unSoc = UnidSocial(uuid, args.idRecorrido, estampatiempo)
 
-        adapter = UnSocPagerAdapter(childFragmentManager)
+        adapter = UnSocPagerAdapter(childFragmentManager, requireContext())
 
         binding.viewPager.adapter = adapter
         binding.tabLayout.setupWithViewPager(binding.viewPager)
@@ -91,7 +91,9 @@ class UnSocAddFragment : Fragment() {
 
         model.insert(unSoc)
 
-        Toast.makeText(activity, "Registro agregado correctamente", Toast.LENGTH_LONG).show()
+        val context = requireContext()
+        Toast.makeText(context, context.getString(R.string.soc_confirmar), Toast.LENGTH_LONG).show()
+
         val action = UnSocAddFragmentDirections.goToUnSocListFromSolapaAction(unSoc.recorrId)
         findNavController().navigate(action)
     }

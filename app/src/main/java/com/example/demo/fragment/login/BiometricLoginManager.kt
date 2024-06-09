@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricPrompt
+import com.example.demo.R
 
 class BiometricLoginManager(private val context: Context) {
 
@@ -11,9 +12,9 @@ class BiometricLoginManager(private val context: Context) {
 
     fun authenticate(callback: BiometricAuthenticationCallback) {
         val promptInfo = BiometricPrompt.PromptInfo.Builder()
-            .setTitle("Autenticación Biométrica")
-            .setSubtitle("Inicie sesión con su huella dactilar")
-            .setNegativeButtonText("Cancelar")
+            .setTitle(context.getString(R.string.bio_titulo))
+            .setSubtitle(context.getString(R.string.bio_subtitulo))
+            .setNegativeButtonText(context.getString(R.string.varias_cancelar))
             .build()
 
         biometricPrompt = BiometricPrompt(

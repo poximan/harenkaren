@@ -1,5 +1,6 @@
 package com.example.demo.fragment.add
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -15,7 +16,7 @@ import com.example.demo.databinding.FragmentUnsocVivosBinding
 import com.example.demo.viewModel.UnSocShareViewModel
 import kotlin.reflect.KFunction2
 
-class UnSocVivosFragment : Fragment() {
+class UnSocVivosFragment(private val context: Context) : Fragment() {
 
     companion object {
         private lateinit var colectar: (Int, Map<String, Any>) -> Unit
@@ -31,7 +32,7 @@ class UnSocVivosFragment : Fragment() {
 
     fun newInstance(funcColectar: KFunction2<Int, Map<String, Any>, Unit>): UnSocVivosFragment {
         colectar = funcColectar
-        return UnSocVivosFragment()
+        return UnSocVivosFragment(context)
     }
 
     override fun onCreateView(
@@ -145,8 +146,8 @@ class UnSocVivosFragment : Fragment() {
                     binding.vHembrasAd.text.toString().toInt() < 2
                 )
                     Toast.makeText(
-                        activity,
-                        "Para Haren, las hembras deben ser >= 2",
+                        requireContext(),
+                        requireContext().getString(R.string.socv_vistaHaren),
                         Toast.LENGTH_LONG
                     ).show()
             }
@@ -164,8 +165,8 @@ class UnSocVivosFragment : Fragment() {
 
         if (contMacho > 0)
             Toast.makeText(
-                activity,
-                "Para haren sin alfa, no deben haber machos dominantes",
+                requireContext(),
+                requireContext().getString(R.string.socv_vistaHarenSinAlfa1),
                 Toast.LENGTH_LONG
             ).show()
 
@@ -176,8 +177,8 @@ class UnSocVivosFragment : Fragment() {
             binding.vHembrasAd.text.toString().toInt() < 2
         )
             Toast.makeText(
-                activity,
-                "Para Haren sin alfa, las hembras deben ser >= 2",
+                requireContext(),
+                requireContext().getString(R.string.socv_vistaHarenSinAlfa2),
                 Toast.LENGTH_LONG
             ).show()
     }
@@ -193,8 +194,8 @@ class UnSocVivosFragment : Fragment() {
 
         if (contMacho < 2)
             Toast.makeText(
-                activity,
-                "Para grupo de harenes, la suma de los machos dominantes debe ser >=2",
+                requireContext(),
+                requireContext().getString(R.string.socv_vistaGrupoHarenes1),
                 Toast.LENGTH_LONG
             ).show()
 
@@ -202,8 +203,8 @@ class UnSocVivosFragment : Fragment() {
             binding.vHembrasAd.text.toString().toInt() < 2
         )
             Toast.makeText(
-                activity,
-                "Para grupo de harenes, las hembras deben ser >= 2",
+                requireContext(),
+                requireContext().getString(R.string.socv_vistaGrupoHarenes2),
                 Toast.LENGTH_LONG
             ).show()
     }
@@ -227,8 +228,8 @@ class UnSocVivosFragment : Fragment() {
 
             R.id.vHembrasAd -> {
                 Toast.makeText(
-                    activity,
-                    "Este campo no es editable para pareja solitaria",
+                    requireContext(),
+                    requireContext().getString(R.string.socv_vistaPjaSolitaria),
                     Toast.LENGTH_LONG
                 ).show()
             }
@@ -244,19 +245,19 @@ class UnSocVivosFragment : Fragment() {
         var texto = ""
         try {   // si usuario borra antes de ingresar un nuevo numero, entonces campo==""
             if (editTextPrimario.text.toString().toInt() > 1)
-                texto = "Solo se permite [0,1] si es pareja solitaria"
+                texto = requireContext().getString(R.string.socv_validarDominante1)
 
             if (editTextPrimario.text.toString().toInt() == 1 && (
                         !editTextSecundario.text.isNullOrEmpty() && editTextSecundario.text.toString()
                             .toInt() > 0)
             )
-                texto = "Debe ser AlfaS4Ad=1 o AlfaSams=1, eligí uno solo"
+                texto = requireContext().getString(R.string.socv_validarDominante2)
         } catch (e: NumberFormatException) {
         }
 
         if (texto.isNotEmpty()) {
             Toast.makeText(
-                activity,
+                requireContext(),
                 texto,
                 Toast.LENGTH_LONG
             ).show()
@@ -272,6 +273,6 @@ class UnSocVivosFragment : Fragment() {
     }
 
     override fun toString(): String {
-        return "Vivos"
+        return context.getString(R.string.socv_toString)
     }
 }

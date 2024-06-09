@@ -1,6 +1,7 @@
 package com.example.demo.fragment.add
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -47,7 +48,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import kotlin.reflect.KFunction2
 
-class UnSocGralFragment : Fragment() {
+class UnSocGralFragment(private val context: Context) : Fragment() {
 
     companion object {
         private lateinit var colectar: (Int, Map<String, Any>) -> Unit
@@ -82,7 +83,7 @@ class UnSocGralFragment : Fragment() {
         colectarFunc: KFunction2<Int, Map<String, Any>, Unit>
     ): UnSocGralFragment {
         colectar = colectarFunc
-        return UnSocGralFragment()
+        return UnSocGralFragment(context)
     }
 
     override fun onCreateView(
@@ -230,9 +231,8 @@ class UnSocGralFragment : Fragment() {
                     override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {}
                     override fun onProviderEnabled(provider: String) {}
                     override fun onProviderDisabled(provider: String) {
-                        val message =
-                            "GPS deshabilitado. Habilítar en Configuraciones."
-                        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                        val context = requireContext()
+                        Toast.makeText(context, context.getString(R.string.varias_gpsHab), Toast.LENGTH_SHORT).show()
                     }
                 },
                 null
@@ -305,7 +305,7 @@ class UnSocGralFragment : Fragment() {
                     createImageFile()
                 } catch (ex: IOException) {
                     // Error occurred while creating the File
-                    Toast.makeText(activity, ": error", Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(), ": error", Toast.LENGTH_LONG).show()
                     null
                 }
                 // Continue only if the File was successfully created
@@ -332,6 +332,7 @@ class UnSocGralFragment : Fragment() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
+        val context = requireContext()
         when (requestCode) {
             DbConstants.PERMISSION_REQUEST_CAMERA -> {
                 // Maneja los resultados de los permisos de la cámara
@@ -341,8 +342,8 @@ class UnSocGralFragment : Fragment() {
                 } else {
                     // Los permisos de la cámara no fueron concedidos, muestra un mensaje al usuario
                     Toast.makeText(
-                        requireContext(),
-                        "Los permisos de la cámara son necesarios para tomar fotos.",
+                        context,
+                        context.getString(R.string.socg_permCamara),
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -355,8 +356,8 @@ class UnSocGralFragment : Fragment() {
                 } else {
                     // Los permisos de ubicación no fueron concedidos, muestra un mensaje al usuario
                     Toast.makeText(
-                        requireContext(),
-                        "Los permisos de ubicación son necesarios para obtener la posición actual.",
+                        context,
+                        context.getString(R.string.socg_permGPS),
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -396,7 +397,7 @@ class UnSocGralFragment : Fragment() {
         val targetImageViewHeight = binding.captureImageView.height
 
         if (targetImageViewWidth <= 0 || targetImageViewHeight <= 0) {
-            throw IllegalArgumentException("Las dimensiones del ImageView no pueden ser cero o negativas.")
+            throw IllegalArgumentException(requireContext().getString(R.string.socg_reduceBit))
         }
 
         val bmOptions = BitmapFactory.Options()
@@ -473,7 +474,7 @@ class UnSocGralFragment : Fragment() {
                 if (isRunning) {
                     if (isImageChanged) {
                         indicatorLight!!.setImageResource(R.drawable.indicator_on)
-                        binding.latitud.text = "geoposicionando..."
+                        binding.latitud.text = requireContext().getString(R.string.varias_geopos)
                         binding.latitud.setTextColor(
                             ContextCompat.getColor(
                                 requireContext(),
@@ -482,7 +483,7 @@ class UnSocGralFragment : Fragment() {
                         )
                     } else {
                         indicatorLight!!.setImageResource(R.drawable.indicator_off)
-                        binding.latitud.text = "geoposicionando..."
+                        binding.latitud.text = requireContext().getString(R.string.varias_geopos)
                         binding.latitud.setTextColor(
                             ContextCompat.getColor(
                                 requireContext(),
@@ -508,6 +509,6 @@ class UnSocGralFragment : Fragment() {
     }
 
     override fun toString(): String {
-        return "Gral"
+        return context.getString(R.string.socg_toString)
     }
 }

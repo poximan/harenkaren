@@ -176,13 +176,13 @@ class OSMFragment : Fragment(), MapEventsReceiver {
     private fun mostrarMapaRecorridos(unSocList: List<UnidSocial>) {
 
         mapView.visibility = View.VISIBLE
-
         var routePoints = emptyList<GeoPoint>()
+
+        removerPolilinea()
+        removerMarcadores()
+
         try {
             var recorr = unSocList.first().recorrId
-
-            removerPolilinea()
-            removerMarcadores()
 
             for (unSoc in unSocList) {
                 if (recorr != unSoc.recorrId) {
@@ -212,7 +212,7 @@ class OSMFragment : Fragment(), MapEventsReceiver {
         } catch (e: NoSuchElementException) {
             Toast.makeText(
                 requireContext(),
-                "Para el año elegido, algun de los recorridos no posee registros asociados",
+                "Para el año elegido, hay recorridos sin registros asociados",
                 Toast.LENGTH_SHORT
             ).show()
         }

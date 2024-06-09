@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.example.demo.R
 import com.example.demo.database.HarenKarenRoomDatabase
 import com.example.demo.databinding.FragmentImportarBinding
 import com.example.demo.model.EntidadesPlanas
@@ -69,10 +70,8 @@ class ImportarFragment : Fragment(), RegistroDistribuible, ListaImportable {
         comWF.descubrir()
         val port = comWF.activarComoMTU()
 
-        binding.idMaster.text =
-            "En el dispositivo que quiere entregar sus registros, anda a Exportar y presiona DESTINATARIOS." +
-                    "Ahi buscame como ${comWF.miNombre()}:$port"
-        binding.recepcion.text = "esperando datos desde remota"
+        binding.idMaster.text = "${requireContext().getString(R.string.imp_clickWF1)} ${comWF.miNombre()}:$port"
+        binding.recepcion.text = requireContext().getString(R.string.imp_clickWF2)
     }
 
     private fun agregarCSV() {
@@ -205,12 +204,19 @@ class ImportarFragment : Fragment(), RegistroDistribuible, ListaImportable {
         recorrInsert: Int,
         unSocInsert: Int
     ) {
-        val texto: String = "Los registros contabilizados en la importacion fueron $lote," +
-                " desglosados en:\n${mapContador["dias"]} dias, ${mapContador["recorr"]} recorridos y ${mapContador["unidsoc"]} unidades sociales.\n" +
-                "De ese lote, se insertaron a esta BD:\n$diasInsert dias, $recorrInsert recorridos y $unSocInsert unidades sociales."
+        val texto: String = "${requireContext().getString(R.string.imp_mostrarResMsg1)} $lote, " +
+                "${requireContext().getString(R.string.imp_mostrarResMsg2)}\n" +
+                "${mapContador["dias"]} ${requireContext().getString(R.string.dev_dias)}, " +
+                "${mapContador["recorr"]} ${requireContext().getString(R.string.dev_recorr)} y" +
+                "${mapContador["unidsoc"]} ${requireContext().getString(R.string.dev_unsoc)}.\n" +
+
+                "${requireContext().getString(R.string.imp_mostrarResMsg3)}\n" +
+                "$diasInsert ${requireContext().getString(R.string.dev_dias)}, " +
+                "$recorrInsert ${requireContext().getString(R.string.dev_recorr)} y " +
+                "$unSocInsert ${requireContext().getString(R.string.dev_unsoc)}"
 
         val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle("Nuevos registros")
+        builder.setTitle(requireContext().getString(R.string.imp_mostrarResTit))
         builder.setMessage(texto)
         builder.setPositiveButton("OK") { dialog, _ ->
             dialog.dismiss()
@@ -256,7 +262,7 @@ class ImportarFragment : Fragment(), RegistroDistribuible, ListaImportable {
             "distribuidos en ${mapContador["dias"]} dias, ${mapContador["recorr"]} recorridos y ${mapContador["unidsoc"]} unidades sociales"
         )
         insertarEntidades(listaEntidadesPlanas, mapContador)
-        binding.recepcion.text = "Llegaron desde dispositivo remoto $mapContador"
+        binding.recepcion.text = "${requireContext().getString(R.string.imp_onMessage)} $mapContador"
     }
 
     // callback del importador de csv's
@@ -268,11 +274,11 @@ class ImportarFragment : Fragment(), RegistroDistribuible, ListaImportable {
             "distribuidos en ${mapContador["dias"]} dias, ${mapContador["recorr"]} recorridos y ${mapContador["unidsoc"]} unidades sociales"
         )
         insertarEntidades(listaEntidadesPlanas, mapContador)
-        binding.recepcion.text = "Agregados desde archivo externo $mapContador"
+        binding.recepcion.text = "${requireContext().getString(R.string.imp_onPelos)} $mapContador"
     }
 
     override fun progreso(valor: Float) {
         binding.recepcion.text =
-            "extrayendo lineas desde csv... ${valor.toString().substringBefore(".")}%"
+            "${requireContext().getString(R.string.imp_progreso)} ${valor.toString().substringBefore(".")}%"
     }
 }

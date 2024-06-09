@@ -70,7 +70,8 @@ class RecorrAddFragment : Fragment() {
         val recorrido = dataDesdeIU()
         model.insert(recorrido)
 
-        Toast.makeText(activity, "Recorrido agregado correctamente", Toast.LENGTH_LONG).show()
+        val context = requireContext()
+        Toast.makeText(context, context.getString(R.string.rec_confirmar), Toast.LENGTH_LONG).show()
 
         val action = RecorrAddFragmentDirections.goToRecorrListAction(args.idDia)
         findNavController().navigate(action)
@@ -121,9 +122,8 @@ class RecorrAddFragment : Fragment() {
                     override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {}
                     override fun onProviderEnabled(provider: String) {}
                     override fun onProviderDisabled(provider: String) {
-                        val message =
-                            "GPS deshabilitado. Habilítar en Configuraciones."
-                        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                        val context = requireContext()
+                        Toast.makeText(context, context.getString(R.string.varias_gpsHab), Toast.LENGTH_SHORT).show()
                     }
                 },
                 null
@@ -190,7 +190,7 @@ class RecorrAddFragment : Fragment() {
                 if (isRunning) {
                     if (isImageChanged) {
                         indicatorLight!!.setImageResource(R.drawable.indicator_on)
-                        binding.latitudIni.text = "geoposicionando..."
+                        binding.latitudIni.text = requireContext().getString(R.string.varias_geopos)
                         binding.latitudIni.setTextColor(
                             ContextCompat.getColor(
                                 requireContext(),
@@ -199,7 +199,7 @@ class RecorrAddFragment : Fragment() {
                         )
                     } else {
                         indicatorLight!!.setImageResource(R.drawable.indicator_off)
-                        binding.latitudIni.text = "geoposicionando..."
+                        binding.latitudIni.text = requireContext().getString(R.string.varias_geopos)
                         binding.latitudIni.setTextColor(
                             ContextCompat.getColor(
                                 requireContext(),

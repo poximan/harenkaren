@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.demo.R
 import com.example.demo.model.UnidSocial
@@ -89,15 +90,17 @@ class UnSocListAdapter(
     }
 
     fun armarResumen(unidSocial: UnidSocial): String {
+        val context = (itemClickListener as Fragment).requireContext()
+
         return buildString {
-            append("Gral --> ")
+            append(context.getString(R.string.soc_listAdap_gral))
 
             if (unidSocial.ptoObsUnSoc.isNotEmpty()) append("*Pto.obs.: ${unidSocial.ptoObsUnSoc} ")
             if (unidSocial.ctxSocial.isNotEmpty()) append("*Ctx.soc: ${unidSocial.ctxSocial} ")
             if (unidSocial.tpoSustrato.isNotEmpty()) append("*Pya: ${unidSocial.tpoSustrato} ")
             append("\n")
 
-            append("vivos --> ")
+            append(context.getString(R.string.soc_listAdap_vivos))
             if (unidSocial.vAlfaS4Ad > 0) append("*AlfaS4/Ad: ${unidSocial.vAlfaS4Ad} ")
             if (unidSocial.vAlfaSams > 0) append("*AlfaOt.Sams: ${unidSocial.vAlfaSams} ")
             if (unidSocial.vHembrasAd > 0) append("*Hem.Ad.: ${unidSocial.vHembrasAd} ")
@@ -110,11 +113,11 @@ class UnSocListAdapter(
             if (unidSocial.vOtrosSamsPerif > 0) append("*Ot.Sams Perif.: ${unidSocial.vOtrosSamsPerif} ")
             if (unidSocial.vOtrosSamsCerca > 0) append("*Ot.Sams Cerca: ${unidSocial.vOtrosSamsCerca} ")
             if (unidSocial.vOtrosSamsLejos > 0) append("*Ot.Sams Lejos: ${unidSocial.vOtrosSamsLejos} ")
-            if (endsWith("vivos --> ")) {
-                delete(length - "vivos --> ".length, length)
+            if (endsWith(context.getString(R.string.soc_listAdap_vivos))) {
+                delete(length - context.getString(R.string.soc_listAdap_vivos).length, length)
             } else append("\n")
 
-            append("muertos --> ")
+            append(context.getString(R.string.soc_listAdap_muertos))
             if (unidSocial.mAlfaS4Ad > 0) append("*AlfaS4/Ad: ${unidSocial.mAlfaS4Ad} ")
             if (unidSocial.mAlfaSams > 0) append("*AlfaOt.Sams: ${unidSocial.mAlfaSams} ")
             if (unidSocial.mHembrasAd > 0) append("*Hem.Ad.: ${unidSocial.mHembrasAd} ")
@@ -127,8 +130,8 @@ class UnSocListAdapter(
             if (unidSocial.mOtrosSamsPerif > 0) append("*Ot.Sams Perif.: ${unidSocial.mOtrosSamsPerif} ")
             if (unidSocial.mOtrosSamsCerca > 0) append("*Ot.Sams Cerca: ${unidSocial.mOtrosSamsCerca} ")
             if (unidSocial.mOtrosSamsLejos > 0) append("*Ot.Sams Lejos: ${unidSocial.mOtrosSamsLejos} ")
-            if (endsWith("muertos --> ")) {
-                delete(length - "muertos --> ".length, length)
+            if (endsWith(context.getString(R.string.soc_listAdap_muertos))) {
+                delete(length - context.getString(R.string.soc_listAdap_muertos).length, length)
             } else append("\n")
 
             if (unidSocial.comentario?.isNotEmpty() == true) append("*Comentario: ${unidSocial.comentario}")

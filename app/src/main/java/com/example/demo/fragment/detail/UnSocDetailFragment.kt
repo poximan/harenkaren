@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.demo.R
 import com.example.demo.adapter.UnSocPagerAdapter
 import com.example.demo.databinding.FragmentUnsocAddBinding
 import com.example.demo.model.UnidSocial
@@ -29,7 +30,7 @@ class UnSocDetailFragment : Fragment() {
         binding = FragmentUnsocAddBinding.inflate(inflater, container, false)
 
         unSoc = args.unSocActual
-        adapter = UnSocPagerAdapter(childFragmentManager, unSoc)
+        adapter = UnSocPagerAdapter(childFragmentManager, requireContext(), unSoc)
 
         binding.viewPager.adapter = adapter
         binding.tabLayout.setupWithViewPager(binding.viewPager)
@@ -83,7 +84,9 @@ class UnSocDetailFragment : Fragment() {
 
         model.update(unSoc)
 
-        Toast.makeText(activity, "Registro editado correctamente", Toast.LENGTH_LONG).show()
+        val context = requireContext()
+        Toast.makeText(context, context.getString(R.string.soc_confirmarEdit), Toast.LENGTH_LONG).show()
+
         val action =
             UnSocDetailFragmentDirections.goToUnSocListFromUnSocDetailAction(unSoc.recorrId)
         findNavController().navigate(action)

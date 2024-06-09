@@ -31,7 +31,6 @@ class RTUServWF(private val ip: String, private val port: Int) {
                 outputStream.flush()
                 outputStream.close()
                 socket.close()
-                println("ArrayList enviado con éxito.")
             } catch (e: IOException) {
                 e.printStackTrace()
             }

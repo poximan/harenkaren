@@ -97,26 +97,19 @@ class RecorrListFragment : Fragment(), RecorrListAdapter.OnRecorrClickListener {
 
     private fun mostrarAyuda() {
 
+        val context = requireContext()
         recorrViewModel.readAsynConFK(args.idDia) {
-
             val texto: String = when (it.size) {
-                0 -> "Aun no has agregado ningun recorrido, y por lo tanto la lista esta vacia. Hacé click en (+) para agregarlo"
-                1 -> "Hay un solo recorrido dado de alta. Cuando agregues mas, notaras la lista. Hace click en el recorrido" +
-                        " existente para administrar sus registros (unidades sociales censadas)"
-
-                else -> {
-                    "Hace click en la fila que representa el recorrido de interes, para poder continuar a su detalle. " +
-                            "Allí podrás adminstrar los registros (unidades sociales censadas) asociados al recorrido que seleccionaste"
-                }
+                0 -> context.getString(R.string.rec_mostrarAyuda0)
+                1 -> context.getString(R.string.rec_mostrarAyuda1)
+                else -> context.getString(R.string.rec_mostrarAyudaElse)
             }
 
             val builder = AlertDialog.Builder(requireContext())
-            builder.setTitle("Recorridos")
+            builder.setTitle(context.getString(R.string.rec_mostrarAyudaTit))
             builder.setMessage(
-                "Esta pantalla representa una lista de los recorridos realizados durante un unico dia, " +
-                        "en donde cada recorrido esta representado por una fila.\n$texto"
+                "${context.getString(R.string.rec_mostrarAyudaMarco)}\n$texto"
             )
-
             builder.setPositiveButton("OK") { dialog, _ ->
                 dialog.dismiss()
             }

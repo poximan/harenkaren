@@ -1,5 +1,6 @@
 package com.example.demo.fragment.add
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -7,10 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.demo.R
 import com.example.demo.databinding.FragmentUnsocMuertosBinding
 import kotlin.reflect.KFunction2
 
-class UnSocMuertosFragment : Fragment() {
+class UnSocMuertosFragment(private val context: Context) : Fragment() {
 
     companion object {
         private lateinit var colectar: (Int, Map<String, Any>) -> Unit
@@ -23,7 +25,7 @@ class UnSocMuertosFragment : Fragment() {
 
     fun newInstance(colectarFunc: KFunction2<Int, Map<String, Any>, Unit>): UnSocMuertosFragment {
         colectar = colectarFunc
-        return UnSocMuertosFragment()
+        return UnSocMuertosFragment(context)
     }
 
     override fun onCreateView(
@@ -103,6 +105,6 @@ class UnSocMuertosFragment : Fragment() {
     }
 
     override fun toString(): String {
-        return "Muertos"
+        return context.getString(R.string.socm_toString)
     }
 }

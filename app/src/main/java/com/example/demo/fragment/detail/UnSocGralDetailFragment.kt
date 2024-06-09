@@ -1,6 +1,7 @@
 package com.example.demo.fragment.detail
 
 import android.Manifest
+import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
@@ -28,7 +29,7 @@ import com.example.demo.model.LatLong
 import com.example.demo.model.UnidSocial
 import kotlin.reflect.KFunction2
 
-class UnSocGralDetailFragment : Fragment() {
+class UnSocGralDetailFragment(private val context: Context) : Fragment() {
 
     companion object {
         private lateinit var colectar: (Int, Map<String, Any>) -> Unit
@@ -259,9 +260,9 @@ class UnSocGralDetailFragment : Fragment() {
                     override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {}
                     override fun onProviderEnabled(provider: String) {}
                     override fun onProviderDisabled(provider: String) {
-                        val message =
-                            "GPS deshabilitado. Habilítar en Configuraciones."
-                        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+
+                        val context = requireContext()
+                        Toast.makeText(context, context.getString(R.string.varias_gpsHab), Toast.LENGTH_SHORT).show()
                     }
                 },
                 null
@@ -315,6 +316,6 @@ class UnSocGralDetailFragment : Fragment() {
     }
 
     override fun toString(): String {
-        return "General"
+        return context.getString(R.string.socg_toString)
     }
 }

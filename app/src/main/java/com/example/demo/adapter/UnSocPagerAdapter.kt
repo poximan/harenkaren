@@ -1,5 +1,6 @@
 package com.example.demo.adapter
 
+import android.content.Context
 import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -15,20 +16,21 @@ import java.util.Calendar
 
 class UnSocPagerAdapter(
     fm: FragmentManager,
+    private val context: Context,
     unSoc: UnidSocial? = null
 ) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     private val solapas = if (unSoc == null) {
         arrayOf(
-            UnSocGralFragment().newInstance(::colectar),
-            UnSocVivosFragment().newInstance(::colectar),
-            UnSocMuertosFragment().newInstance(::colectar)
+            UnSocGralFragment(context).newInstance(::colectar),
+            UnSocVivosFragment(context).newInstance(::colectar),
+            UnSocMuertosFragment(context).newInstance(::colectar)
         )
     } else {
         arrayOf(
-            UnSocGralDetailFragment().editInstance(::colectar, unSoc),
-            UnSocVivosDetailFragment().editInstance(::colectar, unSoc),
-            UnSocMuertosDetailFragment().editInstance(::colectar, unSoc)
+            UnSocGralDetailFragment(context).editInstance(::colectar, unSoc),
+            UnSocVivosDetailFragment(context).editInstance(::colectar, unSoc),
+            UnSocMuertosDetailFragment(context).editInstance(::colectar, unSoc)
         )
     }
 

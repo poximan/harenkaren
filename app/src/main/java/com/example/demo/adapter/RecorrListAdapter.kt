@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.demo.R
 import com.example.demo.model.Recorrido
@@ -52,13 +53,14 @@ class RecorrListAdapter(
         }
 
         fun bind(recorrido: Recorrido) {
+            val context = (itemListener as Fragment).requireContext()
 
             id.text = recorrido.orden.toString()
-            observador.text = "Observador: " + recorrido.observador
-            area.text = "Area recorrida: " + recorrido.areaRecorrida
-            meteo.text = "Condicion climatica: " + recorrido.meteo
-            marea.text = "Estado de la marea: " + recorrido.marea
-            fecha.text = "Hora inicio: " + recorrido.fechaIni
+            observador.text = "${context.getString(R.string.rec_obsevador)}: ${recorrido.observador}"
+            area.text = "${context.getString(R.string.rec_area)}: ${recorrido.areaRecorrida}"
+            meteo.text = "${context.getString(R.string.rec_meteo)}: ${recorrido.meteo}"
+            marea.text = "${context.getString(R.string.rec_marea)}: ${recorrido.marea}"
+            fecha.text = "${context.getString(R.string.rec_horaini)}: ${recorrido.fechaIni}"
         }
     }
 

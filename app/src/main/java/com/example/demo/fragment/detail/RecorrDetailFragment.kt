@@ -53,8 +53,8 @@ class RecorrDetailFragment : Fragment() {
         binding.spinnerMarea.setSelection(indice)
         binding.spinnerMarea.isEnabled = false
 
-        binding.horaIni.text = "Hora inicio: " + args.recorrActual.fechaIni
-        binding.horaFin.text = "Hora fin: " + args.recorrActual.fechaFin
+        binding.horaIni.text = "${requireContext().getString(R.string.rec_horaini)}: " + args.recorrActual.fechaIni
+        binding.horaFin.text = "${requireContext().getString(R.string.rec_horafin)}: " + args.recorrActual.fechaFin
 
         latLonIni.lat = args.recorrActual.latitudIni
         latLonIni.lon = args.recorrActual.longitudIni
@@ -100,7 +100,8 @@ class RecorrDetailFragment : Fragment() {
 
         model.update(args.recorrActual)
 
-        Toast.makeText(activity, "Recorrido modificado", Toast.LENGTH_LONG).show()
+        val context = requireContext()
+        Toast.makeText(context, context.getString(R.string.rec_confirmarEdit), Toast.LENGTH_LONG).show()
 
         val action = RecorrDetailFragmentDirections.goToRecorrListAction(args.recorrActual.diaId)
         findNavController().navigate(action)

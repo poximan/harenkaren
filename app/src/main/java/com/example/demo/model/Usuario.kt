@@ -8,11 +8,8 @@ data class Usuario(
 
     @PrimaryKey(autoGenerate = true)
     var id: Int,
-
     var email: String,
-
     var pass: String,
-
     var esAdmin: Boolean
 )
 
