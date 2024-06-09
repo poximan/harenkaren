@@ -148,26 +148,29 @@ class RegisterFragment : Fragment(), UsuarioCallback {
                 usuarioViewModel.crearConEmailPass(email, password, this@RegisterFragment)
             }
         } else {
-            Toast.makeText(activity, "Llene todos los campos", Toast.LENGTH_SHORT).show()
+            val context = requireContext()
+            Toast.makeText(context, context.getString(R.string.reg_newAccount), Toast.LENGTH_SHORT).show()
         }
     }
 
     override fun onLoginSuccess() {
-
         CoroutineScope(Dispatchers.Main).launch {
-            findNavController().navigate(R.id.main_fragment)
+            val context = requireContext()
             Toast.makeText(
-                activity, "Registro exitoso.",
+                context,
+                context.getString(R.string.reg_loginSuccess),
                 Toast.LENGTH_SHORT
             ).show()
+            findNavController().navigate(R.id.main_fragment)
         }
     }
 
     override fun onLoginFailure(errorMessage: String) {
-
         CoroutineScope(Dispatchers.Main).launch {
+            val context = requireContext()
             Toast.makeText(
-                activity, "Error en la autenticación.",
+                context,
+                context.getString(R.string.reg_loginFailure),
                 Toast.LENGTH_SHORT
             ).show()
         }

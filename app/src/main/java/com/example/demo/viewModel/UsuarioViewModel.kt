@@ -3,6 +3,7 @@ package com.example.demo.viewModel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.demo.R
 import com.example.demo.database.HarenKarenRoomDatabase
 import com.example.demo.exception.MultipleUsuarioException
 import com.example.demo.exception.NoExisteUsuarioException
@@ -32,13 +33,15 @@ class UsuarioViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun loginConEmailPass(email: String, password: String, callback: UsuarioCallback) {
+
+        val context = super.getApplication<Application>().applicationContext
         try {
             repository.login(email, password)
             callback.onLoginSuccess()
         } catch (e: NoExisteUsuarioException) {
-            callback.onLoginFailure("No se encontraron coincidencias para {email, contraseña}")
+            callback.onLoginFailure(context.getString(R.string.usr_VMLoginNoExiste))
         } catch (e: MultipleUsuarioException) {
-            callback.onLoginFailure("Inconsistencia BD, instancia multiple para {email, contraseña}")
+            callback.onLoginFailure(context.getString(R.string.usr_VMLoginMultiple))
         }
     }
 

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.widget.Toast
 import androidx.core.content.FileProvider
+import com.example.demo.R
 import java.io.File
 
 // cienciaycoso
@@ -13,7 +14,7 @@ object EmailSender {
 
         val destinatarios = arrayOf("harenkaren70@gmail.com")
 
-        val asunto = "respaldo censo"
+        val asunto = context.getString(R.string.mai_asunto)
         val uri =
             FileProvider.getUriForFile(context, "com.example.demo.fileprovider", archivoAdjunto)
 
@@ -31,7 +32,7 @@ object EmailSender {
         } else {
             Toast.makeText(
                 context,
-                "No se encontró una aplicación de correo electrónico en este dispositivo",
+                context.getString(R.string.mai_appemail),
                 Toast.LENGTH_LONG
             ).show()
         }

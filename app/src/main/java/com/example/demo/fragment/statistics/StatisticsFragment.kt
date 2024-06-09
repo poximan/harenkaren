@@ -138,7 +138,9 @@ class StatisticsFragment : Fragment() {
                 if (unidSocial != null) {
                     graficar()
                 } else {
-                    showErrorDialog("No existen registros asociados para el dia seleccionado")
+                    showErrorDialog(
+                        requireContext().getString(R.string.sta_unDia)
+                    )
                 }
             }
         }
@@ -152,7 +154,9 @@ class StatisticsFragment : Fragment() {
                 if (unidSocial != null) {
                     graficar()
                 } else {
-                    showErrorDialog("No existen registros asociados para el recorrido seleccionado")
+                    showErrorDialog(
+                        requireContext().getString(R.string.sta_unRecorrido)
+                    )
                 }
             }
         }
@@ -287,10 +291,12 @@ class StatisticsFragment : Fragment() {
     }
 
     private fun showErrorDialog(mensaje: String) {
-        AlertDialog.Builder(requireContext())
+        val context = requireContext()
+
+        AlertDialog.Builder(context)
             .setTitle("Error")
             .setMessage(mensaje)
-            .setPositiveButton("Volver") { dialog, _ ->
+            .setPositiveButton(context.getString(R.string.varias_volver)) { dialog, _ ->
                 dialog.dismiss()
                 goBack()
             }

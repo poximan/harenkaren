@@ -68,13 +68,11 @@ class LoginFragment : Fragment(), UsuarioCallback {
             override fun onAuthenticationSuccess() {
                 onLoginSuccess()
             }
-
             override fun onAuthenticationError(errorCode: Int, errorMessage: String) {
-                snack(view, "Falta hardware para deteccion de huella")
+                snack(view, requireContext().getString(R.string.log_checkHuella1))
             }
-
             override fun onAuthenticationFailed() {
-                snack(view, "No se pudo verificar usuario")
+                snack(view, requireContext().getString(R.string.log_checkHuella2))
             }
         })
     }
@@ -107,7 +105,7 @@ class LoginFragment : Fragment(), UsuarioCallback {
         val password = binding.pass.text.toString()
 
         if (email.isEmpty() || password.isEmpty()) {
-            showErrorMsg("Complete los campos")
+            showErrorMsg(requireContext().getString(R.string.log_checkLogin))
         } else {
             CoroutineScope(Dispatchers.IO).launch {
                 // this@LoginFragment almacena la referencia antes de cambiar de contexto

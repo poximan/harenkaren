@@ -210,9 +210,10 @@ class OSMFragment : Fragment(), MapEventsReceiver {
             mapView.controller.setZoom(currentZoomLevel)
             mapView.controller.setCenter(startPoint) // Restaurar el centro del mapa
         } catch (e: NoSuchElementException) {
+            val context = requireContext()
             Toast.makeText(
-                requireContext(),
-                "Para el año elegido, hay recorridos sin registros asociados",
+                context,
+                context.getString(R.string.osm_mostrar),
                 Toast.LENGTH_SHORT
             ).show()
         }

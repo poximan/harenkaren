@@ -241,6 +241,31 @@
     <string name="bio_subtitulo">Inicie sesión con su huella dactilar</string>
 
     <!-- LoginFragment -->
-    <string name="log_1"></string>
+    <string name="log_checkLogin">Complete los campos</string>
+    <string name="log_checkHuella1">Falta hardware para deteccion de huella</string>
+    <string name="log_checkHuella2">No se pudo verificar usuario</string>
+
+    <!-- LoginFragment -->
+    <string name="osm_mostrar">Para el año elegido, hay recorridos sin registros asociados</string>
+
+    <!-- EmailSender -->
+    <string name="mai_asunto">Respaldo censo</string>
+    <string name="mai_appemail">No se encontró una aplicación de correo electrónico en este dispositivo</string>
+
+    <!-- RegisterFragment -->
+    <string name="reg_newAccount">Llene todos los campos</string>
+    <string name="reg_loginSuccess">Registro exitoso</string>
+    <string name="reg_loginFailure">Error en la autenticación</string>
+
+    <!-- StatisticsFragment -->
+    <string name="sta_unDia">No existen registros asociados para el dia seleccionado</string>
+    <string name="sta_unRecorrido">No existen registros asociados para el recorrido seleccionado</string>
+
+    <!-- FechaOficial -->
+    <string name="ofi_transformar">Fecha inválida</string>
+
+    <!-- FechaOficial -->
+    <string name="usr_VMLoginNoExiste">No se encontraron coincidencias para {email, contraseña}</string>
+    <string name="usr_VMLoginMultiple">Inconsistencia BD, instancia multiple para {email, contraseña}</string>
 
 </resources>

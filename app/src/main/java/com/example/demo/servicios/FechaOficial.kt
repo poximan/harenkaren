@@ -27,6 +27,6 @@ class FechaOficial(private val context: Context) {
             } catch (e: ParseException) {
             }
         }
-        return "Fecha inválida"
+        return context.getString(R.string.ofi_transformar)
     }
 }

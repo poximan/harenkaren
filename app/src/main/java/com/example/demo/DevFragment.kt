@@ -6,6 +6,7 @@ import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,6 +30,7 @@ class DevFragment : Fragment() {
     private val binding get() = _binding!!
 
     companion object {
+        val TAG = "HAREN_DATABASE"
         var UUID_NULO: UUID = UUID.fromString("00000000-0000-0000-0000-000000000000")
     }
 
@@ -228,6 +230,8 @@ class DevFragment : Fragment() {
                 HarenKarenRoomDatabase
                     .deleteDatabase(requireActivity().application, "haren_database")
                 HarenKarenRoomDatabase.getDatabase(requireActivity().application, viewModelScope)
+                val res = HarenKarenRoomDatabase.isDatabaseSchemaCreated(requireContext())
+                Log.i(TAG, "Existe esquema BD:${res}")
             }
         }
     }
