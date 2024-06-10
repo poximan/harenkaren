@@ -30,7 +30,7 @@
     <fragment
         android:id="@+id/login_fragment"
         android:name="com.example.demo.fragment.login.LoginFragment"
-        android:label="Login"
+        android:label="@string/nav_login_fragment"
         tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/goToHomeFragment"
@@ -44,7 +44,7 @@
     <fragment
         android:id="@+id/home_fragment"
         android:name="com.example.demo.fragment.home.HomeFragment"
-        android:label="Inicio"
+        android:label="@string/nav_home_fragment"
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/goToDiaAction"
@@ -89,7 +89,7 @@
         <fragment
             android:id="@+id/dia_list_fragment"
             android:name="com.example.demo.fragment.list.DiaListFragment"
-            android:label="Fechas"
+            android:label="@string/nav_dia_list_fragment"
             tools:layout="@layout/fragment_dia_list">
             <action
                 android:id="@+id/goToRecorrListAction"
@@ -108,7 +108,7 @@
             <fragment
                 android:id="@+id/recorr_list_fragment"
                 android:name="com.example.demo.fragment.list.RecorrListFragment"
-                android:label="Recorridos"
+                android:label="@string/nav_recorr_list_fragment"
                 tools:layout="@layout/fragment_recorr_list">
                 <argument
                     android:name="idDia"
@@ -126,7 +126,7 @@
             <fragment
                 android:id="@+id/recorr_add_fragment"
                 android:name="com.example.demo.fragment.add.RecorrAddFragment"
-                android:label="Nuevo recorrido"
+                android:label="@string/nav_recorr_add_fragment"
                 tools:layout="@layout/fragment_recorr_add">
                 <argument
                     android:name="idDia"
@@ -138,7 +138,7 @@
             <fragment
                 android:id="@+id/recorr_detail_fragment"
                 android:name="com.example.demo.fragment.detail.RecorrDetailFragment"
-                android:label="Detalle recorrido"
+                android:label="@string/nav_recorr_detail_fragment"
                 tools:layout="@layout/fragment_recorr_detail">
                 <argument
                     android:name="recorrActual"
@@ -168,7 +168,7 @@
                 <fragment
                     android:id="@+id/unsoc_list_fragment"
                     android:name="com.example.demo.fragment.list.UnSocListFragment"
-                    android:label="Registros"
+                    android:label="@string/nav_unsoc_list_fragment"
                     tools:layout="@layout/fragment_unsoc_list">
                     <argument
                         android:name="idRecorrido"
@@ -186,7 +186,7 @@
                 <fragment
                     android:id="@+id/unsoc_listgraf_fragment"
                     android:name="com.example.demo.fragment.list.UnSocListGrafFragment"
-                    android:label="Registros"
+                    android:label="@string/nav_unsoc_list_fragment"
                     tools:layout="@layout/fragment_unsoc_list_graf">
                     <argument
                         android:name="idRecorrido"
@@ -204,7 +204,7 @@
                 <fragment
                     android:id="@+id/unsoc_add_fragment"
                     android:name="com.example.demo.fragment.add.UnSocAddFragment"
-                    android:label="Nuevo registro"
+                    android:label="@string/nav_unsoc_add_fragment"
                     tools:layout="@layout/fragment_unsoc_add">
                     <argument
                         android:name="idRecorrido"
@@ -216,7 +216,7 @@
                 <fragment
                     android:id="@+id/unsoc_detail_fragment"
                     android:name="com.example.demo.fragment.detail.UnSocDetailFragment"
-                    android:label="Detalle registro"
+                    android:label="@string/nav_unsoc_detail_fragment"
                     tools:layout="@layout/fragment_unsoc_add">
                     <argument
                         android:name="unSocActual"
@@ -250,7 +250,7 @@
     <fragment
         android:id="@+id/statistics_fragment"
         android:name="com.example.demo.fragment.statistics.StatisticsFragment"
-        android:label="Estadísticas"
+        android:label="@string/nav_statistics_fragment"
         tools:layout="@layout/fragment_statistics">
         <argument
             android:name="entidad"
@@ -259,27 +259,27 @@
     <fragment
         android:id="@+id/osm_fragment"
         android:name="com.example.demo.fragment.maps.OSMFragment"
-        android:label="Mapa"
+        android:label="@string/nav_osm_fragment"
         tools:layout="@layout/fragment_osm" />
     <fragment
         android:id="@+id/reportes_fragment"
         android:name="com.example.demo.fragment.statistics.ReportesFragment"
-        android:label="Reportes"
+        android:label="@string/nav_reportes_fragment"
         tools:layout="@layout/fragment_reportes" />
     <fragment
         android:id="@+id/ayuda_fragment"
         android:name="com.example.demo.fragment.info.AyudaFragment"
-        android:label="Ayuda"
+        android:label="@string/nav_ayuda_fragment"
         tools:layout="@layout/fragment_ayuda" />
     <fragment
         android:id="@+id/dev_fragment"
         android:name="com.example.demo.DevFragment"
-        android:label="Para desarrollador"
+        android:label="@string/nav_dev_fragment"
         tools:layout="@layout/fragment_dev" />
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.demo.fragment.register.RegisterFragment"
-        android:label="Registro"
+        android:label="@string/nav_registerFragment"
         tools:layout="@layout/fragment_register" />
     <fragment
         android:id="@+id/about_fragment"
@@ -288,11 +288,11 @@
     <fragment
         android:id="@+id/import_fragment"
         android:name="com.example.demo.compartir.importar.ImportarFragment"
-        android:label="Importar registros"
+        android:label="@string/nav_import_fragment"
         tools:layout="@layout/fragment_importar" />
     <fragment
         android:id="@+id/export_fragment"
         android:name="com.example.demo.compartir.exportar.ExportarFragment"
-        android:label="Exportar registros"
+        android:label="@string/nav_export_fragment"
         tools:layout="@layout/fragment_exportar" />
 </navigation>

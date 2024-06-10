@@ -1,12 +1,10 @@
 <resources>
-    <string name="app_name">Haren Karen</string>
+    <string name="app_name" translatable="false">Haren Karen</string>
 
-    <string name="fecha_unsoc">Fecha observacion</string>
+    <string name="formato_dia" translatable="false">yyyy/MM/dd</string>
+    <string name="formato_fecha" translatable="false">yyyy/MM/dd - HH:mm:ss</string>
 
-    <string name="formato_dia">yyyy/MM/dd</string>
-    <string name="formato_fecha">yyyy/MM/dd - HH:mm:ss</string>
-
-    <string name="about">
+    <string name="about" translatable="false">
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     </string>
 
@@ -15,14 +13,24 @@
     <!-- ****************************************************************** -->
 
     <!-- uso en varios lugares -->
-    <string name="varias_desarrollador">"Desarrollador"</string>
+    <string name="varias_desarrollador">Desarrollador</string>
     <string name="varias_cancelar">Cancelar</string>
     <string name="varias_volver">Volver</string>
     <string name="varias_seleccione">Seleccione...</string>
     <string name="varias_confirmar">Confirmar</string>
-    <string name="varias_gps">GPS</string>
+    <string name="varias_gps" translatable="false">GPS</string>
     <string name="varias_lat">Latitud</string>
     <string name="varias_lon">Longitud</string>
+
+    <!-- nav_drawer_menu -->
+    <string name="mnu_importar">Importar</string>
+    <string name="mnu_exportar">Exportar</string>
+    <string name="mnu_acercade">Acerca de</string>
+
+    <!-- filter_menu -->
+    <string name="mnu_filtrar">Filtrar</string>
+    <string name="mnu_fecha">Filtrar por fecha</string>
+    <string name="mnu_limpiar">Limpiar filtro</string>
 
     <!-- fragment_ctx_social -->
     <string name="ctx_haren">Haren(H)</string>
@@ -47,22 +55,22 @@
     <string name="exp_mensajeCompartir">Extraer todos los registros, y compartir fuera de la app</string>
     <string name="exp_compartir">Compartir</string>
     <string name="exp_compartirConUnPar">Entregar los registros realizados con este dispositivo. \nEsta app funcionara como terminal</string>
-    <string name="exp_compartirParMedio">"Eliga medio para comunicarse"</string>
-    <string name="exp_bluetooth">"bluetooth"</string>
-    <string name="exp_wifi">"wifi"</string>
-    <string name="exp_destinatario">"Destinatarios"</string>
+    <string name="exp_compartirParMedio">Eliga medio para comunicarse</string>
+    <string name="exp_bluetooth" translatable="false">bluetooth</string>
+    <string name="exp_wifi" translatable="false">wifi</string>
+    <string name="exp_destinatario">Destinatarios</string>
 
     <!-- fragment_home -->
     <string name="home_censos">censos</string>
     <string name="home_mapa">Mapa recorridos</string>
     <string name="home_reportes">Reportes</string>
-    <string name="home_ayuda">"Ayuda"</string>
+    <string name="home_ayuda">Ayuda</string>
 
     <!-- fragment_importar -->
     <string name="imp_mensajeCargar">Agregar registros desde csv</string>
     <string name="imp_cargar">Cargar archivo</string>
     <string name="imp_compartirConUnPar">Pedir los registros realizados en otro dispositivo. \nEsta app funcionará como concentrador</string>
-    <string name="imp_misdatos">"Mis datos para conexion"</string>
+    <string name="imp_misdatos">Mis datos para conexion</string>
 
     <!-- fragment_inicio -->
     <string name="ini_bienvenido">Bienvenido</string>
@@ -267,5 +275,27 @@
     <!-- FechaOficial -->
     <string name="usr_VMLoginNoExiste">No se encontraron coincidencias para {email, contraseña}</string>
     <string name="usr_VMLoginMultiple">Inconsistencia BD, instancia multiple para {email, contraseña}</string>
+
+    <!-- ****************************************************************** -->
+    <!-- ****** componente navigation ************************************* -->
+    <!-- ****************************************************************** -->
+
+    <string name="nav_login_fragment">Login</string>
+    <string name="nav_home_fragment">Inicio</string>
+    <string name="nav_dia_list_fragment">Fechas</string>
+    <string name="nav_recorr_list_fragment">Recorridos</string>
+    <string name="nav_recorr_add_fragment">Nuevo recorrido</string>
+    <string name="nav_recorr_detail_fragment">Detalle recorrido</string>
+    <string name="nav_unsoc_list_fragment">Registros</string>
+    <string name="nav_unsoc_add_fragment">Nuevo registro</string>
+    <string name="nav_unsoc_detail_fragment">Detalle registro</string>
+    <string name="nav_statistics_fragment">Grafica</string>
+    <string name="nav_osm_fragment">Mapa</string>
+    <string name="nav_reportes_fragment">Reportes</string>
+    <string name="nav_ayuda_fragment">Ayuda</string>
+    <string name="nav_dev_fragment">Para desarrollador</string>
+    <string name="nav_registerFragment">Registro</string>
+    <string name="nav_import_fragment">Importar registros</string>
+    <string name="nav_export_fragment">Exportar registros</string>
 
 </resources>

@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
     <item
         android:id="@id/import_fragment"
         android:icon="@drawable/ic_import"
-        android:title="Importar" />
+        android:title="@string/mnu_importar" />
     <item
         android:id="@id/export_fragment"
         android:icon="@drawable/ic_export"
-        android:title="Exportar" />
+        android:title="@string/mnu_exportar" />
     <item
         android:id="@id/dev_fragment"
         android:icon="@android:drawable/ic_menu_zoom"
@@ -17,5 +16,5 @@
     <item
         android:id="@id/about_fragment"
         android:icon="@android:drawable/ic_menu_info_details"
-        android:title="Acerca de" />
+        android:title="@string/mnu_acercade" />
 </menu>

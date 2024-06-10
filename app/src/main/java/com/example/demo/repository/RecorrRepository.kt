@@ -22,9 +22,10 @@ class RecorrRepository(private val dao: RecorrDAO) {
         return dao.getRecorrByUUID(id)
     }
 
-    fun readConFK(id: UUID): LiveData<List<Recorrido>> {
+    fun readConFK(id: UUID): List<Recorrido> {
         val listaIntermedia = dao.getRecorrByDiaId(id)
-        return convertirAData(listaIntermedia)
+        // TODO hacer conversion
+        return listaIntermedia
     }
 
     private fun convertirAData(list: List<Recorrido>): LiveData<List<Recorrido>> {

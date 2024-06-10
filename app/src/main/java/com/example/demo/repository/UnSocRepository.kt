@@ -21,7 +21,9 @@ class UnSocRepository(private val dao: UnSocDAO) {
     }
 
     fun readConFK(idRecorr: UUID): List<UnidSocial> {
-        return dao.getUnSocByRecorrId(idRecorr)
+        val listaIntermedia = dao.getUnSocByRecorrId(idRecorr)
+        // TODO hacer conversion
+        return listaIntermedia
     }
 
     fun getMaxRegistro(idRecorr: UUID): Int {

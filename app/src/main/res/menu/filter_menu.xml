@@ -3,15 +3,15 @@
 
     <item
         android:id="@+id/menu_group"
-        android:title="Filtrar"
+        android:title="@string/mnu_filtrar"
         app:showAsAction="ifRoom">
         <menu>
             <item
                 android:id="@+id/filtro_ejecutar"
-                android:title="Filtrar por fecha" />
+                android:title="@string/mnu_fecha" />
             <item
                 android:id="@+id/filtro_limpiar"
-                android:title="Limpiar filtro" />
+                android:title="@string/mnu_limpiar" />
         </menu>
     </item>
 

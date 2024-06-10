@@ -55,7 +55,7 @@ class DevDatos(private val context: Context) {
                 longitudFin = -61.031,
                 areaRecorrida = "punta norte",
                 meteo = "parcialmente nublado",
-                marea = "Media"
+                marea = context.getString(R.string.mar_media)
             ),
             Recorrido(
                 id = DevFragment.UUID_NULO,
@@ -70,7 +70,7 @@ class DevDatos(private val context: Context) {
                 longitudFin = -59.031,
                 areaRecorrida = "punta delgada",
                 meteo = "parcialmente nublado",
-                marea = "Baja, bajando"
+                marea = context.getString(R.string.mar_bajabaj)
             ),
             Recorrido(
                 id = DevFragment.UUID_NULO,
@@ -85,7 +85,7 @@ class DevDatos(private val context: Context) {
                 longitudFin = -60.311,
                 areaRecorrida = "isla escondida",
                 meteo = "despejado",
-                marea = "Muy alta"
+                marea = context.getString(R.string.mar_muyalta)
             ),
         )
         val listUUID = Array<UUID?>(recorrList.size) { null }
