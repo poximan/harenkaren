@@ -1,0 +1,290 @@
+<resources>
+
+    <!-- ****************************************************************** -->
+    <!-- ****** incrustados en layouts ************************************ -->
+    <!-- ****************************************************************** -->
+
+    <!-- uso en varios lugares -->
+    <string name="varias_desarrollador">Developer</string>
+    <string name="varias_cancelar">Cancel</string>
+    <string name="varias_volver">Back</string>
+    <string name="varias_seleccione">Select...</string>
+    <string name="varias_confirmar">Confirm</string>
+    <string name="varias_lat">Latitude</string>
+    <string name="varias_lon">Longitude</string>
+
+    <!-- nav_drawer_menu -->
+    <string name="mnu_importar">Import</string>
+    <string name="mnu_exportar">Export</string>
+    <string name="mnu_acercade">About</string>
+
+    <!-- filter_menu -->
+    <string name="mnu_filtrar">Filter</string>
+    <string name="mnu_fecha">Filter by date</string>
+    <string name="mnu_limpiar">Clear filter</string>
+
+    <!-- fragment_ctx_social -->
+    <string name="ctx_haren">Haren(H)</string>
+    <string name="ctx_harenSAlfa">Haren w/o alpha(HwA)</string>
+    <string name="ctx_gpoHarenes">Group of harens(GH)</string>
+    <string name="ctx_pjaSolitaria">Solitary pair(SP)</string>
+    <string name="ctx_indivSolo">Solo individuals(S)</string>
+
+    <!-- fragment_dev -->
+    <string name="dev_poblar">Populate DB</string>
+    <string name="dev_dias">Days</string>
+    <string name="dev_recorr">Routes</string>
+    <string name="dev_unsoc">Social Units</string>
+    <string name="dev_usr">Add user</string>
+    <string name="dev_logcat">Logcat</string>
+    <string name="dev_limpdias">Clear days</string>
+    <string name="dev_limprecorr">Clear\nroutes</string>
+    <string name="dev_limpUnsoc">Clear\nsocial units</string>
+    <string name="dev_rearmar">Rebuild\nschema</string>
+
+    <!-- fragment_exportar -->
+    <string name="exp_mensajeCompartir">Extract all records, and share outside the app</string>
+    <string name="exp_compartir">Share</string>
+    <string name="exp_compartirConUnPar">Deliver the records made with this device.\nThis app will function as a terminal</string>
+    <string name="exp_compartirParMedio">Choose medium to communicate</string>
+    <string name="exp_destinatario">Recipients</string>
+
+    <!-- fragment_home -->
+    <string name="home_censos">Censuses</string>
+    <string name="home_mapa">Map routes</string>
+    <string name="home_reportes">Reports</string>
+    <string name="home_ayuda">Help</string>
+
+    <!-- fragment_importar -->
+    <string name="imp_mensajeCargar">Add records from csv</string>
+    <string name="imp_cargar">Load file</string>
+    <string name="imp_compartirConUnPar">Request the records made on another device.\nThis app will function as a hub</string>
+    <string name="imp_misdatos">My connection data</string>
+
+    <!-- fragment_inicio -->
+    <string name="ini_bienvenido">Welcome</string>
+    <string name="ini_ingresar">Log in</string>
+    <string name="ini_nuevo">I\'m new</string>
+
+    <!-- fragment_login -->
+    <string name="log_email">Enter email</string>
+    <string name="log_contrasenia">Enter password</string>
+    <string name="log_huella">Use fingerprint</string>
+    <string name="log_fallalog">Incorrect username and/or password</string>
+    <string name="log_in">Log in</string>
+
+    <!-- fragment_osm -->
+    <string name="osm_mapacalor">Heat map</string>
+
+    <!-- fragment_pto_obs_unsoc -->
+    <string name="pto_alto">High</string>
+    <string name="pto_bajo">Low</string>
+
+    <!-- fragment_recorr_add -->
+    <string name="rec_obsevador">Observer</string>
+    <string name="rec_area">Surveyed area</string>
+    <string name="rec_meteo">Weather conditions</string>
+    <string name="rec_marea">Tide state</string>
+
+    <!-- fragment_recorr_detail -->
+    <string name="rec_editar">Edit</string>
+    <string name="rec_horaini">Start time</string>
+    <string name="rec_gpsini">Start GPS ==></string>
+    <string name="rec_horafin">End time</string>
+    <string name="rec_gpsfin">End GPS ==></string>
+    <string name="rec_registros">Records</string>
+
+    <!-- fragment_register -->
+    <string name="reg_nombre">First name</string>
+    <string name="reg_apellido">Last name</string>
+    <string name="reg_email">Email</string>
+    <string name="reg_contrasenia">Password</string>
+    <string name="reg_repcontrasenia">Repeat password</string>
+    <string name="reg_nocoincide">Passwords do not match</string>
+    <string name="reg_registrar">Register</string>
+
+    <!-- fragment_tpo_sustrato -->
+    <string name="tpo_arena">Sand(S)</string>
+    <string name="tpo_cRodado">Pebble(P)</string>
+    <string name="tpo_mezcla">Mix(M)</string>
+    <string name="tpo_restinga">Rock(R)</string>
+
+    <!-- fragment_unsoc_gral -->
+    <string name="socg_ptoObs">Observation point:</string>
+    <string name="socg_ctxSoc">Social context(Ref):</string>
+    <string name="socg_tpoSust">Substrate(Pya):</string>
+    <string name="socg_comentario">Comment:</string>
+    <string name="socg_opcional">Optional</string>
+    <string name="socg_foto">Photo</string>
+
+    <!-- fragment_unsoc_muertos -->
+    <string name="socm_dominante">Dominant (\u03B1)</string>
+    <string name="socm_s4_ad">S4/Ad</string>
+    <string name="socm_sams">Sams</string>
+    <string name="socm_hembras">Adult female</string>
+    <string name="socm_crias">Pups</string>
+    <string name="socm_destetado">Weaned</string>
+    <string name="socm_juvenil">Juvenile</string>
+    <string name="socm_periferico"><![CDATA[Peripheral(<10m)]]></string>
+    <string name="socm_cercano">Close(10-50m)</string>
+    <string name="socm_lejos">Far(50-100m)</string>
+
+    <!-- ****************************************************************** -->
+    <!-- ****** fuera de layouts ****************************************** -->
+    <!-- ****************************************************************** -->
+
+    <string name="mar_muybaja">Very low</string>
+    <string name="mar_baja">Low</string>
+    <string name="mar_bajabaj">Low, decreasing</string>
+    <string name="mar_bajasub">Low, rising</string>
+    <string name="mar_mediabaj">Medium, decreasing</string>
+    <string name="mar_media">Medium</string>
+    <string name="mar_mediasub">Medium, rising</string>
+    <string name="mar_altabaj">High, decreasing</string>
+    <string name="mar_altasub">High, rising</string>
+    <string name="mar_alta">High</string>
+    <string name="mar_muyalta">Very high</string>
+
+    <!-- ****************************************************************** -->
+    <!-- ****** incrustados en clases ************************************ -->
+    <!-- ****************************************************************** -->
+
+    <!-- uso en varios lugares -->
+    <string name="varias_gpsHab">GPS disabled. Enable in Settings</string>
+    <string name="varias_geopos">Geopositioning...</string>
+
+    <!-- DevFragment -->
+    <string name="dev_E_estadoDB">The DB manager cannot verify the data integrity</string>
+    <string name="dev_estadoDB_entidad">entities</string>
+    <string name="dev_estadoDB_dia">day</string>
+    <string name="dev_estadoDB_recorr">route</string>
+    <string name="dev_estadoDB_unsoc">social unit</string>
+
+    <!-- UnSocVivosFragment -->
+    <string name="socv_vistaHaren">For Haren, females must be >= 2</string>
+    <string name="socv_vistaHarenSinAlfa1">For Haren without alpha, there should be no dominant males</string>
+    <string name="socv_vistaHarenSinAlfa2">For Haren without alpha, females must be >= 2</string>
+    <string name="socv_vistaGrupoHarenes1">For harems group, the sum of dominant males must be >=2</string>
+    <string name="socv_vistaGrupoHarenes2">For harems group, females must be >= 2</string>
+    <string name="socv_vistaPjaSolitaria">This field is not editable for solitary pairs</string>
+    <string name="socv_validarDominante1">Only [0,1] is allowed if it is a solitary pair</string>
+    <string name="socv_validarDominante2">It must be AlfaS4Ad=1 or AlfaSams=1, choose only one</string>
+    <string name="socv_toString">Alive</string>
+
+    <!-- UnSocListAdapter -->
+    <string name="soc_listAdap_gral">Gral --></string>
+    <string name="soc_listAdap_vivos">Alive --></string>
+    <string name="soc_listAdap_muertos">Dead --></string>
+
+    <!-- ImportarFragment -->
+    <string name="imp_clickWF1">On the device you want to deliver your records, go to Export and press RECIPIENTS.\nThere, look for me as</string>
+    <string name="imp_clickWF2">Waiting for data from remote</string>
+    <string name="imp_mostrarResTit">New records</string>
+    <string name="imp_mostrarResMsg1">The records accounted for in the import were</string>
+    <string name="imp_mostrarResMsg2">broken down into:</string>
+    <string name="imp_mostrarResMsg3">From that batch, they were inserted into this DB:</string>
+    <string name="imp_onMessage">Arrived from remote device</string>
+    <string name="imp_onPelos">Added from external file</string>
+    <string name="imp_progreso">Extracting lines from CSV...</string>
+
+    <!-- RecorrAddFragment -->
+    <string name="rec_confirmar">Route added correctly</string>
+
+    <!-- UnSocAddFragment -->
+    <string name="soc_confirmar">Record added correctly</string>
+
+    <!-- ExportarFragment -->
+    <string name="exp_enviarExterno">This is a backup of the records contained in the app.\nIn total, there are</string>
+
+    <!-- UnSocGralFragment -->
+    <string name="socg_permCamara">Camera permissions are required to take photos</string>
+    <string name="socg_permGPS">Location permissions are required to obtain the current position</string>
+    <string name="socg_reduceBit">ImageView dimensions cannot be zero or negative</string>
+    <string name="socg_toString">Gral</string>
+
+    <!-- UnSocMuertosFragment -->
+    <string name="socm_toString">Dead</string>
+
+    <!-- RecorrDetailFragment -->
+    <string name="rec_confirmarEdit">Route edited correctly</string>
+
+    <!-- UnSocDetailFragment -->
+    <string name="soc_confirmarEdit">Record edited correctly</string>
+
+    <!-- DiaListFragment -->
+    <string name="dia_confirmar">Day added correctly</string>
+    <string name="dia_mostrarAyudaTit">Dates</string>
+    <string name="dia_mostrarAyuda0">You have not added any day yet, so the list is empty. Click on (+) to add it</string>
+    <string name="dia_mostrarAyuda1">Now there is only one day registered. When you add more, you will notice the list. Click on the existing day to manage its routes</string>
+    <string name="dia_mostrarAyudaElse">Click on the row representing the day of interest to continue to its detail. There you can manage the routes associated with the selected date</string>
+    <string name="dia_mostrarAyudaMarco">This screen represents a list of days, where each day is represented by a row.</string>
+
+    <!-- RecorrListFragment -->
+    <string name="rec_mostrarAyudaTit">Routes</string>
+    <string name="rec_mostrarAyuda0">You have not added any route yet, so the list is empty. Click on (+) to add it</string>
+    <string name="rec_mostrarAyuda1">There is only one route registered. When you add more, you will notice the list. Click on the existing route to manage its records (census social units)</string>
+    <string name="rec_mostrarAyudaElse">Click on the row representing the route of interest to continue to its detail. There you can manage the records (census social units) associated with the selected route</string>
+    <string name="rec_mostrarAyudaMarco">This screen represents a list of the routes made during a single day, where each route is represented by a row.</string>
+
+    <!-- UnSocListFragment -->
+    <string name="soc_mostrarAyudaTit">Records</string>
+    <string name="soc_mostrarAyuda0">You have not added any record yet, so the list is empty. Click on (+) to add it</string>
+    <string name="soc_mostrarAyuda1">Now there is only one record registered. When you add more, you will notice the list. Click on the existing record to view its detail</string>
+    <string name="soc_mostrarAyudaElse">Click on the row representing the record of interest to continue to its detail. There you can review the values defined during the observation of that social unit</string>
+    <string name="soc_mostrarAyudaMarco">This screen shows a list of records, where each record is represented by a row.</string>
+
+    <!-- BiometricLoginManager -->
+    <string name="bio_titulo">Biometric authentication</string>
+    <string name="bio_subtitulo">Log in with your fingerprint</string>
+
+    <!-- LoginFragment -->
+    <string name="log_checkLogin">Complete the fields</string>
+    <string name="log_checkHuella1">Fingerprint detection hardware is missing</string>
+    <string name="log_checkHuella2">User verification failed</string>
+
+    <!-- LoginFragment -->
+    <string name="osm_mostrar">For the chosen year, there are routes without associated records</string>
+
+    <!-- EmailSender -->
+    <string name="mai_asunto">Census backup</string>
+    <string name="mai_appemail">No email application was found on this device</string>
+
+    <!-- RegisterFragment -->
+    <string name="reg_newAccount">Fill in all fields</string>
+    <string name="reg_loginSuccess">Successful registration</string>
+    <string name="reg_loginFailure">Authentication error</string>
+
+    <!-- StatisticsFragment -->
+    <string name="sta_unDia">There are no associated records for the selected day</string>
+    <string name="sta_unRecorrido">There are no associated records for the selected route</string>
+
+    <!-- FechaOficial -->
+    <string name="ofi_transformar">Invalid date</string>
+
+    <!-- FechaOficial -->
+    <string name="usr_VMLoginNoExiste">No matches found for {email, password}</string>
+    <string name="usr_VMLoginMultiple">Database inconsistency, multiple instances for {email, password}</string>
+
+    <!-- ****************************************************************** -->
+    <!-- ****** componente navigation ************************************* -->
+    <!-- ****************************************************************** -->
+
+    <string name="nav_login_fragment">Login</string>
+    <string name="nav_home_fragment">Home</string>
+    <string name="nav_dia_list_fragment">Dates</string>
+    <string name="nav_recorr_list_fragment">Routes</string>
+    <string name="nav_recorr_add_fragment">New route</string>
+    <string name="nav_recorr_detail_fragment">Route detail</string>
+    <string name="nav_unsoc_list_fragment">Records</string>
+    <string name="nav_unsoc_add_fragment">New record</string>
+    <string name="nav_unsoc_detail_fragment">Record detail</string>
+    <string name="nav_statistics_fragment">Chart</string>
+    <string name="nav_osm_fragment">Map</string>
+    <string name="nav_reportes_fragment">Reports</string>
+    <string name="nav_ayuda_fragment">Help</string>
+    <string name="nav_dev_fragment">For developer</string>
+    <string name="nav_registerFragment">Register</string>
+    <string name="nav_import_fragment">Import records</string>
+    <string name="nav_export_fragment">Export records</string>
+
+</resources>
