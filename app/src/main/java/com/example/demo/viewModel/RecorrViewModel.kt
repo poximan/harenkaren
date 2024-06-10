@@ -26,7 +26,7 @@ class RecorrViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     fun insert(recorrido: Recorrido) = CoroutineScope(Dispatchers.IO).launch(Dispatchers.IO) {
-        repository.insert(recorrido)
+        repository.insert(super.getApplication<Application>().applicationContext, recorrido)
     }
 
     fun update(recorrido: Recorrido) = CoroutineScope(Dispatchers.IO).launch {
@@ -34,7 +34,7 @@ class RecorrViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     fun readConFK(idDia: UUID): List<Recorrido> {
-        return repository.readConFK(idDia)
+        return repository.readConFK(idDia, super.getApplication<Application>().applicationContext)
     }
 
     fun readAsynConFK(idDia: UUID, callback: (List<Recorrido>) -> Unit) {

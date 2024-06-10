@@ -1,15 +1,19 @@
 package com.example.demo.repository
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.demo.dao.UnSocDAO
 import com.example.demo.model.UnidSocial
+import com.example.demo.servicios.IdiomaAdapter
 import java.util.UUID
 
 class UnSocRepository(private val dao: UnSocDAO) {
 
-    fun insert(unidSocial: UnidSocial) {
-        dao.insertConUUID(unidSocial)
+    fun insert(context: Context, unidSocial: UnidSocial): UUID {
+        val idiomasaurio = IdiomaAdapter()
+        val unidSocialAdaptado = idiomasaurio.persistenciaUnSoc(context, unidSocial)
+        return dao.insertConUUID(unidSocialAdaptado)
     }
 
     fun update(unidSocial: UnidSocial) {
@@ -20,10 +24,14 @@ class UnSocRepository(private val dao: UnSocDAO) {
         return dao.getUnSocByUUID(id)
     }
 
-    fun readConFK(idRecorr: UUID): List<UnidSocial> {
+    fun readConFK(idRecorr: UUID, context: Context): List<UnidSocial> {
+        val idiomasaurio = IdiomaAdapter()
         val listaIntermedia = dao.getUnSocByRecorrId(idRecorr)
-        // TODO hacer conversion
-        return listaIntermedia
+
+        val listaAdaptada = listaIntermedia.map { elem ->
+            idiomasaurio.viewModelUnSoc(context, elem)
+        }
+        return listaAdaptada
     }
 
     fun getMaxRegistro(idRecorr: UUID): Int {

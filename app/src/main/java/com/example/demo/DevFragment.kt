@@ -16,6 +16,8 @@ import androidx.lifecycle.lifecycleScope
 import com.example.demo.database.DevDatos
 import com.example.demo.database.HarenKarenRoomDatabase
 import com.example.demo.databinding.FragmentDevBinding
+import com.example.demo.repository.RecorrRepository
+import com.example.demo.repository.UnSocRepository
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -151,18 +153,22 @@ class DevFragment : Fragment() {
                 val diaDao = HarenKarenRoomDatabase
                     .getDatabase(requireActivity().application, viewModelScope)
                     .diaDao()
+
                 val recorrDao = HarenKarenRoomDatabase
                     .getDatabase(requireActivity().application, viewModelScope)
                     .recorrDao()
+                val recorrRepo = RecorrRepository(recorrDao)
+
                 val unSocDao = HarenKarenRoomDatabase
                     .getDatabase(requireActivity().application, viewModelScope)
                     .unSocDao()
+                val unSocRepo = UnSocRepository(unSocDao)
 
                 val listDias: Array<UUID> =
                     datos.generarDias(diaDao).filterNotNull().toTypedArray()
                 val listRecorr: Array<UUID> =
-                    datos.generarRecorridos(recorrDao, listDias).filterNotNull().toTypedArray()
-                datos.generarUnidadesSociales(unSocDao, listRecorr)
+                    datos.generarRecorridos(recorrRepo, listDias).filterNotNull().toTypedArray()
+                datos.generarUnidadesSociales(unSocRepo, listRecorr)
 
                 withContext(Dispatchers.Main) {
                     estadoBD()

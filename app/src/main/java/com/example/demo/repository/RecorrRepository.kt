@@ -1,17 +1,21 @@
 package com.example.demo.repository
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.demo.dao.RecorrDAO
 import com.example.demo.model.Recorrido
+import com.example.demo.servicios.IdiomaAdapter
 import java.util.UUID
 
 class RecorrRepository(private val dao: RecorrDAO) {
 
     val recorrListAll: LiveData<List<Recorrido>> = dao.getAll()
 
-    fun insert(recorrido: Recorrido) {
-        dao.insertConUUID(recorrido)
+    fun insert(context: Context, recorrido: Recorrido): UUID {
+        val idiomasaurio = IdiomaAdapter()
+        val recorrAdaptado = idiomasaurio.persistenciaRecorr(context, recorrido)
+        return dao.insertConUUID(recorrAdaptado)
     }
 
     fun update(recorrido: Recorrido) {
@@ -22,10 +26,14 @@ class RecorrRepository(private val dao: RecorrDAO) {
         return dao.getRecorrByUUID(id)
     }
 
-    fun readConFK(id: UUID): List<Recorrido> {
+    fun readConFK(id: UUID, context: Context): List<Recorrido> {
+        val idiomasaurio = IdiomaAdapter()
         val listaIntermedia = dao.getRecorrByDiaId(id)
-        // TODO hacer conversion
-        return listaIntermedia
+
+        val listaAdaptada = listaIntermedia.map { elem ->
+            idiomasaurio.viewModelRecorr(context, elem)
+        }
+        return listaAdaptada
     }
 
     private fun convertirAData(list: List<Recorrido>): LiveData<List<Recorrido>> {

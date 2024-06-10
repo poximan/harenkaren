@@ -10,6 +10,8 @@ import com.example.demo.dao.UsuarioDAO
 import com.example.demo.model.Dia
 import com.example.demo.model.Recorrido
 import com.example.demo.model.UnidSocial
+import com.example.demo.repository.RecorrRepository
+import com.example.demo.repository.UnSocRepository
 import com.example.demo.servicios.GestorUUID
 import java.util.UUID
 
@@ -39,7 +41,7 @@ class DevDatos(private val context: Context) {
         return listUUID
     }
 
-    fun generarRecorridos(recorrDAO: RecorrDAO, listDia: Array<UUID>): Array<UUID?> {
+    fun generarRecorridos(recorrRepo: RecorrRepository, listDia: Array<UUID>): Array<UUID?> {
 
         val recorrList = listOf<Recorrido>(
             Recorrido(
@@ -89,13 +91,13 @@ class DevDatos(private val context: Context) {
             ),
         )
         val listUUID = Array<UUID?>(recorrList.size) { null }
-        recorrList.forEachIndexed { idx, dia ->
-            listUUID[idx] = recorrDAO.insertConUUID(dia)
+        recorrList.forEachIndexed { idx, recorr ->
+            listUUID[idx] = recorrRepo.insert(context, recorr)
         }
         return listUUID
     }
 
-    fun generarUnidadesSociales(unsocDAO: UnSocDAO, listRecorr: Array<UUID>) {
+    fun generarUnidadesSociales(unSocRepo: UnSocRepository, listRecorr: Array<UUID>) {
         val unSocList = listOf<UnidSocial>(
             UnidSocial(
                 id = DevFragment.UUID_NULO,
@@ -469,7 +471,7 @@ class DevDatos(private val context: Context) {
             )
         )
         unSocList.forEach { unsoc ->
-            unsocDAO.insertConUUID(unsoc)
+            unSocRepo.insert(context, unsoc)
         }
     }
 

@@ -29,7 +29,7 @@ class UnSocViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun insert(unidSocial: UnidSocial) = CoroutineScope(Dispatchers.IO).launch(Dispatchers.IO) {
-        repository.insert(unidSocial)
+        repository.insert(super.getApplication<Application>().applicationContext, unidSocial)
 
         val recorrActual = repositoryPropagado.readUnico(unidSocial.recorrId)
         recorrActual.latitudFin = unidSocial.latitud
@@ -43,7 +43,7 @@ class UnSocViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun readConFK(id: UUID): List<UnidSocial> {
-        return repository.readConFK(id)
+        return repository.readConFK(id, super.getApplication<Application>().applicationContext)
     }
 
     fun readUnico(idUnSoc: UUID): UnidSocial {
