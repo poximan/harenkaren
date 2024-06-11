@@ -2,6 +2,9 @@ package com.example.demo.activity
 
 import android.content.ContentResolver
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -23,8 +26,10 @@ class MainActivity : AppCompatActivity() {
 
     private val mapaParesOrigenDestino: MutableMap<Int, Int> = mutableMapOf()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    private var doubleBackParaSalir = false
+    private val handler = Handler(Looper.getMainLooper())
 
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         resolver = applicationContext.contentResolver
 
@@ -74,11 +79,25 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onBackPressed() {
-        onSupportNavigateUp()
-    }
-
     private fun agregarParOrigenDestino(idOrigen: Int, idDestino: Int) {
         mapaParesOrigenDestino[idOrigen] = idDestino
+    }
+
+    override fun onBackPressed() {
+        val navController = findNavController(R.id.theNavHostFragment)
+        val currentFragment = navController.currentDestination?.id
+
+        // Verifica si estás en el fragmento inicial de activity_main.xml
+        if (currentFragment == R.id.main_fragment) {
+            if (doubleBackParaSalir) {
+                super.onBackPressed()
+                return
+            }
+            this.doubleBackParaSalir = true
+            Toast.makeText(this, getString(R.string.nav_main_fragment), Toast.LENGTH_SHORT).show()
+            handler.postDelayed({ doubleBackParaSalir = false }, 1000)
+        } else {
+            onSupportNavigateUp()
+        }
     }
 }

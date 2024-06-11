@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import com.example.demo.R
 import com.example.demo.fragment.add.UnSocGralFragment
 import com.example.demo.fragment.add.UnSocMuertosFragment
 import com.example.demo.fragment.add.UnSocVivosFragment
@@ -22,15 +23,15 @@ class UnSocPagerAdapter(
 
     private val solapas = if (unSoc == null) {
         arrayOf(
-            UnSocGralFragment(context).newInstance(::colectar),
-            UnSocVivosFragment(context).newInstance(::colectar),
-            UnSocMuertosFragment(context).newInstance(::colectar)
+            UnSocGralFragment().newInstance(::colectar),
+            UnSocVivosFragment().newInstance(::colectar),
+            UnSocMuertosFragment().newInstance(::colectar)
         )
     } else {
         arrayOf(
-            UnSocGralDetailFragment(context).editInstance(::colectar, unSoc),
-            UnSocVivosDetailFragment(context).editInstance(::colectar, unSoc),
-            UnSocMuertosDetailFragment(context).editInstance(::colectar, unSoc)
+            UnSocGralDetailFragment().editInstance(::colectar, unSoc),
+            UnSocVivosDetailFragment().editInstance(::colectar, unSoc),
+            UnSocMuertosDetailFragment().editInstance(::colectar, unSoc)
         )
     }
 
@@ -127,7 +128,15 @@ class UnSocPagerAdapter(
     }
 
     override fun getPageTitle(position: Int): CharSequence {
-        return solapas[position].toString()
+        return when(solapas[position]){
+            is UnSocGralFragment -> context.getString(R.string.socg_toString)
+            is UnSocGralDetailFragment -> context.getString(R.string.socg_toString)
+            is UnSocVivosFragment -> context.getString(R.string.socv_toString)
+            is UnSocVivosDetailFragment -> context.getString(R.string.socv_toString)
+            is UnSocMuertosFragment -> context.getString(R.string.socm_toString)
+            is UnSocMuertosDetailFragment -> context.getString(R.string.socm_toString)
+            else -> { "error TAG!" }
+        }
     }
 
     fun transferirDatos(): MutableMap<String, Any?> {

@@ -1,6 +1,5 @@
 package com.example.demo.fragment.detail
 
-import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -9,12 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.demo.R
 import com.example.demo.databinding.FragmentUnsocVivosBinding
 import com.example.demo.model.UnidSocial
 import kotlin.reflect.KFunction2
 
-class UnSocVivosDetailFragment(private val context: Context) : Fragment() {
+class UnSocVivosDetailFragment() : Fragment() {
 
     companion object {
         private lateinit var colectar: (Int, Map<String, Any>) -> Unit
@@ -156,9 +154,5 @@ class UnSocVivosDetailFragment(private val context: Context) : Fragment() {
         override fun afterTextChanged(s: Editable?) {
             cargarMap()
         }
-    }
-
-    override fun toString(): String {
-        return context.getString(R.string.socv_toString)
     }
 }

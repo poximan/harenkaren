@@ -36,11 +36,10 @@ class RecorrAddFragment : Fragment() {
     private val args: RecorrAddFragmentArgs by navArgs()
 
     private lateinit var model: RecorrViewModel
+    private val latLonIni = LatLong()
 
     private lateinit var locationManager: LocationManager
     private var indicatorLight: ImageView? = null
-    private val latLonIni = LatLong()
-
     private val handler = Handler(Looper.getMainLooper())
     private var isRunning = false
     private lateinit var imageChangerRunnable: Runnable

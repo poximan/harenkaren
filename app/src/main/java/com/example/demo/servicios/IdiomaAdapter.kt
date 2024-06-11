@@ -25,7 +25,7 @@ class IdiomaAdapter {
             throw IndiceNoExisteExcepcion()
 
         // Establece el idioma por defecto de la app
-        setAppLocale(context, "es")
+        setAppLocale(context, "es_ES")
         val defaultMarea = getAtribValue(context, mareaIndex, R.array.estado_marea)
         restoreAppLocale(context, originalConfig, originalLocale)
 
@@ -38,7 +38,7 @@ class IdiomaAdapter {
         val originalLocale = Locale.getDefault()
 
         // Establece el idioma por defecto de la app
-        setAppLocale(context, "es")
+        setAppLocale(context, "es_ES")
 
         // Obtiene el índice del valor de marea en el idioma por defecto
         val mareaIndex = getAtribIndex(context, recorrido.marea, R.array.estado_marea)
@@ -62,17 +62,17 @@ class IdiomaAdapter {
 
         // Obtiene el índice del valor de marea en el idioma actual
         val ptoObsIndex = getAtribIndex(context, unidSocial.ptoObsUnSoc, R.array.op_punto_obs_unsoc)
-        val ctxSocIndex = getAtribIndex(context, unidSocial.ptoObsUnSoc, R.array.op_contexto_social)
-        val tpoSustIndex = getAtribIndex(context, unidSocial.ptoObsUnSoc, R.array.op_tipo_sustrato)
+        val ctxSocIndex = getAtribIndex(context, unidSocial.ctxSocial, R.array.op_contexto_social)
+        val tpoSustIndex = getAtribIndex(context, unidSocial.tpoSustrato, R.array.op_tipo_sustrato)
 
         if (ptoObsIndex == -1 || ctxSocIndex == -1 || tpoSustIndex == -1)
             throw IndiceNoExisteExcepcion()
 
         // Establece el idioma por defecto de la app
-        setAppLocale(context, "es")
+        setAppLocale(context, "es_ES")
         val defPtoObs = getAtribValue(context, ptoObsIndex, R.array.op_punto_obs_unsoc)
-        val defCtxSoc = getAtribValue(context, ctxSocIndex, R.array.op_punto_obs_unsoc)
-        val defTpoSust = getAtribValue(context, tpoSustIndex, R.array.op_punto_obs_unsoc)
+        val defCtxSoc = getAtribValue(context, ctxSocIndex, R.array.op_contexto_social)
+        val defTpoSust = getAtribValue(context, tpoSustIndex, R.array.op_tipo_sustrato)
         restoreAppLocale(context, originalConfig, originalLocale)
 
         return unidSocial.copy(
@@ -86,20 +86,20 @@ class IdiomaAdapter {
         val originalLocale = Locale.getDefault()
 
         // Establece el idioma por defecto de la app
-        setAppLocale(context, "es")
+        setAppLocale(context, "es_ES")
 
         // Obtiene el índice del valor de marea en el idioma por defecto
         val ptoObsIndex = getAtribIndex(context, unidSocial.ptoObsUnSoc, R.array.op_punto_obs_unsoc)
-        val ctxSocIndex = getAtribIndex(context, unidSocial.ptoObsUnSoc, R.array.op_contexto_social)
-        val tpoSustIndex = getAtribIndex(context, unidSocial.ptoObsUnSoc, R.array.op_tipo_sustrato)
+        val ctxSocIndex = getAtribIndex(context, unidSocial.ctxSocial, R.array.op_contexto_social)
+        val tpoSustIndex = getAtribIndex(context, unidSocial.tpoSustrato, R.array.op_tipo_sustrato)
         restoreAppLocale(context, originalConfig, originalLocale)
 
         if (ptoObsIndex == -1 || ctxSocIndex == -1 || tpoSustIndex == -1)
             throw IndiceNoExisteExcepcion()
 
         val defPtoObs = getAtribValue(context, ptoObsIndex, R.array.op_punto_obs_unsoc)
-        val defCtxSoc = getAtribValue(context, ctxSocIndex, R.array.op_punto_obs_unsoc)
-        val defTpoSust = getAtribValue(context, tpoSustIndex, R.array.op_punto_obs_unsoc)
+        val defCtxSoc = getAtribValue(context, ctxSocIndex, R.array.op_contexto_social)
+        val defTpoSust = getAtribValue(context, tpoSustIndex, R.array.op_tipo_sustrato)
         return unidSocial.copy(
             ptoObsUnSoc = defPtoObs, ctxSocial = defCtxSoc, tpoSustrato = defTpoSust
         )
@@ -130,13 +130,13 @@ class IdiomaAdapter {
         resources.updateConfiguration(config, resources.displayMetrics)
     }
 
-    private fun getAtribIndex(context: Context, marea: String, recursoId: Int): Int {
-        val estadoMarea = context.resources.getStringArray(recursoId)
-        return estadoMarea.indexOf(marea)
+    private fun getAtribIndex(context: Context, atrib: String, recursoId: Int): Int {
+        val atribLista = context.resources.getStringArray(recursoId)
+        return atribLista.indexOf(atrib)
     }
 
     private fun getAtribValue(context: Context, index: Int, recursoId: Int): String {
-        val estadoMarea = context.resources.getStringArray(recursoId)
-        return estadoMarea.getOrNull(index) ?: ""
+        val atribLista = context.resources.getStringArray(recursoId)
+        return atribLista.getOrNull(index) ?: ""
     }
 }

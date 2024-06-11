@@ -1,19 +1,30 @@
 package com.example.demo.fragment.detail
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
+import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.demo.R
 import com.example.demo.databinding.FragmentRecorrDetailBinding
+import com.example.demo.fragment.add.UnSocGralFragment
 import com.example.demo.model.LatLong
 import com.example.demo.viewModel.RecorrViewModel
 import java.text.SimpleDateFormat
@@ -29,6 +40,12 @@ class RecorrDetailFragment : Fragment() {
 
     private val latLonIni = LatLong()
     private val latLonFin = LatLong()
+
+    private lateinit var locationManager: LocationManager
+    private var indicatorLight: ImageView? = null
+    private val handler = Handler(Looper.getMainLooper())
+    private var isRunning = false
+    private lateinit var imageChangerRunnable: Runnable
 
     private fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)
 
@@ -56,16 +73,19 @@ class RecorrDetailFragment : Fragment() {
         binding.horaIni.text = "${requireContext().getString(R.string.rec_horaini)}: " + args.recorrActual.fechaIni
         binding.horaFin.text = "${requireContext().getString(R.string.rec_horafin)}: " + args.recorrActual.fechaFin
 
+        indicatorLight = binding.gpsLight
         latLonIni.lat = args.recorrActual.latitudIni
         latLonIni.lon = args.recorrActual.longitudIni
-        binding.latitudIni.text = String.format("%.6f", latLonIni.lat)
-        binding.longitudIni.text = String.format("%.6f", latLonIni.lon)
-
         latLonFin.lat = args.recorrActual.latitudFin
         latLonFin.lon = args.recorrActual.longitudFin
-        binding.latitudFin.text = String.format("%.6f", latLonFin.lat)
-        binding.longitudFin.text = String.format("%.6f", latLonFin.lon)
 
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.getPosicionFin.setOnClickListener { getPosicionActual() }
         binding.volverButton.setOnClickListener { goBack() }
         binding.verUnSocButton.setOnClickListener { verUnidadSocial() }
         binding.confirmarButton.setOnClickListener { guardarCambios() }
@@ -76,10 +96,10 @@ class RecorrDetailFragment : Fragment() {
             binding.areaRecorr.isEnabled = isChecked
             binding.meteo.isEnabled = isChecked
             binding.spinnerMarea.isEnabled = isChecked
+            binding.getPosicionFin.isEnabled = isChecked
             binding.confirmarButton.isEnabled = isChecked
         }
-
-        return view
+        mostrarEnPantalla()
     }
 
     private fun guardarCambios() {
@@ -127,5 +147,122 @@ class RecorrDetailFragment : Fragment() {
     private fun goBack() {
         val action = RecorrDetailFragmentDirections.goToRecorrListAction(args.recorrActual.diaId)
         findNavController().navigate(action)
+    }
+
+    private fun getPosicionActual() {
+
+        locationManager = requireActivity().getSystemService(LocationManager::class.java)
+        if (checkLocationPermission()) {
+
+            startImageChanger()
+            locationManager.requestSingleUpdate(
+                LocationManager.GPS_PROVIDER,
+                object : LocationListener {
+                    override fun onLocationChanged(location: Location) {
+                        stopImageChanger()
+                        updateLocationViews(location.latitude, location.longitude)
+                    }
+
+                    override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {}
+                    override fun onProviderEnabled(provider: String) {}
+                    override fun onProviderDisabled(provider: String) {
+                        val context = requireContext()
+                        Toast.makeText(context, context.getString(R.string.varias_gpsHab), Toast.LENGTH_SHORT).show()
+                    }
+                },
+                null
+            )
+        } else {
+            requestLocationPermission()
+        }
+    }
+
+    private fun updateLocationViews(latitud: Double, longitud: Double) {
+
+        latLonFin.lat = latitud
+        latLonFin.lon = longitud
+        mostrarEnPantalla()
+    }
+
+    private fun mostrarEnPantalla() {
+
+        binding.latitudIni.text = String.format("%.6f", latLonIni.lat)
+        binding.longitudIni.text = String.format("%.6f", latLonIni.lon)
+        binding.latitudFin.text = String.format("%.6f", latLonFin.lat)
+        binding.longitudFin.text = String.format("%.6f", latLonFin.lon)
+    }
+
+    private fun checkLocationPermission(): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val fineLocationPermission =
+                ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                )
+            val coarseLocationPermission =
+                ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                )
+            fineLocationPermission == PackageManager.PERMISSION_GRANTED &&
+                    coarseLocationPermission == PackageManager.PERMISSION_GRANTED
+        } else {
+            true
+        }
+    }
+
+    private fun requestLocationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ),
+                UnSocGralFragment.DbConstants.PERMISSION_REQUEST_LOCATION
+            )
+        }
+    }
+
+    private fun startImageChanger() {
+        isRunning = true
+        imageChangerRunnable = object : Runnable {
+            private var isImageChanged = false
+
+            override fun run() {
+                if (isRunning) {
+                    if (isImageChanged) {
+                        indicatorLight!!.setImageResource(R.drawable.indicator_on)
+                        binding.latitudFin.text = requireContext().getString(R.string.varias_geopos)
+                        binding.latitudFin.setTextColor(
+                            ContextCompat.getColor(
+                                requireContext(),
+                                R.color.purple_700
+                            )
+                        )
+                    } else {
+                        indicatorLight!!.setImageResource(R.drawable.indicator_off)
+                        binding.latitudFin.text = requireContext().getString(R.string.varias_geopos)
+                        binding.latitudFin.setTextColor(
+                            ContextCompat.getColor(
+                                requireContext(),
+                                R.color.black
+                            )
+                        )
+                    }
+                    isImageChanged = !isImageChanged
+                    handler.postDelayed(this, 800)
+                }
+            }
+        }
+
+        Thread {
+            handler.post(imageChangerRunnable)
+        }.start()
+    }
+
+    private fun stopImageChanger() {
+        isRunning = false
+        handler.removeCallbacks(imageChangerRunnable)
+        indicatorLight!!.setImageResource(R.drawable.indicator_on)
     }
 }

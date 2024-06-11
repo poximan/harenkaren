@@ -1,6 +1,5 @@
 package com.example.demo.fragment.add
 
-import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -16,7 +15,7 @@ import com.example.demo.databinding.FragmentUnsocVivosBinding
 import com.example.demo.viewModel.UnSocShareViewModel
 import kotlin.reflect.KFunction2
 
-class UnSocVivosFragment(private val context: Context) : Fragment() {
+class UnSocVivosFragment() : Fragment() {
 
     companion object {
         private lateinit var colectar: (Int, Map<String, Any>) -> Unit
@@ -32,7 +31,7 @@ class UnSocVivosFragment(private val context: Context) : Fragment() {
 
     fun newInstance(funcColectar: KFunction2<Int, Map<String, Any>, Unit>): UnSocVivosFragment {
         colectar = funcColectar
-        return UnSocVivosFragment(context)
+        return UnSocVivosFragment()
     }
 
     override fun onCreateView(
@@ -121,6 +120,7 @@ class UnSocVivosFragment(private val context: Context) : Fragment() {
                 ctxSocial[2] -> vistaHarenSinAlfa()
                 ctxSocial[3] -> vistaGrupoHarenes()
                 ctxSocial[4] -> vistaPjaSolitaria()
+                ctxSocial[5] -> vistaIndividuoSolo()
             }
         }
     }
@@ -143,7 +143,7 @@ class UnSocVivosFragment(private val context: Context) : Fragment() {
 
             R.id.vHembrasAd -> {
                 if (!binding.vHembrasAd.text.isNullOrEmpty() &&
-                    binding.vHembrasAd.text.toString().toInt() < 2
+                    binding.vHembrasAd.text.toString().toInt() <= 1
                 )
                     Toast.makeText(
                         requireContext(),
@@ -162,6 +162,8 @@ class UnSocVivosFragment(private val context: Context) : Fragment() {
             contMacho += binding.vAlfaS4Ad.text.toString().toInt()
         if (!binding.vAlfaSams.text.isNullOrEmpty())
             contMacho += binding.vAlfaSams.text.toString().toInt()
+        if (!binding.vOtrosSamsPerif.text.isNullOrEmpty())
+            contMacho += binding.vOtrosSamsPerif.text.toString().toInt()
 
         if (contMacho > 0)
             Toast.makeText(
@@ -172,15 +174,18 @@ class UnSocVivosFragment(private val context: Context) : Fragment() {
 
         forzarValor("0", binding.vAlfaS4Ad)
         forzarValor("0", binding.vAlfaSams)
+        forzarValor("0", binding.vOtrosSamsPerif)
 
-        if (!binding.vHembrasAd.text.isNullOrEmpty() &&
-            binding.vHembrasAd.text.toString().toInt() < 2
-        )
+        if (binding.vHembrasAd.text.isNullOrEmpty() ||
+            binding.vHembrasAd.text.toString().toInt() <= 1
+        ) {
             Toast.makeText(
                 requireContext(),
                 requireContext().getString(R.string.socv_vistaHarenSinAlfa2),
                 Toast.LENGTH_LONG
             ).show()
+            forzarValor("2", binding.vHembrasAd)
+        }
     }
 
     private fun vistaGrupoHarenes() {
@@ -192,25 +197,26 @@ class UnSocVivosFragment(private val context: Context) : Fragment() {
         if (!binding.vAlfaSams.text.isNullOrEmpty())
             contMacho += binding.vAlfaSams.text.toString().toInt()
 
-        if (contMacho < 2)
+        if (contMacho <= 1)
             Toast.makeText(
                 requireContext(),
                 requireContext().getString(R.string.socv_vistaGrupoHarenes1),
                 Toast.LENGTH_LONG
             ).show()
 
-        if (!binding.vHembrasAd.text.isNullOrEmpty() &&
-            binding.vHembrasAd.text.toString().toInt() < 2
-        )
+        if (binding.vHembrasAd.text.isNullOrEmpty() ||
+            binding.vHembrasAd.text.toString().toInt() <= 1
+        ) {
             Toast.makeText(
                 requireContext(),
                 requireContext().getString(R.string.socv_vistaGrupoHarenes2),
                 Toast.LENGTH_LONG
             ).show()
+            forzarValor("2", binding.vHembrasAd)
+        }
     }
 
     private fun vistaPjaSolitaria() {
-
         when (binding.root.findFocus()?.id) {
             R.id.vAlfaS4Ad -> {
                 validarDominante(
@@ -218,14 +224,12 @@ class UnSocVivosFragment(private val context: Context) : Fragment() {
                     binding.vAlfaSams
                 )
             }
-
             R.id.vAlfaSams -> {
                 validarDominante(
                     binding.vAlfaSams,
                     binding.vAlfaS4Ad
                 )
             }
-
             R.id.vHembrasAd -> {
                 Toast.makeText(
                     requireContext(),
@@ -234,8 +238,27 @@ class UnSocVivosFragment(private val context: Context) : Fragment() {
                 ).show()
             }
         }
-        // para pareja solitaria, siempre hembra==1
+        // para pareja solitaria, siempre hembra=1
         forzarValor("1", binding.vHembrasAd)
+    }
+
+    private fun vistaIndividuoSolo() {
+        var contMacho = 0
+
+        if (!binding.vAlfaS4Ad.text.isNullOrEmpty())
+            contMacho += binding.vAlfaS4Ad.text.toString().toInt()
+        if (!binding.vAlfaSams.text.isNullOrEmpty())
+            contMacho += binding.vAlfaSams.text.toString().toInt()
+
+        if (contMacho > 0)
+            Toast.makeText(
+                requireContext(),
+                requireContext().getString(R.string.socv_vistaIndividuoSolo),
+                Toast.LENGTH_LONG
+            ).show()
+
+        forzarValor("0", binding.vAlfaS4Ad)
+        forzarValor("0", binding.vAlfaSams)
     }
 
     private fun validarDominante(
@@ -270,9 +293,5 @@ class UnSocVivosFragment(private val context: Context) : Fragment() {
         categoria.removeTextChangedListener(textWatcher)
         categoria.text = valor.toEditable()
         categoria.addTextChangedListener(textWatcher)
-    }
-
-    override fun toString(): String {
-        return context.getString(R.string.socv_toString)
     }
 }

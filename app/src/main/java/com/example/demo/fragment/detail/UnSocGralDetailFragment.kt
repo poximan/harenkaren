@@ -1,7 +1,6 @@
 package com.example.demo.fragment.detail
 
 import android.Manifest
-import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
@@ -29,7 +28,7 @@ import com.example.demo.model.LatLong
 import com.example.demo.model.UnidSocial
 import kotlin.reflect.KFunction2
 
-class UnSocGralDetailFragment(private val context: Context) : Fragment() {
+class UnSocGralDetailFragment() : Fragment() {
 
     companion object {
         private lateinit var colectar: (Int, Map<String, Any>) -> Unit
@@ -313,9 +312,5 @@ class UnSocGralDetailFragment(private val context: Context) : Fragment() {
                 UnSocGralFragment.DbConstants.PERMISSION_REQUEST_LOCATION
             )
         }
-    }
-
-    override fun toString(): String {
-        return context.getString(R.string.socg_toString)
     }
 }

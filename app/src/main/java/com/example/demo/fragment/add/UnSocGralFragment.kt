@@ -1,7 +1,6 @@
 package com.example.demo.fragment.add
 
 import android.Manifest
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -48,7 +47,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import kotlin.reflect.KFunction2
 
-class UnSocGralFragment(private val context: Context) : Fragment() {
+class UnSocGralFragment() : Fragment() {
 
     companion object {
         private lateinit var colectar: (Int, Map<String, Any>) -> Unit
@@ -83,7 +82,7 @@ class UnSocGralFragment(private val context: Context) : Fragment() {
         colectarFunc: KFunction2<Int, Map<String, Any>, Unit>
     ): UnSocGralFragment {
         colectar = colectarFunc
-        return UnSocGralFragment(context)
+        return UnSocGralFragment()
     }
 
     override fun onCreateView(
@@ -506,9 +505,5 @@ class UnSocGralFragment(private val context: Context) : Fragment() {
         isRunning = false
         handler.removeCallbacks(imageChangerRunnable)
         indicatorLight!!.setImageResource(R.drawable.indicator_on)
-    }
-
-    override fun toString(): String {
-        return context.getString(R.string.socg_toString)
     }
 }
