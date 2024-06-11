@@ -219,6 +219,8 @@
     <string name="dia_mostrarAyuda1">Now there is only one day registered. When you add more, you will notice the list. Click on the existing day to manage its routes</string>
     <string name="dia_mostrarAyudaElse">Click on the row representing the day of interest to continue to its detail. There you can manage the routes associated with the selected date</string>
     <string name="dia_mostrarAyudaMarco">This screen represents a list of days, where each day is represented by a row.</string>
+    <string name="dia_onDeleteTit">Delete day</string>
+    <string name="dia_onDeleteMsg">Do you confirm elimination?</string>
 
     <!-- RecorrListFragment -->
     <string name="rec_mostrarAyudaTit">Routes</string>
@@ -233,6 +235,9 @@
     <string name="soc_mostrarAyuda1">Now there is only one record registered. When you add more, you will notice the list. Click on the existing record to view its detail</string>
     <string name="soc_mostrarAyudaElse">Click on the row representing the record of interest to continue to its detail. There you can review the values defined during the observation of that social unit</string>
     <string name="soc_mostrarAyudaMarco">This screen shows a list of records, where each record is represented by a row.</string>
+
+    <!-- UnSocListGrafFragment -->
+    <string name="soc_cambiarVista">There is no data to graph</string>
 
     <!-- BiometricLoginManager -->
     <string name="bio_titulo">Biometric authentication</string>

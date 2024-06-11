@@ -7,6 +7,7 @@ import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -53,8 +54,18 @@ class UnSocListGrafFragment : Fragment() {
         val unSocAdapter = UnSocListGrafAdapter(args.idRecorrido)
 
         viewLifecycleOwner.lifecycleScope.launch {
-            val dynamicHtml = unSocAdapter.contenidoHTML(unSocViewModel)
-            contenedorHTML(dynamicHtml)
+            try {
+                val dynamicHtml = unSocAdapter.contenidoHTML(unSocViewModel)
+                contenedorHTML(dynamicHtml)
+            } catch (e: NoSuchElementException){
+                val context = requireContext()
+                Toast.makeText(
+                    context,
+                    context.getString(R.string.soc_cambiarVista),
+                    Toast.LENGTH_SHORT
+                ).show()
+                cambiarVista()
+            }
         }
     }
 

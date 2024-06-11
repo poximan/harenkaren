@@ -3,6 +3,7 @@ package com.example.demo.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -26,6 +27,9 @@ class DiaListAdapter(
         val dia = diaList[position]
         holder.numDia.text = position.toString()
         holder.timestamp.text = dia.fecha
+        holder.deleteButton.setOnClickListener {
+            itemListener.onDeleteClick(dia)
+        }
     }
 
     internal fun setDia(diaList: List<Dia>) {
@@ -38,6 +42,7 @@ class DiaListAdapter(
         val numDia: TextView = view.findViewById(R.id.num_dia)
         val timestamp: TextView = view.findViewById(R.id.textViewTimestamp)
         private val icono: ImageView = view.findViewById(R.id.grafDia)
+        val deleteButton: ImageButton = view.findViewById(R.id.deleteDia)
 
         init {
             view.setOnClickListener {
@@ -54,5 +59,6 @@ class DiaListAdapter(
     interface OnDiaClickListener {
         fun onItemClick(elem: Dia)
         fun onIconClick(dia: Dia)
+        fun onDeleteClick(dia: Dia)
     }
 }

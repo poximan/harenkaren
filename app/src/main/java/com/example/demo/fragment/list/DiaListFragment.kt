@@ -59,6 +59,18 @@ class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
         findNavController().navigate(action)
     }
 
+    override fun onDeleteClick(dia: Dia) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle(getString(R.string.dia_onDeleteTit))
+        builder.setMessage(getString(R.string.dia_onDeleteMsg))
+        builder.setPositiveButton(android.R.string.ok) { _, _ ->
+            diaViewModel.delete(dia)
+            loadFullList() // Refresh the list after deletion
+        }
+        builder.setNegativeButton(android.R.string.cancel, null)
+        builder.show()
+    }
+
     private fun goHome() {
         findNavController().navigate(R.id.home_fragment)
     }

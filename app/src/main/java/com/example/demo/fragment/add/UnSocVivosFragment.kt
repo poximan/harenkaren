@@ -144,12 +144,14 @@ class UnSocVivosFragment() : Fragment() {
             R.id.vHembrasAd -> {
                 if (!binding.vHembrasAd.text.isNullOrEmpty() &&
                     binding.vHembrasAd.text.toString().toInt() <= 1
-                )
+                ){
                     Toast.makeText(
                         requireContext(),
                         requireContext().getString(R.string.socv_vistaHaren),
                         Toast.LENGTH_LONG
                     ).show()
+                    binding.vHembrasAd.text="".toEditable()
+                }
             }
         }
     }
@@ -266,15 +268,20 @@ class UnSocVivosFragment() : Fragment() {
         editTextSecundario: EditText
     ) {
         var texto = ""
+        var valor = ""
         try {   // si usuario borra antes de ingresar un nuevo numero, entonces campo==""
-            if (editTextPrimario.text.toString().toInt() > 1)
+            if (editTextPrimario.text.toString().toInt() > 1){
                 texto = requireContext().getString(R.string.socv_validarDominante1)
+                valor = ""
+            }
 
             if (editTextPrimario.text.toString().toInt() == 1 && (
                         !editTextSecundario.text.isNullOrEmpty() && editTextSecundario.text.toString()
                             .toInt() > 0)
-            )
+            ){
                 texto = requireContext().getString(R.string.socv_validarDominante2)
+                valor = "0"
+            }
         } catch (e: NumberFormatException) {
         }
 
@@ -284,8 +291,7 @@ class UnSocVivosFragment() : Fragment() {
                 texto,
                 Toast.LENGTH_LONG
             ).show()
-
-            forzarValor("0", editTextPrimario)
+            forzarValor(valor, editTextPrimario)
         }
     }
 

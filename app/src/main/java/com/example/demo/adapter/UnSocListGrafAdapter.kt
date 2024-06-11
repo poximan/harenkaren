@@ -4,6 +4,7 @@ import com.example.demo.model.UnidSocial
 import com.example.demo.viewModel.UnSocViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.util.NoSuchElementException
 import java.util.UUID
 
 class UnSocListGrafAdapter(private val idRecorrido: UUID) {
@@ -13,6 +14,9 @@ class UnSocListGrafAdapter(private val idRecorrido: UUID) {
             unSocViewModel.readConFK(idRecorrido)
         }
         return withContext(Dispatchers.Main) {
+            if(unSocListAsync.isEmpty())
+                throw NoSuchElementException()
+
             generarHTML(unSocListAsync)
         }
     }

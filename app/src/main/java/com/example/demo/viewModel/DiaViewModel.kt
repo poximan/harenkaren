@@ -30,5 +30,9 @@ class DiaViewModel(application: Application) : AndroidViewModel(application) {
     fun update(dia: Dia) = CoroutineScope(Dispatchers.IO).launch {
         repository.update(dia)
     }
+
+    fun delete(dia: Dia) = viewModelScope.launch {
+        repository.delete(dia)
+    }
 }
 

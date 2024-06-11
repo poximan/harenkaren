@@ -2,6 +2,7 @@ package com.example.demo.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -15,6 +16,7 @@ import java.util.UUID
 
 @Dao
 interface DiaDAO {
+
     @Query("SELECT * from dia ORDER BY id ASC")
     fun getAll(): LiveData<List<Dia>>
 
@@ -54,6 +56,9 @@ interface DiaDAO {
 
     @Query("DELETE FROM dia")
     fun deleteAll()
+
+    @Delete
+    fun delete(dia: Dia)
 
     @Query("SELECT COUNT(id) FROM dia")
     fun getCount(): Int
