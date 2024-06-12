@@ -252,7 +252,6 @@ class ImportarFragment : Fragment(), RegistroDistribuible, ListaImportable {
 
     // callback del arribo de objetos parcelados, obtenidos desde otra app
     override fun onMessageReceived(message: ArrayList<Parcelable>) {
-
         val listaEntidadesPlanas = desparcelarLista(message)
         Log.i(TAG, "transformados a ${listaEntidadesPlanas.size} objetos desnomarlizados")
 

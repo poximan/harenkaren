@@ -52,6 +52,10 @@ android {
 }
 
 dependencies {
+
+    // imprimir en pdf
+    implementation 'androidx.print:print:1.0.0'
+
     // login con huella digital
     implementation 'androidx.biometric:biometric:1.0.1'
 
