@@ -31,7 +31,7 @@ import kotlinx.coroutines.withContext
 
 class UnSocListFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
 
-    private val unSocViewModel: UnSocViewModel by navGraphViewModels(R.id.app_navigation)
+    private val unSocViewModel: UnSocViewModel by navGraphViewModels(R.id.navHome)
     private val args: UnSocListFragmentArgs by navArgs()
 
     private var _binding: FragmentUnsocListBinding? = null

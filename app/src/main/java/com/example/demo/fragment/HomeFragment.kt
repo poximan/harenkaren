@@ -1,4 +1,4 @@
-package com.example.demo.fragment.home
+package com.example.demo.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -30,7 +30,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun gotoCensos() {
-        findNavController().navigate(R.id.goToDiaAction)
+        val action = HomeFragmentDirections.goToDiaAction()
+        findNavController().navigate(action)
     }
 
     private fun gotoMapas() {

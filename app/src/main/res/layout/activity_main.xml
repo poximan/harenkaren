@@ -12,11 +12,11 @@
             android:layout_height="match_parent">
 
             <fragment
-                android:id="@+id/theNavHostFragment"
+                android:id="@+id/navHostMain"
                 android:name="androidx.navigation.fragment.NavHostFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:navGraph="@navigation/navigation" />
+                app:navGraph="@navigation/navarranque" />
         </LinearLayout>
 
         <com.google.android.material.navigation.NavigationView
@@ -25,6 +25,6 @@
             android:layout_height="match_parent"
             android:layout_gravity="left"
             app:headerLayout="@layout/nav_header"
-            app:menu="@menu/nav_drawer_menu" />
+            app:menu="@menu/navarr_drawer_menu" />
     </androidx.drawerlayout.widget.DrawerLayout>
 </layout>

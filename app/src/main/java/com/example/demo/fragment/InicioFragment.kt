@@ -20,6 +20,7 @@ class InicioFragment : Fragment() {
     ): View {
 
         _binding = FragmentInicioBinding.inflate(inflater, container, false)
+
         binding.loginButton.setOnClickListener { loginApp() }
         binding.registerTextView.setOnClickListener { registerApp() }
         return binding.root

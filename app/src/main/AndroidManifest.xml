@@ -43,22 +43,24 @@
         </activity>
 
         <activity
+            android:name=".activity.HomeActivity"
+            android:excludeFromRecents="true"
+            android:exported="true"/>
+
+        <activity
             android:name=".activity.PtoObsHelpActivity"
             android:excludeFromRecents="true"
-            android:exported="false"
-            android:taskAffinity="" />
+            android:exported="false"/>
 
         <activity
             android:name=".activity.CtxSocialHelpActivity"
             android:excludeFromRecents="true"
-            android:exported="false"
-            android:taskAffinity="" />
+            android:exported="false" />
 
         <activity
             android:name=".activity.TipoSustratoHelpActivity"
             android:excludeFromRecents="true"
-            android:exported="false"
-            android:taskAffinity="" />
+            android:exported="false"/>
 
         <meta-data
             android:name="preloaded_fonts"

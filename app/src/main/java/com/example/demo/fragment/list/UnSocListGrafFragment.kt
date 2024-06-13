@@ -24,7 +24,7 @@ import java.io.OutputStreamWriter
 
 class UnSocListGrafFragment : Fragment() {
 
-    private val unSocViewModel: UnSocViewModel by navGraphViewModels(R.id.app_navigation)
+    private val unSocViewModel: UnSocViewModel by navGraphViewModels(R.id.navHome)
     private val args: UnSocListFragmentArgs by navArgs()
 
     private var _binding: FragmentUnsocListGrafBinding? = null

@@ -27,7 +27,7 @@ import kotlinx.coroutines.withContext
 
 class RecorrListFragment : Fragment(), RecorrListAdapter.OnRecorrClickListener {
 
-    private val recorrViewModel: RecorrViewModel by navGraphViewModels(R.id.app_navigation)
+    private val recorrViewModel: RecorrViewModel by navGraphViewModels(R.id.navHome)
     private val args: RecorrListFragmentArgs by navArgs()
 
     private var _binding: FragmentRecorrListBinding? = null

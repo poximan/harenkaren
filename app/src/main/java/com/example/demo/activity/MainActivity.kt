@@ -14,15 +14,15 @@ import androidx.navigation.ui.NavigationUI
 import com.example.demo.R
 import com.example.demo.databinding.ActivityMainBinding
 
-private lateinit var binding: ActivityMainBinding
-private lateinit var appBarConfiguration: AppBarConfiguration
-private lateinit var drawerLayout: DrawerLayout
-
 class MainActivity : AppCompatActivity() {
 
     companion object {
         lateinit var resolver: ContentResolver
     }
+
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var drawerLayout: DrawerLayout
 
     private val mapaParesOrigenDestino: MutableMap<Int, Int> = mutableMapOf()
 
@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         drawerLayout = binding.drawerLayout
 
         val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.theNavHostFragment) as NavHostFragment
+            supportFragmentManager.findFragmentById(R.id.navHostMain) as NavHostFragment
         val navController = navHostFragment.navController
 
         NavigationUI.setupWithNavController(binding.navView, navController)
@@ -47,14 +47,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
 
         agregarParOrigenDestino(R.id.home_fragment, R.id.login_fragment)
-        agregarParOrigenDestino(R.id.dia_list_fragment, R.id.home_fragment)
-        agregarParOrigenDestino(R.id.recorr_list_fragment, R.id.dia_list_fragment)
-        agregarParOrigenDestino(R.id.unsoc_list_fragment, R.id.recorr_detail_fragment)
     }
 
     override fun onSupportNavigateUp(): Boolean {
 
-        val navController = this.findNavController(R.id.theNavHostFragment)
+        val navController = this.findNavController(R.id.navHostMain)
         var fragActual = navController.currentDestination?.id
 
         /*
@@ -84,7 +81,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        val navController = findNavController(R.id.theNavHostFragment)
+        val navController = findNavController(R.id.navHostMain)
         val currentFragment = navController.currentDestination?.id
 
         // Verifica si estás en el fragmento inicial de activity_main.xml

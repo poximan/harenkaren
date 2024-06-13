@@ -27,7 +27,7 @@ import java.util.Date
 
 class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
 
-    private val diaViewModel: DiaViewModel by navGraphViewModels(R.id.app_navigation)
+    private val diaViewModel: DiaViewModel by navGraphViewModels(R.id.navHome)
 
     private var _binding: FragmentDiaListBinding? = null
     private val binding get() = _binding!!

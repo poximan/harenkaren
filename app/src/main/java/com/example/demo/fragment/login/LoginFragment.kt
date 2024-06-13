@@ -1,5 +1,6 @@
 package com.example.demo.fragment.login
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -14,6 +15,7 @@ import android.view.animation.AlphaAnimation
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.demo.R
+import com.example.demo.activity.HomeActivity
 import com.example.demo.databinding.FragmentLoginBinding
 import com.example.demo.viewModel.UsuarioViewModel
 import com.google.android.material.snackbar.Snackbar
@@ -116,7 +118,8 @@ class LoginFragment : Fragment(), UsuarioCallback {
 
     override fun onLoginSuccess() {
         CoroutineScope(Dispatchers.Main).launch {
-            findNavController().navigate(R.id.goToHomeFragment)
+            val intent = Intent(activity, HomeActivity::class.java)
+            startActivity(intent)
         }
     }
 
