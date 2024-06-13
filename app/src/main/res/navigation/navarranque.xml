@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navArr"
+    app:startDestination="@id/main_fragment">
+
+    <fragment
+        android:id="@+id/main_fragment"
+        android:name="com.example.demo.fragment.InicioFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_inicio">
+
+        <action
+            android:id="@+id/loginAction"
+            app:destination="@id/login_fragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/registerAction"
+            app:destination="@id/registerFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.example.demo.fragment.register.RegisterFragment"
+        android:label="@string/nav_registerFragment"
+        tools:layout="@layout/fragment_register" />
+    <fragment
+        android:id="@+id/login_fragment"
+        android:name="com.example.demo.fragment.login.LoginFragment"
+        android:label="@string/nav_login_fragment"
+        tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/about_fragment"
+        android:name="com.example.demo.fragment.info.AboutFragment"
+        tools:layout="@layout/fragment_about" />
+</navigation>
