@@ -110,9 +110,10 @@ class UnSocListGrafAdapter(private val idRecorrido: UUID) {
             var $atribString = {
                 x: $xval,
                 y: $yval,
-                text: $xtext,                
+                text: $xtext,
+                textangle: 90,
                 name: '$atribString',
-                orientation: 'h',
+                "orientation": "h",
                 type: 'bar',
                 hovertemplate: 'reg n°%{y}<br>%{text}=%{x}'
             };

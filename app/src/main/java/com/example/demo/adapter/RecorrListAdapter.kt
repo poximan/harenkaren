@@ -36,10 +36,7 @@ class RecorrListAdapter(
     inner class RecorrViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         private val id: TextView = view.findViewById(R.id.num_recorr)
-        private val observador: TextView = view.findViewById(R.id.text_observador)
-        private val area: TextView = view.findViewById(R.id.area_recorrida)
-        private val meteo: TextView = view.findViewById(R.id.text_meteo)
-        private val marea: TextView = view.findViewById(R.id.text_marea)
+        private val resumen: TextView = view.findViewById(R.id.text_resumen)
         private val fecha: TextView = view.findViewById(R.id.textViewTimestamp)
         private val icono: ImageView = view.findViewById(R.id.grafRecorr)
 
@@ -56,10 +53,12 @@ class RecorrListAdapter(
             val context = (itemListener as Fragment).requireContext()
 
             id.text = recorrido.orden.toString()
-            observador.text = "${context.getString(R.string.rec_obsevador)}: ${recorrido.observador}"
-            area.text = "${context.getString(R.string.rec_area)}: ${recorrido.areaRecorrida}"
-            meteo.text = "${context.getString(R.string.rec_meteo)}: ${recorrido.meteo}"
-            marea.text = "${context.getString(R.string.rec_marea)}: ${recorrido.marea}"
+            resumen.text = """
+                ${context.getString(R.string.rec_obsevador)}: ${recorrido.observador}
+                ${context.getString(R.string.rec_area)}: ${recorrido.areaRecorrida}
+                ${context.getString(R.string.rec_meteo)}: ${recorrido.meteo}
+                ${context.getString(R.string.rec_marea)}: ${recorrido.marea}
+            """.trimIndent()
             fecha.text = "${context.getString(R.string.rec_horaini)}: ${recorrido.fechaIni}"
         }
     }

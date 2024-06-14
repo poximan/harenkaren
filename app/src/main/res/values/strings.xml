@@ -94,7 +94,7 @@
     <!-- fragment_recorr_add -->
     <string name="rec_obsevador">Observador</string>
     <string name="rec_area">Area recorrida</string>
-    <string name="rec_meteo">Condiciones climaticas</string>
+    <string name="rec_meteo">Cond. climaticas</string>
     <string name="rec_marea">Estado de la marea</string>
 
     <!-- fragment_recorr_detail -->

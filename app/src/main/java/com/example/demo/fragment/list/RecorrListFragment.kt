@@ -41,9 +41,8 @@ class RecorrListFragment : Fragment(), RecorrListAdapter.OnRecorrClickListener {
         setHasOptionsMenu(true)
         _binding = FragmentRecorrListBinding.inflate(inflater, container, false)
 
-        _binding!!.homeActionButton.setOnClickListener { goHome() }
-        _binding!!.nvoRecorrButton.setOnClickListener { nvoRecorrido() }
-
+        binding.homeActionButton.setOnClickListener { goHome() }
+        binding.nvoRecorrButton.setOnClickListener { nvoRecorrido() }
         recorrList = binding.listRecorr
         loadFullList()
 
