@@ -5,4 +5,8 @@
         android:id="@id/about_fragment"
         android:icon="@android:drawable/ic_menu_info_details"
         android:title="@string/mnu_acercade" />
+    <item
+        android:id="@id/dev_fragment"
+        android:icon="@android:drawable/ic_menu_zoom"
+        android:title="@string/varias_desarrollador" />
 </menu>

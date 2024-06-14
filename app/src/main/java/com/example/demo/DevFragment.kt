@@ -102,7 +102,7 @@ class DevFragment : Fragment() {
     }
 
     private fun logcat() {
-        val process = Runtime.getRuntime().exec("logcat -d -t 100")
+        val process = Runtime.getRuntime().exec("logcat -d -t 80")
         val bufferedReader = BufferedReader(InputStreamReader(process.inputStream))
 
         val log = SpannableStringBuilder()
