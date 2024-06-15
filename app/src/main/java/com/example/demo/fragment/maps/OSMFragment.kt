@@ -118,7 +118,7 @@ class OSMFragment : Fragment(), MapEventsReceiver {
             ) {
                 val anioSeleccionado = anios[position]
                 getInvolucrados(anioSeleccionado) {
-                    resolverVisibildiad(it)
+                    resolverVisibilidad(it)
                 }
             }
 
@@ -161,7 +161,7 @@ class OSMFragment : Fragment(), MapEventsReceiver {
         }
     }
 
-    private fun resolverVisibildiad(unSocList: List<UnidSocial>) {
+    private fun resolverVisibilidad(unSocList: List<UnidSocial>) {
         if (chkMapaCalor.isChecked) {
             mapView.visibility = View.GONE
 

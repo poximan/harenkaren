@@ -153,6 +153,10 @@
     <string name="varias_gpsHab">GPS disabled. Enable in Settings</string>
     <string name="varias_geopos">Geopositioning...</string>
 
+    <!-- HomeFragment -->
+    <string name="hom_fechaDesde">Since date</string>
+    <string name="hom_fechaHasta">To date</string>
+
     <!-- DevFragment -->
     <string name="dev_E_estadoDB">The DB manager cannot verify the data integrity</string>
     <string name="dev_estadoDB_entidad">entities</string>
@@ -186,7 +190,7 @@
     <string name="imp_mostrarResMsg3">From that batch, they were inserted into this DB:</string>
     <string name="imp_onMessage">Arrived from remote device</string>
     <string name="imp_onPelos">Added from external file</string>
-    <string name="imp_progreso">Extracting lines from CSV...</string>
+    <string name="imp_progreso">Processing incoming data...</string>
 
     <!-- RecorrAddFragment -->
     <string name="rec_confirmar">Route added correctly</string>

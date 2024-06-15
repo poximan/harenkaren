@@ -1,6 +1,7 @@
 package com.example.demo.compartir.importar
 
 import android.os.Parcelable
+import android.util.Log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -14,6 +15,10 @@ import java.net.ServerSocket
 import java.net.Socket
 
 class MTUClienteWF(private val callback: RegistroDistribuible) {
+
+    companion object {
+        private const val TAG = "DesdePar"
+    }
 
     fun startListening(socket: ServerSocket) {
         CoroutineScope(Dispatchers.IO).launch {
@@ -29,22 +34,21 @@ class MTUClienteWF(private val callback: RegistroDistribuible) {
         var objectInputStream: ObjectInputStream? = null
 
         try {
-            socket = serverSocket.accept()
+            socket = withContext(Dispatchers.IO) { serverSocket.accept() }
             inputStream = socket.getInputStream()
             byteArrayOutputStream = ByteArrayOutputStream()
             var byte: Int
             val buffer = ByteArray(1024)
             var bytesRead: Long = 0
 
-            val socketSize = socket.soTimeout.toLong() // Estimación de tamaño
-
             // Leer datos del socket y calcular progreso
-            while (inputStream.read(buffer).also { byte = it } != -1) {
+            while (withContext(Dispatchers.IO) { inputStream.read(buffer).also { byte = it } } != -1) {
                 byteArrayOutputStream.write(buffer, 0, byte)
                 bytesRead += byte
-                val progress = (bytesRead / socketSize.toFloat()) * 100
+                val progress = bytesRead / 1024f
 
                 withContext(Dispatchers.Main) {
+                    Log.i(TAG, progress.toString())
                     callback.progreso(progress)
                 }
             }
@@ -65,12 +69,14 @@ class MTUClienteWF(private val callback: RegistroDistribuible) {
         } catch (e: ClassNotFoundException) {
             e.printStackTrace()
         } finally {
-            // Cerrar streams y socket
-            inputStream?.close()
-            byteArrayOutputStream?.close()
-            byteArrayInputStream?.close()
-            objectInputStream?.close()
-            socket?.close()
+            withContext(Dispatchers.IO) {
+                // Cerrar streams y socket
+                inputStream?.close()
+                byteArrayOutputStream?.close()
+                byteArrayInputStream?.close()
+                objectInputStream?.close()
+                socket?.close()
+            }
         }
     }
 }

@@ -229,7 +229,11 @@
         android:id="@+id/reportes_fragment"
         android:name="com.example.demo.fragment.statistics.ReportesFragment"
         android:label="@string/nav_reportes_fragment"
-        tools:layout="@layout/fragment_reportes" />
+        tools:layout="@layout/fragment_reportes">
+        <argument
+            android:name="rangoFechas"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/ayuda_fragment"
         android:name="com.example.demo.fragment.info.AyudaFragment"

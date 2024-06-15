@@ -4,10 +4,8 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Transaction
 import androidx.room.Update
 import com.example.demo.DevFragment
-import com.example.demo.exception.UUIDRepetidoException
 import com.example.demo.model.EntidadesPlanas
 import com.example.demo.model.UnidSocial
 import com.example.demo.servicios.GestorUUID
@@ -22,7 +20,6 @@ interface UnSocDAO {
     @Query("SELECT * FROM unidsocial WHERE unidsocial.id = :id")
     fun getUnSocByUUID(id: UUID): UnidSocial
 
-    @Transaction
     @Query("SELECT * FROM unidsocial WHERE unidsocial.id_recorrido = :idRecorrido")
     fun getUnSocByRecorrId(idRecorrido: UUID): List<UnidSocial>
 
@@ -66,25 +63,35 @@ interface UnSocDAO {
     @Query("SELECT COUNT(id) FROM unidsocial")
     fun getCount(): Int
 
-    @Transaction
     @Update
     fun update(unidSocial: UnidSocial)
 
     fun insertarDesnormalizado(listaEntidadesPlanas: List<EntidadesPlanas>): Int {
+        var ultimoID: UUID? = null
         var insertsEfectivos = 0
+
         listaEntidadesPlanas.forEach { entidadPlana ->
-
             val unSoc = entidadPlana.getUnidSocial()
-            val existe = getUnSocByUUID(unSoc.id)
 
-            if (existe == null) {
-                insertConUltInst(unSoc)
-                insertsEfectivos += 1
-            } else
-                throw UUIDRepetidoException()
+            if (unSoc.id != ultimoID) {
+                val existe = getUnSocByUUID(unSoc.id)
+
+                if (existe == null) {
+                    insertConUltInst(unSoc)
+                    insertsEfectivos += 1
+                }
+                ultimoID = unSoc.id
+            }
         }
         return insertsEfectivos
     }
+
+    @Query("""
+        SELECT *
+        FROM unidsocial
+        WHERE date BETWEEN :desde AND :hasta
+    """)
+    fun getEntreFechas(desde: String, hasta: String): List<UnidSocial>
 
     @Query(
         "SELECT \n" +

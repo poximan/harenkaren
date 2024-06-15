@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name" translatable="false">Haren Karen</string>
 
-    <string name="formato_dia" translatable="false">yyyy/MM/dd</string>
-    <string name="formato_fecha" translatable="false">yyyy/MM/dd - HH:mm:ss</string>
+    <string name="formato_dia" translatable="false">yyyy-MM-dd</string>
+    <string name="formato_fecha" translatable="false">yyyy-MM-dd HH:mm:ss</string>
 
     <string name="about" translatable="false">
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
@@ -164,6 +164,10 @@
     <string name="varias_gpsHab">GPS deshabilitado. Habilítar en Configuraciones</string>
     <string name="varias_geopos">Geoposicionando...</string>
 
+    <!-- HomeFragment -->
+    <string name="hom_fechaDesde">Desde fecha...</string>
+    <string name="hom_fechaHasta">Hasta fecha...</string>
+
     <!-- DevFragment -->
     <string name="dev_E_estadoDB">El gestor de BD no puede verificar la integridad de los datos</string>
     <string name="dev_estadoDB_entidad">entidades</string>
@@ -197,7 +201,7 @@
     <string name="imp_mostrarResMsg3">De ese lote, se insertaron a esta BD:</string>
     <string name="imp_onMessage">Llegaron desde dispositivo remoto</string>
     <string name="imp_onPelos">Agregados desde archivo externo</string>
-    <string name="imp_progreso">Extrayendo lineas desde csv...</string>
+    <string name="imp_progreso">Procesando datos entrantes...</string>
 
     <!-- RecorrAddFragment -->
     <string name="rec_confirmar">Recorrido agregado correctamente</string>

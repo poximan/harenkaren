@@ -23,7 +23,7 @@
         <item>@string/tpo_restinga</item>
     </string-array>
 
-    <string-array name="estado_marea">
+    <string-array name="op_marea">
         <item>@string/varias_seleccione</item>
         <item>@string/mar_muybaja</item>
         <item>@string/mar_baja</item>

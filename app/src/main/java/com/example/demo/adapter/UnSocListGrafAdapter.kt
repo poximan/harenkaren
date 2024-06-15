@@ -57,13 +57,17 @@ class UnSocListGrafAdapter(private val idRecorrido: UUID) {
         val staticHtmlEnd = """
 
                         var layout = {
-                            margin: { t: 15, r: 0, b: 0, l: 15 },
+                            margin: { t: 5, r: 155, b: 0, l: 10 },
                             barmode: 'stack',
                             yaxis: {
                                 tickvals: $yval
                             }
                         };
-                        Plotly.newPlot('chart', data, layout);
+                        var config = {
+                            responsive: true,
+                            displayModeBar: false
+                        };
+                        Plotly.newPlot('chart', data, layout, config);
                         
                     </script>
                 </body>

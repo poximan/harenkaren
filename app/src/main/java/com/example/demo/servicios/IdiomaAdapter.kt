@@ -20,13 +20,13 @@ class IdiomaAdapter {
         val originalLocale = Locale.getDefault()
 
         // Obtiene el índice del valor de marea en el idioma actual
-        val mareaIndex = getAtribIndex(context, recorrido.marea, R.array.estado_marea)
+        val mareaIndex = getAtribIndex(context, recorrido.marea, R.array.op_marea)
         if (mareaIndex == -1)
             throw IndiceNoExisteExcepcion()
 
         // Establece el idioma por defecto de la app
         setAppLocale(context, "es_ES")
-        val defaultMarea = getAtribValue(context, mareaIndex, R.array.estado_marea)
+        val defaultMarea = getAtribValue(context, mareaIndex, R.array.op_marea)
         restoreAppLocale(context, originalConfig, originalLocale)
 
         return recorrido.copy(marea = defaultMarea)
@@ -41,14 +41,14 @@ class IdiomaAdapter {
         setAppLocale(context, "es_ES")
 
         // Obtiene el índice del valor de marea en el idioma por defecto
-        val mareaIndex = getAtribIndex(context, recorrido.marea, R.array.estado_marea)
+        val mareaIndex = getAtribIndex(context, recorrido.marea, R.array.op_marea)
         restoreAppLocale(context, originalConfig, originalLocale)
 
         // Si no se encuentra el índice, devuelve el recorrido sin cambios
         if (mareaIndex == -1)
             throw IndiceNoExisteExcepcion()
 
-        val originalMarea = getAtribValue(context, mareaIndex, R.array.estado_marea)
+        val originalMarea = getAtribValue(context, mareaIndex, R.array.op_marea)
         return recorrido.copy(marea = originalMarea)
     }
 

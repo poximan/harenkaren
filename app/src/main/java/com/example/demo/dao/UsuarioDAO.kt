@@ -5,7 +5,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Transaction
 import androidx.room.Update
 import com.example.demo.model.Usuario
 
@@ -23,7 +22,6 @@ interface UsuarioDAO {
     @Query("SELECT COUNT(id) FROM usuario")
     fun getCount(): Int
 
-    @Transaction
     @Update
     fun update(usuario: Usuario)
 

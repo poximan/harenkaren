@@ -29,7 +29,6 @@ class ImportarFragment : Fragment(), RegistroDistribuible, ListaImportable {
     private val binding get() = _binding!!
 
     private lateinit var comWF: ImportarWF
-
     private lateinit var leerCSV: LeerCSV
 
     override fun onCreateView(
@@ -103,18 +102,19 @@ class ImportarFragment : Fragment(), RegistroDistribuible, ListaImportable {
             val recorrId = etl.extraerRecorrId(map)
             val unidSocId = etl.extraerUnSocId(map)
 
-            val fechaTransformada = etl.transformarFecha(map["fecha"]!!).substringBefore(" - ")
+            val fechaTransformada = etl.transformarFecha(map["fecha"]!!)
             val lat0 = etl.transformarLat(map["lat0"]!!)
             val lon0 = etl.transformarLon(map["lon0"]!!)
-            val ptoObs = etl.transformarPtoObservacion("")
+            val ptoObs = etl.transformarPtoObservacion()
             val ctxSocial = etl.transformarCtxSocial(map["referencia"]!!)
-            val sustrato = etl.transformarSustrato("")
+            val sustrato = etl.transformarSustrato()
+            val marea = etl.transformarMarea()
 
             val entidadPlanta = EntidadesPlanas(
                 "cel_no_aplica",
                 diaId,
                 map["orden"]!!.toInt(),
-                fechaTransformada,
+                fechaTransformada.substringBefore(" "),
                 recorrId,
                 diaId,
                 map["orden"]!!.toInt(),
@@ -127,7 +127,7 @@ class ImportarFragment : Fragment(), RegistroDistribuible, ListaImportable {
                 lon0,
                 map["playa"]!!,
                 "meteo_desc",
-                "marea_desc",
+                marea,
                 unidSocId,
                 recorrId,
                 map["orden"]!!.toInt(),
@@ -207,7 +207,7 @@ class ImportarFragment : Fragment(), RegistroDistribuible, ListaImportable {
         val texto: String = "${requireContext().getString(R.string.imp_mostrarResMsg1)} $lote, " +
                 "${requireContext().getString(R.string.imp_mostrarResMsg2)}\n" +
                 "${mapContador["dias"]} ${requireContext().getString(R.string.dev_dias)}, " +
-                "${mapContador["recorr"]} ${requireContext().getString(R.string.dev_recorr)} y" +
+                "${mapContador["recorr"]} ${requireContext().getString(R.string.dev_recorr)} y " +
                 "${mapContador["unidsoc"]} ${requireContext().getString(R.string.dev_unsoc)}.\n" +
 
                 "${requireContext().getString(R.string.imp_mostrarResMsg3)}\n" +

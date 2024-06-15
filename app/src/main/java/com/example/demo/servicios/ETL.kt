@@ -61,7 +61,7 @@ class ETL(private val context: Context) {
         return lon.toDouble()
     }
 
-    fun transformarPtoObservacion(referencia: String): String {
+    fun transformarPtoObservacion(): String {
         return getOpcionesPtoObservacion()[0]
     }
 
@@ -74,8 +74,12 @@ class ETL(private val context: Context) {
         }
     }
 
-    fun transformarSustrato(referencia: String): String {
+    fun transformarSustrato(): String {
         return getOpcionesSustrato()[0]
+    }
+
+    fun transformarMarea(): String {
+        return getOpcionesMarea()[0]
     }
 
     private fun getOpcionesPtoObservacion(): Array<String> {
@@ -90,8 +94,12 @@ class ETL(private val context: Context) {
         return context.resources.getStringArray(R.array.op_tipo_sustrato)
     }
 
+    private fun getOpcionesMarea(): Array<String> {
+        return context.resources.getStringArray(R.array.op_marea)
+    }
+
     fun ordenar(mapas: List<Map<String, String>>): List<Map<String, String>> {
-        return sortCSV(mapas, "lat0", "lon0")
+        return sortCSV(mapas, "fecha", "libreta", "orden")
     }
 
     private fun rellenarNulos(
@@ -115,9 +123,10 @@ class ETL(private val context: Context) {
 
     private fun sortCSV(
         csvData: List<Map<String, String>>,
-        primaryKey: String,
-        secondaryKey: String
+        primeraK: String,
+        segundaK: String,
+        terceraK: String
     ): List<Map<String, String>> {
-        return csvData.sortedWith(compareBy({ it[primaryKey] }, { it[secondaryKey] }))
+        return csvData.sortedWith(compareBy({ it[primeraK] }, { it[segundaK] }, { it[terceraK] }))
     }
 }

@@ -58,7 +58,7 @@ class RecorrDetailFragment : Fragment() {
 
         model = ViewModelProvider(this)[RecorrViewModel::class.java]
 
-        val estadosMarea = resources.getStringArray(R.array.estado_marea)
+        val estadosMarea = resources.getStringArray(R.array.op_marea)
         val mareasArrayAdapter = ArrayAdapter(view.context, R.layout.dropdown_item, estadosMarea)
         binding.spinnerMarea.adapter = mareasArrayAdapter
 

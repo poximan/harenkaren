@@ -24,6 +24,7 @@ import com.example.demo.servicios.GestorUUID
 import com.example.demo.viewModel.DiaViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Locale
 
 class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
 
@@ -129,17 +130,24 @@ class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
 
     private fun filtrar() {
 
+        val contextazo = requireContext()
         val c = Calendar.getInstance()
+
         val year = c.get(Calendar.YEAR)
         val month = c.get(Calendar.MONTH)
         val day = c.get(Calendar.DAY_OF_MONTH)
 
         val dpd = DatePickerDialog(
-            activity!!,
-            { _, year, monthOfYear, dayOfMonth ->
-                val dateSelected = "" + dayOfMonth + "/" + (monthOfYear + 1) + "/" + year
+            contextazo,
+            { _, selectedYear, selectedMonth, selectedDayOfMonth ->
+                val selectedDate = Calendar.getInstance().apply {
+                    set(selectedYear, selectedMonth, selectedDayOfMonth)
+                }
+                val dateFormat = SimpleDateFormat(contextazo.getString(R.string.formato_dia), Locale.getDefault())
+                val dateSelected = dateFormat.format(selectedDate.time)
                 loadListWithDate(dateSelected)
-            }, year, month, day
+            },
+            year, month, day
         )
         dpd.show()
     }

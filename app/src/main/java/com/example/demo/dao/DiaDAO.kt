@@ -6,7 +6,6 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Transaction
 import androidx.room.Update
 import com.example.demo.DevFragment
 import com.example.demo.model.Dia
@@ -63,7 +62,6 @@ interface DiaDAO {
     @Query("SELECT COUNT(id) FROM dia")
     fun getCount(): Int
 
-    @Transaction
     @Update
     fun update(recorrido: Dia): Int
 
