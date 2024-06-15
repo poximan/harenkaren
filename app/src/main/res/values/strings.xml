@@ -21,6 +21,7 @@
     <string name="varias_gps" translatable="false">GPS</string>
     <string name="varias_lat">Latitud</string>
     <string name="varias_lon">Longitud</string>
+    <string name="varias_area">Area recorrida</string>
 
     <!-- nav_drawer_menu -->
     <string name="mnu_importar">Importar</string>
@@ -93,7 +94,6 @@
 
     <!-- fragment_recorr_add -->
     <string name="rec_obsevador">Observador</string>
-    <string name="rec_area">Area recorrida</string>
     <string name="rec_meteo">Cond. climaticas</string>
     <string name="rec_marea">Estado de la marea</string>
 
@@ -113,6 +113,24 @@
     <string name="reg_repcontrasenia">Repita Contraseña</string>
     <string name="reg_nocoincide">Las contraseñas no coinciden</string>
     <string name="reg_registrar">Registrar</string>
+
+    <!-- fragment_reportes -->
+    <string name="rep_subtit">Relevamiento terrestre\nde elefante marino del sur</string>
+    <string name="rep_observadores">Numero total de participantes:</string>
+    <string name="rep_crias">Total crias contadas:</string>
+    <string name="rep_resUnSoc">Resumen de unidades sociales</string>
+    <string name="rep_resIndiv">Resumen individuos</string>
+
+    <!-- fragment_reportes_tabla -->
+    <string name="rep_tabUnSoc">Unidades\nsociales</string>
+    <string name="rep_tabTotal">Numero total</string>
+    <string name="rep_tabPromH">Promedio de \nhembras por\nunidad social</string>
+    <string name="rep_tabHaren">Haren</string>
+    <string name="rep_tabGpoHaren">Grupo de\nharenes</string>
+    <string name="rep_tabHarenSin">Haren\nsin alfa</string>
+    <string name="rep_tabPjaSolit">Pareja\nsolitaria</string>
+    <string name="rep_tabIndivSolo">Individuos\nsolos</string>
+    <string name="rep_tabNoAplica">no aplica</string>
 
     <!-- fragment_tpo_sustrato -->
     <string name="tpo_arena">Arena(A)</string>
@@ -274,6 +292,9 @@
     <string name="reg_newAccount">Llene todos los campos</string>
     <string name="reg_loginSuccess">Registro exitoso</string>
     <string name="reg_loginFailure">Error en la autenticación</string>
+
+    <!-- ReportesFragment -->
+    <string name="rep_rangoVacio">No existen registros entre las fechas</string>
 
     <!-- StatisticsFragment -->
     <string name="sta_unDia">No existen registros asociados para el dia seleccionado</string>

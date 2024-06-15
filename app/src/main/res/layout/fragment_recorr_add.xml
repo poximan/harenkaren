@@ -39,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10px"
-                android:text="@string/rec_area" />
+                android:text="@string/varias_area" />
 
             <EditText
                 android:id="@+id/area_recorr"

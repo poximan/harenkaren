@@ -55,7 +55,7 @@ class RecorrListAdapter(
             id.text = recorrido.orden.toString()
             resumen.text = """
                 ${context.getString(R.string.rec_obsevador)}: ${recorrido.observador}
-                ${context.getString(R.string.rec_area)}: ${recorrido.areaRecorrida}
+                ${context.getString(R.string.varias_area)}: ${recorrido.areaRecorrida}
                 ${context.getString(R.string.rec_meteo)}: ${recorrido.meteo}
                 ${context.getString(R.string.rec_marea)}: ${recorrido.marea}
             """.trimIndent()

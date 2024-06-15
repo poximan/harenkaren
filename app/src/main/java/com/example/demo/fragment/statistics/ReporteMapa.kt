@@ -78,7 +78,7 @@ class ReporteMapa(private val webView: WebView, private val geoPoint: GeoPoint) 
                                     lon: ${geoPoint.longitude} 
                                 },
                                 style: "carto-positron",
-                                zoom: 7.5
+                                zoom: ${geoPoint.altitude},
                             },
                            coloraxis: { colorscale: 'RdBu' }
                         };

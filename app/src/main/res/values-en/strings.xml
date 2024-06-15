@@ -82,7 +82,7 @@
 
     <!-- fragment_recorr_add -->
     <string name="rec_obsevador">Observer</string>
-    <string name="rec_area">Surveyed area</string>
+    <string name="varias_area">Surveyed area</string>
     <string name="rec_meteo">Weather conditions</string>
     <string name="rec_marea">Tide state</string>
 
@@ -102,6 +102,24 @@
     <string name="reg_repcontrasenia">Repeat password</string>
     <string name="reg_nocoincide">Passwords do not match</string>
     <string name="reg_registrar">Register</string>
+
+    <!-- fragment_reportes -->
+    <string name="rep_subtit">Southern elephant seal\nterrestrial survey</string>
+    <string name="rep_observadores">Total number of participants:</string>
+    <string name="rep_crias">Total babies counted:</string>
+    <string name="rep_resUnSoc">Summary of social units</string>
+    <string name="rep_resIndiv">Summary individuals</string>
+
+    <!-- fragment_reportes_tabla -->
+    <string name="rep_tabUnSoc">Social\nunits</string>
+    <string name="rep_tabTotal">Total number</string>
+    <string name="rep_tabPromH">Average number\nof females\nper social unit</string>
+    <string name="rep_tabHaren">Harem</string>
+    <string name="rep_tabGpoHaren">Harem\ngroup</string>
+    <string name="rep_tabHarenSin">Haren\nwithout alpha</string>
+    <string name="rep_tabPjaSolit">Lonely\ncouple</string>
+    <string name="rep_tabIndivSolo">Single\nindividuals</string>
+    <string name="rep_tabNoAplica">not apply</string>
 
     <!-- fragment_tpo_sustrato -->
     <string name="tpo_arena">Sand(S)</string>
@@ -263,6 +281,9 @@
     <string name="reg_newAccount">Fill in all fields</string>
     <string name="reg_loginSuccess">Successful registration</string>
     <string name="reg_loginFailure">Authentication error</string>
+
+    <!-- ReportesFragment -->
+    <string name="rep_rangoVacio">There are no records between the dates</string>
 
     <!-- StatisticsFragment -->
     <string name="sta_unDia">There are no associated records for the selected day</string>
