@@ -128,14 +128,16 @@ class UnSocPagerAdapter(
     }
 
     override fun getPageTitle(position: Int): CharSequence {
-        return when(solapas[position]){
+        return when (solapas[position]) {
             is UnSocGralFragment -> context.getString(R.string.socg_toString)
             is UnSocGralDetailFragment -> context.getString(R.string.socg_toString)
             is UnSocVivosFragment -> context.getString(R.string.socv_toString)
             is UnSocVivosDetailFragment -> context.getString(R.string.socv_toString)
             is UnSocMuertosFragment -> context.getString(R.string.socm_toString)
             is UnSocMuertosDetailFragment -> context.getString(R.string.socm_toString)
-            else -> { "error TAG!" }
+            else -> {
+                "error TAG!"
+            }
         }
     }
 

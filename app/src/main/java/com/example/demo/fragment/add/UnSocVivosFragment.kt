@@ -144,13 +144,13 @@ class UnSocVivosFragment() : Fragment() {
             R.id.vHembrasAd -> {
                 if (!binding.vHembrasAd.text.isNullOrEmpty() &&
                     binding.vHembrasAd.text.toString().toInt() <= 1
-                ){
+                ) {
                     Toast.makeText(
                         requireContext(),
                         requireContext().getString(R.string.socv_vistaHaren),
                         Toast.LENGTH_LONG
                     ).show()
-                    binding.vHembrasAd.text="".toEditable()
+                    binding.vHembrasAd.text = "".toEditable()
                 }
             }
         }
@@ -226,12 +226,14 @@ class UnSocVivosFragment() : Fragment() {
                     binding.vAlfaSams
                 )
             }
+
             R.id.vAlfaSams -> {
                 validarDominante(
                     binding.vAlfaSams,
                     binding.vAlfaS4Ad
                 )
             }
+
             R.id.vHembrasAd -> {
                 Toast.makeText(
                     requireContext(),
@@ -270,7 +272,7 @@ class UnSocVivosFragment() : Fragment() {
         var texto = ""
         var valor = ""
         try {   // si usuario borra antes de ingresar un nuevo numero, entonces campo==""
-            if (editTextPrimario.text.toString().toInt() > 1){
+            if (editTextPrimario.text.toString().toInt() > 1) {
                 texto = requireContext().getString(R.string.socv_validarDominante1)
                 valor = ""
             }
@@ -278,7 +280,7 @@ class UnSocVivosFragment() : Fragment() {
             if (editTextPrimario.text.toString().toInt() == 1 && (
                         !editTextSecundario.text.isNullOrEmpty() && editTextSecundario.text.toString()
                             .toInt() > 0)
-            ){
+            ) {
                 texto = requireContext().getString(R.string.socv_validarDominante2)
                 valor = "0"
             }

@@ -86,11 +86,13 @@ interface UnSocDAO {
         return insertsEfectivos
     }
 
-    @Query("""
+    @Query(
+        """
         SELECT *
         FROM unidsocial
         WHERE date BETWEEN :desde AND :hasta
-    """)
+    """
+    )
     fun getEntreFechas(desde: String, hasta: String): List<UnidSocial>
 
     @Query(

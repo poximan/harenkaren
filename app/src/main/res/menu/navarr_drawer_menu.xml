@@ -7,6 +7,6 @@
         android:title="@string/mnu_acercade" />
     <item
         android:id="@id/dev_fragment"
-        android:icon="@android:drawable/ic_menu_zoom"
+        android:icon="@drawable/ic_dev"
         android:title="@string/varias_desarrollador" />
 </menu>

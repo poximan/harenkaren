@@ -143,7 +143,7 @@ class RecorrListFragment : Fragment(), RecorrListAdapter.OnRecorrClickListener {
         CoroutineScope(Dispatchers.IO).launch {
             val recorrListAsync = recorrViewModel.readConFK(args.idDia)
             withContext(Dispatchers.Main) {
-               recorrAdapter.setRecorrido(recorrListAsync)
+                recorrAdapter.setRecorrido(recorrListAsync)
             }
         }
     }

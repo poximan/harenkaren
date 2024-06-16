@@ -261,7 +261,11 @@ class UnSocGralDetailFragment() : Fragment() {
                     override fun onProviderDisabled(provider: String) {
 
                         val context = requireContext()
-                        Toast.makeText(context, context.getString(R.string.varias_gpsHab), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.varias_gpsHab),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 },
                 null

@@ -72,7 +72,10 @@ abstract class HarenKarenRoomDatabase : RoomDatabase() {
             ).build()
 
             return try {
-                val cursor: Cursor = db.query("SELECT name FROM sqlite_master WHERE type='table' AND name IN ('dia', 'recorrido', 'unidsocial', 'usuario')", null)
+                val cursor: Cursor = db.query(
+                    "SELECT name FROM sqlite_master WHERE type='table' AND name IN ('dia', 'recorrido', 'unidsocial', 'usuario')",
+                    null
+                )
                 val tableNames = mutableListOf<String>()
                 if (cursor.moveToFirst()) {
                     do {

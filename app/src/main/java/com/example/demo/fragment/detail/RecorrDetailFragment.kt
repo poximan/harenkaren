@@ -70,8 +70,10 @@ class RecorrDetailFragment : Fragment() {
         binding.spinnerMarea.setSelection(indice)
         binding.spinnerMarea.isEnabled = false
 
-        binding.horaIni.text = "${requireContext().getString(R.string.rec_horaini)}: " + args.recorrActual.fechaIni
-        binding.horaFin.text = "${requireContext().getString(R.string.rec_horafin)}: " + args.recorrActual.fechaFin
+        binding.horaIni.text =
+            "${requireContext().getString(R.string.rec_horaini)}: " + args.recorrActual.fechaIni
+        binding.horaFin.text =
+            "${requireContext().getString(R.string.rec_horafin)}: " + args.recorrActual.fechaFin
 
         indicatorLight = binding.gpsLight
         latLonIni.lat = args.recorrActual.latitudIni
@@ -121,7 +123,8 @@ class RecorrDetailFragment : Fragment() {
         model.update(args.recorrActual)
 
         val context = requireContext()
-        Toast.makeText(context, context.getString(R.string.rec_confirmarEdit), Toast.LENGTH_LONG).show()
+        Toast.makeText(context, context.getString(R.string.rec_confirmarEdit), Toast.LENGTH_LONG)
+            .show()
 
         val action = RecorrDetailFragmentDirections.goToRecorrListAction(args.recorrActual.diaId)
         findNavController().navigate(action)
@@ -167,7 +170,11 @@ class RecorrDetailFragment : Fragment() {
                     override fun onProviderEnabled(provider: String) {}
                     override fun onProviderDisabled(provider: String) {
                         val context = requireContext()
-                        Toast.makeText(context, context.getString(R.string.varias_gpsHab), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.varias_gpsHab),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 },
                 null

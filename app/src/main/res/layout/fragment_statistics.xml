@@ -15,7 +15,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            app:cardElevation="40dp"
             app:cardCornerRadius="10dp">
 
             <org.eazegraph.lib.charts.PieChart

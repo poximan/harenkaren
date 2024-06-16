@@ -57,7 +57,7 @@ class UnSocListGrafFragment : Fragment() {
             try {
                 val dynamicHtml = unSocAdapter.contenidoHTML(unSocViewModel)
                 contenedorHTML(dynamicHtml)
-            } catch (e: NoSuchElementException){
+            } catch (e: NoSuchElementException) {
                 val context = requireContext()
                 Toast.makeText(
                     context,

@@ -85,7 +85,8 @@ class UnSocDetailFragment : Fragment() {
         model.update(unSoc)
 
         val context = requireContext()
-        Toast.makeText(context, context.getString(R.string.soc_confirmarEdit), Toast.LENGTH_LONG).show()
+        Toast.makeText(context, context.getString(R.string.soc_confirmarEdit), Toast.LENGTH_LONG)
+            .show()
 
         val action =
             UnSocDetailFragmentDirections.goToUnSocListFromUnSocDetailAction(unSoc.recorrId)

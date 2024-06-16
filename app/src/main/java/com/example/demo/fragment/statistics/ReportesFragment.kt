@@ -8,8 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
+import android.widget.LinearLayout
 import android.widget.ScrollView
+import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
@@ -22,7 +25,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.eazegraph.lib.charts.PieChart
+import org.eazegraph.lib.models.PieModel
 import org.osmdroid.util.GeoPoint
+import java.util.UUID
 import kotlin.math.abs
 
 class ReportesFragment : Fragment() {
@@ -73,7 +79,7 @@ class ReportesFragment : Fragment() {
             .unSocDao()
 
         getInvolucrados(args.rangoFechas) {
-            if(it.isNotEmpty()){
+            if (it.isNotEmpty()) {
                 participantes(it)
                 completarMapa(it)
                 contarCrias(it)
@@ -82,7 +88,9 @@ class ReportesFragment : Fragment() {
                 tabFilaHarenSin(it)
                 tabFilaPjaSolit(it)
                 tabFilaIndivSolo(it)
-            }else{
+                val reduccion = reducir(it)
+                graficar(reduccion)
+            } else {
                 val mensaje = getString(R.string.rep_rangoVacio) + " " + args.rangoFechas
                 Toast.makeText(requireContext(), mensaje, Toast.LENGTH_SHORT).show()
             }
@@ -118,8 +126,10 @@ class ReportesFragment : Fragment() {
         binding.tablePart.totHaren.text = total.toString()
 
         val promedio = unSocList.filter {
-            it.ctxSocial == getString(R.string.ctx_haren) }.sumOf {
-            it.vHembrasAd }
+            it.ctxSocial == getString(R.string.ctx_haren)
+        }.sumOf {
+            it.vHembrasAd
+        }
         binding.tablePart.promHaren.text = if (total != 0) {
             (promedio / total).toString()
         } else {
@@ -134,8 +144,10 @@ class ReportesFragment : Fragment() {
         binding.tablePart.totGpoharen.text = total.toString()
 
         val promedio = unSocList.filter {
-            it.ctxSocial == getString(R.string.ctx_gpoHarenes) }.sumOf {
-            it.vHembrasAd }
+            it.ctxSocial == getString(R.string.ctx_gpoHarenes)
+        }.sumOf {
+            it.vHembrasAd
+        }
         binding.tablePart.promGpoharen.text = if (total != 0) {
             (promedio / total).toString()
         } else {
@@ -150,8 +162,10 @@ class ReportesFragment : Fragment() {
         binding.tablePart.totHarensin.text = total.toString()
 
         val promedio = unSocList.filter {
-            it.ctxSocial == getString(R.string.ctx_harenSAlfa) }.sumOf {
-            it.vHembrasAd }
+            it.ctxSocial == getString(R.string.ctx_harenSAlfa)
+        }.sumOf {
+            it.vHembrasAd
+        }
         binding.tablePart.promHarensin.text = if (total != 0) {
             (promedio / total).toString()
         } else {
@@ -171,6 +185,86 @@ class ReportesFragment : Fragment() {
             it.ctxSocial == getString(R.string.ctx_indivSolo)
         }
         binding.tablePart.totIndivsolo.text = total.toString()
+    }
+
+    private fun reducir(unSocList: List<UnidSocial>): UnidSocial {
+        val randomQueTeTiro = UUID.randomUUID()
+        return unSocList.reduce { acc, unidSocial ->
+            UnidSocial(
+                vAlfaS4Ad = acc.vAlfaS4Ad + unidSocial.vAlfaS4Ad,
+                vAlfaSams = acc.vAlfaSams + unidSocial.vAlfaSams,
+                vHembrasAd = acc.vHembrasAd + unidSocial.vHembrasAd,
+                vCrias = acc.vCrias + unidSocial.vCrias,
+                vDestetados = acc.vDestetados + unidSocial.vDestetados,
+                vJuveniles = acc.vJuveniles + unidSocial.vJuveniles,
+                vS4AdPerif = acc.vS4AdPerif + unidSocial.vS4AdPerif,
+                vS4AdCerca = acc.vS4AdCerca + unidSocial.vS4AdCerca,
+                vS4AdLejos = acc.vS4AdLejos + unidSocial.vS4AdLejos,
+                vOtrosSamsPerif = acc.vOtrosSamsPerif + unidSocial.vOtrosSamsPerif,
+                vOtrosSamsCerca = acc.vOtrosSamsCerca + unidSocial.vOtrosSamsCerca,
+                vOtrosSamsLejos = acc.vOtrosSamsLejos + unidSocial.vOtrosSamsLejos,
+                mAlfaS4Ad = acc.mAlfaS4Ad + unidSocial.mAlfaS4Ad,
+                mAlfaSams = acc.mAlfaSams + unidSocial.mAlfaSams,
+                mHembrasAd = acc.mHembrasAd + unidSocial.mHembrasAd,
+                mCrias = acc.mCrias + unidSocial.mCrias,
+                mDestetados = acc.mDestetados + unidSocial.mDestetados,
+                mJuveniles = acc.mJuveniles + unidSocial.mJuveniles,
+                mS4AdPerif = acc.mS4AdPerif + unidSocial.mS4AdPerif,
+                mS4AdCerca = acc.mS4AdCerca + unidSocial.mS4AdCerca,
+                mS4AdLejos = acc.mS4AdLejos + unidSocial.mS4AdLejos,
+                mOtrosSamsPerif = acc.mOtrosSamsPerif + unidSocial.mOtrosSamsPerif,
+                mOtrosSamsCerca = acc.mOtrosSamsCerca + unidSocial.mOtrosSamsCerca,
+                mOtrosSamsLejos = acc.mOtrosSamsLejos + unidSocial.mOtrosSamsLejos,
+                id= randomQueTeTiro, idRecorrido = randomQueTeTiro,
+                ptoObsUnSoc = "", ctxSocial = "", tpoSustrato = "", timeStamp = "",
+                latitud = 0.0, longitud = 0.0, photoPath = "", comentario = ""
+            )
+        }
+    }
+    
+    private fun graficar(unidSocial: UnidSocial) {
+        val pieChart: PieChart = binding.piechart
+        pieChart.clearChart()
+
+        val contadoresNoNulos = unidSocial.getContadoresNoNulos()
+        for (atribString in contadoresNoNulos) {
+            asignarValorPorReflexion(unidSocial, atribString)
+            pieChart.addPieSlice(setData(unidSocial, atribString))
+        }
+        pieChart.startAnimation()
+    }
+
+    private fun asignarValorPorReflexion(unidSocial: UnidSocial, atribString: String) {
+
+        // Genera el nombre del campo correspondiente al componente visual
+        val capitalizar = if (atribString.startsWith('v')) 'V' else 'M'
+        val nombreCampo = "txt${capitalizar}${atribString.substring(1)}"
+
+        // Obtiene el campo del binding utilizando reflexión
+        val field = binding.javaClass.getDeclaredField(nombreCampo)
+        field.isAccessible = true
+
+        if (field.type == TextView::class.java) {
+            val textView = field.get(binding) as TextView
+
+            // obtengo un objeto Field
+            val valorAtributo = unidSocial.javaClass.getDeclaredField(atribString)
+            valorAtributo.isAccessible = true
+            // utilizar el objeto Field para obtener el valor del atributo en unidSocial.
+            val valor = valorAtributo.get(unidSocial)
+            textView.text = "$atribString: $valor"
+
+            val layoutExiste = textView.parent as LinearLayout
+            layoutExiste.visibility = View.VISIBLE
+        }
+    }
+
+    private fun setData(unidSocial: UnidSocial, atribString: String): PieModel {
+        val valorAtributo = unidSocial.javaClass.getDeclaredField(atribString)
+        valorAtributo.isAccessible = true
+        // utilizar el objeto Field para obtener el valor del atributo en unidSocial.
+        val valor = (valorAtributo.get(unidSocial) as Int).toFloat()
+        return PieModel(atribString, valor, siguienteColor(atribString))
     }
 
     private fun promediarPosiciones(unSocList: List<UnidSocial>): GeoPoint {
@@ -193,7 +287,7 @@ class ReportesFragment : Fragment() {
         val puntoMedioLatitud = (minLatitud + maxLatitud) / 2.0
         val puntoMedioLongitud = (minLongitud + maxLongitud) / 2.0
 
-        val altitud = -1.9481 * abs(minLatitud-maxLatitud) + 9.5195
+        val altitud = -1.9481 * abs(minLatitud - maxLatitud) + 9.5195
         /*
         para 0.78 dif lat --> 8 altitud
         para 1.55 dif lat --> 6.5 altitud
@@ -220,8 +314,39 @@ class ReportesFragment : Fragment() {
     private fun printPdf() {
         val printManager = requireContext().getSystemService(Context.PRINT_SERVICE) as PrintManager
         val printAdapter = PdfPrintDocumentAdapter(requireContext(), scrollView)
-        val jobName = "${requireContext().applicationInfo.loadLabel(requireContext().packageManager)} Document"
+        val jobName =
+            "${requireContext().applicationInfo.loadLabel(requireContext().packageManager)} Document"
 
         printManager.print(jobName, printAdapter, PrintAttributes.Builder().build())
+    }
+
+    private fun siguienteColor(atribString: String): Int {
+        val coloresMap = mapOf(
+            "vAlfaS4Ad" to R.color.clr_v_alfa_s4ad,
+            "vAlfaSams" to R.color.clr_v_alfa_sams,
+            "vHembrasAd" to R.color.clr_v_hembras_ad,
+            "vCrias" to R.color.clr_v_crias,
+            "vDestetados" to R.color.clr_v_destetados,
+            "vJuveniles" to R.color.clr_v_juveniles,
+            "vS4AdPerif" to R.color.clr_v_s4ad_perif,
+            "vS4AdCerca" to R.color.clr_v_s4ad_cerca,
+            "vS4AdLejos" to R.color.clr_v_s4ad_lejos,
+            "vOtrosSamsPerif" to R.color.clr_v_otros_sams_perif,
+            "vOtrosSamsCerca" to R.color.clr_v_otros_sams_cerca,
+            "vOtrosSamsLejos" to R.color.clr_v_otros_sams_lejos,
+            "mAlfaS4Ad" to R.color.clr_m_alfa_s4ad,
+            "mAlfaSams" to R.color.clr_m_alfa_sams,
+            "mHembrasAd" to R.color.clr_m_hembras_ad,
+            "mCrias" to R.color.clr_m_crias,
+            "mDestetados" to R.color.clr_m_destetados,
+            "mJuveniles" to R.color.clr_m_juveniles,
+            "mS4AdPerif" to R.color.clr_m_s4ad_perif,
+            "mS4AdCerca" to R.color.clr_m_s4ad_cerca,
+            "mS4AdLejos" to R.color.clr_m_s4ad_lejos,
+            "mOtrosSamsPerif" to R.color.clr_m_otros_sams_perif,
+            "mOtrosSamsCerca" to R.color.clr_m_otros_sams_cerca,
+            "mOtrosSamsLejos" to R.color.clr_m_otros_sams_lejos
+        )
+        return ContextCompat.getColor(requireContext(), coloresMap[atribString]!!)
     }
 }

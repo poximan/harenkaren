@@ -35,7 +35,6 @@ class StatisticsFragment : Fragment() {
 
     private var uuid: UUID = DevFragment.UUID_NULO
     private var unidSocial: UnidSocial? = null
-    private var contadoresNoNulos: List<String> = emptyList()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -174,7 +173,7 @@ class StatisticsFragment : Fragment() {
 
     private fun graficar() {
 
-        val pieChart: PieChart = view!!.findViewById(R.id.piechart)
+        val pieChart: PieChart = binding.piechart
         pieChart.clearChart()
 
         val contadores = unidSocial!!.getContadores()
@@ -182,7 +181,7 @@ class StatisticsFragment : Fragment() {
             ocultarEtiquetas(atribString)
         }
 
-        contadoresNoNulos = unidSocial!!.getContadoresNoNulos()
+        val contadoresNoNulos = unidSocial!!.getContadoresNoNulos()
         for (atribString in contadoresNoNulos) {
 
             asignarValorPorReflexion(atribString)
@@ -255,7 +254,6 @@ class StatisticsFragment : Fragment() {
     }
 
     private fun siguienteColor(atribString: String): Int {
-
         val coloresMap = mapOf(
             "vAlfaS4Ad" to R.color.clr_v_alfa_s4ad,
             "vAlfaSams" to R.color.clr_v_alfa_sams,
@@ -282,7 +280,6 @@ class StatisticsFragment : Fragment() {
             "mOtrosSamsCerca" to R.color.clr_m_otros_sams_cerca,
             "mOtrosSamsLejos" to R.color.clr_m_otros_sams_lejos
         )
-
         return ContextCompat.getColor(requireContext(), coloresMap[atribString]!!)
     }
 

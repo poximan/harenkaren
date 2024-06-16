@@ -93,16 +93,25 @@ class DevFragment : Fragment() {
                 val recorr = bd.recorrDao().getCount()
                 val unsoc = bd.unSocDao().getCount()
                 withContext(Dispatchers.Main) {
-                    binding.dias.text = "$dias ${requireContext().getString(R.string.dev_estadoDB_entidad)} ${requireContext().getString(R.string.dev_estadoDB_dia)}"
-                    binding.recorr.text = "$recorr ${requireContext().getString(R.string.dev_estadoDB_entidad)} ${requireContext().getString(R.string.dev_estadoDB_recorr)}"
-                    binding.unsoc.text = "$unsoc  ${requireContext().getString(R.string.dev_estadoDB_entidad)} ${requireContext().getString(R.string.dev_estadoDB_unsoc)}"
+                    binding.dias.text =
+                        "$dias ${requireContext().getString(R.string.dev_estadoDB_entidad)} ${
+                            requireContext().getString(R.string.dev_estadoDB_dia)
+                        }"
+                    binding.recorr.text =
+                        "$recorr ${requireContext().getString(R.string.dev_estadoDB_entidad)} ${
+                            requireContext().getString(R.string.dev_estadoDB_recorr)
+                        }"
+                    binding.unsoc.text =
+                        "$unsoc  ${requireContext().getString(R.string.dev_estadoDB_entidad)} ${
+                            requireContext().getString(R.string.dev_estadoDB_unsoc)
+                        }"
                 }
             }
         }
     }
 
     private fun logcat() {
-        val process = Runtime.getRuntime().exec("logcat -d -t 80")
+        val process = Runtime.getRuntime().exec("logcat -d -t 50")
         val bufferedReader = BufferedReader(InputStreamReader(process.inputStream))
 
         val log = SpannableStringBuilder()
@@ -112,10 +121,20 @@ class DevFragment : Fragment() {
             val parts = line?.split("\\s+".toRegex())
             if (parts != null && parts.size >= 5 && (parts[4] == "E" || parts[4] == "W")) {
                 val spannable = SpannableString(line)
-                if(parts[4] == "E")
-                    spannable.setSpan(ForegroundColorSpan(Color.RED), 0, line!!.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-                if(parts[4] == "W")
-                    spannable.setSpan(ForegroundColorSpan(Color.MAGENTA), 0, line!!.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                if (parts[4] == "E")
+                    spannable.setSpan(
+                        ForegroundColorSpan(Color.RED),
+                        0,
+                        line!!.length,
+                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                if (parts[4] == "W")
+                    spannable.setSpan(
+                        ForegroundColorSpan(Color.MAGENTA),
+                        0,
+                        line!!.length,
+                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
 
                 log.append(spannable).append("\n")
             } else {

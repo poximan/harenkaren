@@ -69,7 +69,8 @@ class ImportarFragment : Fragment(), RegistroDistribuible, ListaImportable {
         comWF.descubrir()
         val port = comWF.activarComoMTU()
 
-        binding.idMaster.text = "${requireContext().getString(R.string.imp_clickWF1)} ${comWF.miNombre()}:$port"
+        binding.idMaster.text =
+            "${requireContext().getString(R.string.imp_clickWF1)} ${comWF.miNombre()}:$port"
         binding.recepcion.text = requireContext().getString(R.string.imp_clickWF2)
     }
 
@@ -261,7 +262,8 @@ class ImportarFragment : Fragment(), RegistroDistribuible, ListaImportable {
             "distribuidos en ${mapContador["dias"]} dias, ${mapContador["recorr"]} recorridos y ${mapContador["unidsoc"]} unidades sociales"
         )
         insertarEntidades(listaEntidadesPlanas, mapContador)
-        binding.recepcion.text = "${requireContext().getString(R.string.imp_onMessage)} $mapContador"
+        binding.recepcion.text =
+            "${requireContext().getString(R.string.imp_onMessage)} $mapContador"
     }
 
     // callback del importador de csv's
@@ -278,6 +280,8 @@ class ImportarFragment : Fragment(), RegistroDistribuible, ListaImportable {
 
     override fun progreso(valor: Float) {
         binding.recepcion.text =
-            "${requireContext().getString(R.string.imp_progreso)} ${valor.toString().substringBefore(".")}%"
+            "${requireContext().getString(R.string.imp_progreso)} ${
+                valor.toString().substringBefore(".")
+            }%"
     }
 }

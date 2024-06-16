@@ -121,7 +121,11 @@ class IdiomaAdapter {
     }
 
     // Función para restaurar el idioma original de la aplicación
-    private fun restoreAppLocale(context: Context, originalConfig: Configuration, originalLocale: Locale) {
+    private fun restoreAppLocale(
+        context: Context,
+        originalConfig: Configuration,
+        originalLocale: Locale
+    ) {
         Locale.setDefault(originalLocale)
         val config = Configuration(originalConfig)
         config.setLocale(originalLocale)

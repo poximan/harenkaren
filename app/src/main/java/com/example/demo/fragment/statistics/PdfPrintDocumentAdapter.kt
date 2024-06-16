@@ -106,7 +106,8 @@ class PdfPrintDocumentAdapter(
         view.measure(widthSpec, heightSpec)
         view.layout(0, 0, pageWidth, view.measuredHeight)
 
-        val bitmap = Bitmap.createBitmap(view.measuredWidth, view.measuredHeight, Bitmap.Config.ARGB_8888)
+        val bitmap =
+            Bitmap.createBitmap(view.measuredWidth, view.measuredHeight, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
         view.draw(canvas)
         return bitmap

@@ -42,7 +42,9 @@ class MTUClienteWF(private val callback: RegistroDistribuible) {
             var bytesRead: Long = 0
 
             // Leer datos del socket y calcular progreso
-            while (withContext(Dispatchers.IO) { inputStream.read(buffer).also { byte = it } } != -1) {
+            while (withContext(Dispatchers.IO) {
+                    inputStream.read(buffer).also { byte = it }
+                } != -1) {
                 byteArrayOutputStream.write(buffer, 0, byte)
                 bytesRead += byte
                 val progress = bytesRead / 1024f

@@ -4,10 +4,6 @@
     <string name="formato_dia" translatable="false">yyyy-MM-dd</string>
     <string name="formato_fecha" translatable="false">yyyy-MM-dd HH:mm:ss</string>
 
-    <string name="about" translatable="false">
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-    </string>
-
     <!-- ****************************************************************** -->
     <!-- ****** incrustados en layouts ************************************ -->
     <!-- ****************************************************************** -->
@@ -32,6 +28,18 @@
     <string name="mnu_filtrar">Filtrar</string>
     <string name="mnu_fecha">Filtrar por fecha</string>
     <string name="mnu_limpiar">Limpiar filtro</string>
+
+    <!-- fragment_about -->
+    <string name="abo_acercade">
+        Acerca de esta app
+\n---------------------------------
+\n\nhabitualmente los trabajos en campo implican el uso de papel y lápiz, lo más portable por mucho. esta app pretende (con exagerado optimismo) ser un digno reemplazo de aquello.
+\nen este sentido la navegabilidad de pantallas busca guiar al censista en la definición de los datos, desde lo general a lo particular.
+
+\n\nasi el usuario primeramente dará de alta un **Dia** (como unidad de tiempo en que sucede un acto de censar), dentro de este definirá **Recorridos** (como descriptor de áreas geográficas donde sucede el acto de censar) y finalmente agregará tantos **Registros** como unidades sociales observe en el campo.
+
+\n\nesta primer actividad constituye lo que bien puede llamarse generacion del **dato primario**, ya que a partir de él explotarán una serie de modestos pero contundentes instrumentos de interpretacion de datos.
+    </string>
 
     <!-- fragment_ctx_social -->
     <string name="ctx_haren">Haren(H)</string>
@@ -247,6 +255,7 @@
 
     <!-- DiaListFragment -->
     <string name="dia_confirmar">Dia agregado correctamente</string>
+    <string name="dia_existe">El dia de hoy ya fue agregado</string>
     <string name="dia_mostrarAyudaTit">Fechas</string>
     <string name="dia_mostrarAyuda0">Aun no has agregado ningun dia, y por lo tanto la lista esta vacia. Hacé click en (+) para agregarlo</string>
     <string name="dia_mostrarAyuda1">Ahora hay un solo dia dado de alta. Cuando agregues mas, notaras la lista. Hace click en el dia existente para administrar sus recorridos</string>

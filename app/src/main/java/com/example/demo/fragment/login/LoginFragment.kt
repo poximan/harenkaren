@@ -70,9 +70,11 @@ class LoginFragment : Fragment(), UsuarioCallback {
             override fun onAuthenticationSuccess() {
                 onLoginSuccess()
             }
+
             override fun onAuthenticationError(errorCode: Int, errorMessage: String) {
                 snack(view, requireContext().getString(R.string.log_checkHuella1))
             }
+
             override fun onAuthenticationFailed() {
                 snack(view, requireContext().getString(R.string.log_checkHuella2))
             }

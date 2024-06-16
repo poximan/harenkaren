@@ -78,7 +78,14 @@ class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
 
     private fun nvoDia() {
         val currentDate = getCurrentDate()
-        confirmarDia(currentDate)
+        val existe = diaViewModel.allDia.value?.filter { it.fecha == currentDate }
+
+        if(existe.isNullOrEmpty())
+            confirmarDia(currentDate)
+        else{
+            val context = requireContext()
+            Toast.makeText(context, context.getString(R.string.dia_existe), Toast.LENGTH_LONG).show()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -143,7 +150,10 @@ class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
                 val selectedDate = Calendar.getInstance().apply {
                     set(selectedYear, selectedMonth, selectedDayOfMonth)
                 }
-                val dateFormat = SimpleDateFormat(contextazo.getString(R.string.formato_dia), Locale.getDefault())
+                val dateFormat = SimpleDateFormat(
+                    contextazo.getString(R.string.formato_dia),
+                    Locale.getDefault()
+                )
                 val dateSelected = dateFormat.format(selectedDate.time)
                 loadListWithDate(dateSelected)
             },
@@ -207,7 +217,7 @@ class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
     private fun dataDesdeIU(timestamp: String): Dia {
         val celularId = GestorUUID.obtenerAndroidID()
         val uuid = DevFragment.UUID_NULO
-        return Dia(celularId, uuid, 0, timestamp)
+        return Dia(celularId, uuid, 0, fecha = timestamp)
     }
 
     private fun getCurrentDate(): String {

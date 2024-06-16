@@ -149,7 +149,8 @@ class RegisterFragment : Fragment(), UsuarioCallback {
             }
         } else {
             val context = requireContext()
-            Toast.makeText(context, context.getString(R.string.reg_newAccount), Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, context.getString(R.string.reg_newAccount), Toast.LENGTH_SHORT)
+                .show()
         }
     }
 

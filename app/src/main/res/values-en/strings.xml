@@ -23,6 +23,18 @@
     <string name="mnu_fecha">Filter by date</string>
     <string name="mnu_limpiar">Clear filter</string>
 
+    <!-- fragment_about -->
+    <string name="abo_acercade">
+        About this app
+ \n---------------------------------
+ \n\nField work usually involves the use of paper and pencil, the most portable by far. This app aims (with exaggerated optimism) to be a worthy replacement for that.
+ \nIn this sense, the navigability of screens seeks to guide the census taker in defining the data, from the general to the particular.
+
+ \n\nIf the user will first register a **Day** (as a unit of time in which an act of census occurs), within this he will define **Tours** (as a descriptor of geographical areas where the act of census occurs). census) and finally it will add as many **Records** as social units observed in the field.
+
+ \n\nThis first activity constitutes what can well be called generation of **primary data**, since from it a series of modest but forceful data interpretation instruments will be exploited.
+    </string>
+
     <!-- fragment_ctx_social -->
     <string name="ctx_haren">Haren(H)</string>
     <string name="ctx_harenSAlfa">Haren w/o alpha(HwA)</string>
@@ -236,6 +248,7 @@
 
     <!-- DiaListFragment -->
     <string name="dia_confirmar">Day added correctly</string>
+    <string name="dia_existe">Today was already added</string>
     <string name="dia_mostrarAyudaTit">Dates</string>
     <string name="dia_mostrarAyuda0">You have not added any day yet, so the list is empty. Click on (+) to add it</string>
     <string name="dia_mostrarAyuda1">Now there is only one day registered. When you add more, you will notice the list. Click on the existing day to manage its routes</string>
