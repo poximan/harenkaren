@@ -1,8 +1,6 @@
 package com.example.demo.fragment.list
 
 import android.app.AlertDialog
-import android.app.DatePickerDialog
-import android.icu.util.Calendar
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -11,7 +9,6 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.navGraphViewModels
@@ -28,14 +25,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class UnSocListFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
+class UnSocListFragment : SuperList(), UnSocListAdapter.OnUnSocClickListener {
 
     private val unSocViewModel: UnSocViewModel by navGraphViewModels(R.id.navHome)
     private val args: UnSocListFragmentArgs by navArgs()
 
     private var _binding: FragmentUnsocListBinding? = null
     private val binding get() = _binding!!
-    private lateinit var unSocList: RecyclerView
+    private var unSocList: RecyclerView? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,16 +48,24 @@ class UnSocListFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
 
         unSocList = binding.listUnSoc
         val layoutManager = LinearLayoutManager(requireContext())
-        unSocList.layoutManager = layoutManager
+        unSocList!!.layoutManager = layoutManager
+
         val dividerDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.divider)
         val dividerItemDecoration =
-            DividerItemDecoration(unSocList.context, layoutManager.orientation)
+            DividerItemDecoration(unSocList!!.context, layoutManager.orientation)
         dividerItemDecoration.setDrawable(dividerDrawable!!)
-        unSocList.addItemDecoration(dividerItemDecoration)
+        unSocList!!.addItemDecoration(dividerItemDecoration)
 
         loadFullList()
 
         return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+        unSocList!!.adapter = null
+        unSocList = null
     }
 
     override fun onItemClick(elem: UnidSocial) {
@@ -130,27 +135,10 @@ class UnSocListFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
         }
     }
 
-    private fun filtrar() {
-
-        val c = Calendar.getInstance()
-        val year = c.get(Calendar.YEAR)
-        val month = c.get(Calendar.MONTH)
-        val day = c.get(Calendar.DAY_OF_MONTH)
-
-        val dpd = DatePickerDialog(
-            activity!!,
-            { _, year, monthOfYear, dayOfMonth ->
-                val dateSelected = "" + dayOfMonth + "/" + (monthOfYear + 1) + "/" + year
-                loadListWithDate(dateSelected)
-            }, year, month, day
-        )
-        dpd.show()
-    }
-
     private fun loadFullList() {
 
         val unSocAdapter = UnSocListAdapter(this)
-        unSocList.adapter = unSocAdapter
+        unSocList!!.adapter = unSocAdapter
 
         CoroutineScope(Dispatchers.IO).launch {
             val unSocListAsync = unSocViewModel.readConFK(args.idRecorrido)
@@ -160,10 +148,10 @@ class UnSocListFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
         }
     }
 
-    private fun loadListWithDate(date: String) {
+    override fun loadListWithDate(date: String) {
 
         val unSocAdapter = UnSocListAdapter(this)
-        unSocList.adapter = unSocAdapter
+        unSocList!!.adapter = unSocAdapter
 
         CoroutineScope(Dispatchers.IO).launch {
             val unSocListAsync = unSocViewModel.readConFK(args.idRecorrido)
@@ -177,9 +165,9 @@ class UnSocListFragment : Fragment(), UnSocListAdapter.OnUnSocClickListener {
 
     private fun remove(arr: List<UnidSocial>, target: String): List<UnidSocial> {
         val result: MutableList<UnidSocial> = ArrayList()
-
         for (elem in arr) {
-            if (elem.date == target) {
+            val soloFecha = elem.date.split(" ")[0]
+            if (soloFecha == target) {
                 result.add(elem)
             }
         }

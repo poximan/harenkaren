@@ -1,8 +1,6 @@
 package com.example.demo.fragment.list
 
 import android.app.AlertDialog
-import android.app.DatePickerDialog
-import android.icu.util.Calendar
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -11,28 +9,26 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
-import com.example.demo.DevFragment
 import com.example.demo.R
 import com.example.demo.adapter.DiaListAdapter
+import com.example.demo.database.DevFragment
 import com.example.demo.databinding.FragmentDiaListBinding
 import com.example.demo.model.Dia
 import com.example.demo.servicios.GestorUUID
 import com.example.demo.viewModel.DiaViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
-import java.util.Locale
 
-class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
+class DiaListFragment : SuperList(), DiaListAdapter.OnDiaClickListener {
 
     private val diaViewModel: DiaViewModel by navGraphViewModels(R.id.navHome)
 
     private var _binding: FragmentDiaListBinding? = null
     private val binding get() = _binding!!
-    private lateinit var diaList: RecyclerView
+    private var diaList: RecyclerView? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,6 +44,12 @@ class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
         loadFullList()
 
         return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+        diaList = null
     }
 
     override fun onItemClick(dia: Dia) {
@@ -80,11 +82,12 @@ class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
         val currentDate = getCurrentDate()
         val existe = diaViewModel.allDia.value?.filter { it.fecha == currentDate }
 
-        if(existe.isNullOrEmpty())
+        if (existe.isNullOrEmpty())
             confirmarDia(currentDate)
-        else{
+        else {
             val context = requireContext()
-            Toast.makeText(context, context.getString(R.string.dia_existe), Toast.LENGTH_LONG).show()
+            Toast.makeText(context, context.getString(R.string.dia_existe), Toast.LENGTH_LONG)
+                .show()
         }
     }
 
@@ -135,37 +138,10 @@ class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
         dialog.show()
     }
 
-    private fun filtrar() {
-
-        val contextazo = requireContext()
-        val c = Calendar.getInstance()
-
-        val year = c.get(Calendar.YEAR)
-        val month = c.get(Calendar.MONTH)
-        val day = c.get(Calendar.DAY_OF_MONTH)
-
-        val dpd = DatePickerDialog(
-            contextazo,
-            { _, selectedYear, selectedMonth, selectedDayOfMonth ->
-                val selectedDate = Calendar.getInstance().apply {
-                    set(selectedYear, selectedMonth, selectedDayOfMonth)
-                }
-                val dateFormat = SimpleDateFormat(
-                    contextazo.getString(R.string.formato_dia),
-                    Locale.getDefault()
-                )
-                val dateSelected = dateFormat.format(selectedDate.time)
-                loadListWithDate(dateSelected)
-            },
-            year, month, day
-        )
-        dpd.show()
-    }
-
     private fun loadFullList() {
 
         val diaAdapter = DiaListAdapter(this)
-        diaList.adapter = diaAdapter
+        diaList!!.adapter = diaAdapter
 
         diaViewModel.allDia
             .observe(
@@ -178,10 +154,10 @@ class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
             }
     }
 
-    private fun loadListWithDate(date: String) {
+    override fun loadListWithDate(date: String) {
 
         val diaAdapter = DiaListAdapter(this)
-        diaList.adapter = diaAdapter
+        diaList!!.adapter = diaAdapter
 
         diaViewModel.allDia
             .observe(
@@ -197,7 +173,6 @@ class DiaListFragment : Fragment(), DiaListAdapter.OnDiaClickListener {
 
     private fun remove(arr: List<Dia>, target: String): List<Dia> {
         val result: MutableList<Dia> = ArrayList()
-
         for (elem in arr) {
             if (elem.fecha == target) {
                 result.add(elem)

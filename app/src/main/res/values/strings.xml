@@ -189,6 +189,7 @@
     <!-- uso en varios lugares -->
     <string name="varias_gpsHab">GPS deshabilitado. Habilítar en Configuraciones</string>
     <string name="varias_geopos">Geoposicionando...</string>
+    <string name="varias_validarGPS">Tomar geoposicion</string>
 
     <!-- HomeFragment -->
     <string name="hom_fechaDesde">Desde fecha...</string>
@@ -211,7 +212,6 @@
     <string name="socv_vistaIndividuoSolo">Para individuo solo, no puede haber machos dominantes</string>
     <string name="socv_validarDominante1">Solo se permite [0,1]</string>
     <string name="socv_validarDominante2">Debe ser AlfaS4Ad=1 o AlfaSams=1, eligí uno solo</string>
-    <string name="socv_toString">Vivos</string>
 
     <!-- UnSocListAdapter -->
     <string name="soc_listAdap_gral">Gral --> </string>
@@ -233,7 +233,8 @@
     <string name="rec_confirmar">Recorrido agregado correctamente</string>
 
     <!-- UnSocAddFragment -->
-    <string name="soc_confirmar">Registro agregado correctamente</string>
+    <string name="soc_confirmarOk">Registro agregado correctamente</string>
+    <string name="soc_confirmarFalla">Faltan datos</string>
 
     <!-- ExportarFragment -->
     <string name="exp_enviarExterno">Este es un respaldo de los registros contenidos en la app.\nCuentan en total</string>
@@ -242,10 +243,12 @@
     <string name="socg_permCamara">Los permisos de la cámara son necesarios para tomar fotos</string>
     <string name="socg_permGPS">Los permisos de ubicación son necesarios para obtener la posición actual</string>
     <string name="socg_reduceBit">Las dimensiones del ImageView no pueden ser cero o negativas</string>
-    <string name="socg_toString">Gral</string>
 
-    <!-- UnSocMuertosFragment -->
-    <string name="socm_toString">Muertos</string>
+    <!-- UnSocPagerAdapter -->
+    <string name="adap_gralToString">Gral</string>
+    <string name="adap_vivosToString">Vivos</string>
+    <string name="adap_muertosToString">Muertos</string>
+    <string name="adap_validarVivos">Contar animales vivos</string>
 
     <!-- RecorrDetailFragment -->
     <string name="rec_confirmarEdit">Recorrido editado correctamente</string>

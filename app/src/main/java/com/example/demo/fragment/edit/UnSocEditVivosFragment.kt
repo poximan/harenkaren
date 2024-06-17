@@ -1,4 +1,4 @@
-package com.example.demo.fragment.detail
+package com.example.demo.fragment.edit
 
 import android.os.Bundle
 import android.text.Editable
@@ -10,15 +10,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.demo.databinding.FragmentUnsocVivosBinding
 import com.example.demo.model.UnidSocial
+import com.example.demo.model.UnidadSociable
 import kotlin.reflect.KFunction2
 
-class UnSocVivosDetailFragment() : Fragment() {
+class UnSocEditVivosFragment : Fragment(), UnidadSociable {
 
     companion object {
-        private lateinit var colectar: (Int, Map<String, Any>) -> Unit
+        private lateinit var colectar: (Int, Map<String, Int>) -> Unit
     }
-
-    private val map: MutableMap<String, Any> = mutableMapOf()
+    private val map: MutableMap<String, Int> = mutableMapOf()
 
     private var _binding: FragmentUnsocVivosBinding? = null
     private val binding get() = _binding!!
@@ -26,9 +26,9 @@ class UnSocVivosDetailFragment() : Fragment() {
     private lateinit var unSocEditable: UnidSocial
 
     fun editInstance(
-        colectarFunc: KFunction2<Int, Map<String, Any>, Unit>,
+        colectarFunc: KFunction2<Int, Map<String, Int>, Unit>,
         unSoc: UnidSocial
-    ): UnSocVivosDetailFragment {
+    ): UnidadSociable {
         colectar = colectarFunc
         unSocEditable = unSoc
         return this
@@ -71,6 +71,23 @@ class UnSocVivosDetailFragment() : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        cargarDatos()
+        cargarMap()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        cargarMap()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+        map.clear()
+    }
+
     private fun cargarDatos() {
 
         binding.vAlfaS4Ad.setText(unSocEditable.vAlfaS4Ad.toString())
@@ -90,32 +107,18 @@ class UnSocVivosDetailFragment() : Fragment() {
 
         binding.vAlfaS4Ad.addTextChangedListener(textWatcher)
         binding.vAlfaSams.addTextChangedListener(textWatcher)
+
         binding.vHembrasAd.addTextChangedListener(textWatcher)
         binding.vCrias.addTextChangedListener(textWatcher)
         binding.vDestetados.addTextChangedListener(textWatcher)
         binding.vJuveniles.addTextChangedListener(textWatcher)
+
         binding.vS4AdPerif.addTextChangedListener(textWatcher)
         binding.vS4AdCerca.addTextChangedListener(textWatcher)
         binding.vS4AdLejos.addTextChangedListener(textWatcher)
         binding.vOtrosSamsPerif.addTextChangedListener(textWatcher)
         binding.vOtrosSamsCerca.addTextChangedListener(textWatcher)
         binding.vOtrosSamsLejos.addTextChangedListener(textWatcher)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        cargarDatos()
-        cargarMap()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        cargarMap()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     private fun cargarMap() {

@@ -34,10 +34,6 @@ class UnSocRepository(private val dao: UnSocDAO) {
         return listaAdaptada
     }
 
-    fun getMaxRegistro(idRecorr: UUID): Int {
-        return dao.getMaxRegistro(idRecorr)
-    }
-
     /*
     SQL para graficar
      */

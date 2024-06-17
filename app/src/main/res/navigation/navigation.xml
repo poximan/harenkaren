@@ -101,7 +101,7 @@
             </fragment>
             <fragment
                 android:id="@+id/recorr_detail_fragment"
-                android:name="com.example.demo.fragment.detail.RecorrDetailFragment"
+                android:name="com.example.demo.fragment.edit.RecorrEditFragment"
                 android:label="@string/nav_recorr_detail_fragment"
                 tools:layout="@layout/fragment_recorr_detail">
                 <argument
@@ -167,7 +167,7 @@
                 </fragment>
                 <fragment
                     android:id="@+id/unsoc_add_fragment"
-                    android:name="com.example.demo.fragment.add.UnSocAddFragment"
+                    android:name="com.example.demo.fragment.add.UnSocAddTodoFragment"
                     android:label="@string/nav_unsoc_add_fragment"
                     tools:layout="@layout/fragment_unsoc_add">
                     <argument
@@ -179,7 +179,7 @@
                 </fragment>
                 <fragment
                     android:id="@+id/unsoc_detail_fragment"
-                    android:name="com.example.demo.fragment.detail.UnSocDetailFragment"
+                    android:name="com.example.demo.fragment.edit.UnSocEditTodoFragment"
                     android:label="@string/nav_unsoc_detail_fragment"
                     tools:layout="@layout/fragment_unsoc_add">
                     <argument
@@ -241,7 +241,7 @@
         tools:layout="@layout/fragment_ayuda" />
     <fragment
         android:id="@+id/dev_fragment"
-        android:name="com.example.demo.DevFragment"
+        android:name="com.example.demo.database.DevFragment"
         android:label="@string/nav_dev_fragment"
         tools:layout="@layout/fragment_dev" />
     <fragment

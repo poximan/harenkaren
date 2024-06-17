@@ -12,16 +12,16 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.demo.R
 import com.example.demo.databinding.FragmentUnsocVivosBinding
+import com.example.demo.model.UnidadSociable
 import com.example.demo.viewModel.UnSocShareViewModel
 import kotlin.reflect.KFunction2
 
-class UnSocVivosFragment() : Fragment() {
+class UnSocAddVivosFragment : Fragment(), UnidadSociable {
 
     companion object {
-        private lateinit var colectar: (Int, Map<String, Any>) -> Unit
+        private lateinit var colectar: (Int, Map<String, Int>) -> Unit
     }
-
-    private val map: MutableMap<String, Any> = mutableMapOf()
+    private val map: MutableMap<String, Int> = mutableMapOf()
 
     private var _binding: FragmentUnsocVivosBinding? = null
     private val binding get() = _binding!!
@@ -29,9 +29,9 @@ class UnSocVivosFragment() : Fragment() {
     private val sharedViewModel: UnSocShareViewModel by activityViewModels()
     private fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)
 
-    fun newInstance(funcColectar: KFunction2<Int, Map<String, Any>, Unit>): UnSocVivosFragment {
+    fun newInstance(funcColectar: KFunction2<Int, Map<String, Int>, Unit>): UnidadSociable {
         colectar = funcColectar
-        return UnSocVivosFragment()
+        return this
     }
 
     override fun onCreateView(
@@ -70,6 +70,7 @@ class UnSocVivosFragment() : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        map.clear()
     }
 
     private fun cargarMap() {

@@ -182,6 +182,7 @@
     <!-- uso en varios lugares -->
     <string name="varias_gpsHab">GPS disabled. Enable in Settings</string>
     <string name="varias_geopos">Geopositioning...</string>
+    <string name="varias_validarGPS">Take geoposition</string>
 
     <!-- HomeFragment -->
     <string name="hom_fechaDesde">Since date</string>
@@ -204,7 +205,6 @@
     <string name="socv_vistaIndividuoSolo">For individual alone, there can be no dominant males</string>
     <string name="socv_validarDominante1">Only [0,1] is allowed</string>
     <string name="socv_validarDominante2">It must be AlfaS4Ad=1 or AlfaSams=1, choose only one</string>
-    <string name="socv_toString">Alive</string>
 
     <!-- UnSocListAdapter -->
     <string name="soc_listAdap_gral">Gral --></string>
@@ -226,7 +226,8 @@
     <string name="rec_confirmar">Route added correctly</string>
 
     <!-- UnSocAddFragment -->
-    <string name="soc_confirmar">Record added correctly</string>
+   <string name="soc_confirmarOk">Record added correctly</string>
+   <string name="soc_confirmarFalla">Missing data</string>
 
     <!-- ExportarFragment -->
     <string name="exp_enviarExterno">This is a backup of the records contained in the app.\nIn total, there are</string>
@@ -235,10 +236,12 @@
     <string name="socg_permCamara">Camera permissions are required to take photos</string>
     <string name="socg_permGPS">Location permissions are required to obtain the current position</string>
     <string name="socg_reduceBit">ImageView dimensions cannot be zero or negative</string>
-    <string name="socg_toString">Gral</string>
 
-    <!-- UnSocMuertosFragment -->
-    <string name="socm_toString">Dead</string>
+    <!-- UnSocPagerAdapter -->
+    <string name="adap_gralToString">Gral</string>
+    <string name="adap_vivosToString">Alive</string>
+    <string name="adap_muertosToString">Dead</string>
+    <string name="adap_validarVivos">Count live animals</string>
 
     <!-- RecorrDetailFragment -->
     <string name="rec_confirmarEdit">Route edited correctly</string>

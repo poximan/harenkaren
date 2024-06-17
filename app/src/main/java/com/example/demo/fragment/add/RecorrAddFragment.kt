@@ -1,48 +1,33 @@
 package com.example.demo.fragment.add
 
-import android.Manifest
-import android.content.pm.PackageManager
-import android.location.Location
-import android.location.LocationListener
-import android.location.LocationManager
-import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.ImageView
 import android.widget.Toast
-import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.demo.DevFragment
 import com.example.demo.R
+import com.example.demo.database.DevFragment
 import com.example.demo.databinding.FragmentRecorrAddBinding
+import com.example.demo.exception.CamposVaciosExcepcion
+import com.example.demo.exception.FaltaLatLongExcepcion
 import com.example.demo.model.LatLong
 import com.example.demo.model.Recorrido
 import com.example.demo.viewModel.RecorrViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 
-class RecorrAddFragment : Fragment() {
+class RecorrAddFragment : SuperAdd() {
 
     private var _binding: FragmentRecorrAddBinding? = null
     private val binding get() = _binding!!
     private val args: RecorrAddFragmentArgs by navArgs()
 
-    private lateinit var model: RecorrViewModel
-    private val latLonIni = LatLong()
-
-    private lateinit var locationManager: LocationManager
-    private var indicatorLight: ImageView? = null
-    private val handler = Handler(Looper.getMainLooper())
-    private var isRunning = false
-    private lateinit var imageChangerRunnable: Runnable
+    private var model: RecorrViewModel? = null
+    private var latLonIni = LatLong()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,7 +43,7 @@ class RecorrAddFragment : Fragment() {
         val mareasArrayAdapter = ArrayAdapter(view.context, R.layout.dropdown_item, estadosMarea)
         binding.spinnerMarea.adapter = mareasArrayAdapter
 
-        binding.getPosicionIni.setOnClickListener { getPosicionActual() }
+        binding.getPosicionIni.setOnClickListener { getPosicionActual(binding.latitudIni) }
         binding.confirmarRecorridoButton.setOnClickListener { confirmarRecorrido() }
 
         return view
@@ -66,14 +51,21 @@ class RecorrAddFragment : Fragment() {
 
     private fun confirmarRecorrido() {
 
-        val recorrido = dataDesdeIU()
-        model.insert(recorrido)
-
         val context = requireContext()
-        Toast.makeText(context, context.getString(R.string.rec_confirmar), Toast.LENGTH_LONG).show()
+        var justificacion = ""
 
-        val action = RecorrAddFragmentDirections.goToRecorrListAction(args.idDia)
-        findNavController().navigate(action)
+        try {
+            val recorrido = dataDesdeIU()
+            model!!.insert(recorrido)
+
+            justificacion = context.getString(R.string.rec_confirmar)
+            val action = RecorrAddFragmentDirections.goToRecorrListAction(args.idDia)
+            findNavController().navigate(action)
+        } catch (e: CamposVaciosExcepcion) {
+            justificacion =
+                context.getString(R.string.soc_confirmarFalla) + ": " + e.message.toString()
+        }
+        Toast.makeText(context, justificacion, Toast.LENGTH_LONG).show()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -84,6 +76,8 @@ class RecorrAddFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        model = null
+        latLonIni = LatLong()
     }
 
     private fun dataDesdeIU(): Recorrido {
@@ -94,49 +88,20 @@ class RecorrAddFragment : Fragment() {
         val meteo = binding.editTextMeteo.text.toString()
         val marea = binding.spinnerMarea.selectedItem.toString()
 
+        if (latLonIni.lat == null || latLonIni.lon == null)
+            throw FaltaLatLongExcepcion(requireContext().getString(R.string.varias_validarGPS))
+
         val formato = requireContext().resources.getString(R.string.formato_fecha)
         val fechaIni = SimpleDateFormat(formato).format(Date())
 
         return Recorrido(
             uuid, args.idDia, observador, fechaIni, "",
-            latLonIni.lat, latLonIni.lon, 0.0, 0.0,
+            latLonIni.lat!!, latLonIni.lon!!, 0.0, 0.0,
             areaRecorrida, meteo, marea
         )
     }
 
-    private fun getPosicionActual() {
-
-        locationManager = requireActivity().getSystemService(LocationManager::class.java)
-        if (checkLocationPermission()) {
-
-            startImageChanger()
-            locationManager.requestSingleUpdate(
-                LocationManager.GPS_PROVIDER,
-                object : LocationListener {
-                    override fun onLocationChanged(location: Location) {
-                        stopImageChanger()
-                        updateLocationViews(location.latitude, location.longitude)
-                    }
-
-                    override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {}
-                    override fun onProviderEnabled(provider: String) {}
-                    override fun onProviderDisabled(provider: String) {
-                        val context = requireContext()
-                        Toast.makeText(
-                            context,
-                            context.getString(R.string.varias_gpsHab),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                },
-                null
-            )
-        } else {
-            requestLocationPermission()
-        }
-    }
-
-    private fun updateLocationViews(latitud: Double, longitud: Double) {
+    override fun updateLocationViews(latitud: Double, longitud: Double) {
 
         latLonIni.lat = latitud
         latLonIni.lon = longitud
@@ -151,79 +116,5 @@ class RecorrAddFragment : Fragment() {
 
         binding.latitudIni.text = lat
         binding.longitudIni.text = lon
-    }
-
-    private fun checkLocationPermission(): Boolean {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val fineLocationPermission =
-                ContextCompat.checkSelfPermission(
-                    requireContext(),
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                )
-            val coarseLocationPermission =
-                ContextCompat.checkSelfPermission(
-                    requireContext(),
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                )
-            fineLocationPermission == PackageManager.PERMISSION_GRANTED &&
-                    coarseLocationPermission == PackageManager.PERMISSION_GRANTED
-        } else {
-            true
-        }
-    }
-
-    private fun requestLocationPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(
-                arrayOf(
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ),
-                UnSocGralFragment.DbConstants.PERMISSION_REQUEST_LOCATION
-            )
-        }
-    }
-
-    private fun startImageChanger() {
-        isRunning = true
-        imageChangerRunnable = object : Runnable {
-            private var isImageChanged = false
-
-            override fun run() {
-                if (isRunning) {
-                    if (isImageChanged) {
-                        indicatorLight!!.setImageResource(R.drawable.indicator_on)
-                        binding.latitudIni.text = requireContext().getString(R.string.varias_geopos)
-                        binding.latitudIni.setTextColor(
-                            ContextCompat.getColor(
-                                requireContext(),
-                                R.color.purple_700
-                            )
-                        )
-                    } else {
-                        indicatorLight!!.setImageResource(R.drawable.indicator_off)
-                        binding.latitudIni.text = requireContext().getString(R.string.varias_geopos)
-                        binding.latitudIni.setTextColor(
-                            ContextCompat.getColor(
-                                requireContext(),
-                                R.color.black
-                            )
-                        )
-                    }
-                    isImageChanged = !isImageChanged
-                    handler.postDelayed(this, 800)
-                }
-            }
-        }
-
-        Thread {
-            handler.post(imageChangerRunnable)
-        }.start()
-    }
-
-    private fun stopImageChanger() {
-        isRunning = false
-        handler.removeCallbacks(imageChangerRunnable)
-        indicatorLight!!.setImageResource(R.drawable.indicator_on)
     }
 }

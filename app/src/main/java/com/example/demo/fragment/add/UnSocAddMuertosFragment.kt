@@ -8,22 +8,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.demo.databinding.FragmentUnsocMuertosBinding
+import com.example.demo.model.UnidadSociable
 import kotlin.reflect.KFunction2
 
-class UnSocMuertosFragment() : Fragment() {
+class UnSocAddMuertosFragment : Fragment(), UnidadSociable {
 
     companion object {
-        private lateinit var colectar: (Int, Map<String, Any>) -> Unit
+        private lateinit var colectar: (Int, Map<String, Int>) -> Unit
     }
-
-    private val map: MutableMap<String, Any> = mutableMapOf()
+    private val map: MutableMap<String, Int> = mutableMapOf()
 
     private var _binding: FragmentUnsocMuertosBinding? = null
     private val binding get() = _binding!!
 
-    fun newInstance(colectarFunc: KFunction2<Int, Map<String, Any>, Unit>): UnSocMuertosFragment {
+    fun newInstance(colectarFunc: KFunction2<Int, Map<String, Int>, Unit>): UnidadSociable {
         colectar = colectarFunc
-        return UnSocMuertosFragment()
+        return this
     }
 
     override fun onCreateView(
@@ -61,6 +61,7 @@ class UnSocMuertosFragment() : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        map.clear()
     }
 
     private fun cargarMap() {

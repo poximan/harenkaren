@@ -6,15 +6,9 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
-import android.location.Location
-import android.location.LocationListener
-import android.location.LocationManager
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.os.Environment
-import android.os.Handler
-import android.os.Looper
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
@@ -23,14 +17,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.exifinterface.media.ExifInterface
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -39,6 +31,7 @@ import com.example.demo.R
 import com.example.demo.adapter.PhotoAdapter
 import com.example.demo.databinding.FragmentUnsocGralBinding
 import com.example.demo.model.LatLong
+import com.example.demo.model.UnidadSociable
 import com.example.demo.viewModel.UnSocShareViewModel
 import java.io.File
 import java.io.FileOutputStream
@@ -47,19 +40,12 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import kotlin.reflect.KFunction2
 
-class UnSocGralFragment() : Fragment() {
+class UnSocAddGralFragment : SuperAdd() {
 
     companion object {
-        private lateinit var colectar: (Int, Map<String, Any>) -> Unit
+        private lateinit var colectar: (Int, Map<String, Any?>) -> Unit
     }
-
-    private val map: MutableMap<String, Any> = mutableMapOf()
-
-    object DbConstants {
-        const val PERMISSION_REQUEST_TAKE_PHOTO = 2
-        const val PERMISSION_REQUEST_CAMERA = 3
-        const val PERMISSION_REQUEST_LOCATION = 4
-    }
+    private val map: MutableMap<String, Any?> = mutableMapOf()
 
     private var _binding: FragmentUnsocGralBinding? = null
     val binding get() = _binding!!
@@ -67,22 +53,16 @@ class UnSocGralFragment() : Fragment() {
     private val sharedViewModel: UnSocShareViewModel by activityViewModels()
 
     private val photoPaths = mutableListOf<String>()
-    private val adapter = PhotoAdapter(photoPaths)
+    private var adapter = PhotoAdapter(photoPaths)
     private var currentPhotoPath: String = ""
 
-    private lateinit var locationManager: LocationManager
-    private var indicatorLight: ImageView? = null
-    private val latLon = LatLong()
-
-    private val handler = Handler(Looper.getMainLooper())
-    private var isRunning = false
-    private lateinit var imageChangerRunnable: Runnable
+    private var latLon = LatLong()
 
     fun newInstance(
-        colectarFunc: KFunction2<Int, Map<String, Any>, Unit>
-    ): UnSocGralFragment {
+        colectarFunc: KFunction2<Int, Map<String, Any?>, Unit>
+    ): UnidadSociable {
         colectar = colectarFunc
-        return UnSocGralFragment()
+        return this
     }
 
     override fun onCreateView(
@@ -121,7 +101,7 @@ class UnSocGralFragment() : Fragment() {
 
         binding.helpTpoSustrato.setOnClickListener { tpoSustratoInfo() }
 
-        binding.getPosicion.setOnClickListener { getPosicionActual() }
+        binding.getPosicion.setOnClickListener { getPosicionActual(binding.latitud) }
         binding.photoButton.setOnClickListener { takePhoto() }
 
         binding.spinnerAddPtoObs.onItemSelectedListener = onItemSelectedListener
@@ -153,8 +133,8 @@ class UnSocGralFragment() : Fragment() {
         super.onPause()
 
         val bundle = Bundle().apply {
-            putDouble("lat", latLon.lat)
-            putDouble("lon", latLon.lon)
+            latLon.lat?.let { putDouble("lat", it) }
+            latLon.lon?.let { putDouble("lon", it) }
         }
         arguments = bundle
         cargarMap()
@@ -163,6 +143,11 @@ class UnSocGralFragment() : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        map.clear()
+        photoPaths.clear()
+        adapter = PhotoAdapter(photoPaths)
+        currentPhotoPath = ""
+        latLon = LatLong()
     }
 
 
@@ -213,39 +198,7 @@ class UnSocGralFragment() : Fragment() {
         }
     }
 
-    private fun getPosicionActual() {
-
-        locationManager = requireActivity().getSystemService(LocationManager::class.java)
-        if (checkLocationPermission()) {
-
-            startImageChanger()
-            locationManager.requestSingleUpdate(
-                LocationManager.GPS_PROVIDER,
-                object : LocationListener {
-                    override fun onLocationChanged(location: Location) {
-                        stopImageChanger()
-                        updateLocationViews(location.latitude, location.longitude)
-                    }
-
-                    override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {}
-                    override fun onProviderEnabled(provider: String) {}
-                    override fun onProviderDisabled(provider: String) {
-                        val context = requireContext()
-                        Toast.makeText(
-                            context,
-                            context.getString(R.string.varias_gpsHab),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                },
-                null
-            )
-        } else {
-            requestLocationPermission()
-        }
-    }
-
-    private fun updateLocationViews(latitud: Double, longitud: Double) {
+    override fun updateLocationViews(latitud: Double, longitud: Double) {
         latLon.lat = latitud
         latLon.lon = longitud
 
@@ -351,20 +304,6 @@ class UnSocGralFragment() : Fragment() {
                     ).show()
                 }
             }
-
-            DbConstants.PERMISSION_REQUEST_LOCATION -> {
-                // Maneja los resultados de los permisos de ubicación
-                if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
-                    // Los permisos de ubicación fueron concedidos, pero no solicitamos actualizaciones aquí
-                } else {
-                    // Los permisos de ubicación no fueron concedidos, muestra un mensaje al usuario
-                    Toast.makeText(
-                        context,
-                        context.getString(R.string.socg_permGPS),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
         }
     }
 
@@ -435,79 +374,5 @@ class UnSocGralFragment() : Fragment() {
         val outputStream = FileOutputStream(currentPhotoPath)
         rotatedBitmap.compress(Bitmap.CompressFormat.JPEG, 80, outputStream)
         binding.captureImageView.setImageBitmap(rotatedBitmap)
-    }
-
-    private fun checkLocationPermission(): Boolean {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val fineLocationPermission =
-                ContextCompat.checkSelfPermission(
-                    requireContext(),
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                )
-            val coarseLocationPermission =
-                ContextCompat.checkSelfPermission(
-                    requireContext(),
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                )
-            fineLocationPermission == PackageManager.PERMISSION_GRANTED &&
-                    coarseLocationPermission == PackageManager.PERMISSION_GRANTED
-        } else {
-            true
-        }
-    }
-
-    private fun requestLocationPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(
-                arrayOf(
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ),
-                DbConstants.PERMISSION_REQUEST_LOCATION
-            )
-        }
-    }
-
-    private fun startImageChanger() {
-        isRunning = true
-        imageChangerRunnable = object : Runnable {
-            private var isImageChanged = false
-
-            override fun run() {
-                if (isRunning) {
-                    if (isImageChanged) {
-                        indicatorLight!!.setImageResource(R.drawable.indicator_on)
-                        binding.latitud.text = requireContext().getString(R.string.varias_geopos)
-                        binding.latitud.setTextColor(
-                            ContextCompat.getColor(
-                                requireContext(),
-                                R.color.purple_700
-                            )
-                        )
-                    } else {
-                        indicatorLight!!.setImageResource(R.drawable.indicator_off)
-                        binding.latitud.text = requireContext().getString(R.string.varias_geopos)
-                        binding.latitud.setTextColor(
-                            ContextCompat.getColor(
-                                requireContext(),
-                                R.color.black
-                            )
-                        )
-                    }
-                    isImageChanged = !isImageChanged
-                    handler.postDelayed(this, 800)
-                }
-            }
-        }
-
-        Thread {
-            handler.post(imageChangerRunnable)
-        }.start()
-    }
-
-    private fun stopImageChanger() {
-        isRunning = false
-        handler.removeCallbacks(imageChangerRunnable)
-        indicatorLight!!.setImageResource(R.drawable.indicator_on)
     }
 }

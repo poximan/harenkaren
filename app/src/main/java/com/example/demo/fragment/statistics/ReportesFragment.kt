@@ -215,13 +215,13 @@ class ReportesFragment : Fragment() {
                 mOtrosSamsPerif = acc.mOtrosSamsPerif + unidSocial.mOtrosSamsPerif,
                 mOtrosSamsCerca = acc.mOtrosSamsCerca + unidSocial.mOtrosSamsCerca,
                 mOtrosSamsLejos = acc.mOtrosSamsLejos + unidSocial.mOtrosSamsLejos,
-                id= randomQueTeTiro, idRecorrido = randomQueTeTiro,
+                id = randomQueTeTiro, idRecorrido = randomQueTeTiro,
                 ptoObsUnSoc = "", ctxSocial = "", tpoSustrato = "", timeStamp = "",
                 latitud = 0.0, longitud = 0.0, photoPath = "", comentario = ""
             )
         }
     }
-    
+
     private fun graficar(unidSocial: UnidSocial) {
         val pieChart: PieChart = binding.piechart
         pieChart.clearChart()

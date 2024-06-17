@@ -69,6 +69,11 @@ class UnSocListGrafFragment : Fragment() {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     private fun contenedorHTML(dynamicHtml: String) {
 
         val fileName = "index.html"

@@ -12,8 +12,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.demo.DevFragment
 import com.example.demo.R
+import com.example.demo.database.DevFragment
 import com.example.demo.databinding.FragmentStatisticsBinding
 import com.example.demo.model.Dia
 import com.example.demo.model.Recorrido

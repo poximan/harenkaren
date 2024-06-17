@@ -1,8 +1,6 @@
 package com.example.demo.fragment.list
 
 import android.app.AlertDialog
-import android.app.DatePickerDialog
-import android.icu.util.Calendar
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -10,7 +8,6 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.navGraphViewModels
@@ -25,14 +22,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class RecorrListFragment : Fragment(), RecorrListAdapter.OnRecorrClickListener {
+class RecorrListFragment : SuperList(), RecorrListAdapter.OnRecorrClickListener {
 
     private val recorrViewModel: RecorrViewModel by navGraphViewModels(R.id.navHome)
     private val args: RecorrListFragmentArgs by navArgs()
 
     private var _binding: FragmentRecorrListBinding? = null
     private val binding get() = _binding!!
-    private lateinit var recorrList: RecyclerView
+    private var recorrList: RecyclerView? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,6 +44,13 @@ class RecorrListFragment : Fragment(), RecorrListAdapter.OnRecorrClickListener {
         loadFullList()
 
         return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+        recorrList!!.adapter = null
+        recorrList = null
     }
 
     override fun onItemClick(elem: Recorrido) {
@@ -118,27 +122,10 @@ class RecorrListFragment : Fragment(), RecorrListAdapter.OnRecorrClickListener {
         }
     }
 
-    private fun filtrar() {
-
-        val c = Calendar.getInstance()
-        val year = c.get(Calendar.YEAR)
-        val month = c.get(Calendar.MONTH)
-        val day = c.get(Calendar.DAY_OF_MONTH)
-
-        val dpd = DatePickerDialog(
-            activity!!,
-            { _, year, monthOfYear, dayOfMonth ->
-                val dateSelected = "" + dayOfMonth + "/" + (monthOfYear + 1) + "/" + year
-                loadListWithDate(dateSelected)
-            }, year, month, day
-        )
-        dpd.show()
-    }
-
     private fun loadFullList() {
 
         val recorrAdapter = RecorrListAdapter(this)
-        recorrList.adapter = recorrAdapter
+        recorrList!!.adapter = recorrAdapter
 
         CoroutineScope(Dispatchers.IO).launch {
             val recorrListAsync = recorrViewModel.readConFK(args.idDia)
@@ -148,10 +135,10 @@ class RecorrListFragment : Fragment(), RecorrListAdapter.OnRecorrClickListener {
         }
     }
 
-    private fun loadListWithDate(date: String) {
+    override fun loadListWithDate(date: String) {
 
         val recorrAdapter = RecorrListAdapter(this)
-        recorrList.adapter = recorrAdapter
+        recorrList!!.adapter = recorrAdapter
 
         CoroutineScope(Dispatchers.IO).launch {
             val unSocListAsync = recorrViewModel.readConFK(args.idDia)
@@ -165,9 +152,9 @@ class RecorrListFragment : Fragment(), RecorrListAdapter.OnRecorrClickListener {
 
     private fun remove(arr: List<Recorrido>, target: String): List<Recorrido> {
         val result: MutableList<Recorrido> = ArrayList()
-
         for (elem in arr) {
-            if (elem.fechaIni == target) {
+            val soloFecha = elem.fechaIni.split(" ")[0]
+            if (soloFecha == target) {
                 result.add(elem)
             }
         }

@@ -6,12 +6,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.example.demo.R
-import com.example.demo.fragment.add.UnSocGralFragment
-import com.example.demo.fragment.add.UnSocMuertosFragment
-import com.example.demo.fragment.add.UnSocVivosFragment
-import com.example.demo.fragment.detail.UnSocGralDetailFragment
-import com.example.demo.fragment.detail.UnSocMuertosDetailFragment
-import com.example.demo.fragment.detail.UnSocVivosDetailFragment
+import com.example.demo.exception.FaltaLatLongExcepcion
+import com.example.demo.exception.FaltaVivosExcepcion
+import com.example.demo.fragment.add.UnSocAddGralFragment
+import com.example.demo.fragment.add.UnSocAddMuertosFragment
+import com.example.demo.fragment.add.UnSocAddVivosFragment
+import com.example.demo.fragment.edit.UnSocEditGralFragment
+import com.example.demo.fragment.edit.UnSocEditMuertosFragment
+import com.example.demo.fragment.edit.UnSocEditVivosFragment
 import com.example.demo.model.UnidSocial
 import java.util.Calendar
 
@@ -22,16 +24,18 @@ class UnSocPagerAdapter(
 ) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     private val solapas = if (unSoc == null) {
+        // nueva instancia
         arrayOf(
-            UnSocGralFragment().newInstance(::colectar),
-            UnSocVivosFragment().newInstance(::colectar),
-            UnSocMuertosFragment().newInstance(::colectar)
+            UnSocAddGralFragment().newInstance(::colectar),
+            UnSocAddVivosFragment().newInstance(::colectar),
+            UnSocAddMuertosFragment().newInstance(::colectar)
         )
     } else {
+        // editar
         arrayOf(
-            UnSocGralDetailFragment().editInstance(::colectar, unSoc),
-            UnSocVivosDetailFragment().editInstance(::colectar, unSoc),
-            UnSocMuertosDetailFragment().editInstance(::colectar, unSoc)
+            UnSocEditGralFragment().editInstance(::colectar, unSoc),
+            UnSocEditVivosFragment().editInstance(::colectar, unSoc),
+            UnSocEditMuertosFragment().editInstance(::colectar, unSoc)
         )
     }
 
@@ -70,57 +74,56 @@ class UnSocPagerAdapter(
         "comentario" to (unSoc?.comentario ?: 0.0)
     )
 
-
-    private fun colectar(position: Int, mapaActual: Map<String, Any>) {
+    private fun colectar(position: Int, mapaActual: Map<String, Any?>) {
 
         val instante = String.format("%02d", Calendar.getInstance().get(Calendar.SECOND))
         Log.i("pagerAdapter", "${instante}: carga de datos desde solapa ${getPageTitle(position)}")
 
         when (position) {
             0 -> {
-                map["pto_observacion"] = mapaActual["pto_observacion"] as String
-                map["ctx_social"] = mapaActual["ctx_social"] as String
-                map["tpo_sustrato"] = mapaActual["tpo_sustrato"] as String
-                map["latitud"] = mapaActual["latitud"] as Double
-                map["longitud"] = mapaActual["longitud"] as Double
-                map["photo_path"] = mapaActual["photo_path"] as String
-                map["comentario"] = mapaActual["comentario"] as String
+                map["pto_observacion"] = mapaActual["pto_observacion"]
+                map["ctx_social"] = mapaActual["ctx_social"]
+                map["tpo_sustrato"] = mapaActual["tpo_sustrato"]
+                map["latitud"] = mapaActual["latitud"]
+                map["longitud"] = mapaActual["longitud"]
+                map["photo_path"] = mapaActual["photo_path"]
+                map["comentario"] = mapaActual["comentario"]
             }
 
             1 -> {
-                map["v_alfa_s4ad"] = mapaActual["v_alfa_s4ad"] as Int
-                map["v_alfa_sams"] = mapaActual["v_alfa_sams"] as Int
-                map["v_hembras_ad"] = mapaActual["v_hembras_ad"] as Int
-                map["v_crias"] = mapaActual["v_crias"] as Int
-                map["v_destetados"] = mapaActual["v_destetados"] as Int
-                map["v_juveniles"] = mapaActual["v_juveniles"] as Int
-                map["v_s4ad_perif"] = mapaActual["v_s4ad_perif"] as Int
-                map["v_s4ad_cerca"] = mapaActual["v_s4ad_cerca"] as Int
-                map["v_s4ad_lejos"] = mapaActual["v_s4ad_lejos"] as Int
-                map["v_otros_sams_perif"] = mapaActual["v_otros_sams_perif"] as Int
-                map["v_otros_sams_cerca"] = mapaActual["v_otros_sams_cerca"] as Int
-                map["v_otros_sams_lejos"] = mapaActual["v_otros_sams_lejos"] as Int
+                map["v_alfa_s4ad"] = mapaActual["v_alfa_s4ad"]
+                map["v_alfa_sams"] = mapaActual["v_alfa_sams"]
+                map["v_hembras_ad"] = mapaActual["v_hembras_ad"]
+                map["v_crias"] = mapaActual["v_crias"]
+                map["v_destetados"] = mapaActual["v_destetados"]
+                map["v_juveniles"] = mapaActual["v_juveniles"]
+                map["v_s4ad_perif"] = mapaActual["v_s4ad_perif"]
+                map["v_s4ad_cerca"] = mapaActual["v_s4ad_cerca"]
+                map["v_s4ad_lejos"] = mapaActual["v_s4ad_lejos"]
+                map["v_otros_sams_perif"] = mapaActual["v_otros_sams_perif"]
+                map["v_otros_sams_cerca"] = mapaActual["v_otros_sams_cerca"]
+                map["v_otros_sams_lejos"] = mapaActual["v_otros_sams_lejos"]
             }
 
             2 -> {
-                map["m_alfa_s4ad"] = mapaActual["m_alfa_s4ad"] as Int
-                map["m_alfa_sams"] = mapaActual["m_alfa_sams"] as Int
-                map["m_hembras_ad"] = mapaActual["m_hembras_ad"] as Int
-                map["m_crias"] = mapaActual["m_crias"] as Int
-                map["m_destetados"] = mapaActual["m_destetados"] as Int
-                map["m_juveniles"] = mapaActual["m_juveniles"] as Int
-                map["m_s4ad_perif"] = mapaActual["m_s4ad_perif"] as Int
-                map["m_s4ad_cerca"] = mapaActual["m_s4ad_cerca"] as Int
-                map["m_s4ad_lejos"] = mapaActual["m_s4ad_lejos"] as Int
-                map["m_otros_sams_perif"] = mapaActual["m_otros_sams_perif"] as Int
-                map["m_otros_sams_cerca"] = mapaActual["m_otros_sams_cerca"] as Int
-                map["m_otros_sams_lejos"] = mapaActual["m_otros_sams_lejos"] as Int
+                map["m_alfa_s4ad"] = mapaActual["m_alfa_s4ad"]
+                map["m_alfa_sams"] = mapaActual["m_alfa_sams"]
+                map["m_hembras_ad"] = mapaActual["m_hembras_ad"]
+                map["m_crias"] = mapaActual["m_crias"]
+                map["m_destetados"] = mapaActual["m_destetados"]
+                map["m_juveniles"] = mapaActual["m_juveniles"]
+                map["m_s4ad_perif"] = mapaActual["m_s4ad_perif"]
+                map["m_s4ad_cerca"] = mapaActual["m_s4ad_cerca"]
+                map["m_s4ad_lejos"] = mapaActual["m_s4ad_lejos"]
+                map["m_otros_sams_perif"] = mapaActual["m_otros_sams_perif"]
+                map["m_otros_sams_cerca"] = mapaActual["m_otros_sams_cerca"]
+                map["m_otros_sams_lejos"] = mapaActual["m_otros_sams_lejos"]
             }
         }
     }
 
     override fun getItem(position: Int): Fragment {
-        return solapas[position]
+        return solapas[position] as Fragment
     }
 
     override fun getCount(): Int {
@@ -129,12 +132,12 @@ class UnSocPagerAdapter(
 
     override fun getPageTitle(position: Int): CharSequence {
         return when (solapas[position]) {
-            is UnSocGralFragment -> context.getString(R.string.socg_toString)
-            is UnSocGralDetailFragment -> context.getString(R.string.socg_toString)
-            is UnSocVivosFragment -> context.getString(R.string.socv_toString)
-            is UnSocVivosDetailFragment -> context.getString(R.string.socv_toString)
-            is UnSocMuertosFragment -> context.getString(R.string.socm_toString)
-            is UnSocMuertosDetailFragment -> context.getString(R.string.socm_toString)
+            is UnSocAddGralFragment -> context.getString(R.string.adap_gralToString)
+            is UnSocEditGralFragment -> context.getString(R.string.adap_gralToString)
+            is UnSocAddVivosFragment -> context.getString(R.string.adap_vivosToString)
+            is UnSocEditVivosFragment -> context.getString(R.string.adap_vivosToString)
+            is UnSocAddMuertosFragment -> context.getString(R.string.adap_muertosToString)
+            is UnSocEditMuertosFragment -> context.getString(R.string.adap_muertosToString)
             else -> {
                 "error TAG!"
             }
@@ -142,6 +145,20 @@ class UnSocPagerAdapter(
     }
 
     fun transferirDatos(): MutableMap<String, Any?> {
+        if (map["latitud"] == null || map["longitud"] == null
+            ||
+            map["latitud"] == 0.0 || map["longitud"] == 0.0
+        )
+            throw FaltaLatLongExcepcion(context.getString(R.string.varias_validarGPS))
+
+        if (
+            map["v_alfa_s4ad"] == 0 && map["v_alfa_sams"] == 0 && map["m_hembras_ad"] == 0 &&
+            map["v_crias"] == 0 && map["v_destetados"] == 0 && map["v_juveniles"] == 0 &&
+            map["v_s4ad_perif"] == 0 && map["v_s4ad_cerca"] == 0 && map["v_s4ad_lejos"] == 0 &&
+            map["v_otros_sams_perif"] == 0 && map["v_otros_sams_cerca"] == 0 && map["v_otros_sams_lejos"] == 0
+        )
+            throw FaltaVivosExcepcion(context.getString(R.string.adap_validarVivos))
+
         return map
     }
 }

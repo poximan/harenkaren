@@ -1,4 +1,4 @@
-package com.example.demo
+package com.example.demo.database
 
 import android.graphics.Color
 import android.os.Bundle
@@ -13,8 +13,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.example.demo.database.DevDatos
-import com.example.demo.database.HarenKarenRoomDatabase
+import com.example.demo.R
 import com.example.demo.databinding.FragmentDevBinding
 import com.example.demo.repository.RecorrRepository
 import com.example.demo.repository.UnSocRepository

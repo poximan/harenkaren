@@ -42,7 +42,7 @@
         tools:layout="@layout/fragment_about" />
     <fragment
         android:id="@+id/dev_fragment"
-        android:name="com.example.demo.DevFragment"
+        android:name="com.example.demo.database.DevFragment"
         android:label="@string/nav_dev_fragment"
         tools:layout="@layout/fragment_dev" />
 </navigation>

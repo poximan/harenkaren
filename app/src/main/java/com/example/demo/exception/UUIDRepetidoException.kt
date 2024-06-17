@@ -1,5 +1,3 @@
 package com.example.demo.exception
 
-class UUIDRepetidoException : Throwable() {
-
-}
+class UUIDRepetidoException : Throwable()

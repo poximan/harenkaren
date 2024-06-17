@@ -1,4 +1,4 @@
-package com.example.demo.fragment.detail
+package com.example.demo.fragment.edit
 
 import android.os.Bundle
 import android.text.Editable
@@ -10,15 +10,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.demo.databinding.FragmentUnsocMuertosBinding
 import com.example.demo.model.UnidSocial
+import com.example.demo.model.UnidadSociable
 import kotlin.reflect.KFunction2
 
-class UnSocMuertosDetailFragment() : Fragment() {
+class UnSocEditMuertosFragment : Fragment(), UnidadSociable {
 
     companion object {
-        private lateinit var colectar: (Int, Map<String, Any>) -> Unit
+        private lateinit var colectar: (Int, Map<String, Int>) -> Unit
     }
-
-    private val map: MutableMap<String, Any> = mutableMapOf()
+    private val map: MutableMap<String, Int> = mutableMapOf()
 
     private var _binding: FragmentUnsocMuertosBinding? = null
     private val binding get() = _binding!!
@@ -26,9 +26,9 @@ class UnSocMuertosDetailFragment() : Fragment() {
     private lateinit var unSocEditable: UnidSocial
 
     fun editInstance(
-        colectarFunc: KFunction2<Int, Map<String, Any>, Unit>,
+        colectarFunc: KFunction2<Int, Map<String, Int>, Unit>,
         unSoc: UnidSocial
-    ): UnSocMuertosDetailFragment {
+    ): UnidadSociable {
         colectar = colectarFunc
         unSocEditable = unSoc
         return this
@@ -116,6 +116,7 @@ class UnSocMuertosDetailFragment() : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        map.clear()
     }
 
     private fun cargarMap() {

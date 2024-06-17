@@ -7,7 +7,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.example.demo.DevFragment
+import com.example.demo.database.DevFragment
 import com.example.demo.model.Dia
 import com.example.demo.model.EntidadesPlanas
 import com.example.demo.servicios.GestorUUID

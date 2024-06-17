@@ -1,4 +1,4 @@
-package com.example.demo.fragment.add
+package com.example.demo.fragment.edit
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,19 +9,16 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.demo.DevFragment
 import com.example.demo.R
 import com.example.demo.adapter.UnSocPagerAdapter
 import com.example.demo.databinding.FragmentUnsocAddBinding
 import com.example.demo.model.UnidSocial
 import com.example.demo.viewModel.UnSocViewModel
-import java.text.SimpleDateFormat
-import java.util.Date
 
-class UnSocAddFragment : Fragment() {
+class UnSocEditTodoFragment : Fragment() {
 
     private lateinit var binding: FragmentUnsocAddBinding
-    private val args: UnSocAddFragmentArgs by navArgs()
+    private val args: UnSocEditTodoFragmentArgs by navArgs()
 
     private lateinit var unSoc: UnidSocial
     private lateinit var adapter: UnSocPagerAdapter
@@ -32,12 +29,8 @@ class UnSocAddFragment : Fragment() {
     ): View {
         binding = FragmentUnsocAddBinding.inflate(inflater, container, false)
 
-        val formato = requireContext().resources.getString(R.string.formato_fecha)
-        val estampatiempo = SimpleDateFormat(formato).format(Date())
-        val uuid = DevFragment.UUID_NULO
-        unSoc = UnidSocial(uuid, args.idRecorrido, estampatiempo)
-
-        adapter = UnSocPagerAdapter(childFragmentManager, requireContext())
+        unSoc = args.unSocActual
+        adapter = UnSocPagerAdapter(childFragmentManager, requireContext(), unSoc)
 
         binding.viewPager.adapter = adapter
         binding.tabLayout.setupWithViewPager(binding.viewPager)
@@ -88,13 +81,14 @@ class UnSocAddFragment : Fragment() {
             photoPath = map["photo_path"] as String
             comentario = map["comentario"] as String
         }
-
-        model.insert(unSoc)
+        model.update(unSoc)
 
         val context = requireContext()
-        Toast.makeText(context, context.getString(R.string.soc_confirmar), Toast.LENGTH_LONG).show()
+        Toast.makeText(context, context.getString(R.string.soc_confirmarEdit), Toast.LENGTH_LONG)
+            .show()
 
-        val action = UnSocAddFragmentDirections.goToUnSocListFromSolapaAction(unSoc.recorrId)
+        val action =
+            UnSocEditTodoFragmentDirections.goToUnSocListFromUnSocDetailAction(unSoc.recorrId)
         findNavController().navigate(action)
     }
 }
