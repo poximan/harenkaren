@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:background="?attr/selectableItemBackground"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/num_dia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="1"
+        android:minWidth="40dp"
+        android:minHeight="40dp"
+        android:textSize="16dp" />
+
+    <TextView
+        android:id="@+id/textViewTimestamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:hint="dd/mm/aa HH:mm:ss" />
+
+    <ImageButton
+        android:id="@+id/grafDia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/colorAccent"
+        android:clickable="true"
+        android:src="@drawable/ic_graficar" />
+
+    <ImageButton
+        android:id="@+id/deleteDia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="40dp"
+        android:background="@color/colorAccent"
+        android:clickable="true"
+        android:src="@drawable/ic_delete" />
+
+</LinearLayout>
