@@ -11,8 +11,8 @@
         android:label="@string/nav_home_fragment"
         tools:layout="@layout/fragment_home">
         <action
-            android:id="@+id/goToDiaAction"
-            app:destination="@id/dia"
+            android:id="@+id/goToCensoAction"
+            app:destination="@id/censo_fragment"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out"
             app:popEnterAnim="@android:anim/fade_in"
@@ -46,15 +46,33 @@
             app:popEnterAnim="@android:anim/fade_in"
             app:popExitAnim="@android:anim/fade_out" />
     </fragment>
+    <fragment
+        android:id="@+id/censo_fragment"
+        android:name="com.example.demo.fragment.CensoFragment"
+        android:label="@string/nav_censo_fragment"
+        tools:layout="@layout/fragment_censo">
+        <action
+            android:id="@+id/goToDiaAction"
+            app:destination="@id/dia"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
+    </fragment>
     <navigation
         android:id="@+id/dia"
         app:startDestination="@id/dia_list_fragment">
-
+        <argument
+            android:name="anio"
+            app:argType="integer"/>
         <fragment
             android:id="@+id/dia_list_fragment"
             android:name="com.example.demo.fragment.list.DiaListFragment"
             android:label="@string/nav_dia_list_fragment"
             tools:layout="@layout/fragment_dia_list">
+            <argument
+                android:name="anio"
+                app:argType="integer"/>
             <action
                 android:id="@+id/goToRecorrListAction"
                 app:destination="@id/recorrido" />

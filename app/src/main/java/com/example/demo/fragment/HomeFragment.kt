@@ -34,7 +34,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun gotoCensos() {
-        val action = HomeFragmentDirections.goToDiaAction()
+        val action = HomeFragmentDirections.goToCensoAction()
         findNavController().navigate(action)
     }
 

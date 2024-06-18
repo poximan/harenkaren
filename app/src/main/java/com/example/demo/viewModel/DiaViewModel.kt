@@ -6,10 +6,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.example.demo.database.HarenKarenRoomDatabase
 import com.example.demo.model.Dia
+import com.example.demo.model.Recorrido
 import com.example.demo.repository.DiaRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.util.UUID
 
 class DiaViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -33,6 +36,24 @@ class DiaViewModel(application: Application) : AndroidViewModel(application) {
 
     fun delete(dia: Dia) = viewModelScope.launch {
         repository.delete(dia)
+    }
+
+    fun getAnios(callback: (List<Int>) -> Unit) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val result = repository.getAnios()
+            withContext(Dispatchers.Main) {
+                callback(result)
+            }
+        }
+    }
+
+    fun getDias(anio: Int, callback: (List<Dia>) -> Unit) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val result = repository.getDias(anio)
+            withContext(Dispatchers.Main) {
+                callback(result)
+            }
+        }
     }
 }
 

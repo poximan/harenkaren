@@ -41,6 +41,9 @@
 \n\nesta primer actividad constituye lo que bien puede llamarse generacion del **dato primario**, ya que a partir de él explotarán una serie de modestos pero contundentes instrumentos de interpretacion de datos.
     </string>
 
+    <!-- fragment_censo -->
+    <string name="cen_anios">Años guardados en este dispositivo</string>
+
     <!-- fragment_ctx_social -->
     <string name="ctx_haren">Haren(H)</string>
     <string name="ctx_harenSAlfa">Haren s/alfa(HsA)</string>
@@ -326,6 +329,7 @@
     <string name="nav_main_fragment">Presione nuevamente para salir</string>
     <string name="nav_login_fragment">Login</string>
     <string name="nav_home_fragment">Inicio</string>
+    <string name="nav_censo_fragment">Censos</string>
     <string name="nav_dia_list_fragment">Fechas</string>
     <string name="nav_recorr_list_fragment">Recorridos</string>
     <string name="nav_recorr_add_fragment">Nuevo recorrido</string>

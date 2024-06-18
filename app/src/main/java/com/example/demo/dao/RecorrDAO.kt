@@ -21,7 +21,11 @@ interface RecorrDAO {
     @Query("SELECT * FROM recorrido WHERE recorrido.id = :id")
     fun getRecorrByUUID(id: UUID): Recorrido
 
-    @Query("SELECT * FROM recorrido WHERE recorrido.id_dia = :idDia")
+    @Query("""
+        SELECT * 
+        FROM recorrido
+        WHERE recorrido.id_dia = :idDia 
+    """)
     fun getRecorrByDiaId(idDia: UUID): List<Recorrido>
 
     /*

@@ -35,6 +35,9 @@
  \n\nThis first activity constitutes what can well be called generation of **primary data**, since from it a series of modest but forceful data interpretation instruments will be exploited.
     </string>
 
+    <!-- fragment_censo -->
+    <string name="cen_anios">Years saved on this device</string>
+
     <!-- fragment_ctx_social -->
     <string name="ctx_haren">Haren(H)</string>
     <string name="ctx_harenSAlfa">Haren w/o alpha(HwA)</string>
@@ -319,6 +322,7 @@
     <string name="nav_main_fragment">Press again to exit</string>
     <string name="nav_login_fragment">Login</string>
     <string name="nav_home_fragment">Home</string>
+    <string name="nav_censo_fragment">Census</string>
     <string name="nav_dia_list_fragment">Dates</string>
     <string name="nav_recorr_list_fragment">Routes</string>
     <string name="nav_recorr_add_fragment">New route</string>

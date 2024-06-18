@@ -60,12 +60,6 @@ class UnSocRepository(private val dao: UnSocDAO) {
         return dao.getSumTotal()
     }
 
-    private fun convertirAData(list: List<UnidSocial>): LiveData<List<UnidSocial>> {
-        val liveData = MutableLiveData<List<UnidSocial>>()
-        liveData.postValue(list)
-        return liveData
-    }
-
     fun readAsynConFK(idRecorr: UUID): List<UnidSocial> {
         return dao.getUnSocByRecorrId(idRecorr)
     }

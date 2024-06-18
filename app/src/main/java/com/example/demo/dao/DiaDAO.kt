@@ -19,6 +19,20 @@ interface DiaDAO {
     @Query("SELECT * from dia ORDER BY id ASC")
     fun getAll(): LiveData<List<Dia>>
 
+    @Query("""
+        SELECT DISTINCT substr(fecha, 1, 4) as anios
+        FROM dia
+        ORDER BY anios ASC
+    """)
+    fun getAnios(): List<Int>
+
+    @Query("""
+        SELECT *
+        FROM dia
+        WHERE substr(fecha, 1, 4) = CAST(:anio AS CHAR)
+    """)
+    fun getDias(anio: Int): List<Dia>
+
     @Query("SELECT * from dia WHERE id = :idDia")
     fun getDiaByUUID(idDia: UUID): Dia
 

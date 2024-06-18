@@ -36,12 +36,6 @@ class RecorrRepository(private val dao: RecorrDAO) {
         return listaAdaptada
     }
 
-    private fun convertirAData(list: List<Recorrido>): LiveData<List<Recorrido>> {
-        val liveData = MutableLiveData<List<Recorrido>>()
-        liveData.postValue(list)
-        return liveData
-    }
-
     fun readAsynConFK(id: UUID): List<Recorrido> {
         return dao.getRecorrByDiaId(id)
     }

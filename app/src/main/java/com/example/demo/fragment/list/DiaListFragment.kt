@@ -10,12 +10,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.example.demo.R
 import com.example.demo.adapter.DiaListAdapter
 import com.example.demo.database.DevFragment
 import com.example.demo.databinding.FragmentDiaListBinding
+import com.example.demo.fragment.add.RecorrAddFragmentArgs
 import com.example.demo.model.Dia
 import com.example.demo.servicios.GestorUUID
 import com.example.demo.viewModel.DiaViewModel
@@ -25,6 +27,7 @@ import java.util.Date
 class DiaListFragment : SuperList(), DiaListAdapter.OnDiaClickListener {
 
     private val diaViewModel: DiaViewModel by navGraphViewModels(R.id.navHome)
+    private val args: DiaListFragmentArgs by navArgs()
 
     private var _binding: FragmentDiaListBinding? = null
     private val binding get() = _binding!!
@@ -143,15 +146,10 @@ class DiaListFragment : SuperList(), DiaListAdapter.OnDiaClickListener {
         val diaAdapter = DiaListAdapter(this)
         diaList!!.adapter = diaAdapter
 
-        diaViewModel.allDia
-            .observe(
-                viewLifecycleOwner
-            ) { elem ->
-                elem?.let {
-                    val sortedList = it.sortedBy { dia -> dia.fecha }
-                    diaAdapter.setDia(sortedList)
-                }
-            }
+        diaViewModel.getDias(args.anio) {
+            val sortedList = it.sortedBy { dia -> dia.fecha }
+            diaAdapter.setDia(sortedList)
+        }
     }
 
     override fun loadListWithDate(date: String) {
@@ -159,16 +157,11 @@ class DiaListFragment : SuperList(), DiaListAdapter.OnDiaClickListener {
         val diaAdapter = DiaListAdapter(this)
         diaList!!.adapter = diaAdapter
 
-        diaViewModel.allDia
-            .observe(
-                viewLifecycleOwner
-            ) { elem ->
-                elem?.let {
-                    val filteredList = remove(elem, date)
-                    val sortedList = filteredList.sortedBy { dia -> dia.orden }
-                    diaAdapter.setDia(sortedList)
-                }
-            }
+        diaViewModel.getDias(args.anio) {
+            val filteredList = remove(it, date)
+            val sortedList = filteredList.sortedBy { dia -> dia.orden }
+            diaAdapter.setDia(sortedList)
+        }
     }
 
     private fun remove(arr: List<Dia>, target: String): List<Dia> {
