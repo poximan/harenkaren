@@ -17,7 +17,6 @@ import com.example.demo.R
 import com.example.demo.adapter.DiaListAdapter
 import com.example.demo.database.DevFragment
 import com.example.demo.databinding.FragmentDiaListBinding
-import com.example.demo.fragment.add.RecorrAddFragmentArgs
 import com.example.demo.model.Dia
 import com.example.demo.servicios.GestorUUID
 import com.example.demo.viewModel.DiaViewModel
@@ -82,14 +81,16 @@ class DiaListFragment : SuperList(), DiaListAdapter.OnDiaClickListener {
 
     private fun nvoDia() {
         val currentDate = getCurrentDate()
-        val existe = diaViewModel.allDia.value?.filter { it.fecha == currentDate }
+        diaViewModel.getDias(args.anio) { diasList ->
+            val existe = diasList.filter { it.fecha == currentDate }
 
-        if (existe.isNullOrEmpty())
-            confirmarDia(currentDate)
-        else {
-            val context = requireContext()
-            Toast.makeText(context, context.getString(R.string.dia_existe), Toast.LENGTH_LONG)
-                .show()
+            if (existe.isNullOrEmpty())
+                confirmarDia(currentDate)
+            else {
+                val context = requireContext()
+                Toast.makeText(context, context.getString(R.string.dia_existe), Toast.LENGTH_LONG)
+                    .show()
+            }
         }
     }
 
@@ -121,23 +122,27 @@ class DiaListFragment : SuperList(), DiaListAdapter.OnDiaClickListener {
     private fun mostrarAyuda() {
 
         val context = requireContext()
-        val texto: String = when (diaViewModel.allDia.value?.size) {
-            0 -> context.getString(R.string.dia_mostrarAyuda0)
-            1 -> context.getString(R.string.dia_mostrarAyuda1)
-            else -> context.getString(R.string.dia_mostrarAyudaElse)
-        }
 
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle(context.getString(R.string.dia_mostrarAyudaTit))
-        builder.setMessage(
-            "${context.getString(R.string.dia_mostrarAyudaMarco)}\n$texto"
-        )
-        builder.setPositiveButton("OK") { dialog, _ ->
-            dialog.dismiss()
-        }
+        diaViewModel.getDias(args.anio) { diasList ->
 
-        val dialog = builder.create()
-        dialog.show()
+            val texto: String = when (diasList.size) {
+                0 -> context.getString(R.string.dia_mostrarAyuda0)
+                1 -> context.getString(R.string.dia_mostrarAyuda1)
+                else -> context.getString(R.string.dia_mostrarAyudaElse)
+            }
+
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setTitle(context.getString(R.string.dia_mostrarAyudaTit))
+            builder.setMessage(
+                "${context.getString(R.string.dia_mostrarAyudaMarco)}\n$texto"
+            )
+            builder.setPositiveButton("OK") { dialog, _ ->
+                dialog.dismiss()
+            }
+
+            val dialog = builder.create()
+            dialog.show()
+        }
     }
 
     private fun loadFullList() {

@@ -70,8 +70,8 @@ class UnSocPagerAdapter(
         "date" to (unSoc?.date ?: ""),
         "latitud" to (unSoc?.latitud ?: 0.0),
         "longitud" to (unSoc?.longitud ?: 0.0),
-        "photo_path" to (unSoc?.photoPath ?: 0.0),
-        "comentario" to (unSoc?.comentario ?: 0.0)
+        "photo_path" to (unSoc?.photoPath ?: ""),
+        "comentario" to (unSoc?.comentario ?: "")
     )
 
     private fun colectar(position: Int, mapaActual: Map<String, Any?>) {

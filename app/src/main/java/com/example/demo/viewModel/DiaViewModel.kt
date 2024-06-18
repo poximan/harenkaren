@@ -17,7 +17,7 @@ import java.util.UUID
 class DiaViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository: DiaRepository
-    val allDia: LiveData<List<Dia>>
+    private val allDia: LiveData<List<Dia>>
 
     init {
         val diaDAO = HarenKarenRoomDatabase
