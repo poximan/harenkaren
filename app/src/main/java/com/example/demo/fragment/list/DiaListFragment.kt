@@ -70,8 +70,7 @@ class DiaListFragment : SuperList(), DiaListAdapter.OnDiaClickListener {
         builder.setTitle(getString(R.string.dia_onDeleteTit))
         builder.setMessage(getString(R.string.dia_onDeleteMsg))
         builder.setPositiveButton(android.R.string.ok) { _, _ ->
-            diaViewModel.delete(dia)
-            loadFullList() // Refresh the list after deletion
+            diaViewModel.delete(dia, this::loadFullList)
         }
         builder.setNegativeButton(android.R.string.cancel, null)
         builder.show()
@@ -180,6 +179,7 @@ class DiaListFragment : SuperList(), DiaListAdapter.OnDiaClickListener {
 
         val context = requireContext()
         Toast.makeText(context, context.getString(R.string.dia_confirmar), Toast.LENGTH_LONG).show()
+        loadFullList()
     }
 
     private fun dataDesdeIU(timestamp: String): Dia {

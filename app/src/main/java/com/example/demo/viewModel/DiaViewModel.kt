@@ -34,8 +34,13 @@ class DiaViewModel(application: Application) : AndroidViewModel(application) {
         repository.update(dia)
     }
 
-    fun delete(dia: Dia) = viewModelScope.launch {
-        repository.delete(dia)
+    fun delete(dia: Dia, callback: () -> Unit) = viewModelScope.launch {
+        CoroutineScope(Dispatchers.IO).launch {
+            repository.delete(dia)
+            withContext(Dispatchers.Main) {
+                callback()
+            }
+        }
     }
 
     fun getAnios(callback: (List<Int>) -> Unit) {

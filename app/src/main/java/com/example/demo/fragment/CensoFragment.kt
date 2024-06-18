@@ -12,6 +12,7 @@ import androidx.navigation.navGraphViewModels
 import com.example.demo.R
 import com.example.demo.databinding.FragmentCensoBinding
 import com.example.demo.viewModel.DiaViewModel
+import java.util.Calendar
 
 class CensoFragment : Fragment(){
 
@@ -32,7 +33,15 @@ class CensoFragment : Fragment(){
 
     private fun getAnios() {
         diaViewModel.getAnios {
-            for (anio in it) {
+
+            // crear nueva lista que sea mutable para poder agregar elementos si esta vacia
+            val anios = it.toMutableList()
+            val currentYear = Calendar.getInstance().get(Calendar.YEAR)
+
+            if (anios.isEmpty() || !anios.contains(currentYear))
+                anios.add(currentYear)
+
+            for (anio in anios) {
                 val button = Button(requireContext())
                 button.text = anio.toString()
 
