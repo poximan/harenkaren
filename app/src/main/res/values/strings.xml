@@ -208,7 +208,8 @@
     <!-- UnSocVivosFragment -->
     <string name="socv_vistaHaren">Para Haren, las hembras deben ser >1</string>
     <string name="socv_vistaHarenSinAlfa1">Para haren sin alfa, no deben haber machos dominantes</string>
-    <string name="socv_vistaHarenSinAlfa2">Para Haren sin alfa, las hembras deben ser >1</string>
+    <string name="socv_vistaHarenSinAlfa2">Para haren sin alfa, no deben haber machos perifericos</string>
+    <string name="socv_vistaHarenSinAlfa3">Para Haren sin alfa, las hembras deben ser >1</string>
     <string name="socv_vistaGrupoHarenes1">Para grupo de harenes, la suma de los machos dominantes debe ser >1</string>
     <string name="socv_vistaGrupoHarenes2">Para grupo de harenes, las hembras deben ser >1</string>
     <string name="socv_vistaPjaSolitaria">Este campo no es editable para pareja solitaria</string>

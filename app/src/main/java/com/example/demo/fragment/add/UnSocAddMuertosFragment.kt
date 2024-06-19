@@ -61,7 +61,7 @@ class UnSocAddMuertosFragment : Fragment(), UnidadSociable {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        map.clear()
+        
     }
 
     private fun cargarMap() {

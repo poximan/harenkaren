@@ -116,7 +116,6 @@ class UnSocEditMuertosFragment : Fragment(), UnidadSociable {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        map.clear()
     }
 
     private fun cargarMap() {
@@ -139,6 +138,21 @@ class UnSocEditMuertosFragment : Fragment(), UnidadSociable {
         map["m_otros_sams_cerca"] = safeStringToInt(binding.mOtrosSamsCerca.text.toString())
         map["m_otros_sams_lejos"] = safeStringToInt(binding.mOtrosSamsLejos.text.toString())
 
+        unSocEditable.apply {
+            mAlfaS4Ad = map["m_alfa_s4ad"] as Int
+            mAlfaSams = map["m_alfa_sams"] as Int
+            mHembrasAd = map["m_hembras_ad"] as Int
+            mCrias = map["m_crias"] as Int
+            mDestetados = map["m_destetados"] as Int
+            mJuveniles = map["m_juveniles"] as Int
+            mS4AdPerif = map["m_s4ad_perif"] as Int
+            mS4AdCerca = map["m_s4ad_cerca"] as Int
+            mS4AdLejos = map["m_s4ad_lejos"] as Int
+            mOtrosSamsPerif = map["m_otros_sams_perif"] as Int
+            mOtrosSamsCerca = map["m_otros_sams_cerca"] as Int
+            mOtrosSamsLejos = map["m_otros_sams_lejos"] as Int
+        }
+        
         colectar(2, map)
     }
 

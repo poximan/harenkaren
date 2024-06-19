@@ -70,7 +70,7 @@ class UnSocAddVivosFragment : Fragment(), UnidadSociable {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        map.clear()
+        
     }
 
     private fun cargarMap() {
@@ -159,24 +159,36 @@ class UnSocAddVivosFragment : Fragment(), UnidadSociable {
 
     private fun vistaHarenSinAlfa() {
 
-        var contMacho = 0
+        var contMachoDom = 0
+        var contMachoPerif = 0
 
         if (!binding.vAlfaS4Ad.text.isNullOrEmpty())
-            contMacho += binding.vAlfaS4Ad.text.toString().toInt()
+            contMachoDom += binding.vAlfaS4Ad.text.toString().toInt()
         if (!binding.vAlfaSams.text.isNullOrEmpty())
-            contMacho += binding.vAlfaSams.text.toString().toInt()
-        if (!binding.vOtrosSamsPerif.text.isNullOrEmpty())
-            contMacho += binding.vOtrosSamsPerif.text.toString().toInt()
+            contMachoDom += binding.vAlfaSams.text.toString().toInt()
 
-        if (contMacho > 0)
+        if (contMachoDom > 0)
             Toast.makeText(
                 requireContext(),
                 requireContext().getString(R.string.socv_vistaHarenSinAlfa1),
                 Toast.LENGTH_LONG
             ).show()
 
+        if (!binding.vS4AdPerif.text.isNullOrEmpty())
+            contMachoPerif += binding.vOtrosSamsPerif.text.toString().toInt()
+        if (!binding.vOtrosSamsPerif.text.isNullOrEmpty())
+            contMachoPerif += binding.vOtrosSamsPerif.text.toString().toInt()
+
+        if (contMachoPerif > 0)
+            Toast.makeText(
+                requireContext(),
+                requireContext().getString(R.string.socv_vistaHarenSinAlfa2),
+                Toast.LENGTH_LONG
+            ).show()
+
         forzarValor("0", binding.vAlfaS4Ad)
         forzarValor("0", binding.vAlfaSams)
+        forzarValor("0", binding.vS4AdPerif)
         forzarValor("0", binding.vOtrosSamsPerif)
 
         if (binding.vHembrasAd.text.isNullOrEmpty() ||
@@ -184,10 +196,10 @@ class UnSocAddVivosFragment : Fragment(), UnidadSociable {
         ) {
             Toast.makeText(
                 requireContext(),
-                requireContext().getString(R.string.socv_vistaHarenSinAlfa2),
+                requireContext().getString(R.string.socv_vistaHarenSinAlfa3),
                 Toast.LENGTH_LONG
             ).show()
-            forzarValor("2", binding.vHembrasAd)
+            forzarValor("", binding.vHembrasAd)
         }
     }
 
@@ -215,7 +227,7 @@ class UnSocAddVivosFragment : Fragment(), UnidadSociable {
                 requireContext().getString(R.string.socv_vistaGrupoHarenes2),
                 Toast.LENGTH_LONG
             ).show()
-            forzarValor("2", binding.vHembrasAd)
+            forzarValor("", binding.vHembrasAd)
         }
     }
 

@@ -143,11 +143,10 @@ class UnSocAddGralFragment : SuperAdd() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        map.clear()
+        
         photoPaths.clear()
         adapter = PhotoAdapter(photoPaths)
         currentPhotoPath = ""
-        latLon = LatLong()
     }
 
 

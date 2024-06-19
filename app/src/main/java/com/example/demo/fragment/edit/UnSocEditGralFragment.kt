@@ -30,7 +30,7 @@ class UnSocEditGralFragment : SuperEdit() {
 
     private var latLon = LatLong()
 
-    private var unSocEditable: UnidSocial? = null
+    private lateinit var unSocEditable: UnidSocial
 
     fun editInstance(
         colectarFunc: KFunction2<Int, Map<String, Any?>, Unit>,
@@ -142,20 +142,17 @@ class UnSocEditGralFragment : SuperEdit() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        map.clear()
-        latLon = LatLong()
-        unSocEditable = null
     }
 
     private fun goGraficar() {
         val action =
-            UnSocEditTodoFragmentDirections.goToGrafDesdeUnSocAction(unSocEditable!!)
+            UnSocEditTodoFragmentDirections.goToGrafDesdeUnSocAction(unSocEditable)
         findNavController().navigate(action)
     }
 
     private fun cargarDatos() {
 
-        val unSocEdit = unSocEditable!!
+        val unSocEdit = unSocEditable
         var indice = obtenerPosicionSpinner(unSocEdit.ptoObsUnSoc, binding.spinnerAddPtoObs)
         binding.spinnerAddPtoObs.setSelection(indice)
 
@@ -177,8 +174,8 @@ class UnSocEditGralFragment : SuperEdit() {
         latLon.lat = latitud
         latLon.lon = longitud
 
-        unSocEditable!!.latitud = latitud
-        unSocEditable!!.longitud = longitud
+        unSocEditable.latitud = latitud
+        unSocEditable.longitud = longitud
 
         mostrarEnPantalla()
         cargarMap()
@@ -199,8 +196,18 @@ class UnSocEditGralFragment : SuperEdit() {
         map["tpo_sustrato"] = binding.spinnerAddTpoSustrato.selectedItem.toString()
         map["latitud"] = latLon.lat
         map["longitud"] = latLon.lon
-        map["photo_path"] = unSocEditable!!.photoPath
+        map["photo_path"] = unSocEditable.photoPath
         map["comentario"] = binding.unSocComentario.text.toString()
+
+        unSocEditable.apply {
+            ptoObsUnSoc = binding.spinnerAddPtoObs.selectedItem.toString()
+            ctxSocial = binding.spinnerAddCtxSocial.selectedItem.toString()
+            tpoSustrato = binding.spinnerAddTpoSustrato.selectedItem.toString()
+            latitud = latLon.lat
+            longitud = latLon.lon
+            photoPath = unSocEditable.photoPath
+            comentario = binding.unSocComentario.text.toString()
+        }
 
         colectar(0, map)
     }

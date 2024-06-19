@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.demo.R
 import com.example.demo.model.UnidSocial
-import java.io.File
 
 class UnSocListAdapter(
     private val itemClickListener: OnUnSocClickListener
@@ -45,47 +44,6 @@ class UnSocListAdapter(
             id.text = unidSocial.orden.toString()
             unSocResumen.text = armarResumen(unidSocial)
             date.text = unidSocial.date
-
-            val file = File(unidSocial.photoPath)
-            /*
-            if (file.exists()) {
-
-                val imageBitmap: Bitmap = BitmapFactory.decodeFile(unidSocial.photoPath)
-                val exif = ExifInterface(unidSocial.photoPath.toString())
-                val orientation: Int =
-                    exif.getAttributeInt(
-                        ExifInterface.TAG_ORIENTATION,
-                        ExifInterface.ORIENTATION_NORMAL
-                    )
-                Log.i("orientation", orientation.toString())
-
-                val matrix = Matrix()
-                when (orientation) {
-                    ExifInterface.ORIENTATION_ROTATE_90 -> {
-                        matrix.setRotate(90F)
-                    }
-                    ExifInterface.ORIENTATION_ROTATE_180 -> {
-                        matrix.setRotate(180F)
-                    }
-                    ExifInterface.ORIENTATION_ROTATE_270 -> {
-                        matrix.setRotate(270F)
-                    }
-                }
-
-                val rotatedBitmap =
-                    Bitmap.createBitmap(
-                        imageBitmap,
-                        0,
-                        0,
-                        imageBitmap.width,
-                        imageBitmap.height,
-                        matrix,
-                        true
-                    )
-
-                image.setImageBitmap(rotatedBitmap)
-            }
-             */
         }
     }
 

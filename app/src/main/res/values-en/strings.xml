@@ -201,7 +201,8 @@
     <!-- UnSocVivosFragment -->
     <string name="socv_vistaHaren">For Haren, females must be >1</string>
     <string name="socv_vistaHarenSinAlfa1">For Haren without alpha, there should be no dominant males</string>
-    <string name="socv_vistaHarenSinAlfa2">For Haren without alpha, females must be >1</string>
+    <string name="socv_vistaHarenSinAlfa2">For haren without alpha, there should be no peripheral males</string>
+    <string name="socv_vistaHarenSinAlfa3">For Haren without alpha, females must be >1</string>
     <string name="socv_vistaGrupoHarenes1">For harems group, the sum of dominant males must be >1</string>
     <string name="socv_vistaGrupoHarenes2">For harems group, females must be >1</string>
     <string name="socv_vistaPjaSolitaria">This field is not editable for solitary pairs</string>
