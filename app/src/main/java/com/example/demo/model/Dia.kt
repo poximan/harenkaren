@@ -24,6 +24,7 @@ data class Dia(
     var fecha: String
 
 ) : Parcelable {
+
     constructor(parcel: Parcel) : this(
         // ----- identidicadores ----- //
         parcel.readString().toString(),

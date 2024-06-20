@@ -42,7 +42,7 @@ class UnSocEditTodoFragment : Fragment() {
     private fun confirmarAlta() {
 
         val model: UnSocViewModel = ViewModelProvider(this)[UnSocViewModel::class.java]
-        val map: MutableMap<String, Any?> = adapter.transferirDatos()
+        val map: MutableMap<String, Any> = adapter.transferirDatos()
 
         unSoc.apply {
             ptoObsUnSoc = map["pto_observacion"] as String

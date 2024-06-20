@@ -8,7 +8,7 @@
     <string name="varias_desarrollador">Developer</string>
     <string name="varias_cancelar">Cancel</string>
     <string name="varias_volver">Back</string>
-    <string name="varias_seleccione">Select...</string>
+    <string name="varias_seleccione">Select…</string>
     <string name="varias_confirmar">Confirm</string>
     <string name="varias_lat">Latitude</string>
     <string name="varias_lon">Longitude</string>
@@ -159,8 +159,8 @@
     <string name="socm_destetado">Weaned</string>
     <string name="socm_juvenil">Juvenile</string>
     <string name="socm_periferico"><![CDATA[Peripheral(<10m)]]></string>
-    <string name="socm_cercano">Close(10-50m)</string>
-    <string name="socm_lejos">Far(50-100m)</string>
+    <string name="socm_cercano">Close(10–50m)</string>
+    <string name="socm_lejos">Far(50–100m)</string>
 
     <!-- ****************************************************************** -->
     <!-- ****** fuera de layouts ****************************************** -->
@@ -184,7 +184,7 @@
 
     <!-- uso en varios lugares -->
     <string name="varias_gpsHab">GPS disabled. Enable in Settings</string>
-    <string name="varias_geopos">Geopositioning...</string>
+    <string name="varias_geopos">Geopositioning…</string>
     <string name="varias_validarGPS">Take geoposition</string>
 
     <!-- HomeFragment -->
@@ -211,9 +211,9 @@
     <string name="socv_validarDominante2">It must be AlfaS4Ad=1 or AlfaSams=1, choose only one</string>
 
     <!-- UnSocListAdapter -->
-    <string name="soc_listAdap_gral">Gral --></string>
-    <string name="soc_listAdap_vivos">Alive --></string>
-    <string name="soc_listAdap_muertos">Dead --></string>
+    <string name="soc_listAdap_gral">Gral —></string>
+    <string name="soc_listAdap_vivos">Alive —></string>
+    <string name="soc_listAdap_muertos">Dead —></string>
 
     <!-- ImportarFragment -->
     <string name="imp_clickWF1">On the device you want to deliver your records, go to Export and press RECIPIENTS.\nThere, look for me as</string>
@@ -224,7 +224,7 @@
     <string name="imp_mostrarResMsg3">From that batch, they were inserted into this DB:</string>
     <string name="imp_onMessage">Arrived from remote device</string>
     <string name="imp_onPelos">Added from external file</string>
-    <string name="imp_progreso">Processing incoming data...</string>
+    <string name="imp_progreso">Processing incoming data…</string>
 
     <!-- RecorrAddFragment -->
     <string name="rec_confirmar">Route added correctly</string>
@@ -265,6 +265,9 @@
     <string name="dia_onDeleteMsg">Do you confirm elimination?</string>
 
     <!-- RecorrListFragment -->
+    <string name="rec_noRecorrTit">Add route</string>
+    <string name="rec_noRecorrMsg1">This list corresponds to tours from days prior to today</string>
+    <string name="rec_noRecorrMsg2">and therefore it is closed to adding new entries, although you can see all its content</string>
     <string name="rec_mostrarAyudaTit">Routes</string>
     <string name="rec_mostrarAyuda0">You have not added any route yet, so the list is empty. Click on (+) to add it</string>
     <string name="rec_mostrarAyuda1">There is only one route registered. When you add more, you will notice the list. Click on the existing route to manage its records (census social units)</string>
@@ -272,6 +275,9 @@
     <string name="rec_mostrarAyudaMarco">This screen represents a list of the routes made during a single day, where each route is represented by a row.</string>
 
     <!-- UnSocListFragment -->
+    <string name="soc_noUnSocTit">Add records</string>
+    <string name="soc_noUnSocMsg1">This list corresponds to records from days prior to today</string>
+    <string name="soc_noUnSocMsg2">and therefore it is closed to add new entries, although you can see all its content</string>
     <string name="soc_mostrarAyudaTit">Records</string>
     <string name="soc_mostrarAyuda0">You have not added any record yet, so the list is empty. Click on (+) to add it</string>
     <string name="soc_mostrarAyuda1">Now there is only one record registered. When you add more, you will notice the list. Click on the existing record to view its detail</string>

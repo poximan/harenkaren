@@ -20,8 +20,6 @@ import com.example.demo.databinding.FragmentDiaListBinding
 import com.example.demo.model.Dia
 import com.example.demo.servicios.GestorUUID
 import com.example.demo.viewModel.DiaViewModel
-import java.text.SimpleDateFormat
-import java.util.Date
 
 class DiaListFragment : SuperList(), DiaListAdapter.OnDiaClickListener {
 
@@ -191,10 +189,5 @@ class DiaListFragment : SuperList(), DiaListAdapter.OnDiaClickListener {
         val celularId = GestorUUID.obtenerAndroidID()
         val uuid = DevFragment.UUID_NULO
         return Dia(celularId, uuid, 0, fecha = timestamp)
-    }
-
-    private fun getCurrentDate(): String {
-        val formato = requireContext().resources.getString(R.string.formato_dia)
-        return SimpleDateFormat(formato).format(Date())
     }
 }

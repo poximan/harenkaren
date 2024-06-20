@@ -17,7 +17,7 @@ import com.example.demo.viewModel.RecorrViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 
-class RecorrEditFragment : SuperEdit() {
+class RecorrEditFragment : EditGralAbstract() {
 
     private var _binding: FragmentRecorrDetailBinding? = null
     private val binding get() = _binding!!

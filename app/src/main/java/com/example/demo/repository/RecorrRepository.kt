@@ -2,7 +2,6 @@ package com.example.demo.repository
 
 import android.content.Context
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.example.demo.dao.RecorrDAO
 import com.example.demo.model.Recorrido
 import com.example.demo.servicios.IdiomaAdapter
@@ -38,5 +37,9 @@ class RecorrRepository(private val dao: RecorrDAO) {
 
     fun readAsynConFK(id: UUID): List<Recorrido> {
         return dao.getRecorrByDiaId(id)
+    }
+
+    fun getFechaObservada(idDia: UUID): String {
+        return dao.getFechaObservada(idDia)
     }
 }

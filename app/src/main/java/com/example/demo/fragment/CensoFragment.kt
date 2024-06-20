@@ -14,7 +14,7 @@ import com.example.demo.databinding.FragmentCensoBinding
 import com.example.demo.viewModel.DiaViewModel
 import java.util.Calendar
 
-class CensoFragment : Fragment(){
+class CensoFragment : Fragment() {
 
     private var _binding: FragmentCensoBinding? = null
     private val binding get() = _binding!!

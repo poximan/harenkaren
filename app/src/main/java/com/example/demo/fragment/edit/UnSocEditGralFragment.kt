@@ -3,7 +3,6 @@ package com.example.demo.fragment.edit
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,33 +12,13 @@ import androidx.navigation.fragment.findNavController
 import com.example.demo.R
 import com.example.demo.databinding.FragmentUnsocGralBinding
 import com.example.demo.model.LatLong
-import com.example.demo.model.UnidSocial
-import com.example.demo.model.UnidadSociable
-import kotlin.reflect.KFunction2
 
-class UnSocEditGralFragment : SuperEdit() {
-
-    companion object {
-        private lateinit var colectar: (Int, Map<String, Any?>) -> Unit
-    }
-
-    private val map: MutableMap<String, Any?> = mutableMapOf()
+class UnSocEditGralFragment : EditGralAbstract() {
 
     private var _binding: FragmentUnsocGralBinding? = null
     val binding get() = _binding!!
 
     private var latLon = LatLong()
-
-    private lateinit var unSocEditable: UnidSocial
-
-    fun editInstance(
-        colectarFunc: KFunction2<Int, Map<String, Any?>, Unit>,
-        unSoc: UnidSocial
-    ): UnidadSociable {
-        colectar = colectarFunc
-        unSocEditable = unSoc
-        return this
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -84,35 +63,6 @@ class UnSocEditGralFragment : SuperEdit() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         indicatorLight = view.findViewById(R.id.gpsLightUnSoc)
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        try {
-            outState.putParcelable("unSocEditable", unSocEditable)
-        } catch (e: UninitializedPropertyAccessException) {
-            Log.i(
-                "estadoRotacion",
-                "falso positivo para UninitializedPropertyAccessException en ${toString()}" +
-                        " por rotacion de pantalla + criterio de anticipacion TabLayout/ViewPager que pretende salvar datos" +
-                        " antes que entre en RUN el fragmento contenedor"
-            )
-        }
-    }
-
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-        savedInstanceState?.let {
-            try {
-                unSocEditable = it.getParcelable("unSocEditable")!!
-            } catch (e: NullPointerException) {
-                Log.i(
-                    "estadoRotacion", "falso positivo para NullPointerException en ${toString()}." +
-                            " por rotacion de pantalla + criterio de anticipacion TabLayout/ViewPager que pretende recuperar datos" +
-                            " antes que entre en RUN el fragmento contenedor"
-                )
-            }
-        }
     }
 
     override fun onResume() {
@@ -196,7 +146,7 @@ class UnSocEditGralFragment : SuperEdit() {
         map["tpo_sustrato"] = binding.spinnerAddTpoSustrato.selectedItem.toString()
         map["latitud"] = latLon.lat
         map["longitud"] = latLon.lon
-        map["photo_path"] = unSocEditable.photoPath
+        map["photo_path"] = unSocEditable.photoPath.toString()
         map["comentario"] = binding.unSocComentario.text.toString()
 
         unSocEditable.apply {

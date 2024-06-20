@@ -6,13 +6,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.example.demo.database.HarenKarenRoomDatabase
 import com.example.demo.model.Dia
-import com.example.demo.model.Recorrido
 import com.example.demo.repository.DiaRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.UUID
 
 class DiaViewModel(application: Application) : AndroidViewModel(application) {
 

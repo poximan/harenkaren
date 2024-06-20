@@ -8,6 +8,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -43,7 +44,6 @@ class UnSocListFragment : SuperList(), UnSocListAdapter.OnUnSocClickListener {
         _binding = FragmentUnsocListBinding.inflate(inflater, container, false)
 
         binding.homeActionButton.setOnClickListener { goHome() }
-        binding.newUnsocButton.setOnClickListener { nuevaUnidadSocial() }
         binding.cambiarActionButton.setOnClickListener { cambiarVista() }
 
         unSocList = binding.listUnSoc
@@ -59,6 +59,24 @@ class UnSocListFragment : SuperList(), UnSocListAdapter.OnUnSocClickListener {
         loadFullList()
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        unSocViewModel.getFechaObservada(args.idRecorrido) { fecha ->
+            val diaHoy = getCurrentDate()
+            val rotateAnimation =
+                AnimationUtils.loadAnimation(requireContext(), R.anim.rotate_animation)
+
+            if (fecha.split(" ")[0] == diaHoy) {
+                binding.nvoUnsocButton.setOnClickListener { nvaUnidadSocial() }
+                binding.nvoUnsocButton.clearAnimation()
+            } else {
+                binding.nvoUnsocButton.setOnClickListener { noMasUnidSocial(diaHoy) }
+                binding.nvoUnsocButton.startAnimation(rotateAnimation)
+            }
+        }
     }
 
     override fun onDestroyView() {
@@ -77,13 +95,21 @@ class UnSocListFragment : SuperList(), UnSocListAdapter.OnUnSocClickListener {
         findNavController().navigate(R.id.home_fragment)
     }
 
-    private fun nuevaUnidadSocial() {
-        var action = UnSocListFragmentDirections.goToNewUnSocFromUnSocListAction(args.idRecorrido)
+    private fun noMasUnidSocial(diaHoy: String) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle(getString(R.string.soc_noUnSocTit))
+        builder.setMessage(getString(R.string.soc_noUnSocMsg1) + " (" + diaHoy + ") " + getString(R.string.soc_noUnSocMsg2))
+        builder.setPositiveButton(android.R.string.ok, null)
+        builder.show()
+    }
+
+    private fun nvaUnidadSocial() {
+        val action = UnSocListFragmentDirections.goToNewUnSocFromUnSocListAction(args.idRecorrido)
         findNavController().navigate(action)
     }
 
     private fun cambiarVista() {
-        var action = UnSocListFragmentDirections.goToModoGrafico(args.idRecorrido)
+        val action = UnSocListFragmentDirections.goToModoGrafico(args.idRecorrido)
         findNavController().navigate(action)
     }
 

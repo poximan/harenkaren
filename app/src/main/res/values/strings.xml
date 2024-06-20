@@ -272,6 +272,9 @@
     <string name="dia_onDeleteMsg">¿Confirma eliminacion?</string>
 
     <!-- RecorrListFragment -->
+    <string name="rec_noRecorrTit">Alta recorrido</string>
+    <string name="rec_noRecorrMsg1">Esta lista corresponde a recorridos de dias anteriores a hoy</string>
+    <string name="rec_noRecorrMsg2">y por lo tanto esta cerrada para agregar nuevas entradas, aunque podes ver todo su contenido</string>
     <string name="rec_mostrarAyudaTit">Recorridos</string>
     <string name="rec_mostrarAyuda0">Aun no has agregado ningun recorrido, y por lo tanto la lista esta vacia. Hacé click en (+) para agregarlo</string>
     <string name="rec_mostrarAyuda1">Hay un solo recorrido dado de alta. Cuando agregues mas, notaras la lista. Hace click en el recorrido existente para administrar sus registros (unidades sociales censadas), ya sea para ingresar nuevos o ver los existentes</string>
@@ -279,6 +282,9 @@
     <string name="rec_mostrarAyudaMarco">Esta pantalla representa una lista de los recorridos realizados durante un unico dia, en donde cada recorrido esta representado por una fila.</string>
 
     <!-- UnSocListFragment -->
+    <string name="soc_noUnSocTit">Alta registro</string>
+    <string name="soc_noUnSocMsg1">Esta lista corresponde a registros de dias anteriores a hoy</string>
+    <string name="soc_noUnSocMsg2">y por lo tanto esta cerrada para agregar nuevas entradas, aunque podes ver todo su contenido</string>
     <string name="soc_mostrarAyudaTit">Registros</string>
     <string name="soc_mostrarAyuda0">Aun no has agregado ningun registro, y por lo tanto la lista esta vacia. Hacé click en (+) para agregarlo</string>
     <string name="soc_mostrarAyuda1">Ahora hay un solo registro dado de alta. Cuando agregues mas, notaras la lista. Hace click en el registro existente para ver su detalle</string>

@@ -1,8 +1,6 @@
 package com.example.demo.repository
 
 import android.content.Context
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.example.demo.dao.UnSocDAO
 import com.example.demo.model.UnidSocial
 import com.example.demo.servicios.IdiomaAdapter
@@ -32,6 +30,10 @@ class UnSocRepository(private val dao: UnSocDAO) {
             idiomasaurio.viewModelUnSoc(context, elem)
         }
         return listaAdaptada
+    }
+
+    fun getFechaObservada(idRecorr: UUID): String {
+        return dao.getFechaObservada(idRecorr)
     }
 
     /*

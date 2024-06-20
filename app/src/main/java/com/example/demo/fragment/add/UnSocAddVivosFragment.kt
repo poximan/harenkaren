@@ -8,31 +8,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.demo.R
 import com.example.demo.databinding.FragmentUnsocVivosBinding
-import com.example.demo.model.UnidadSociable
 import com.example.demo.viewModel.UnSocShareViewModel
-import kotlin.reflect.KFunction2
 
-class UnSocAddVivosFragment : Fragment(), UnidadSociable {
-
-    companion object {
-        private lateinit var colectar: (Int, Map<String, Int>) -> Unit
-    }
-    private val map: MutableMap<String, Int> = mutableMapOf()
+class UnSocAddVivosFragment : SuperAdd() {
 
     private var _binding: FragmentUnsocVivosBinding? = null
     private val binding get() = _binding!!
 
     private val sharedViewModel: UnSocShareViewModel by activityViewModels()
     private fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)
-
-    fun newInstance(funcColectar: KFunction2<Int, Map<String, Int>, Unit>): UnidadSociable {
-        colectar = funcColectar
-        return this
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -70,7 +57,7 @@ class UnSocAddVivosFragment : Fragment(), UnidadSociable {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        
+
     }
 
     private fun cargarMap() {

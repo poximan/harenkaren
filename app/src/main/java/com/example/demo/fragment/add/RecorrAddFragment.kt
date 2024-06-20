@@ -20,7 +20,7 @@ import com.example.demo.viewModel.RecorrViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 
-class RecorrAddFragment : SuperAdd() {
+class RecorrAddFragment : AddGralAbstract() {
 
     private var _binding: FragmentRecorrAddBinding? = null
     private val binding get() = _binding!!
@@ -88,7 +88,7 @@ class RecorrAddFragment : SuperAdd() {
         val meteo = binding.editTextMeteo.text.toString()
         val marea = binding.spinnerMarea.selectedItem.toString()
 
-        if (latLonIni.lat == null || latLonIni.lon == null)
+        if (latLonIni.lat == 0.0 || latLonIni.lon == 0.0)
             throw FaltaLatLongExcepcion(requireContext().getString(R.string.varias_validarGPS))
 
         val formato = requireContext().resources.getString(R.string.formato_fecha)

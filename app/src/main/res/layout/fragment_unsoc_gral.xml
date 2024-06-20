@@ -153,7 +153,6 @@
                         android:id="@+id/latitud"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:hint="0.0"
                         android:inputType="numberDecimal" />
                 </LinearLayout>
 
@@ -172,7 +171,6 @@
                         android:id="@+id/longitud"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:hint="0.0"
                         android:inputType="numberDecimal" />
                 </LinearLayout>
             </LinearLayout>

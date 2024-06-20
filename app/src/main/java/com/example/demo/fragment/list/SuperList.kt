@@ -5,11 +5,12 @@ import android.icu.util.Calendar
 import androidx.fragment.app.Fragment
 import com.example.demo.R
 import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
 
 abstract class SuperList : Fragment() {
 
-    fun filtrar() {
+    protected fun filtrar() {
 
         val contextazo = requireContext()
         val c = Calendar.getInstance()
@@ -37,4 +38,9 @@ abstract class SuperList : Fragment() {
     }
 
     abstract fun loadListWithDate(date: String)
+
+    protected fun getCurrentDate(): String {
+        val formato = requireContext().resources.getString(R.string.formato_dia)
+        return SimpleDateFormat(formato).format(Date())
+    }
 }

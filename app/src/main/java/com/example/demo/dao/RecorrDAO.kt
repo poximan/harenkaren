@@ -21,12 +21,23 @@ interface RecorrDAO {
     @Query("SELECT * FROM recorrido WHERE recorrido.id = :id")
     fun getRecorrByUUID(id: UUID): Recorrido
 
-    @Query("""
+    @Query(
+        """
         SELECT * 
         FROM recorrido
         WHERE recorrido.id_dia = :idDia 
-    """)
+    """
+    )
     fun getRecorrByDiaId(idDia: UUID): List<Recorrido>
+
+    @Query(
+        """
+        SELECT fecha 
+        FROM dia
+        WHERE dia.id = :idDia 
+    """
+    )
+    fun getFechaObservada(idDia: UUID): String
 
     /*
    cuando se da de alta una entidad que no existio nunca en este ni en ningun

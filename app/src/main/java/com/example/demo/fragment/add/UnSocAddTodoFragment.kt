@@ -50,7 +50,7 @@ class UnSocAddTodoFragment : Fragment() {
     private fun confirmarAlta() {
 
         val model: UnSocViewModel = ViewModelProvider(this)[UnSocViewModel::class.java]
-        var map: MutableMap<String, Any?>
+        var map: MutableMap<String, Any>
 
         val context = requireContext()
         var justificacion = ""

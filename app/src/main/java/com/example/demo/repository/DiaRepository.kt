@@ -6,13 +6,12 @@ import com.example.demo.model.Dia
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class DiaRepository(private val diaDao: DiaDAO) {
 
     val diaListAll: LiveData<List<Dia>> = diaDao.getAll()
 
-    fun getAnios(): List<Int>{
+    fun getAnios(): List<Int> {
         return diaDao.getAnios()
     }
 

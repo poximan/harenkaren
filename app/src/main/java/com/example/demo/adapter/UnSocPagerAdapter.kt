@@ -39,7 +39,7 @@ class UnSocPagerAdapter(
         )
     }
 
-    private var map: MutableMap<String, Any?> = mutableMapOf(
+    private var map: MutableMap<String, Any> = mutableMapOf(
         "pto_observacion" to (unSoc?.ptoObsUnSoc ?: ""),
         "ctx_social" to (unSoc?.ctxSocial ?: ""),
         "tpo_sustrato" to (unSoc?.tpoSustrato ?: ""),
@@ -74,50 +74,50 @@ class UnSocPagerAdapter(
         "comentario" to (unSoc?.comentario ?: "")
     )
 
-    private fun colectar(position: Int, mapaActual: Map<String, Any?>) {
+    private fun colectar(position: Int, mapaActual: Map<String, Any>) {
 
         val instante = String.format("%02d", Calendar.getInstance().get(Calendar.SECOND))
         Log.i("pagerAdapter", "${instante}: carga de datos desde solapa ${getPageTitle(position)}")
 
         when (position) {
             0 -> {
-                map["pto_observacion"] = mapaActual["pto_observacion"]
-                map["ctx_social"] = mapaActual["ctx_social"]
-                map["tpo_sustrato"] = mapaActual["tpo_sustrato"]
-                map["latitud"] = mapaActual["latitud"]
-                map["longitud"] = mapaActual["longitud"]
-                map["photo_path"] = mapaActual["photo_path"]
-                map["comentario"] = mapaActual["comentario"]
+                map["pto_observacion"] = mapaActual["pto_observacion"] as String
+                map["ctx_social"] = mapaActual["ctx_social"] as String
+                map["tpo_sustrato"] = mapaActual["tpo_sustrato"] as String
+                map["latitud"] = mapaActual["latitud"] as Double
+                map["longitud"] = mapaActual["longitud"] as Double
+                map["photo_path"] = mapaActual["photo_path"] as String
+                map["comentario"] = mapaActual["comentario"] as String
             }
 
             1 -> {
-                map["v_alfa_s4ad"] = mapaActual["v_alfa_s4ad"]
-                map["v_alfa_sams"] = mapaActual["v_alfa_sams"]
-                map["v_hembras_ad"] = mapaActual["v_hembras_ad"]
-                map["v_crias"] = mapaActual["v_crias"]
-                map["v_destetados"] = mapaActual["v_destetados"]
-                map["v_juveniles"] = mapaActual["v_juveniles"]
-                map["v_s4ad_perif"] = mapaActual["v_s4ad_perif"]
-                map["v_s4ad_cerca"] = mapaActual["v_s4ad_cerca"]
-                map["v_s4ad_lejos"] = mapaActual["v_s4ad_lejos"]
-                map["v_otros_sams_perif"] = mapaActual["v_otros_sams_perif"]
-                map["v_otros_sams_cerca"] = mapaActual["v_otros_sams_cerca"]
-                map["v_otros_sams_lejos"] = mapaActual["v_otros_sams_lejos"]
+                map["v_alfa_s4ad"] = mapaActual["v_alfa_s4ad"] as Int
+                map["v_alfa_sams"] = mapaActual["v_alfa_sams"] as Int
+                map["v_hembras_ad"] = mapaActual["v_hembras_ad"] as Int
+                map["v_crias"] = mapaActual["v_crias"] as Int
+                map["v_destetados"] = mapaActual["v_destetados"] as Int
+                map["v_juveniles"] = mapaActual["v_juveniles"] as Int
+                map["v_s4ad_perif"] = mapaActual["v_s4ad_perif"] as Int
+                map["v_s4ad_cerca"] = mapaActual["v_s4ad_cerca"] as Int
+                map["v_s4ad_lejos"] = mapaActual["v_s4ad_lejos"] as Int
+                map["v_otros_sams_perif"] = mapaActual["v_otros_sams_perif"] as Int
+                map["v_otros_sams_cerca"] = mapaActual["v_otros_sams_cerca"] as Int
+                map["v_otros_sams_lejos"] = mapaActual["v_otros_sams_lejos"] as Int
             }
 
             2 -> {
-                map["m_alfa_s4ad"] = mapaActual["m_alfa_s4ad"]
-                map["m_alfa_sams"] = mapaActual["m_alfa_sams"]
-                map["m_hembras_ad"] = mapaActual["m_hembras_ad"]
-                map["m_crias"] = mapaActual["m_crias"]
-                map["m_destetados"] = mapaActual["m_destetados"]
-                map["m_juveniles"] = mapaActual["m_juveniles"]
-                map["m_s4ad_perif"] = mapaActual["m_s4ad_perif"]
-                map["m_s4ad_cerca"] = mapaActual["m_s4ad_cerca"]
-                map["m_s4ad_lejos"] = mapaActual["m_s4ad_lejos"]
-                map["m_otros_sams_perif"] = mapaActual["m_otros_sams_perif"]
-                map["m_otros_sams_cerca"] = mapaActual["m_otros_sams_cerca"]
-                map["m_otros_sams_lejos"] = mapaActual["m_otros_sams_lejos"]
+                map["m_alfa_s4ad"] = mapaActual["m_alfa_s4ad"] as Int
+                map["m_alfa_sams"] = mapaActual["m_alfa_sams"] as Int
+                map["m_hembras_ad"] = mapaActual["m_hembras_ad"] as Int
+                map["m_crias"] = mapaActual["m_crias"] as Int
+                map["m_destetados"] = mapaActual["m_destetados"] as Int
+                map["m_juveniles"] = mapaActual["m_juveniles"] as Int
+                map["m_s4ad_perif"] = mapaActual["m_s4ad_perif"] as Int
+                map["m_s4ad_cerca"] = mapaActual["m_s4ad_cerca"] as Int
+                map["m_s4ad_lejos"] = mapaActual["m_s4ad_lejos"] as Int
+                map["m_otros_sams_perif"] = mapaActual["m_otros_sams_perif"] as Int
+                map["m_otros_sams_cerca"] = mapaActual["m_otros_sams_cerca"] as Int
+                map["m_otros_sams_lejos"] = mapaActual["m_otros_sams_lejos"] as Int
             }
         }
     }
@@ -144,15 +144,12 @@ class UnSocPagerAdapter(
         }
     }
 
-    fun transferirDatos(): MutableMap<String, Any?> {
-        if (map["latitud"] == null || map["longitud"] == null
-            ||
-            map["latitud"] == 0.0 || map["longitud"] == 0.0
-        )
+    fun transferirDatos(): MutableMap<String, Any> {
+        if (map["latitud"] == 0.0 || map["longitud"] == 0.0)
             throw FaltaLatLongExcepcion(context.getString(R.string.varias_validarGPS))
 
         if (
-            map["v_alfa_s4ad"] == 0 && map["v_alfa_sams"] == 0 && map["m_hembras_ad"] == 0 &&
+            map["v_alfa_s4ad"] == 0 && map["v_alfa_sams"] == 0 && map["v_hembras_ad"] == 0 &&
             map["v_crias"] == 0 && map["v_destetados"] == 0 && map["v_juveniles"] == 0 &&
             map["v_s4ad_perif"] == 0 && map["v_s4ad_cerca"] == 0 && map["v_s4ad_lejos"] == 0 &&
             map["v_otros_sams_perif"] == 0 && map["v_otros_sams_cerca"] == 0 && map["v_otros_sams_lejos"] == 0

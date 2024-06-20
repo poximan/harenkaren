@@ -31,21 +31,14 @@ import com.example.demo.R
 import com.example.demo.adapter.PhotoAdapter
 import com.example.demo.databinding.FragmentUnsocGralBinding
 import com.example.demo.model.LatLong
-import com.example.demo.model.UnidadSociable
 import com.example.demo.viewModel.UnSocShareViewModel
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
-import kotlin.reflect.KFunction2
 
-class UnSocAddGralFragment : SuperAdd() {
-
-    companion object {
-        private lateinit var colectar: (Int, Map<String, Any?>) -> Unit
-    }
-    private val map: MutableMap<String, Any?> = mutableMapOf()
+class UnSocAddGralFragment : AddGralAbstract() {
 
     private var _binding: FragmentUnsocGralBinding? = null
     val binding get() = _binding!!
@@ -57,13 +50,6 @@ class UnSocAddGralFragment : SuperAdd() {
     private var currentPhotoPath: String = ""
 
     private var latLon = LatLong()
-
-    fun newInstance(
-        colectarFunc: KFunction2<Int, Map<String, Any?>, Unit>
-    ): UnidadSociable {
-        colectar = colectarFunc
-        return this
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -143,7 +129,7 @@ class UnSocAddGralFragment : SuperAdd() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        
+
         photoPaths.clear()
         adapter = PhotoAdapter(photoPaths)
         currentPhotoPath = ""

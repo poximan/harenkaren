@@ -70,5 +70,13 @@ class UnSocViewModel(application: Application) : AndroidViewModel(application) {
             }
         }
     }
+
+    fun getFechaObservada(idRecorr: UUID, callback: (String) -> Unit) =
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = repository.getFechaObservada(idRecorr)
+            withContext(Dispatchers.Main) {
+                callback(result)
+            }
+        }
 }
 

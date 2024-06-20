@@ -45,5 +45,13 @@ class RecorrViewModel(application: Application) : AndroidViewModel(application) 
             }
         }
     }
+
+    fun getFechaObservada(idDia: UUID, callback: (String) -> Unit) =
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = repository.getFechaObservada(idDia)
+            withContext(Dispatchers.Main) {
+                callback(result)
+            }
+        }
 }
 

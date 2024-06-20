@@ -6,25 +6,12 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import com.example.demo.databinding.FragmentUnsocMuertosBinding
-import com.example.demo.model.UnidadSociable
-import kotlin.reflect.KFunction2
 
-class UnSocAddMuertosFragment : Fragment(), UnidadSociable {
-
-    companion object {
-        private lateinit var colectar: (Int, Map<String, Int>) -> Unit
-    }
-    private val map: MutableMap<String, Int> = mutableMapOf()
+class UnSocAddMuertosFragment : SuperAdd() {
 
     private var _binding: FragmentUnsocMuertosBinding? = null
     private val binding get() = _binding!!
-
-    fun newInstance(colectarFunc: KFunction2<Int, Map<String, Int>, Unit>): UnidadSociable {
-        colectar = colectarFunc
-        return this
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,7 +48,7 @@ class UnSocAddMuertosFragment : Fragment(), UnidadSociable {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        
+
     }
 
     private fun cargarMap() {

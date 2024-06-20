@@ -8,6 +8,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.navGraphViewModels
@@ -39,11 +40,28 @@ class RecorrListFragment : SuperList(), RecorrListAdapter.OnRecorrClickListener 
         _binding = FragmentRecorrListBinding.inflate(inflater, container, false)
 
         binding.homeActionButton.setOnClickListener { goHome() }
-        binding.nvoRecorrButton.setOnClickListener { nvoRecorrido() }
         recorrList = binding.listRecorr
         loadFullList()
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        recorrViewModel.getFechaObservada(args.idDia) { fecha ->
+            val diaHoy = getCurrentDate()
+            val rotateAnimation =
+                AnimationUtils.loadAnimation(requireContext(), R.anim.rotate_animation)
+
+            if (fecha == diaHoy) {
+                binding.nvoRecorrButton.setOnClickListener { nvoRecorrido() }
+                binding.nvoRecorrButton.clearAnimation()
+            } else {
+                binding.nvoRecorrButton.setOnClickListener { noMasRecorrido(diaHoy) }
+                binding.nvoRecorrButton.startAnimation(rotateAnimation)
+            }
+        }
     }
 
     override fun onDestroyView() {
@@ -67,8 +85,16 @@ class RecorrListFragment : SuperList(), RecorrListAdapter.OnRecorrClickListener 
         findNavController().navigate(R.id.home_fragment)
     }
 
+    private fun noMasRecorrido(diaHoy: String) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle(getString(R.string.rec_noRecorrTit))
+        builder.setMessage(getString(R.string.rec_noRecorrMsg1) + " (" + diaHoy + ") " + getString(R.string.rec_noRecorrMsg2))
+        builder.setPositiveButton(android.R.string.ok, null)
+        builder.show()
+    }
+
     private fun nvoRecorrido() {
-        var action = RecorrListFragmentDirections.goToNewRecorrAction(args.idDia)
+        val action = RecorrListFragmentDirections.goToNewRecorrAction(args.idDia)
         findNavController().navigate(action)
     }
 

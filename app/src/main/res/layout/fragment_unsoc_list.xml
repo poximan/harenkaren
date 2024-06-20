@@ -38,13 +38,13 @@
         android:clickable="true"
         app:backgroundTint="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/new_unsoc_button"
+        app:layout_constraintEnd_toStartOf="@id/nvo_unsoc_button"
         app:layout_constraintStart_toEndOf="@id/homeActionButton"
         app:maxImageSize="35dp"
         app:srcCompat="@drawable/ic_graficar" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/new_unsoc_button"
+        android:id="@+id/nvo_unsoc_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="44dp"

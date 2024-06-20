@@ -38,11 +38,7 @@ class UnSocListGrafFragment : Fragment() {
     ): View {
         _binding = FragmentUnsocListGrafBinding.inflate(inflater, container, false)
         webView = binding.webView
-
-        binding.homeActionButton.setOnClickListener { goHome() }
-        binding.newUnsocButton.setOnClickListener { nuevaUnidadSocial() }
         binding.cambiarActionButton.setOnClickListener { cambiarVista() }
-
         return binding.root
     }
 
@@ -95,12 +91,12 @@ class UnSocListGrafFragment : Fragment() {
     }
 
     private fun nuevaUnidadSocial() {
-        var action = UnSocListFragmentDirections.goToNewUnSocFromUnSocListAction(args.idRecorrido)
+        val action = UnSocListFragmentDirections.goToNewUnSocFromUnSocListAction(args.idRecorrido)
         findNavController().navigate(action)
     }
 
     private fun cambiarVista() {
-        var action = UnSocListGrafFragmentDirections.goToModoTexto(args.idRecorrido)
+        val action = UnSocListGrafFragmentDirections.goToModoTexto(args.idRecorrido)
         findNavController().navigate(action)
     }
 

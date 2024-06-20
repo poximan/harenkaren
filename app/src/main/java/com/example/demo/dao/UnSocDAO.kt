@@ -26,10 +26,19 @@ interface UnSocDAO {
     @Query("SELECT * FROM unidsocial WHERE substr(date, 0, 5) = :anio")
     fun getAllPorAnio(anio: String): List<UnidSocial>
 
+    @Query(
+        """
+        SELECT fecha_ini 
+        FROM recorrido
+        WHERE recorrido.id = :idRecorr 
+    """
+    )
+    fun getFechaObservada(idRecorr: UUID): String
+
     /*
-   cuando se da de alta una entidad que no existio nunca en este ni en ningun
-   otro dispositivo, se usa insertConUUID(elem) para asignar UUID unico.
-   */
+    cuando se da de alta una entidad que no existio nunca en este ni en ningun
+    otro dispositivo, se usa insertConUUID(elem) para asignar UUID unico.
+     */
     fun insertConUUID(elem: UnidSocial): UUID {
         if (elem.id == DevFragment.UUID_NULO)
             elem.id = GestorUUID.obtenerUUID()
