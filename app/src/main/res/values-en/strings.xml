@@ -188,6 +188,8 @@
     <string name="varias_validarGPS">Take geoposition</string>
 
     <!-- HomeFragment -->
+    <string name="hom_onViewUsuario">Welcome</string>
+    <string name="hom_onViewHuella">Welcome, Mr. Fingerprint</string>
     <string name="hom_fechaDesde">Since date</string>
     <string name="hom_fechaHasta">To date</string>
 
@@ -206,7 +208,7 @@
     <string name="socv_vistaGrupoHarenes1">For harems group, the sum of dominant males must be >1</string>
     <string name="socv_vistaGrupoHarenes2">For harems group, females must be >1</string>
     <string name="socv_vistaPjaSolitaria">This field is not editable for solitary pairs</string>
-    <string name="socv_vistaIndividuoSolo">For individual alone, there can be no dominant males</string>
+    <string name="socv_vistaIndividuoSolo">For single individuals, there can be no dominant males</string>
     <string name="socv_validarDominante1">Only [0,1] is allowed</string>
     <string name="socv_validarDominante2">It must be AlfaS4Ad=1 or AlfaSams=1, choose only one</string>
 
@@ -298,6 +300,7 @@
 
     <!-- LoginFragment -->
     <string name="osm_mostrar">For the chosen year, there are routes without associated records</string>
+    <string name="osm_categoria">Choose a category first (open side menu)</string>
 
     <!-- EmailSender -->
     <string name="mai_asunto">Census backup</string>

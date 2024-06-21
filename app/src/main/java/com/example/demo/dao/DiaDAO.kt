@@ -83,13 +83,6 @@ interface DiaDAO {
     @Update
     fun update(recorrido: Dia): Int
 
-    @Query(
-        "SELECT DISTINCT SUBSTR(fecha, 1, 4) AS year\n" +
-                "FROM Dia\n" +
-                "ORDER BY year"
-    )
-    fun getTodosAnios(): List<Int>
-
     fun insertarDesnormalizado(listaEntidadesPlanas: List<EntidadesPlanas>): Int {
         var ultimoID: UUID? = null
         var insertsEfectivos = 0

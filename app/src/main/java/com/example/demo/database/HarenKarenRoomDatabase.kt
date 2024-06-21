@@ -83,7 +83,6 @@ abstract class HarenKarenRoomDatabase : RoomDatabase() {
                     } while (cursor.moveToNext())
                 }
                 cursor.close()
-                println(tableNames)
                 tableNames.containsAll(listOf("dia", "recorrido", "unidsocial", "usuario"))
             } catch (e: Exception) {
                 false

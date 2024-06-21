@@ -36,8 +36,9 @@ class UsuarioViewModel(application: Application) : AndroidViewModel(application)
 
         val context = super.getApplication<Application>().applicationContext
         try {
-            repository.login(email, password)
-            callback.onLoginSuccess()
+            repository.login(email, password) { usuario ->
+                callback.onLoginSuccess(usuario)
+            }
         } catch (e: NoExisteUsuarioException) {
             callback.onLoginFailure(context.getString(R.string.usr_VMLoginNoExiste))
         } catch (e: MultipleUsuarioException) {
@@ -46,8 +47,9 @@ class UsuarioViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun crearConEmailPass(email: String, password: String, callback: UsuarioCallback) {
-        repository.crearUsuario(email, password)
-        callback.onLoginSuccess()
+        repository.crearUsuario(email, password) { usuario ->
+            callback.onLoginSuccess(usuario)
+        }
     }
 }
 

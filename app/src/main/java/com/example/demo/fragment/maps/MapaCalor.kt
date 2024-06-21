@@ -9,12 +9,12 @@ import org.osmdroid.util.GeoPoint
 
 class MapaCalor(private val webView: WebView, private val geoPoint: GeoPoint) {
 
-    fun mostrarMapaCalor(unSocList: List<UnidSocial>) {
+    fun mostrarMapaCalor(unSocList: List<UnidSocial>, atribString: String) {
         webView.visibility = View.VISIBLE
         val webSettings: WebSettings = webView.settings
         webSettings.javaScriptEnabled = true
 
-        val htmlContent = generarHTML(unSocList)
+        val htmlContent = generarHTML(unSocList, atribString)
         webView.loadDataWithBaseURL(
             "file:///android_asset/index.html",
             htmlContent,
@@ -24,15 +24,19 @@ class MapaCalor(private val webView: WebView, private val geoPoint: GeoPoint) {
         )
     }
 
-    private fun generarHTML(unSocList: List<UnidSocial>): String {
+    private fun generarHTML(unSocList: List<UnidSocial>, atribString: String): String {
 
         val gson = Gson()
         val jsonUnSocList = gson.toJson(unSocList.map {
+
+            val campo = it.javaClass.getDeclaredField(atribString)
+            campo.isAccessible = true
+
             mapOf(
-                "lat" to "-" + it.latitud.toString().substring(1),
+                "lat" to it.latitud,
                 "lon" to it.longitud,
-                "mag" to it.vHembrasAd + it.vCrias,
-                "suma" to "vHembrasAd+vCrias"
+                "mag" to campo.get(it),
+                "total" to atribString
             )
         })
 
@@ -67,9 +71,9 @@ class MapaCalor(private val webView: WebView, private val geoPoint: GeoPoint) {
                             lat: unpack(rows, "lat"),
                             lon: unpack(rows, "lon"),
                             z: unpack(rows, "mag"),
-                            text: unpack(rows, "suma"),
+                            text: unpack(rows, "total"),
                             hoverinfo: "lat+lon+z+text",
-                            hovertemplate: "lat: %{lat:.6f}<br>lon: %{lon:.6f}<br>suma: %{z}<br>%{text}<extra></extra>",
+                            hovertemplate: "lat: %{lat:.6f}<br>lon: %{lon:.6f}<br>total: %{z}<br>%{text}<extra></extra>",
                             radius: 25,
                             type: "densitymapbox",
                             coloraxis: "coloraxis"
@@ -86,7 +90,7 @@ class MapaCalor(private val webView: WebView, private val geoPoint: GeoPoint) {
                                     lon: ${geoPoint.longitude} 
                                 },
                                 style: "carto-positron",
-                                zoom: 8
+                                zoom: ${geoPoint.altitude}
                             },
                            coloraxis: { colorscale: 'RdBu' }
                         };

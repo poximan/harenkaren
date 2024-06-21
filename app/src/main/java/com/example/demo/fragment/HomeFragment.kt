@@ -5,10 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.demo.R
 import com.example.demo.databinding.FragmentHomeBinding
+import com.example.demo.model.Usuario
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -31,6 +33,30 @@ class HomeFragment : Fragment() {
         binding.desarrolloButton.setOnClickListener { gotoDesarrollo() }
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        /*
+        se guarda en argumento una referencia del usuario que entro a la app.
+        por ahora no tiene utilidad, pero parece un dato que sera necesario pronto
+         */
+        if (arguments == null) {
+            val usuario = activity?.intent?.getSerializableExtra("usuario")
+            var mensaje = ""
+
+            mensaje = if (usuario != null) {
+                usuario as Usuario
+                getString(R.string.hom_onViewUsuario) + ", ${usuario.email}"
+            } else {
+                getString(R.string.hom_onViewHuella)
+            }
+            Toast.makeText(requireContext(), mensaje, Toast.LENGTH_SHORT).show()
+            arguments = Bundle().apply {
+                putSerializable("usuario", usuario)
+            }
+        }
     }
 
     private fun gotoCensos() {

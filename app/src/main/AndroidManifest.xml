@@ -6,6 +6,9 @@
         android:name="android.hardware.bluetooth"
         android:required="false" />
 
+    <!-- saber quien es el usuario en login con huella -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+
     <!-- login con huella digital -->
     <uses-permission
         android:name="android.permission.USE_BIOMETRIC"

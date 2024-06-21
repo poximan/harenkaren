@@ -9,12 +9,15 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.example.demo.R
 import com.example.demo.databinding.ActivityHomeBinding
+import com.google.android.material.navigation.NavigationView
 
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
     private lateinit var appBarConfiguration: AppBarConfiguration
+
     private lateinit var drawerLayout: DrawerLayout
+    lateinit var navigationView: NavigationView
 
     private val mapaParesOrigenDestino: MutableMap<Int, Int> = mutableMapOf()
 
@@ -23,8 +26,8 @@ class HomeActivity : AppCompatActivity() {
         MainActivity.resolver = applicationContext.contentResolver
 
         binding = ActivityHomeBinding.inflate(layoutInflater)
-        val view = binding.root
         drawerLayout = binding.drawerLayout
+        navigationView = binding.navView
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.navHostHome) as NavHostFragment
@@ -33,8 +36,12 @@ class HomeActivity : AppCompatActivity() {
         NavigationUI.setupWithNavController(binding.navView, navController)
         appBarConfiguration = AppBarConfiguration(navController.graph)
         NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
-        setContentView(view)
+        setContentView(binding.root)
 
+        definicionBotonesBack()
+    }
+
+    private fun definicionBotonesBack() {
         agregarParOrigenDestino(R.id.censo_fragment, R.id.home_fragment)
         agregarParOrigenDestino(R.id.dia_list_fragment, R.id.censo_fragment)
         agregarParOrigenDestino(R.id.recorr_list_fragment, R.id.dia_list_fragment)

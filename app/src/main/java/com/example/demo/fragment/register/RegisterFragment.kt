@@ -17,6 +17,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.demo.R
 import com.example.demo.databinding.FragmentRegisterBinding
 import com.example.demo.fragment.login.UsuarioCallback
+import com.example.demo.model.Usuario
 import com.example.demo.viewModel.UsuarioViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -154,7 +155,7 @@ class RegisterFragment : Fragment(), UsuarioCallback {
         }
     }
 
-    override fun onLoginSuccess() {
+    override fun onLoginSuccess(usuario: Usuario?) {
         CoroutineScope(Dispatchers.Main).launch {
             val context = requireContext()
             Toast.makeText(

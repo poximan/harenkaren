@@ -27,7 +27,7 @@ class ReporteMapa(private val webView: WebView, private val geoPoint: GeoPoint) 
         val gson = Gson()
         val jsonUnSocList = gson.toJson(unSocList.map {
             mapOf(
-                "lat" to "-" + it.latitud.toString().substring(1),
+                "lat" to it.latitud,
                 "lon" to it.longitud,
                 "mag" to it.vHembrasAd + it.vCrias,
                 "suma" to "vHembrasAd+vCrias"
@@ -78,7 +78,7 @@ class ReporteMapa(private val webView: WebView, private val geoPoint: GeoPoint) 
                                     lon: ${geoPoint.longitude} 
                                 },
                                 style: "carto-positron",
-                                zoom: ${geoPoint.altitude},
+                                zoom: ${geoPoint.altitude}
                             },
                            coloraxis: { colorscale: 'RdBu' }
                         };

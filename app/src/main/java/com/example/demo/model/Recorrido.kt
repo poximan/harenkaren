@@ -103,7 +103,7 @@ data class Recorrido(
     )
 
     override fun describeContents(): Int {
-        return Parcelable.CONTENTS_FILE_DESCRIPTOR
+        return 0
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {

@@ -15,7 +15,7 @@ class UsuarioRepository(private val dao: UsuarioDAO) {
         dao.update(elem)
     }
 
-    fun login(email: String, pass: String): Usuario {
+    fun login(email: String, pass: String, callback: (Usuario) -> Unit) {
         val usuarioBD = dao.getUsuario(email, pass)
 
         if (usuarioBD.isEmpty())
@@ -24,11 +24,11 @@ class UsuarioRepository(private val dao: UsuarioDAO) {
         if (usuarioBD.count() > 1)
             throw MultipleUsuarioException()
 
-        return usuarioBD.first()
+        callback(usuarioBD.first())
     }
 
-    fun crearUsuario(email: String, pass: String): Usuario {
+    fun crearUsuario(email: String, pass: String, callback: (Usuario) -> Unit) {
         val idNuevo = dao.create(email, pass)
-        return dao.getUsuarioById(idNuevo.toInt())
+        callback(dao.getUsuarioById(idNuevo.toInt()))
     }
 }

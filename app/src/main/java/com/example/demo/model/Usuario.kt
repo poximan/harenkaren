@@ -2,6 +2,7 @@ package com.example.demo.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 @Entity(tableName = "usuario")
 data class Usuario(
@@ -11,5 +12,5 @@ data class Usuario(
     var email: String,
     var pass: String,
     var esAdmin: Boolean
-)
+): Serializable
 

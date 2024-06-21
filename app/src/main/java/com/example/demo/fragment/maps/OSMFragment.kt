@@ -3,21 +3,25 @@ package com.example.demo.fragment.maps
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.CheckBox
+import android.widget.RadioButton
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.demo.R
+import com.example.demo.activity.HomeActivity
 import com.example.demo.dao.UnSocDAO
 import com.example.demo.database.HarenKarenRoomDatabase
 import com.example.demo.model.UnidSocial
+import com.google.android.material.navigation.NavigationView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -31,6 +35,7 @@ import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.MapEventsOverlay
 import org.osmdroid.views.overlay.Marker
 import org.osmdroid.views.overlay.Polyline
+import kotlin.math.abs
 
 class OSMFragment : Fragment(), MapEventsReceiver {
 
@@ -46,6 +51,8 @@ class OSMFragment : Fragment(), MapEventsReceiver {
     private lateinit var chkMapaCalor: CheckBox
     private lateinit var filtroAnio: Spinner
     private lateinit var anios: List<Int>
+
+    private var selectedRadioButton: RadioButton? = null
 
     // Método llamado cuando se crea la vista del fragmento
     override fun onCreateView(
@@ -80,7 +87,7 @@ class OSMFragment : Fragment(), MapEventsReceiver {
             .diaDao()
 
         CoroutineScope(Dispatchers.IO).launch {
-            anios = diaDAO.getTodosAnios()
+            anios = diaDAO.getAnios()
             withContext(Dispatchers.Main) {
                 // Configurar el Spinner
                 val adapter =
@@ -107,6 +114,23 @@ class OSMFragment : Fragment(), MapEventsReceiver {
         configurarFiltroAnio(view)
     }
 
+    override fun onResume() {
+        super.onResume()
+        mapView.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mapView.onPause()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        val navigationView: NavigationView = (activity as HomeActivity).navigationView
+        navigationView.menu.clear()
+        navigationView.inflateMenu(R.menu.nav_drawer_menu)
+    }
+
     private fun configurarFiltroAnio(view: View) {
 
         filtroAnio.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -121,12 +145,42 @@ class OSMFragment : Fragment(), MapEventsReceiver {
                     resolverVisibilidad(it)
                 }
             }
-
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
-
         // Forzar la llamada manualmente al método onItemSelected
         lanzarEventoSpinner(view)
+    }
+
+    private fun cambiarMenuLateral(unSocList: List<UnidSocial>) {
+
+        val navigationView: NavigationView = (activity as HomeActivity).navigationView
+        navigationView.menu.clear()
+        navigationView.inflateMenu(R.menu.nav_map_categorias)
+
+        val categorias = unSocList.first().getContadoresNoNulos().reversed()
+
+        for (i in categorias.indices) {
+            val categoria = categorias[i]
+
+            // Crear un nuevo MenuItem
+            val menuItem = navigationView.menu.add(Menu.NONE, i, Menu.NONE, null)
+
+            // Crear un RadioButton para este MenuItem
+            val radioButton = layoutInflater.inflate(R.layout.item_categorias, null) as RadioButton
+            radioButton.text = categoria
+
+            // Escuchar clics en el RadioButton
+            radioButton.setOnClickListener {
+                selectedRadioButton?.isChecked = false
+                selectedRadioButton = radioButton
+                radioButton.isChecked = true
+            }
+            // Asignar el RadioButton como actionView del MenuItem
+            menuItem.actionView = radioButton
+        }
+
+        // Notificar cambios en el menú para que se actualice
+        navigationView.invalidate()
     }
 
     private fun lanzarEventoSpinner(view: View) {
@@ -162,13 +216,28 @@ class OSMFragment : Fragment(), MapEventsReceiver {
     }
 
     private fun resolverVisibilidad(unSocList: List<UnidSocial>) {
+        val geoPoint: GeoPoint = puntoMedioPosiciones(unSocList)
+        cambiarMenuLateral(unSocList)
+
         if (chkMapaCalor.isChecked) {
             mapView.visibility = View.GONE
+            geoPoint.altitude -= 2
+            val mapaCalor = MapaCalor(webView, geoPoint)
 
-            val mapaCalor = MapaCalor(webView, mapView.mapCenter as GeoPoint)
-            mapaCalor.mostrarMapaCalor(unSocList)
+            try {
+                mapaCalor.mostrarMapaCalor(unSocList, selectedRadioButton!!.text.toString())
+            } catch(e: NullPointerException) {
+                val context = requireContext()
+                Toast.makeText(
+                    context,
+                    context.getString(R.string.osm_categoria),
+                    Toast.LENGTH_LONG
+                ).show()
+            }
         } else {
             webView.visibility = View.GONE
+            mapController.setCenter(geoPoint)
+            mapController.setZoom(geoPoint.altitude)
             mostrarMapaRecorridos(unSocList)
         }
     }
@@ -217,16 +286,6 @@ class OSMFragment : Fragment(), MapEventsReceiver {
                 Toast.LENGTH_SHORT
             ).show()
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        mapView.onResume()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        mapView.onPause()
     }
 
     private fun agregarPolilinea(routePoints: List<GeoPoint>) {
@@ -297,5 +356,23 @@ class OSMFragment : Fragment(), MapEventsReceiver {
     // se mantiene presionado en el mapa
     override fun longPressHelper(p: GeoPoint?): Boolean {
         return false
+    }
+
+    private fun puntoMedioPosiciones(unSocList: List<UnidSocial>): GeoPoint {
+        val minLatitud = unSocList.minOf { it.latitud }
+        val maxLatitud = unSocList.maxOf { it.latitud }
+        val minLongitud = unSocList.minOf { it.longitud }
+        val maxLongitud = unSocList.maxOf { it.longitud }
+
+        // Calcular los puntos medios respecto a los valores extremos
+        val puntoMedioLatitud = (minLatitud + maxLatitud) / 2.0
+        val puntoMedioLongitud = (minLongitud + maxLongitud) / 2.0
+
+        val altitud = -1.9481 * abs(minLatitud - maxLatitud) + 12.0
+        /*
+        para 0.78 dif lat --> 8 altitud
+        para 1.55 dif lat --> 6.5 altitud
+         */
+        return GeoPoint(puntoMedioLatitud, puntoMedioLongitud, altitud)
     }
 }

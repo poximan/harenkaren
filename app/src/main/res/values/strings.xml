@@ -195,6 +195,8 @@
     <string name="varias_validarGPS">Tomar geoposicion</string>
 
     <!-- HomeFragment -->
+    <string name="hom_onViewUsuario">Bienvenido</string>
+    <string name="hom_onViewHuella">Bienvenido, señor/ra huella digital</string>
     <string name="hom_fechaDesde">Desde fecha...</string>
     <string name="hom_fechaHasta">Hasta fecha...</string>
 
@@ -213,7 +215,7 @@
     <string name="socv_vistaGrupoHarenes1">Para grupo de harenes, la suma de los machos dominantes debe ser >1</string>
     <string name="socv_vistaGrupoHarenes2">Para grupo de harenes, las hembras deben ser >1</string>
     <string name="socv_vistaPjaSolitaria">Este campo no es editable para pareja solitaria</string>
-    <string name="socv_vistaIndividuoSolo">Para individuo solo, no puede haber machos dominantes</string>
+    <string name="socv_vistaIndividuoSolo">Para individuos solos, no puede haber machos dominantes</string>
     <string name="socv_validarDominante1">Solo se permite [0,1]</string>
     <string name="socv_validarDominante2">Debe ser AlfaS4Ad=1 o AlfaSams=1, eligí uno solo</string>
 
@@ -305,6 +307,7 @@
 
     <!-- LoginFragment -->
     <string name="osm_mostrar">Para el año elegido, hay recorridos sin registros asociados</string>
+    <string name="osm_categoria">Elegi una categoria primero (abri menu lateral)</string>
 
     <!-- EmailSender -->
     <string name="mai_asunto">Respaldo censo</string>
