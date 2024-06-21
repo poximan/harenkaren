@@ -1,6 +1,7 @@
 package com.example.demo.fragment.statistics
 
 import android.app.AlertDialog
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -35,6 +36,8 @@ class StatisticsFragment : Fragment() {
 
     private var uuid: UUID = DevFragment.UUID_NULO
     private var unidSocial: UnidSocial? = null
+
+    private var datoMasChico: Float = 0.0f
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -175,6 +178,7 @@ class StatisticsFragment : Fragment() {
 
         val pieChart: PieChart = binding.piechart
         pieChart.clearChart()
+        datoMasChico = 0.0f
 
         val contadores = unidSocial!!.getContadores()
         for (atribString in contadores) {
@@ -189,6 +193,7 @@ class StatisticsFragment : Fragment() {
                 pieChart.addPieSlice(setData(atribString))
             }
         }
+        pieChart.addPieSlice(PieModel("", datoMasChico, Color.TRANSPARENT))
         pieChart.startAnimation()
     }
 
@@ -250,6 +255,9 @@ class StatisticsFragment : Fragment() {
         valorAtributo.isAccessible = true
         // utilizar el objeto Field para obtener el valor del atributo en unidSocial.
         val valor = (valorAtributo.get(unidSocial) as Int).toFloat()
+
+        if(datoMasChico > valor) datoMasChico = valor
+
         return PieModel(atribString, valor, siguienteColor(atribString))
     }
 

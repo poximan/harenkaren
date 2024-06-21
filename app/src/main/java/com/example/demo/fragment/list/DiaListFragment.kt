@@ -8,6 +8,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -36,11 +37,21 @@ class DiaListFragment : SuperList(), DiaListAdapter.OnDiaClickListener {
     ): View {
         setHasOptionsMenu(true)
         _binding = FragmentDiaListBinding.inflate(inflater, container, false)
-
-        binding.homeActionButton.setOnClickListener { goHome() }
-        binding.newRecorrButton.setOnClickListener { nvoDia() }
-
         diaList = binding.listDia
+
+        val anio = getCurrentDate().split("-")[0]
+        val rotateAnimation =
+            AnimationUtils.loadAnimation(requireContext(), R.anim.rotate_animation)
+
+        if (args.anio == anio.toInt()) {
+            binding.newRecorrButton.setOnClickListener { nvoDia() }
+            binding.newRecorrButton.clearAnimation()
+        } else {
+            binding.newRecorrButton.setOnClickListener { noMasDia(anio) }
+            binding.newRecorrButton.startAnimation(rotateAnimation)
+        }
+        binding.homeActionButton.setOnClickListener { goHome() }
+
         loadFullList()
 
         return binding.root
@@ -90,6 +101,14 @@ class DiaListFragment : SuperList(), DiaListAdapter.OnDiaClickListener {
                     .show()
             }
         }
+    }
+
+    private fun noMasDia(diaHoy: String) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle(getString(R.string.dia_noDiaTit))
+        builder.setMessage(getString(R.string.dia_noDiaMsg1) + " (" + diaHoy + ") " + getString(R.string.dia_noDiaMsg2))
+        builder.setPositiveButton(android.R.string.ok, null)
+        builder.show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

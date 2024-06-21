@@ -265,6 +265,9 @@
     <!-- DiaListFragment -->
     <string name="dia_confirmar">Dia agregado correctamente</string>
     <string name="dia_existe">El dia de hoy ya fue agregado</string>
+    <string name="dia_noDiaTit">Alta dia</string>
+    <string name="dia_noDiaMsg1">Esta lista corresponde a dias de un año anterior al que estamos cursando</string>
+    <string name="dia_noDiaMsg2">y por lo tanto esta cerrada para agregar nuevas entradas, aunque podes ver todo su contenido</string>
     <string name="dia_mostrarAyudaTit">Fechas</string>
     <string name="dia_mostrarAyuda0">Aun no has agregado ningun dia, y por lo tanto la lista esta vacia. Hacé click en (+) para agregarlo</string>
     <string name="dia_mostrarAyuda1">Ahora hay un solo dia dado de alta. Cuando agregues mas, notaras la lista. Hace click en el dia existente para administrar sus recorridos</string>

@@ -20,7 +20,7 @@
             <org.eazegraph.lib.charts.PieChart
                 android:id="@+id/piechart"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"/>
         </androidx.cardview.widget.CardView>
 
         <ScrollView

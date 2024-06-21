@@ -20,6 +20,7 @@ import com.example.demo.R
 import com.example.demo.activity.HomeActivity
 import com.example.demo.dao.UnSocDAO
 import com.example.demo.database.HarenKarenRoomDatabase
+import com.example.demo.exception.MagNulaExcepcion
 import com.example.demo.model.UnidSocial
 import com.google.android.material.navigation.NavigationView
 import kotlinx.coroutines.CoroutineScope
@@ -39,6 +40,7 @@ import kotlin.math.abs
 
 class OSMFragment : Fragment(), MapEventsReceiver {
 
+    private lateinit var unSocList: List<UnidSocial>
     private lateinit var unSocDAO: UnSocDAO
 
     private lateinit var mapController: IMapController
@@ -142,7 +144,9 @@ class OSMFragment : Fragment(), MapEventsReceiver {
             ) {
                 val anioSeleccionado = anios[position]
                 getInvolucrados(anioSeleccionado) {
-                    resolverVisibilidad(it)
+                    unSocList = it
+                    cambiarMenuLateral()
+                    resolverVisibilidad()
                 }
             }
             override fun onNothingSelected(parent: AdapterView<*>) {}
@@ -151,13 +155,13 @@ class OSMFragment : Fragment(), MapEventsReceiver {
         lanzarEventoSpinner(view)
     }
 
-    private fun cambiarMenuLateral(unSocList: List<UnidSocial>) {
+    private fun cambiarMenuLateral() {
 
         val navigationView: NavigationView = (activity as HomeActivity).navigationView
         navigationView.menu.clear()
         navigationView.inflateMenu(R.menu.nav_map_categorias)
 
-        val categorias = unSocList.first().getContadoresNoNulos().reversed()
+        val categorias = outerJoinCategorias(unSocList)
 
         for (i in categorias.indices) {
             val categoria = categorias[i]
@@ -174,6 +178,7 @@ class OSMFragment : Fragment(), MapEventsReceiver {
                 selectedRadioButton?.isChecked = false
                 selectedRadioButton = radioButton
                 radioButton.isChecked = true
+                resolverVisibilidad()
             }
             // Asignar el RadioButton como actionView del MenuItem
             menuItem.actionView = radioButton
@@ -181,6 +186,24 @@ class OSMFragment : Fragment(), MapEventsReceiver {
 
         // Notificar cambios en el menú para que se actualice
         navigationView.invalidate()
+    }
+
+    /**
+     * de todos los contadores de categorias que tiene una unidad social, frecuentemente es necesario
+     * operar sobre aquellos que no sean nulos. es decir si una unidad social tuviera los contadores
+     * hembras=0, crias=1, machoPeriferico=3, interesara la lista [crias,machoPeriferico]
+     * ahora bien, dada una lista esto se complejiza porque cada unidad social tendra su propio set
+     * de categorias no nulas. haciendo una analogia con SQL, esta funcion realiza un OUTER JOIN de
+     * categorias sobre todos las unidades sociales de una lista.
+     *
+     * @return la lista mas abarcativa de categorias no nulas (para al menos un caso)
+     */
+    private fun outerJoinCategorias(unSocList: List<UnidSocial>): List<String> {
+        val combinedContadores = mutableSetOf<String>()
+        for (unidSocial in unSocList) {
+            combinedContadores.addAll(unidSocial.getContadoresNoNulos())
+        }
+        return combinedContadores.toList().reversed()
     }
 
     private fun lanzarEventoSpinner(view: View) {
@@ -215,9 +238,8 @@ class OSMFragment : Fragment(), MapEventsReceiver {
         }
     }
 
-    private fun resolverVisibilidad(unSocList: List<UnidSocial>) {
+    private fun resolverVisibilidad() {
         val geoPoint: GeoPoint = puntoMedioPosiciones(unSocList)
-        cambiarMenuLateral(unSocList)
 
         if (chkMapaCalor.isChecked) {
             mapView.visibility = View.GONE
@@ -231,6 +253,12 @@ class OSMFragment : Fragment(), MapEventsReceiver {
                 Toast.makeText(
                     context,
                     context.getString(R.string.osm_categoria),
+                    Toast.LENGTH_LONG
+                ).show()
+            } catch (e: MagNulaExcepcion){
+                Toast.makeText(
+                    context,
+                    "Esta categoria tiene todos sus elementos nulos",
                     Toast.LENGTH_LONG
                 ).show()
             }

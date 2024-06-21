@@ -258,6 +258,9 @@
     <!-- DiaListFragment -->
     <string name="dia_confirmar">Day added correctly</string>
     <string name="dia_existe">Today was already added</string>
+    <string name="dia_noDiaTit">Add day</string>
+    <string name="dia_noDiaMsg1">This list corresponds to days from a year prior to the one we are spending</string>
+    <string name="dia_noDiaMsg2">and therefore it is closed to add new entries, although you can see all its content</string>
     <string name="dia_mostrarAyudaTit">Dates</string>
     <string name="dia_mostrarAyuda0">You have not added any day yet, so the list is empty. Click on (+) to add it</string>
     <string name="dia_mostrarAyuda1">Now there is only one day registered. When you add more, you will notice the list. Click on the existing day to manage its routes</string>

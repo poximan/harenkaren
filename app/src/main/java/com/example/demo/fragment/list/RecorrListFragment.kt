@@ -85,17 +85,17 @@ class RecorrListFragment : SuperList(), RecorrListAdapter.OnRecorrClickListener 
         findNavController().navigate(R.id.home_fragment)
     }
 
+    private fun nvoRecorrido() {
+        val action = RecorrListFragmentDirections.goToNewRecorrAction(args.idDia)
+        findNavController().navigate(action)
+    }
+
     private fun noMasRecorrido(diaHoy: String) {
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle(getString(R.string.rec_noRecorrTit))
         builder.setMessage(getString(R.string.rec_noRecorrMsg1) + " (" + diaHoy + ") " + getString(R.string.rec_noRecorrMsg2))
         builder.setPositiveButton(android.R.string.ok, null)
         builder.show()
-    }
-
-    private fun nvoRecorrido() {
-        val action = RecorrListFragmentDirections.goToNewRecorrAction(args.idDia)
-        findNavController().navigate(action)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

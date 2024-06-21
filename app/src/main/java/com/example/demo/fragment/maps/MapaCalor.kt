@@ -3,8 +3,10 @@ package com.example.demo.fragment.maps
 import android.view.View
 import android.webkit.WebSettings
 import android.webkit.WebView
+import com.example.demo.exception.MagNulaExcepcion
 import com.example.demo.model.UnidSocial
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import org.osmdroid.util.GeoPoint
 
 class MapaCalor(private val webView: WebView, private val geoPoint: GeoPoint) {
@@ -36,9 +38,18 @@ class MapaCalor(private val webView: WebView, private val geoPoint: GeoPoint) {
                 "lat" to it.latitud,
                 "lon" to it.longitud,
                 "mag" to campo.get(it),
-                "total" to atribString
+                "categ." to atribString
             )
         })
+
+        // Parsear el JSON
+        val listType = object : TypeToken<List<Map<String, Any>>>() {}.type
+        val rows: List<Map<String, Any>> = gson.fromJson(jsonUnSocList, listType)
+
+        // Verificar si todos los elementos tienen mag == 0
+        if (rows.all { it["mag"] == 0.0 }) {
+            throw MagNulaExcepcion()
+        }
 
         val staticHtmlIni = """
             <!DOCTYPE html>
@@ -71,9 +82,9 @@ class MapaCalor(private val webView: WebView, private val geoPoint: GeoPoint) {
                             lat: unpack(rows, "lat"),
                             lon: unpack(rows, "lon"),
                             z: unpack(rows, "mag"),
-                            text: unpack(rows, "total"),
+                            text: unpack(rows, "categ."),
                             hoverinfo: "lat+lon+z+text",
-                            hovertemplate: "lat: %{lat:.6f}<br>lon: %{lon:.6f}<br>total: %{z}<br>%{text}<extra></extra>",
+                            hovertemplate: "lat: %{lat:.6f}<br>lon: %{lon:.6f}<br>total: %{z}<br>categ.: %{text}<extra></extra>",
                             radius: 25,
                             type: "densitymapbox",
                             coloraxis: "coloraxis"
@@ -99,6 +110,7 @@ class MapaCalor(private val webView: WebView, private val geoPoint: GeoPoint) {
                 </body>
             </html>
         """.trimIndent()
+        println(staticHtmlIni + dynamicHtml + staticHtmlEnd)
         return staticHtmlIni + dynamicHtml + staticHtmlEnd
     }
 }
