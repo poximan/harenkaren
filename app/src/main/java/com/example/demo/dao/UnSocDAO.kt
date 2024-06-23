@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import com.example.demo.compartir.importar.ImportarFragment
 import com.example.demo.database.DevFragment
 import com.example.demo.model.EntidadesPlanas
 import com.example.demo.model.UnidSocial
@@ -75,9 +76,14 @@ interface UnSocDAO {
     @Update
     fun update(unidSocial: UnidSocial)
 
-    fun insertarDesnormalizado(listaEntidadesPlanas: List<EntidadesPlanas>): Int {
+    fun insertarDesnormalizado(
+        listaEntidadesPlanas: List<EntidadesPlanas>,
+        callback: ImportarFragment
+    ): Int {
         var ultimoID: UUID? = null
         var insertsEfectivos = 0
+        var avance = 0
+        val tamanio = listaEntidadesPlanas.size
 
         listaEntidadesPlanas.forEach { entidadPlana ->
             val unSoc = entidadPlana.getUnidSocial()
@@ -88,9 +94,11 @@ interface UnSocDAO {
                 if (existe == null) {
                     insertConUltInst(unSoc)
                     insertsEfectivos += 1
+                    callback.avanceInserts("unidades sociales ${avance*100/tamanio}")
                 }
                 ultimoID = unSoc.id
             }
+            avance++
         }
         return insertsEfectivos
     }

@@ -274,6 +274,7 @@ class OSMFragment : Fragment(), MapEventsReceiver {
 
         mapView.visibility = View.VISIBLE
         var routePoints = emptyList<GeoPoint>()
+        var nvaPoli = 0
 
         removerPolilinea()
         removerMarcadores()
@@ -283,7 +284,8 @@ class OSMFragment : Fragment(), MapEventsReceiver {
 
             for (unSoc in unSocList) {
                 if (recorr != unSoc.recorrId) {
-                    agregarPolilinea(routePoints)
+                    agregarPolilinea(routePoints, nvaPoli)
+                    nvaPoli++
                     routePoints = emptyList()
                     recorr = unSoc.recorrId
                 }
@@ -291,7 +293,7 @@ class OSMFragment : Fragment(), MapEventsReceiver {
                 routePoints = routePoints.plus(geo(unSoc))
                 agregarMarcador(unSoc)  // los puntos se insertan en cada pasada "mapView.overlays.add"
             }
-            agregarPolilinea(routePoints)
+            agregarPolilinea(routePoints, nvaPoli)
 
             val currentCenter = mapView.mapCenter as GeoPoint
             // Verificar si currentCenter es (0.0, 0.0, 0.0)
@@ -316,10 +318,14 @@ class OSMFragment : Fragment(), MapEventsReceiver {
         }
     }
 
-    private fun agregarPolilinea(routePoints: List<GeoPoint>) {
+    private val colors = listOf(
+        Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW, Color.MAGENTA, Color.CYAN
+    )
+
+    private fun agregarPolilinea(routePoints: List<GeoPoint>, nvaPoli: Int) {
         val polyline = Polyline().apply {
             setPoints(routePoints)
-            color = Color.RED
+            color = colors[nvaPoli % colors.size]
             width = 5.0f
         }
         mapView.overlays.add(polyline)

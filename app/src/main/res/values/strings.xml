@@ -31,14 +31,33 @@
 
     <!-- fragment_about -->
     <string name="abo_acercade">
-        Acerca de esta app
-\n---------------------------------
-\n\nhabitualmente los trabajos en campo implican el uso de papel y lápiz, lo más portable por mucho. esta app pretende (con exagerado optimismo) ser un digno reemplazo de aquello.
-\nen este sentido la navegabilidad de pantallas busca guiar al censista en la definición de los datos, desde lo general a lo particular.
+        <![CDATA[
+        <b><u>Acerca de esta app</u></b> <br/><br/>
+        Habitualmente los trabajos en campo implican el uso de papel y lápiz porque es lo más portable por mucho. Esta app pretende (con exagerado optimismo) ser un digno reemplazo de aquello.<br/><br/>
+        En este sentido la navegabilidad de pantallas busca guiar al censista en la definición de los datos, desde lo general a lo particular.
+        Asi el usuario primeramente dará de alta un <b>Dia</b> (como unidad de tiempo en que sucede un acto de censar), dentro de este definirá <b>Recorridos</b> (como descriptor de áreas geográficas donde sucede el acto de censar) y finalmente agregará tantos <b>Registros</b> como unidades sociales observe en el campo.<br/><br/>
+        Esta primer actividad constituye lo que puede llamarse <b>dato primario</b>, ya que a partir de él explotarán una serie de modestos pero contundentes instrumentos de interpretacion de datos.<br/><br/>
+        A nosotros el juego, y a triunfar.<br/><br/>
+        ]]>
+    </string>
+    <string name="abo_legalTit">
+        <![CDATA[<b><u>Advertencia Legal</u></b><br/><br/>]]>
+    </string>
+    <string name="abo_legalMsj">
+        <![CDATA[
+        es una aplicacion desarrollada en el marco del proyecto “Variación temporal y espacial de la colonia de elefantes marinos del sur de Península Valdés”,
+        para facilitar la recolección y manipulación de datos científicos relacionados con la observación de elefantes marinos en su ecosistema natural.<br/><br/>
+        Los datos generados y manipulados a través de esta aplicación son propiedad del Centro Nacional Patagónico (CENPAT) atraves del Grupo de Estudios de Macroecología Marina (GEMMA).<br/>
+        El uso de estos datos está permitido exclusivamente con fines científicos y debe citar adecuadamente al CENPAT y al grupo GEMMA como las fuentes originales.<br/><br/>
 
-\n\nasi el usuario primeramente dará de alta un **Dia** (como unidad de tiempo en que sucede un acto de censar), dentro de este definirá **Recorridos** (como descriptor de áreas geográficas donde sucede el acto de censar) y finalmente agregará tantos **Registros** como unidades sociales observe en el campo.
-
-\n\nesta primer actividad constituye lo que bien puede llamarse generacion del **dato primario**, ya que a partir de él explotarán una serie de modestos pero contundentes instrumentos de interpretacion de datos.
+        Al utilizar esta aplicación, usted reconoce y acepta que:<br/>
+        <b>1)</b> Está manipulando y generando datos científicos que son propiedad del CENPAT<br/>
+        <b>2)</b> Debe citar correctamente al CENPAT y GEMMA para cualquier uso o publicación de estos datos<br/>
+        <b>3)</b> El uso indebido de estos datos, asi como propagarlos sin las autorizacion pertinentes estará sujeto a sanciones conforme la Ley de Protección de Datos Personales (Ley N° 25.326) y Ley de Acceso a la Información Pública (Ley N° 27.275) vigentes en la Republica Argentina<br/>
+        <b>4)</b> Los datos están sujetos a una licencia de uso abierta con atribución (Creative Commons Attribution 4.0 International License - CC BY 4.0).
+        Esto significa que los datos pueden ser compartidos siempre y cuando se otorgue el crédito adecuado a los creadores, y se obtenga de estos su autorizacion<br/><br/>
+        Copyright © 2024 Centro Nacional Patagónico (CENPAT). Todos los derechos reservados.<br/>
+        ]]>
     </string>
 
     <!-- fragment_censo -->
@@ -234,6 +253,7 @@
     <string name="imp_onMessage">Llegaron desde dispositivo remoto</string>
     <string name="imp_onPelos">Agregados desde archivo externo</string>
     <string name="imp_progreso">Procesando datos entrantes...</string>
+    <string name="imp_insertBD">Insertando en BD...</string>
 
     <!-- RecorrAddFragment -->
     <string name="rec_confirmar">Recorrido agregado correctamente</string>

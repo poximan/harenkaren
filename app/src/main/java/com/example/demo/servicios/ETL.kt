@@ -99,7 +99,7 @@ class ETL(private val context: Context) {
     }
 
     fun ordenar(mapas: List<Map<String, String>>): List<Map<String, String>> {
-        return sortCSV(mapas, "fecha", "libreta", "orden")
+        return sortCSV(mapas, "fecha", "lat0", "lon0")
     }
 
     private fun rellenarNulos(

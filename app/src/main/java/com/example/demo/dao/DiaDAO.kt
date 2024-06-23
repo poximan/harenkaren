@@ -7,10 +7,14 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import com.example.demo.compartir.importar.ImportarFragment
 import com.example.demo.database.DevFragment
 import com.example.demo.model.Dia
 import com.example.demo.model.EntidadesPlanas
 import com.example.demo.servicios.GestorUUID
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.util.UUID
 
 @Dao
@@ -83,9 +87,14 @@ interface DiaDAO {
     @Update
     fun update(recorrido: Dia): Int
 
-    fun insertarDesnormalizado(listaEntidadesPlanas: List<EntidadesPlanas>): Int {
+    fun insertarDesnormalizado(
+        listaEntidadesPlanas: List<EntidadesPlanas>,
+        callback: ImportarFragment
+    ): Int {
         var ultimoID: UUID? = null
         var insertsEfectivos = 0
+        var avance = 0
+        val tamanio = listaEntidadesPlanas.size
 
         listaEntidadesPlanas.forEach { entidadPlana ->
             val dia = entidadPlana.getDia()
@@ -96,9 +105,11 @@ interface DiaDAO {
                 if (existe == null) {
                     insertConUltInst(dia)
                     insertsEfectivos += 1
+                    callback.avanceInserts("dias ${avance*100/tamanio}")
                 }
                 ultimoID = dia.id
             }
+            avance++
         }
         return insertsEfectivos
     }

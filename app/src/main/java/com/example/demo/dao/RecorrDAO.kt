@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import com.example.demo.compartir.importar.ImportarFragment
 import com.example.demo.database.DevFragment
 import com.example.demo.model.EntidadesPlanas
 import com.example.demo.model.Recorrido
@@ -79,8 +80,13 @@ interface RecorrDAO {
     @Update
     fun update(recorrido: Recorrido): Int
 
-    fun insertarDesnormalizado(listaEntidadesPlanas: List<EntidadesPlanas>): Int {
+    fun insertarDesnormalizado(
+        listaEntidadesPlanas: List<EntidadesPlanas>,
+        callback: ImportarFragment
+    ): Int {
         var insertsEfectivos = 0
+        var avance = 0
+        val tamanio = listaEntidadesPlanas.size
 
         listaEntidadesPlanas.forEach { entidadPlana ->
 
@@ -90,7 +96,9 @@ interface RecorrDAO {
             if (existe == null) {
                 insertConUltInst(recorr)
                 insertsEfectivos += 1
+                callback.avanceInserts("recorridos ${avance*100/tamanio}")
             }
+            avance++
         }
         return insertsEfectivos
     }

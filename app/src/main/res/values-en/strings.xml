@@ -25,14 +25,35 @@
 
     <!-- fragment_about -->
     <string name="abo_acercade">
-        About this app
- \n---------------------------------
- \n\nField work usually involves the use of paper and pencil, the most portable by far. This app aims (with exaggerated optimism) to be a worthy replacement for that.
- \nIn this sense, the navigability of screens seeks to guide the census taker in defining the data, from the general to the particular.
+        <![CDATA[
+        <b><u>About this app</u></b> <br/><br/>
+        Fieldwork typically involves using pen and paper because its the most portable option by far. This app aims (with exaggerated optimism) to be a worthy replacement for that.<br/><br/>
+        In this sense, screen navigability aims to guide the census taker in defining data, from general to specific.
+        Thus, the user will first create a <b>Day</b> (as a unit of time for census activities), within which they will define <b>Routes</b> (as descriptors of geographic areas where census activities occur), and finally add as many <b>Records</b> as social units observed in the field.<br/><br/>
+        This initial activity constitutes what can be called <b>primary data</b>, from which a series of modest yet powerful data interpretation tools will emerge.<br/><br/>
+        Let the games begin, and may we triumph.<br/><br/>
+        ]]>
+    </string>
 
- \n\nIf the user will first register a **Day** (as a unit of time in which an act of census occurs), within this he will define **Tours** (as a descriptor of geographical areas where the act of census occurs). census) and finally it will add as many **Records** as social units observed in the field.
+    <string name="abo_legalTit">
+        <![CDATA[<b><u>Legal Disclaimer</u></b><br/><br/>]]>
+    </string>
 
- \n\nThis first activity constitutes what can well be called generation of **primary data**, since from it a series of modest but forceful data interpretation instruments will be exploited.
+    <string name="abo_legalMsj">
+        <![CDATA[
+        is an application was developed within the framework of the project "Temporal and spatial variation of the southern elephant seal colony in Península Valdés",
+        to facilitate the collection and manipulation of scientific data related to the observation of southern elephant seals in their natural ecosystem.<br/><br/>
+        The data generated and manipulated through this application are the property of the National Patagonian Center (CENPAT) through the Marine Macroecology Studies Group (GEMMA).<br/>
+        The use of this data is permitted exclusively for scientific purposes and must properly cite CENPAT and GEMMA as the original sources.<br/><br/>
+
+        By using this application, you acknowledge and agree that:<br/>
+        <b>1)</b> You are manipulating and generating scientific data that belong to CENPAT<br/>
+        <b>2)</b> You must properly cite CENPAT and GEMMA for any use or publication of this data<br/>
+        <b>3)</b> Misuse of this data, as well as its dissemination without proper authorization, may be subject to penalties under the Personal Data Protection Law (Law No. 25,326) and the Access to Public Information Law (Law No. 27,275) applicable in the Argentine Republic<br/>
+        <b>4)</b> The data is subject to an open-use license with attribution (Creative Commons Attribution 4.0 International License - CC BY 4.0).
+        This means that the data can be shared as long as proper credit is given to the creators, and authorization is obtained from them.<br/><br/>
+        Copyright © 2024 National Patagonian Center (CENPAT). All rights reserved.<br/>
+        ]]>
     </string>
 
     <!-- fragment_censo -->
@@ -227,6 +248,7 @@
     <string name="imp_onMessage">Arrived from remote device</string>
     <string name="imp_onPelos">Added from external file</string>
     <string name="imp_progreso">Processing incoming data…</string>
+    <string name="imp_insertBD">Insert in DB...</string>
 
     <!-- RecorrAddFragment -->
     <string name="rec_confirmar">Route added correctly</string>
