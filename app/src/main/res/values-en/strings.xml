@@ -326,6 +326,8 @@
     <!-- LoginFragment -->
     <string name="osm_mostrar">For the chosen year, there are routes without associated records</string>
     <string name="osm_categoria">Choose a category first (open side menu)</string>
+    <string name="osm_noregTit">Map data</string>
+    <string name="osm_noregMsj">No records found to display. You can enter them from the Census menu before using this map</string>
 
     <!-- EmailSender -->
     <string name="mai_asunto">Census backup</string>

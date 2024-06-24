@@ -1,5 +1,6 @@
 package com.example.demo.fragment.maps
 
+import android.app.AlertDialog
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,6 +17,9 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import com.example.demo.R
 import com.example.demo.activity.HomeActivity
 import com.example.demo.dao.UnSocDAO
@@ -142,17 +146,45 @@ class OSMFragment : Fragment(), MapEventsReceiver {
                 position: Int,
                 id: Long
             ) {
-                val anioSeleccionado = anios[position]
-                getInvolucrados(anioSeleccionado) {
-                    unSocList = it
-                    cambiarMenuLateral()
-                    resolverVisibilidad()
+                try {
+                    val anioSeleccionado = anios[position]
+                    getInvolucrados(anioSeleccionado) {
+                        try {
+                            unSocList = it
+                            cambiarMenuLateral()
+                            resolverVisibilidad()
+                        } catch (e: Exception) {
+                            anios = anios.filterNot { valor -> valor == anios[position] }
+                            val adapter =
+                                ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, anios)
+                            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                            filtroAnio.adapter = adapter
+                        }
+                    }
+                } catch (e: IndexOutOfBoundsException) {
+                    mensajeError()
                 }
             }
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
         // Forzar la llamada manualmente al método onItemSelected
         lanzarEventoSpinner(view)
+    }
+
+    private fun mensajeError() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle(getString(R.string.osm_noregTit))
+        builder.setMessage(getString(R.string.osm_noregMsj))
+
+        builder.setPositiveButton("OK") { _, _ ->
+            findNavController().navigateUp()
+        }
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+    private fun findNavController(): NavController {
+        return (activity as HomeActivity).findNavController(R.id.navHostHome)
     }
 
     private fun cambiarMenuLateral() {
