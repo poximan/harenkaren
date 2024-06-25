@@ -331,8 +331,11 @@
     <!-- LoginFragment -->
     <string name="osm_mostrar">Para el año elegido, hay recorridos sin registros asociados</string>
     <string name="osm_categoria">Elegi una categoria primero (abri menu lateral)</string>
-    <string name="osm_noregTit">Datos para mapa</string>
-    <string name="osm_noregMsj">No se encontraron registros que mostrar. Podes ingresarlos desde el menu Censos antes de usar este mapa</string>
+    <string name="osm_categNula">Esta categoria tiene todos sus elementos nulos</string>
+    <string name="osm_noregTit">Set vacio</string>
+    <string name="osm_noregMsj">Para el año que elegiste no hay registros que mostrar</string>
+    <string name="osm_noregMsjBtn">Elegir otro año</string>
+    <string name="osm_elegirAnio">Elegi un año de la lista</string>
 
     <!-- EmailSender -->
     <string name="mai_asunto">Respaldo censo</string>

@@ -56,7 +56,7 @@ class OSMFragment : Fragment(), MapEventsReceiver {
 
     private lateinit var chkMapaCalor: CheckBox
     private lateinit var filtroAnio: Spinner
-    private lateinit var anios: List<Int>
+    private var anios: MutableList<String> = mutableListOf("año...")
 
     private var selectedRadioButton: RadioButton? = null
 
@@ -93,7 +93,10 @@ class OSMFragment : Fragment(), MapEventsReceiver {
             .diaDao()
 
         CoroutineScope(Dispatchers.IO).launch {
-            anios = diaDAO.getAnios()
+
+            val listaDeStrings: List<String> = diaDAO.getAnios().map { it.toString() }
+            anios.addAll(listaDeStrings)
+
             withContext(Dispatchers.Main) {
                 // Configurar el Spinner
                 val adapter =
@@ -117,7 +120,7 @@ class OSMFragment : Fragment(), MapEventsReceiver {
             .getDatabase(requireActivity().application, viewLifecycleOwner.lifecycleScope)
             .unSocDao()
 
-        configurarFiltroAnio(view)
+        configurarFiltroAnio()
     }
 
     override fun onResume() {
@@ -137,7 +140,7 @@ class OSMFragment : Fragment(), MapEventsReceiver {
         navigationView.inflateMenu(R.menu.nav_drawer_menu)
     }
 
-    private fun configurarFiltroAnio(view: View) {
+    private fun configurarFiltroAnio() {
 
         filtroAnio.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
@@ -147,36 +150,48 @@ class OSMFragment : Fragment(), MapEventsReceiver {
                 id: Long
             ) {
                 try {
-                    val anioSeleccionado = anios[position]
+                    val anioSeleccionado = anios[position].toInt()
                     getInvolucrados(anioSeleccionado) {
-                        try {
-                            unSocList = it
-                            cambiarMenuLateral()
-                            resolverVisibilidad()
-                        } catch (e: Exception) {
-                            anios = anios.filterNot { valor -> valor == anios[position] }
-                            val adapter =
-                                ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, anios)
-                            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                            filtroAnio.adapter = adapter
+                        unSocList = it
+                        if(it.isEmpty()){
+                            mensajeError()
+                            return@getInvolucrados
                         }
+                        cambiarMenuLateral()
+                        resolverVisibilidad()
                     }
-                } catch (e: IndexOutOfBoundsException) {
-                    mensajeError()
+                } catch (e: NumberFormatException){
+                    Toast.makeText(requireContext(), getString(R.string.osm_elegirAnio), Toast.LENGTH_SHORT).show()
                 }
             }
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
-        // Forzar la llamada manualmente al método onItemSelected
-        lanzarEventoSpinner(view)
+    }
+
+    private fun lanzarEventoSpinner(view: View) {
+
+        var defaultPosition: Int = if (filtroAnio.selectedItemPosition < 0)
+            0
+        else
+            filtroAnio.selectedItemPosition
+
+        filtroAnio.setSelection(defaultPosition)
+
+        filtroAnio.onItemSelectedListener?.onItemSelected(
+            filtroAnio,
+            view,
+            defaultPosition,
+            filtroAnio.getItemIdAtPosition(defaultPosition)
+        )
     }
 
     private fun mensajeError() {
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle(getString(R.string.osm_noregTit))
-        builder.setMessage(getString(R.string.osm_noregMsj))
+        builder.setMessage(R.string.osm_noregMsj)
 
-        builder.setPositiveButton("OK") { _, _ ->
+        builder.setPositiveButton(R.string.osm_noregMsjBtn) { _, _ -> }
+        builder.setNegativeButton(getString(R.string.varias_volver)) {_, _ ->
             findNavController().navigateUp()
         }
         val dialog = builder.create()
@@ -238,23 +253,6 @@ class OSMFragment : Fragment(), MapEventsReceiver {
         return combinedContadores.toList().reversed()
     }
 
-    private fun lanzarEventoSpinner(view: View) {
-
-        var defaultPosition: Int = if (filtroAnio.selectedItemPosition < 0)
-            anios.size - 1
-        else
-            filtroAnio.selectedItemPosition
-
-        filtroAnio.setSelection(defaultPosition)
-
-        filtroAnio.onItemSelectedListener?.onItemSelected(
-            filtroAnio,
-            view,
-            defaultPosition,
-            filtroAnio.getItemIdAtPosition(defaultPosition)
-        )
-    }
-
     private fun getInvolucrados(anio: Int, callback: (List<UnidSocial>) -> Unit) {
         var unSocList: List<UnidSocial>
         // ---------> HILO BACKGOUND
@@ -272,6 +270,7 @@ class OSMFragment : Fragment(), MapEventsReceiver {
 
     private fun resolverVisibilidad() {
         val geoPoint: GeoPoint = puntoMedioPosiciones(unSocList)
+        val context = requireContext()
 
         if (chkMapaCalor.isChecked) {
             mapView.visibility = View.GONE
@@ -281,7 +280,6 @@ class OSMFragment : Fragment(), MapEventsReceiver {
             try {
                 mapaCalor.mostrarMapaCalor(unSocList, selectedRadioButton!!.text.toString())
             } catch(e: NullPointerException) {
-                val context = requireContext()
                 Toast.makeText(
                     context,
                     context.getString(R.string.osm_categoria),
@@ -290,7 +288,7 @@ class OSMFragment : Fragment(), MapEventsReceiver {
             } catch (e: MagNulaExcepcion){
                 Toast.makeText(
                     context,
-                    "Esta categoria tiene todos sus elementos nulos",
+                    context.getString(R.string.osm_categNula),
                     Toast.LENGTH_LONG
                 ).show()
             }
