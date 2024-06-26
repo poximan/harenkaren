@@ -323,7 +323,8 @@
     <string name="log_checkHuella1">Fingerprint detection hardware is missing</string>
     <string name="log_checkHuella2">User verification failed</string>
 
-    <!-- LoginFragment -->
+    <!-- OSMFragment -->
+    <string name="osm_anios">year...</string>
     <string name="osm_mostrar">For the chosen year, there are routes without associated records</string>
     <string name="osm_categoria">Choose a category first (open side menu)</string>
     <string name="osm_categNula">This category has all its null elements</string>

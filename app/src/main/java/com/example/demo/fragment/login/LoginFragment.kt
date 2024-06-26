@@ -78,15 +78,22 @@ class LoginFragment : Fragment(), UsuarioCallback {
 
     private fun usarHuella() {
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.GET_ACCOUNTS)
-            != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.GET_ACCOUNTS),
-                DbConstants.PERMISSION_REQUEST_GET_ACCOUNTS)
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                requireActivity(), arrayOf(Manifest.permission.GET_ACCOUNTS),
+                DbConstants.PERMISSION_REQUEST_GET_ACCOUNTS
+            )
         } else {
             checkLoginHuella()
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == DbConstants.PERMISSION_REQUEST_GET_ACCOUNTS) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {

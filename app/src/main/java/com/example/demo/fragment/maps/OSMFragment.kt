@@ -4,33 +4,16 @@ import android.app.AlertDialog
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.CheckBox
-import android.widget.RadioButton
-import android.widget.Spinner
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import com.example.demo.R
 import com.example.demo.activity.HomeActivity
-import com.example.demo.dao.UnSocDAO
-import com.example.demo.database.HarenKarenRoomDatabase
-import com.example.demo.exception.MagNulaExcepcion
 import com.example.demo.model.UnidSocial
-import com.google.android.material.navigation.NavigationView
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.osmdroid.api.IMapController
 import org.osmdroid.config.Configuration
 import org.osmdroid.events.MapEventsReceiver
@@ -40,25 +23,19 @@ import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.MapEventsOverlay
 import org.osmdroid.views.overlay.Marker
 import org.osmdroid.views.overlay.Polyline
-import kotlin.math.abs
 
-class OSMFragment : Fragment(), MapEventsReceiver {
+class OSMFragment : SuperMapa(), MapEventsReceiver {
 
-    private lateinit var unSocList: List<UnidSocial>
-    private lateinit var unSocDAO: UnSocDAO
+    private val colors = listOf(
+        Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW, Color.MAGENTA, Color.CYAN
+    )
 
-    private lateinit var mapController: IMapController
     private lateinit var mapView: MapView
+    private lateinit var webView: WebView
+    private lateinit var mapController: IMapController
+
     private var polylines = mutableListOf<Polyline>()
     private var markers = mutableListOf<Marker>()
-
-    private lateinit var webView: WebView
-
-    private lateinit var chkMapaCalor: CheckBox
-    private lateinit var filtroAnio: Spinner
-    private var anios: MutableList<String> = mutableListOf("año...")
-
-    private var selectedRadioButton: RadioButton? = null
 
     // Método llamado cuando se crea la vista del fragmento
     override fun onCreateView(
@@ -66,10 +43,13 @@ class OSMFragment : Fragment(), MapEventsReceiver {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_osm, container, false)
+        val view = super.onCreateView(inflater, container, savedInstanceState)!!
 
-        // Inicializar el mapa
+        webView = view.findViewById(R.id.webViewHeat)
         mapView = view.findViewById(R.id.mapView)
+        webView.visibility = View.INVISIBLE
+        mapView.visibility = View.VISIBLE
+
         mapView.setTileSource(TileSourceFactory.MAPNIK)
         mapView.setBuiltInZoomControls(true)
         mapView.setMultiTouchControls(true)
@@ -84,43 +64,8 @@ class OSMFragment : Fragment(), MapEventsReceiver {
 
         // Establecer el agente de usuario para OSMDroid
         Configuration.getInstance().userAgentValue = "AGENTE_OSM_HARENKAREN"
-        filtroAnio = view.findViewById(R.id.filtroAnio)
 
-        webView = view.findViewById(R.id.webViewHeat)
-
-        val diaDAO = HarenKarenRoomDatabase
-            .getDatabase(requireActivity().application, viewLifecycleOwner.lifecycleScope)
-            .diaDao()
-
-        CoroutineScope(Dispatchers.IO).launch {
-
-            val listaDeStrings: List<String> = diaDAO.getAnios().map { it.toString() }
-            anios.addAll(listaDeStrings)
-
-            withContext(Dispatchers.Main) {
-                // Configurar el Spinner
-                val adapter =
-                    ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, anios)
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                filtroAnio.adapter = adapter
-            }
-        }
         return view
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        chkMapaCalor = view.findViewById(R.id.chk_mapacalor)
-        chkMapaCalor.setOnCheckedChangeListener { _, _ ->
-            lanzarEventoSpinner(view)
-        }
-
-        unSocDAO = HarenKarenRoomDatabase
-            .getDatabase(requireActivity().application, viewLifecycleOwner.lifecycleScope)
-            .unSocDao()
-
-        configurarFiltroAnio()
     }
 
     override fun onResume() {
@@ -135,54 +80,7 @@ class OSMFragment : Fragment(), MapEventsReceiver {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        val navigationView: NavigationView = (activity as HomeActivity).navigationView
-        navigationView.menu.clear()
-        navigationView.inflateMenu(R.menu.nav_drawer_menu)
-    }
-
-    private fun configurarFiltroAnio() {
-
-        filtroAnio.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View,
-                position: Int,
-                id: Long
-            ) {
-                try {
-                    val anioSeleccionado = anios[position].toInt()
-                    getInvolucrados(anioSeleccionado) {
-                        unSocList = it
-                        if(it.isEmpty()){
-                            mensajeError()
-                            return@getInvolucrados
-                        }
-                        cambiarMenuLateral()
-                        resolverVisibilidad()
-                    }
-                } catch (e: NumberFormatException){
-                    Toast.makeText(requireContext(), getString(R.string.osm_elegirAnio), Toast.LENGTH_SHORT).show()
-                }
-            }
-            override fun onNothingSelected(parent: AdapterView<*>) {}
-        }
-    }
-
-    private fun lanzarEventoSpinner(view: View) {
-
-        var defaultPosition: Int = if (filtroAnio.selectedItemPosition < 0)
-            0
-        else
-            filtroAnio.selectedItemPosition
-
-        filtroAnio.setSelection(defaultPosition)
-
-        filtroAnio.onItemSelectedListener?.onItemSelected(
-            filtroAnio,
-            view,
-            defaultPosition,
-            filtroAnio.getItemIdAtPosition(defaultPosition)
-        )
+        mapView.clearAnimation()
     }
 
     private fun mensajeError() {
@@ -191,7 +89,7 @@ class OSMFragment : Fragment(), MapEventsReceiver {
         builder.setMessage(R.string.osm_noregMsj)
 
         builder.setPositiveButton(R.string.osm_noregMsjBtn) { _, _ -> }
-        builder.setNegativeButton(getString(R.string.varias_volver)) {_, _ ->
+        builder.setNegativeButton(getString(R.string.varias_volver)) { _, _ ->
             findNavController().navigateUp()
         }
         val dialog = builder.create()
@@ -202,107 +100,16 @@ class OSMFragment : Fragment(), MapEventsReceiver {
         return (activity as HomeActivity).findNavController(R.id.navHostHome)
     }
 
-    private fun cambiarMenuLateral() {
-
-        val navigationView: NavigationView = (activity as HomeActivity).navigationView
-        navigationView.menu.clear()
-        navigationView.inflateMenu(R.menu.nav_map_categorias)
-
-        val categorias = outerJoinCategorias(unSocList)
-
-        for (i in categorias.indices) {
-            val categoria = categorias[i]
-
-            // Crear un nuevo MenuItem
-            val menuItem = navigationView.menu.add(Menu.NONE, i, Menu.NONE, null)
-
-            // Crear un RadioButton para este MenuItem
-            val radioButton = layoutInflater.inflate(R.layout.item_categorias, null) as RadioButton
-            radioButton.text = categoria
-
-            // Escuchar clics en el RadioButton
-            radioButton.setOnClickListener {
-                selectedRadioButton?.isChecked = false
-                selectedRadioButton = radioButton
-                radioButton.isChecked = true
-                resolverVisibilidad()
-            }
-            // Asignar el RadioButton como actionView del MenuItem
-            menuItem.actionView = radioButton
-        }
-
-        // Notificar cambios en el menú para que se actualice
-        navigationView.invalidate()
-    }
-
-    /**
-     * de todos los contadores de categorias que tiene una unidad social, frecuentemente es necesario
-     * operar sobre aquellos que no sean nulos. es decir si una unidad social tuviera los contadores
-     * hembras=0, crias=1, machoPeriferico=3, interesara la lista [crias,machoPeriferico]
-     * ahora bien, dada una lista esto se complejiza porque cada unidad social tendra su propio set
-     * de categorias no nulas. haciendo una analogia con SQL, esta funcion realiza un OUTER JOIN de
-     * categorias sobre todos las unidades sociales de una lista.
-     *
-     * @return la lista mas abarcativa de categorias no nulas (para al menos un caso)
-     */
-    private fun outerJoinCategorias(unSocList: List<UnidSocial>): List<String> {
-        val combinedContadores = mutableSetOf<String>()
-        for (unidSocial in unSocList) {
-            combinedContadores.addAll(unidSocial.getContadoresNoNulos())
-        }
-        return combinedContadores.toList().reversed()
-    }
-
-    private fun getInvolucrados(anio: Int, callback: (List<UnidSocial>) -> Unit) {
-        var unSocList: List<UnidSocial>
-        // ---------> HILO BACKGOUND
-        CoroutineScope(Dispatchers.IO).launch {
-            unSocList =
-                unSocDAO.getAllPorAnio(anio.toString())
-                    .sortedWith(compareBy({ it.recorrId }, { it.orden }))
-
-            // ---------> HILO PRINCIPAL
-            withContext(Dispatchers.Main) {
-                callback(unSocList)
-            }
-        }
-    }
-
-    private fun resolverVisibilidad() {
+    override fun resolverVisibilidad() {
         val geoPoint: GeoPoint = puntoMedioPosiciones(unSocList)
-        val context = requireContext()
 
-        if (chkMapaCalor.isChecked) {
-            mapView.visibility = View.GONE
-            geoPoint.altitude -= 2
-            val mapaCalor = MapaCalor(webView, geoPoint)
-
-            try {
-                mapaCalor.mostrarMapaCalor(unSocList, selectedRadioButton!!.text.toString())
-            } catch(e: NullPointerException) {
-                Toast.makeText(
-                    context,
-                    context.getString(R.string.osm_categoria),
-                    Toast.LENGTH_LONG
-                ).show()
-            } catch (e: MagNulaExcepcion){
-                Toast.makeText(
-                    context,
-                    context.getString(R.string.osm_categNula),
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-        } else {
-            webView.visibility = View.GONE
-            mapController.setCenter(geoPoint)
-            mapController.setZoom(geoPoint.altitude)
-            mostrarMapaRecorridos(unSocList)
-        }
+        mapController.setCenter(geoPoint)
+        mapController.setZoom(geoPoint.altitude)
+        mostrarMapaRecorridos(unSocList)
     }
 
     private fun mostrarMapaRecorridos(unSocList: List<UnidSocial>) {
 
-        mapView.visibility = View.VISIBLE
         var routePoints = emptyList<GeoPoint>()
         var nvaPoli = 0
 
@@ -347,10 +154,6 @@ class OSMFragment : Fragment(), MapEventsReceiver {
             ).show()
         }
     }
-
-    private val colors = listOf(
-        Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW, Color.MAGENTA, Color.CYAN
-    )
 
     private fun agregarPolilinea(routePoints: List<GeoPoint>, nvaPoli: Int) {
         val polyline = Polyline().apply {
@@ -420,23 +223,5 @@ class OSMFragment : Fragment(), MapEventsReceiver {
     // se mantiene presionado en el mapa
     override fun longPressHelper(p: GeoPoint?): Boolean {
         return false
-    }
-
-    private fun puntoMedioPosiciones(unSocList: List<UnidSocial>): GeoPoint {
-        val minLatitud = unSocList.minOf { it.latitud }
-        val maxLatitud = unSocList.maxOf { it.latitud }
-        val minLongitud = unSocList.minOf { it.longitud }
-        val maxLongitud = unSocList.maxOf { it.longitud }
-
-        // Calcular los puntos medios respecto a los valores extremos
-        val puntoMedioLatitud = (minLatitud + maxLatitud) / 2.0
-        val puntoMedioLongitud = (minLongitud + maxLongitud) / 2.0
-
-        val altitud = -1.9481 * abs(minLatitud - maxLatitud) + 12.0
-        /*
-        para 0.78 dif lat --> 8 altitud
-        para 1.55 dif lat --> 6.5 altitud
-         */
-        return GeoPoint(puntoMedioLatitud, puntoMedioLongitud, altitud)
     }
 }

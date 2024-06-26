@@ -181,9 +181,12 @@ class ImportarFragment : Fragment(), RegistroDistribuible, ListaImportable {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
 
-                val diasInsert = bd.diaDao().insertarDesnormalizado(listaArribo, this@ImportarFragment)
-                val recorrInsert = bd.recorrDao().insertarDesnormalizado(listaArribo, this@ImportarFragment)
-                val unSocInsert = bd.unSocDao().insertarDesnormalizado(listaArribo, this@ImportarFragment)
+                val diasInsert =
+                    bd.diaDao().insertarDesnormalizado(listaArribo, this@ImportarFragment)
+                val recorrInsert =
+                    bd.recorrDao().insertarDesnormalizado(listaArribo, this@ImportarFragment)
+                val unSocInsert =
+                    bd.unSocDao().insertarDesnormalizado(listaArribo, this@ImportarFragment)
 
                 withContext(Dispatchers.Main) {
                     mostrarResultado(
@@ -285,7 +288,7 @@ class ImportarFragment : Fragment(), RegistroDistribuible, ListaImportable {
             }%"
     }
 
-    fun avanceInserts(avance: String){
+    fun avanceInserts(avance: String) {
         binding.insertsbd.text =
             "${requireContext().getString(R.string.imp_insertBD)} ${avance}%"
     }

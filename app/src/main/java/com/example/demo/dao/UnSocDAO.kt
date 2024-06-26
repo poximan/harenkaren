@@ -94,7 +94,7 @@ interface UnSocDAO {
                 if (existe == null) {
                     insertConUltInst(unSoc)
                     insertsEfectivos += 1
-                    callback.avanceInserts("unidades sociales ${avance*100/tamanio}")
+                    callback.avanceInserts("unidades sociales ${avance * 100 / tamanio}")
                 }
                 ultimoID = unSoc.id
             }

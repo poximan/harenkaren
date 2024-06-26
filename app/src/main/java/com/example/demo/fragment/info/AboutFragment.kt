@@ -25,9 +25,13 @@ class AboutFragment : Fragment() {
         _binding = FragmentAboutBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        binding.acercade.text = Html.fromHtml(getString(R.string.abo_acercade), Html.FROM_HTML_MODE_COMPACT)
+        binding.acercade.text =
+            Html.fromHtml(getString(R.string.abo_acercade), Html.FROM_HTML_MODE_COMPACT)
 
-        val advertencia = getString(R.string.abo_legalTit) + "\n" + getString(R.string.app_name) + " " + getString(R.string.abo_legalMsj)
+        val advertencia =
+            getString(R.string.abo_legalTit) + "\n" + getString(R.string.app_name) + " " + getString(
+                R.string.abo_legalMsj
+            )
         binding.usodatos.text = Html.fromHtml(advertencia, Html.FROM_HTML_MODE_COMPACT)
 
         binding.build.text = "Buiil: ${getCurrentDateString()}"

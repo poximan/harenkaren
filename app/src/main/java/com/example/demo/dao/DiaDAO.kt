@@ -12,9 +12,6 @@ import com.example.demo.database.DevFragment
 import com.example.demo.model.Dia
 import com.example.demo.model.EntidadesPlanas
 import com.example.demo.servicios.GestorUUID
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import java.util.UUID
 
 @Dao
@@ -105,7 +102,7 @@ interface DiaDAO {
                 if (existe == null) {
                     insertConUltInst(dia)
                     insertsEfectivos += 1
-                    callback.avanceInserts("dias ${avance*100/tamanio}")
+                    callback.avanceInserts("dias ${avance * 100 / tamanio}")
                 }
                 ultimoID = dia.id
             }

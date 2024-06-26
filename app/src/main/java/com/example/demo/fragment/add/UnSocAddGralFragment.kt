@@ -119,8 +119,8 @@ class UnSocAddGralFragment : AddGralAbstract() {
         super.onPause()
 
         val bundle = Bundle().apply {
-            latLon.lat?.let { putDouble("lat", it) }
-            latLon.lon?.let { putDouble("lon", it) }
+            latLon.lat.let { putDouble("lat", it) }
+            latLon.lon.let { putDouble("lon", it) }
         }
         arguments = bundle
         cargarMap()

@@ -12,5 +12,5 @@ data class Usuario(
     var email: String,
     var pass: String,
     var esAdmin: Boolean
-): Serializable
+) : Serializable
 

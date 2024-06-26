@@ -96,7 +96,7 @@ interface RecorrDAO {
             if (existe == null) {
                 insertConUltInst(recorr)
                 insertsEfectivos += 1
-                callback.avanceInserts("recorridos ${avance*100/tamanio}")
+                callback.avanceInserts("recorridos ${avance * 100 / tamanio}")
             }
             avance++
         }

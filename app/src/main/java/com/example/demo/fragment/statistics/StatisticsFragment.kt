@@ -256,7 +256,7 @@ class StatisticsFragment : Fragment() {
         // utilizar el objeto Field para obtener el valor del atributo en unidSocial.
         val valor = (valorAtributo.get(unidSocial) as Int).toFloat()
 
-        if(datoMasChico > valor) datoMasChico = valor
+        if (datoMasChico > valor) datoMasChico = valor
 
         return PieModel(atribString, valor, siguienteColor(atribString))
     }

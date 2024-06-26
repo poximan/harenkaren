@@ -328,7 +328,8 @@
     <string name="log_checkHuella1">Falta hardware para deteccion de huella</string>
     <string name="log_checkHuella2">No se pudo verificar usuario</string>
 
-    <!-- LoginFragment -->
+    <!-- OSMFragment -->
+    <string name="osm_anios">año...</string>
     <string name="osm_mostrar">Para el año elegido, hay recorridos sin registros asociados</string>
     <string name="osm_categoria">Elegi una categoria primero (abri menu lateral)</string>
     <string name="osm_categNula">Esta categoria tiene todos sus elementos nulos</string>

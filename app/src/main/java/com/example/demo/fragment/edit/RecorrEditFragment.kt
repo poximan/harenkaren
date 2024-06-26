@@ -100,10 +100,10 @@ class RecorrEditFragment : EditGralAbstract() {
         args.recorrActual.observador = binding.editObservador.text.toString()
         args.recorrActual.fechaFin = SimpleDateFormat(formato).format(Date())
 
-        args.recorrActual.latitudIni = latLonIni.lat!!
-        args.recorrActual.longitudIni = latLonIni.lon!!
-        args.recorrActual.latitudFin = latLonFin.lat!!
-        args.recorrActual.longitudFin = latLonFin.lon!!
+        args.recorrActual.latitudIni = latLonIni.lat
+        args.recorrActual.longitudIni = latLonIni.lon
+        args.recorrActual.latitudFin = latLonFin.lat
+        args.recorrActual.longitudFin = latLonFin.lon
 
         args.recorrActual.areaRecorrida = binding.areaRecorr.text.toString()
         args.recorrActual.meteo = binding.meteo.text.toString()

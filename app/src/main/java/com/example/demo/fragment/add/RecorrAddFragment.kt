@@ -96,7 +96,7 @@ class RecorrAddFragment : AddGralAbstract() {
 
         return Recorrido(
             uuid, args.idDia, observador, fechaIni, "",
-            latLonIni.lat!!, latLonIni.lon!!, 0.0, 0.0,
+            latLonIni.lat, latLonIni.lon, 0.0, 0.0,
             areaRecorrida, meteo, marea
         )
     }
