@@ -381,7 +381,8 @@
     <string name="nav_reportes_fragment">Reportes</string>
     <string name="nav_ayuda_fragment">Ayuda</string>
     <string name="nav_dev_fragment">Para desarrollador</string>
-    <string name="nav_registerFragment">Registro</string>
+    <string name="nav_about_fragment">Acerca de</string>
+    <string name="nav_register_fragment">Registro</string>
     <string name="nav_import_fragment">Importar registros</string>
     <string name="nav_export_fragment">Exportar registros</string>
 

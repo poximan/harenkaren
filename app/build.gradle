@@ -17,8 +17,8 @@ android {
         minSdk 28
         targetSdk 31
         applicationId "com.example.demo"
-        versionCode 123
-        versionName "harenbeta"
+        versionCode 20240627
+        versionName "julio24"
     }
 
     buildTypes {

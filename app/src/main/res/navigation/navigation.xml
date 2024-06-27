@@ -259,6 +259,7 @@
     <fragment
         android:id="@+id/about_fragment"
         android:name="com.example.demo.fragment.info.AboutFragment"
+        android:label="@string/nav_about_fragment"
         tools:layout="@layout/fragment_about" />
     <fragment
         android:id="@+id/import_fragment"

@@ -49,7 +49,7 @@ class MapOSMAdapter(mapView: MapView, context: Context) : SuperMapa(), MapEvents
         Configuration.getInstance().userAgentValue = "AGENTE_OSM_HARENKAREN"
     }
 
-    override fun resolverVisibilidad(unSocList: List<UnidSocial>) {
+    override fun resolverVisibilidad(unSocList: List<UnidSocial>, atribString: String) {
         geoPoint = puntoMedioPosiciones(unSocList)
         mapController.setCenter(geoPoint)
         mapController.setZoom(geoPoint.altitude)

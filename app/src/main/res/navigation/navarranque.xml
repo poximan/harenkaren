@@ -29,7 +29,7 @@
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.demo.fragment.register.RegisterFragment"
-        android:label="@string/nav_registerFragment"
+        android:label="@string/nav_register_fragment"
         tools:layout="@layout/fragment_register" />
     <fragment
         android:id="@+id/login_fragment"
@@ -39,6 +39,7 @@
     <fragment
         android:id="@+id/about_fragment"
         android:name="com.example.demo.fragment.info.AboutFragment"
+        android:label="@string/nav_about_fragment"
         tools:layout="@layout/fragment_about" />
     <fragment
         android:id="@+id/dev_fragment"

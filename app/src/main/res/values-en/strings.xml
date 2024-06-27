@@ -376,7 +376,8 @@
     <string name="nav_reportes_fragment">Reports</string>
     <string name="nav_ayuda_fragment">Help</string>
     <string name="nav_dev_fragment">For developer</string>
-    <string name="nav_registerFragment">Register</string>
+    <string name="nav_about_fragment">About</string>
+    <string name="nav_register_fragment">Register</string>
     <string name="nav_import_fragment">Import records</string>
     <string name="nav_export_fragment">Export records</string>
 

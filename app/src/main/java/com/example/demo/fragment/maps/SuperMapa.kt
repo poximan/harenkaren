@@ -8,7 +8,7 @@ abstract class SuperMapa {
 
     internal lateinit var geoPoint: GeoPoint
 
-    abstract fun resolverVisibilidad(unSocList: List<UnidSocial>)
+    abstract fun resolverVisibilidad(unSocList: List<UnidSocial>, atribString: String)
 
     internal fun puntoMedioPosiciones(unSocList: List<UnidSocial>): GeoPoint {
         val minLatitud = unSocList.minOf { it.latitud }

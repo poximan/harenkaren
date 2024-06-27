@@ -16,13 +16,10 @@ class MapCalorAdapter(webView: WebView, context: Context) : SuperMapa() {
     private val webView: WebView = webView
     private lateinit var atribString: String
 
-    fun configurar(atribString: String) {
-        this.atribString = atribString
-    }
-
-    override fun resolverVisibilidad(unSocList: List<UnidSocial>) {
+    override fun resolverVisibilidad(unSocList: List<UnidSocial>, atribString: String) {
         geoPoint = puntoMedioPosiciones(unSocList)
         geoPoint.altitude -= 2
+        this.atribString = atribString
 
         try {
             mostrarMapaCalor(unSocList)

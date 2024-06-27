@@ -133,7 +133,7 @@ class MapsFragment : Fragment() {
                             mensajeError()
                         else{
                             cambiarMenuLateral(it)
-                            mapota.resolverVisibilidad(it)
+                            mapota.resolverVisibilidad(it, selectedRadioButton!!.text.toString())
                         }
                     }
                 } catch (e: NumberFormatException) {
@@ -159,7 +159,6 @@ class MapsFragment : Fragment() {
         mapView.visibility = View.GONE
         webView.visibility = View.VISIBLE
         mapota = MapCalorAdapter(webView, requireContext())
-        (mapota as MapCalorAdapter).configurar(selectedRadioButton!!.text.toString())
     }
 
     private fun getInvolucrados(anio: Int, callback: (List<UnidSocial>) -> Unit) {
@@ -199,7 +198,7 @@ class MapsFragment : Fragment() {
                 selectedRadioButton?.isChecked = false
                 selectedRadioButton = radioButton
                 radioButton.isChecked = true
-                mapota.resolverVisibilidad(unSocList)
+                mapota.resolverVisibilidad(unSocList, selectedRadioButton!!.text.toString())
             }
             // Asignar el RadioButton como actionView del MenuItem
             menuItem.actionView = radioButton

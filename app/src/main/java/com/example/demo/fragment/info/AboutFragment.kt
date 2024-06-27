@@ -1,5 +1,7 @@
 package com.example.demo.fragment.info
 
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import android.graphics.text.LineBreaker
 import android.os.Build
 import android.os.Bundle
@@ -34,7 +36,7 @@ class AboutFragment : Fragment() {
             )
         binding.usodatos.text = Html.fromHtml(advertencia, Html.FROM_HTML_MODE_COMPACT)
 
-        binding.build.text = "Buiil: ${getCurrentDateString()}"
+        binding.build.text = "Build: ${getAppVersion().first}, ver.${getAppVersion().second}"
         return view
     }
 
@@ -48,9 +50,16 @@ class AboutFragment : Fragment() {
         }
     }
 
-    private fun getCurrentDateString(): String {
-        val calendar = Calendar.getInstance()
-        val dateFormat = SimpleDateFormat("yyyyMMdd")
-        return dateFormat.format(calendar.time)
+    fun getAppVersion(): Pair<String, Long> {
+        val context = requireContext()
+
+        val packageManager: PackageManager = context.packageManager
+        val packageName: String = context.packageName
+        val packageInfo: PackageInfo = packageManager.getPackageInfo(packageName, 0)
+
+        val versionName: String = packageInfo.versionName
+        val versionCode: Long = packageInfo.longVersionCode
+
+        return Pair(versionName, versionCode)
     }
 }
