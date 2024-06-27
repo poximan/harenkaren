@@ -1,18 +1,10 @@
 package com.example.demo.fragment.maps
 
-import android.app.AlertDialog
+import android.content.Context
 import android.graphics.Color
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.webkit.WebView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import com.example.demo.R
-import com.example.demo.activity.HomeActivity
 import com.example.demo.model.UnidSocial
 import org.osmdroid.api.IMapController
 import org.osmdroid.config.Configuration
@@ -24,31 +16,22 @@ import org.osmdroid.views.overlay.MapEventsOverlay
 import org.osmdroid.views.overlay.Marker
 import org.osmdroid.views.overlay.Polyline
 
-class OSMFragment : SuperMapa(), MapEventsReceiver {
+class MapOSMAdapter(mapView: MapView, context: Context) : SuperMapa(), MapEventsReceiver {
 
     private val colors = listOf(
         Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW, Color.MAGENTA, Color.CYAN
     )
 
-    private lateinit var mapView: MapView
-    private lateinit var webView: WebView
+    private val context = context
+
+    private val mapView: MapView = mapView
     private lateinit var mapController: IMapController
 
     private var polylines = mutableListOf<Polyline>()
     private var markers = mutableListOf<Marker>()
 
     // Método llamado cuando se crea la vista del fragmento
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val view = super.onCreateView(inflater, container, savedInstanceState)!!
-
-        webView = view.findViewById(R.id.webViewHeat)
-        mapView = view.findViewById(R.id.mapView)
-        webView.visibility = View.INVISIBLE
-        mapView.visibility = View.VISIBLE
+    fun configurar() {
 
         mapView.setTileSource(TileSourceFactory.MAPNIK)
         mapView.setBuiltInZoomControls(true)
@@ -64,51 +47,12 @@ class OSMFragment : SuperMapa(), MapEventsReceiver {
 
         // Establecer el agente de usuario para OSMDroid
         Configuration.getInstance().userAgentValue = "AGENTE_OSM_HARENKAREN"
-
-        return view
     }
 
-    override fun onResume() {
-        super.onResume()
-        mapView.onResume()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        mapView.onPause()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        mapView.clearAnimation()
-    }
-
-    private fun mensajeError() {
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle(getString(R.string.osm_noregTit))
-        builder.setMessage(R.string.osm_noregMsj)
-
-        builder.setPositiveButton(R.string.osm_noregMsjBtn) { _, _ -> }
-        builder.setNegativeButton(getString(R.string.varias_volver)) { _, _ ->
-            findNavController().navigateUp()
-        }
-        val dialog = builder.create()
-        dialog.show()
-    }
-
-    private fun findNavController(): NavController {
-        return (activity as HomeActivity).findNavController(R.id.navHostHome)
-    }
-
-    override fun resolverVisibilidad() {
-        val geoPoint: GeoPoint = puntoMedioPosiciones(unSocList)
-
+    override fun resolverVisibilidad(unSocList: List<UnidSocial>) {
+        geoPoint = puntoMedioPosiciones(unSocList)
         mapController.setCenter(geoPoint)
         mapController.setZoom(geoPoint.altitude)
-        mostrarMapaRecorridos(unSocList)
-    }
-
-    private fun mostrarMapaRecorridos(unSocList: List<UnidSocial>) {
 
         var routePoints = emptyList<GeoPoint>()
         var nvaPoli = 0
@@ -145,8 +89,8 @@ class OSMFragment : SuperMapa(), MapEventsReceiver {
             mapView.invalidate() // Actualizar la vista del mapa
             mapView.controller.setZoom(currentZoomLevel)
             mapView.controller.setCenter(startPoint) // Restaurar el centro del mapa
+
         } catch (e: NoSuchElementException) {
-            val context = requireContext()
             Toast.makeText(
                 context,
                 context.getString(R.string.osm_mostrar),
@@ -184,10 +128,10 @@ class OSMFragment : SuperMapa(), MapEventsReceiver {
         val punto = geo(unSoc)
         val marker = Marker(mapView)
         marker.position = punto
-        marker.icon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_marker)
+        marker.icon = ContextCompat.getDrawable(context, R.drawable.ic_marker)
 
         val infoWindow = BarCharInfoWindow(
-            requireContext(), unSoc,
+            context, unSoc,
             R.layout.fragment_osm_bubble, mapView
         )
 
@@ -215,7 +159,7 @@ class OSMFragment : SuperMapa(), MapEventsReceiver {
             val latitude = String.format("%.6f", geoPoint.latitude)
             val longitude = String.format("%.6f", geoPoint.longitude)
             val toastText = "Lat.: $latitude, Long.: $longitude"
-            Toast.makeText(requireContext(), toastText, Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show()
         }
         return true     // el evento ha sido manejado
     }

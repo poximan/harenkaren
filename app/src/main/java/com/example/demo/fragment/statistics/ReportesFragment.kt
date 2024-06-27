@@ -49,7 +49,7 @@ class ReportesFragment : Fragment() {
         _binding = FragmentReportesBinding.inflate(inflater, container, false)
 
         scrollView = binding.scrollReporte
-        webViewHeat = binding.webViewHeat
+        webViewHeat = binding.webViewRep
 
         return binding.root
     }

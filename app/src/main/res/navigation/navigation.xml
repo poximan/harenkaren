@@ -234,7 +234,7 @@
     </fragment>
     <fragment
         android:id="@+id/osm_fragment"
-        android:name="com.example.demo.fragment.maps.OSMFragment"
+        android:name="com.example.demo.fragment.maps.MapsFragment"
         android:label="@string/nav_osm_fragment"
         tools:layout="@layout/fragment_osm" />
     <fragment

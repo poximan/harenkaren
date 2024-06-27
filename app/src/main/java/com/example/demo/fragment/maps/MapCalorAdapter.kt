@@ -1,18 +1,41 @@
 package com.example.demo.fragment.maps
 
-import android.view.View
+import android.content.Context
 import android.webkit.WebSettings
 import android.webkit.WebView
+import android.widget.Toast
+import com.example.demo.R
 import com.example.demo.exception.MagNulaExcepcion
 import com.example.demo.model.UnidSocial
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import org.osmdroid.util.GeoPoint
 
-class MapaCalor(private val webView: WebView, private val geoPoint: GeoPoint) {
+class MapCalorAdapter(webView: WebView, context: Context) : SuperMapa() {
 
-    fun mostrarMapaCalor(unSocList: List<UnidSocial>, atribString: String) {
-        webView.visibility = View.VISIBLE
+    private val context = context
+    private val webView: WebView = webView
+    private lateinit var atribString: String
+
+    fun configurar(atribString: String) {
+        this.atribString = atribString
+    }
+
+    override fun resolverVisibilidad(unSocList: List<UnidSocial>) {
+        geoPoint = puntoMedioPosiciones(unSocList)
+        geoPoint.altitude -= 2
+
+        try {
+            mostrarMapaCalor(unSocList)
+        } catch (e: MagNulaExcepcion) {
+            Toast.makeText(
+                context,
+                context.getString(R.string.osm_categNula),
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }
+
+    private fun mostrarMapaCalor(unSocList: List<UnidSocial>) {
         val webSettings: WebSettings = webView.settings
         webSettings.javaScriptEnabled = true
 
@@ -24,6 +47,8 @@ class MapaCalor(private val webView: WebView, private val geoPoint: GeoPoint) {
             "UTF-8",
             null
         )
+        println(htmlContent)
+        println(webView)
     }
 
     private fun generarHTML(unSocList: List<UnidSocial>, atribString: String): String {
@@ -110,7 +135,6 @@ class MapaCalor(private val webView: WebView, private val geoPoint: GeoPoint) {
                 </body>
             </html>
         """.trimIndent()
-        println(staticHtmlIni + dynamicHtml + staticHtmlEnd)
         return staticHtmlIni + dynamicHtml + staticHtmlEnd
     }
 }
