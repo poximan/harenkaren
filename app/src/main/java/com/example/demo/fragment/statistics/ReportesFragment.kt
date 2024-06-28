@@ -1,13 +1,17 @@
 package com.example.demo.fragment.statistics
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.print.PrintAttributes
 import android.print.PrintManager
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
@@ -74,6 +78,10 @@ class ReportesFragment : Fragment() {
             printPdf()
         }
 
+        binding.fijarCuadro.setOnClickListener {
+            fijarCuadro()
+        }
+
         unSocDAO = HarenKarenRoomDatabase
             .getDatabase(requireContext(), viewLifecycleOwner.lifecycleScope)
             .unSocDao()
@@ -110,6 +118,25 @@ class ReportesFragment : Fragment() {
         val geoPoint: GeoPoint = puntoMedioPosiciones(unSocList)
         val mapaCalor = ReporteMapa(webViewHeat, geoPoint)
         mapaCalor.mostrarMapaCalor(unSocList)
+    }
+
+    private fun fijarCuadro() {
+        webViewHeat.webViewClient = object : WebViewClient() {
+            override fun onPageFinished(view: WebView?, url: String?) {
+                capturarContenidoWebView(webViewHeat) { bitmap ->
+                    binding.imgMapaCalor.setImageBitmap(bitmap)
+                }
+            }
+        }
+    }
+
+    private fun capturarContenidoWebView(webView: WebView, callback: (Bitmap) -> Unit) {
+        webView.evaluateJavascript("html2canvas(document.body).then(canvas => canvas.toDataURL('image/png')).then(dataURL => dataURL);") { dataURL ->
+            val base64Data = dataURL.removePrefix("\"data:image/png;base64,").removeSuffix("\"")
+            val decodedString = Base64.decode(base64Data, Base64.DEFAULT)
+            val bitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
+            callback(bitmap)
+        }
     }
 
     private fun contarCrias(unSocList: List<UnidSocial>) {

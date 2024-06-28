@@ -59,24 +59,42 @@
             android:textSize="18dp"
             android:text="@string/varias_area"
             android:gravity="center"/>
-        <WebView
-            android:id="@+id/webViewRep"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <WebView
+                android:id="@+id/webViewRep"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+            <ImageView
+                android:id="@+id/imgMapaCalor"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"/>
+        </LinearLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:gravity="center"
             android:layout_gravity="center">
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:text="@string/rep_crias"/>
             <TextView
                 android:id="@+id/crias"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:hint="#num"/>
+            <Button
+                android:id="@+id/fijarCuadro"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:text="Fijar cuadro"
+                android:textSize="8sp"/>
         </LinearLayout>
 
         <!-- resumen unidades sociales -->
