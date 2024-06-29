@@ -1,6 +1,5 @@
 package com.example.demo.fragment.statistics
 
-import android.webkit.WebSettings
 import android.webkit.WebView
 import com.example.demo.model.UnidSocial
 import com.google.gson.Gson
@@ -9,8 +8,6 @@ import org.osmdroid.util.GeoPoint
 class ReporteMapa(private val webView: WebView, private val geoPoint: GeoPoint) {
 
     fun mostrarMapaCalor(unSocList: List<UnidSocial>) {
-        val webSettings: WebSettings = webView.settings
-        webSettings.javaScriptEnabled = true
 
         val htmlContent = generarHTML(unSocList)
         webView.loadDataWithBaseURL(
@@ -43,7 +40,6 @@ class ReporteMapa(private val webView: WebView, private val geoPoint: GeoPoint) 
                 </head>
                 <body>
                     <div id="myDiv"></div>
-                    <button onclick="fijar()">Fijar cuadro</button>
                     """.trimIndent()
 
         val dynamicHtml = """
@@ -88,11 +84,13 @@ class ReporteMapa(private val webView: WebView, private val geoPoint: GeoPoint) 
                             displayModeBar: false
                         };
                         Plotly.newPlot("myDiv", data, layout, config);
-                        
+                     
                         function fijar() {
-                            Plotly.toImage('myDiv', {format: 'png'}).then(function(dataUrl) {
-                                Android.onImageCaptured(dataUrl);
-                            });
+                            var width = document.body.clientWidth;
+                            var height = document.body.clientHeight;
+                            
+                            Plotly.toImage(myDiv, {format: 'png', width: width, height: height})
+                                .then(function(dataUrl) { Android.onImageCaptured(dataUrl); });
                         }
                     </script>
                 </body>

@@ -60,7 +60,7 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
         super.onViewCreated(view, savedInstanceState)
 
         webViewHeat.settings.javaScriptEnabled = true
-        webViewHeat.addJavascriptInterface(JavaScriptInterface(this), "Android")
+        webViewHeat.addJavascriptInterface(JavaScriptInterface(this, requireActivity()), "Android")
 
         // Controla el scroll del ScrollView
         webViewHeat.setOnTouchListener { _, _ ->
@@ -80,7 +80,9 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
         }
 
         binding.fijarCuadro.setOnClickListener {
-            webViewHeat.evaluateJavascript("fijar()", null)
+            activity?.runOnUiThread {
+                webViewHeat.evaluateJavascript("fijar()", null)
+            }
         }
 
         unSocDAO = HarenKarenRoomDatabase
@@ -112,8 +114,8 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
     }
 
     override fun onImageCaptured(bitmap: Bitmap) {
-        binding.imgMapaCalor.visibility = View.VISIBLE
         binding.webViewRep.visibility = View.GONE
+        binding.imgMapaCalor.visibility = View.VISIBLE
         binding.imgMapaCalor.setImageBitmap(bitmap)
     }
 
