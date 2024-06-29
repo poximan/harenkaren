@@ -168,7 +168,7 @@ class DiaListFragment : SuperList(), DiaListAdapter.OnDiaClickListener {
         diaList!!.adapter = diaAdapter
 
         diaViewModel.getDias(args.anio) {
-            val sortedList = it.sortedBy { dia -> dia.fecha }
+            val sortedList = it.sortedBy { dia -> dia.orden }
             diaAdapter.setDia(sortedList)
         }
     }

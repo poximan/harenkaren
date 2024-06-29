@@ -16,7 +16,7 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
     private lateinit var appBarConfiguration: AppBarConfiguration
 
-    private lateinit var drawerLayout: DrawerLayout
+    lateinit var drawerLayout: DrawerLayout
     lateinit var navigationView: NavigationView
 
     private val mapaParesOrigenDestino: MutableMap<Int, Int> = mutableMapOf()

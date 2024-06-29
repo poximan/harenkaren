@@ -93,7 +93,7 @@
                 android:id="@+id/fijarCuadro"
                 android:layout_width="100dp"
                 android:layout_height="30dp"
-                android:text="Fijar cuadro"
+                android:text="@string/rep_fijar"
                 android:textSize="8sp"/>
         </LinearLayout>
 

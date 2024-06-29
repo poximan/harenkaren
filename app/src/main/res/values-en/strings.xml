@@ -111,6 +111,7 @@
 
     <!-- fragment_osm -->
     <string name="osm_mapacalor">Heat map</string>
+    <string name="osm_menu">See menu</string>
 
     <!-- fragment_pto_obs_unsoc -->
     <string name="pto_alto">High</string>
@@ -143,6 +144,7 @@
     <string name="rep_subtit">Southern elephant seal\nterrestrial survey</string>
     <string name="rep_observadores">Total number of participants:</string>
     <string name="rep_crias">Total babies counted:</string>
+    <string name="rep_fijar">Set box</string>
     <string name="rep_resUnSoc">Summary of social units</string>
     <string name="rep_resIndiv">Summary individuals</string>
 

@@ -43,6 +43,7 @@ class ReporteMapa(private val webView: WebView, private val geoPoint: GeoPoint) 
                 </head>
                 <body>
                     <div id="myDiv"></div>
+                    <button onclick="fijar()">Fijar cuadro</button>
                     """.trimIndent()
 
         val dynamicHtml = """
@@ -87,6 +88,12 @@ class ReporteMapa(private val webView: WebView, private val geoPoint: GeoPoint) 
                             displayModeBar: false
                         };
                         Plotly.newPlot("myDiv", data, layout, config);
+                        
+                        function fijar() {
+                            Plotly.toImage('myDiv', {format: 'png'}).then(function(dataUrl) {
+                                Android.onImageCaptured(dataUrl);
+                            });
+                        }
                     </script>
                 </body>
             </html>

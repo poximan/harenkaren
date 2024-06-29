@@ -9,10 +9,12 @@ import android.view.ViewGroup
 import android.webkit.WebView
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.CheckBox
 import android.widget.RadioButton
 import android.widget.Spinner
 import android.widget.Toast
+import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
@@ -34,6 +36,7 @@ class MapsFragment : Fragment() {
     private lateinit var mapView: MapView
     private lateinit var webView: WebView
     private lateinit var chkMapaCalor: CheckBox
+    private lateinit var botonMenu: Button
     private var selectedRadioButton: RadioButton? = null
 
     private lateinit var filtroAnio: Spinner
@@ -87,6 +90,10 @@ class MapsFragment : Fragment() {
 
         cambiarMenuLateral(emptyList())
         configCheckbox(view)
+        botonMenu = view.findViewById(R.id.boton_menu)
+        botonMenu.setOnClickListener {
+            (activity as? HomeActivity)?.drawerLayout?.openDrawer(GravityCompat.START)
+        }
         configSpinner()
     }
 

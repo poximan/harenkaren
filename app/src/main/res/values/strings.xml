@@ -117,6 +117,7 @@
 
     <!-- fragment_osm -->
     <string name="osm_mapacalor">Mapa calor</string>
+    <string name="osm_menu">Ver menu</string>
 
     <!-- fragment_pto_obs_unsoc -->
     <string name="pto_alto">Alto</string>
@@ -148,6 +149,7 @@
     <string name="rep_subtit">Relevamiento terrestre\nde elefante marino del sur</string>
     <string name="rep_observadores">Numero total de participantes:</string>
     <string name="rep_crias">Total crias contadas:</string>
+    <string name="rep_fijar">Fijar cuadro</string>
     <string name="rep_resUnSoc">Resumen de unidades sociales</string>
     <string name="rep_resIndiv">Resumen individuos</string>
 
