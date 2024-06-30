@@ -118,10 +118,11 @@
     <string name="pto_bajo">Low</string>
 
     <!-- fragment_recorr_add -->
-    <string name="rec_obsevador">Observer</string>
+    <string name="rec_observador">Observer</string>
     <string name="varias_area">Surveyed area</string>
     <string name="rec_meteo">Weather conditions</string>
     <string name="rec_marea">Tide state</string>
+    <string name="rec_observaciones">Observations</string>
 
     <!-- fragment_recorr_detail -->
     <string name="rec_editar">Edit</string>
@@ -354,9 +355,10 @@
     <!-- FechaOficial -->
     <string name="ofi_transformar">Invalid date</string>
 
-    <!-- FechaOficial -->
+    <!-- UsuarioViewModel -->
     <string name="usr_VMLoginNoExiste">No matches found for {email, password}</string>
     <string name="usr_VMLoginMultiple">Database inconsistency, multiple instances for {email, password}</string>
+    <string name="usr_VMLoginEsquema">The database schema has changed. It is necessary to redo from the "Development" menu</string>
 
     <!-- ****************************************************************** -->
     <!-- ****** componente navigation ************************************* -->

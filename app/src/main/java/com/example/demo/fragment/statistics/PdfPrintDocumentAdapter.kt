@@ -37,8 +37,8 @@ class PdfPrintDocumentAdapter(
         widthMils/1000: Convierte el tamaño del papel de milésimas de pulgada (como lo usa PrintAttributes) a pulgadas
         se multiplica por 72 para convierte el tamaño de pulgadas a puntos. En la tipografía, un punto (pt) es 1/72 de una pulgada.
          */
-        val widthMils = newAttributes.mediaSize!!.widthMils / 1000 * 72
-        val heightMils = newAttributes.mediaSize!!.heightMils / 1000 * 72
+        val widthMils = newAttributes.mediaSize!!.widthMils / 1000 * 108
+        val heightMils = newAttributes.mediaSize!!.heightMils / 1000 * 108
         val pageInfo = PdfDocument.PageInfo.Builder(widthMils, heightMils, 1).create()
 
         pageWidth = pageInfo.pageWidth

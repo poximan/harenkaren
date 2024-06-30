@@ -132,6 +132,7 @@ interface UnSocDAO {
                 "    recorrido.area_recorrida,\n" +
                 "    recorrido.meteo,\n" +
                 "    recorrido.marea,\n" +
+                "    recorrido.observaciones,\n" +
                 "    -- unidad social\n" +
                 "    unidsocial.id AS unsoc_id,\n" +
                 "    unidsocial.id_recorrido AS unsoc_id_recorr,\n" +

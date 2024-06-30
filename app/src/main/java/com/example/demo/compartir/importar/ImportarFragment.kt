@@ -129,6 +129,7 @@ class ImportarFragment : Fragment(), RegistroDistribuible, ListaImportable {
                 map["playa"]!!,
                 "meteo_desc",
                 marea,
+                map["tipo"]!!,
                 unidSocId,
                 recorrId,
                 map["orden"]!!.toInt(),

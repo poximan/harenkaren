@@ -86,10 +86,10 @@ class ReporteMapa(private val webView: WebView, private val geoPoint: GeoPoint) 
                         Plotly.newPlot("myDiv", data, layout, config);
                      
                         function fijar() {
-                            var width = document.body.clientWidth;
-                            var height = document.body.clientHeight;
+                            var ancho = window.innerWidth;
+                            var alto = window.innerHeight;
                             
-                            Plotly.toImage(myDiv, {format: 'png', width: width, height: height})
+                            Plotly.toImage(myDiv, {format: 'png', width: ancho, height: alto})
                                 .then(function(dataUrl) { Android.onImageCaptured(dataUrl); });
                         }
                     </script>

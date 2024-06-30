@@ -133,11 +133,7 @@ class UnSocAddVivosFragment : SuperAdd() {
                 if (!binding.vHembrasAd.text.isNullOrEmpty() &&
                     binding.vHembrasAd.text.toString().toInt() <= 1
                 ) {
-                    Toast.makeText(
-                        requireContext(),
-                        requireContext().getString(R.string.socv_vistaHaren),
-                        Toast.LENGTH_LONG
-                    ).show()
+                    aTostar(requireContext().getString(R.string.socv_vistaHaren))
                     binding.vHembrasAd.text = "".toEditable()
                 }
             }
@@ -145,76 +141,54 @@ class UnSocAddVivosFragment : SuperAdd() {
     }
 
     private fun vistaHarenSinAlfa() {
+        when (binding.root.findFocus()?.id) {
+            R.id.vAlfaS4Ad, R.id.vAlfaSams -> {
+                var contMacho = validarDominanteNulo(binding.vAlfaS4Ad, binding.vAlfaSams)
 
-        var contMachoDom = 0
-        var contMachoPerif = 0
+                if (contMacho > 0)
+                    aTostar(requireContext().getString(R.string.socv_vistaHarenSinAlfa1))
+            }
 
-        if (!binding.vAlfaS4Ad.text.isNullOrEmpty())
-            contMachoDom += binding.vAlfaS4Ad.text.toString().toInt()
-        if (!binding.vAlfaSams.text.isNullOrEmpty())
-            contMachoDom += binding.vAlfaSams.text.toString().toInt()
+            R.id.vS4AdPerif, R.id.vOtrosSamsPerif -> {
+                var contMacho = validarDominanteNulo(binding.vS4AdPerif, binding.vOtrosSamsPerif)
 
-        if (contMachoDom > 0)
-            Toast.makeText(
-                requireContext(),
-                requireContext().getString(R.string.socv_vistaHarenSinAlfa1),
-                Toast.LENGTH_LONG
-            ).show()
+                if (contMacho > 0)
+                    aTostar(requireContext().getString(R.string.socv_vistaHarenSinAlfa2))
+            }
 
-        if (!binding.vS4AdPerif.text.isNullOrEmpty())
-            contMachoPerif += binding.vOtrosSamsPerif.text.toString().toInt()
-        if (!binding.vOtrosSamsPerif.text.isNullOrEmpty())
-            contMachoPerif += binding.vOtrosSamsPerif.text.toString().toInt()
-
-        if (contMachoPerif > 0)
-            Toast.makeText(
-                requireContext(),
-                requireContext().getString(R.string.socv_vistaHarenSinAlfa2),
-                Toast.LENGTH_LONG
-            ).show()
+            R.id.vHembrasAd -> {
+                if (binding.vHembrasAd.text.isNullOrEmpty() ||
+                    binding.vHembrasAd.text.toString().toInt() <= 1
+                ) {
+                    aTostar(requireContext().getString(R.string.socv_vistaHarenSinAlfa3))
+                    forzarValor("", binding.vHembrasAd)
+                }
+            }
+        }
 
         forzarValor("0", binding.vAlfaS4Ad)
         forzarValor("0", binding.vAlfaSams)
         forzarValor("0", binding.vS4AdPerif)
         forzarValor("0", binding.vOtrosSamsPerif)
-
-        if (binding.vHembrasAd.text.isNullOrEmpty() ||
-            binding.vHembrasAd.text.toString().toInt() <= 1
-        ) {
-            Toast.makeText(
-                requireContext(),
-                requireContext().getString(R.string.socv_vistaHarenSinAlfa3),
-                Toast.LENGTH_LONG
-            ).show()
-            forzarValor("", binding.vHembrasAd)
-        }
     }
 
     private fun vistaGrupoHarenes() {
+        when (binding.root.findFocus()?.id) {
+            R.id.vAlfaS4Ad, R.id.vAlfaSams -> {
+                var contMacho = validarDominanteNulo(binding.vAlfaS4Ad, binding.vAlfaSams)
 
-        var contMacho = 0
+                if (contMacho <= 1)
+                    aTostar(requireContext().getString(R.string.socv_vistaGrupoHarenes1))
+            }
 
-        if (!binding.vAlfaS4Ad.text.isNullOrEmpty())
-            contMacho += binding.vAlfaS4Ad.text.toString().toInt()
-        if (!binding.vAlfaSams.text.isNullOrEmpty())
-            contMacho += binding.vAlfaSams.text.toString().toInt()
-
-        if (contMacho <= 1)
-            Toast.makeText(
-                requireContext(),
-                requireContext().getString(R.string.socv_vistaGrupoHarenes1),
-                Toast.LENGTH_LONG
-            ).show()
-
-        if (binding.vHembrasAd.text.isNullOrEmpty() ||
-            binding.vHembrasAd.text.toString().toInt() <= 1
-        ) {
-            Toast.makeText(
-                requireContext(),
-                requireContext().getString(R.string.socv_vistaGrupoHarenes2),
-                Toast.LENGTH_LONG
-            ).show()
-            forzarValor("", binding.vHembrasAd)
+            R.id.vHembrasAd -> {
+                if (binding.vHembrasAd.text.isNullOrEmpty() ||
+                    binding.vHembrasAd.text.toString().toInt() <= 1
+                ) {
+                    aTostar(requireContext().getString(R.string.socv_vistaGrupoHarenes2))
+                    forzarValor("", binding.vHembrasAd)
+                }
+            }
         }
     }
 
@@ -235,11 +209,7 @@ class UnSocAddVivosFragment : SuperAdd() {
             }
 
             R.id.vHembrasAd -> {
-                Toast.makeText(
-                    requireContext(),
-                    requireContext().getString(R.string.socv_vistaPjaSolitaria),
-                    Toast.LENGTH_LONG
-                ).show()
+                aTostar(requireContext().getString(R.string.socv_vistaPjaSolitaria))
             }
         }
         // para pareja solitaria, siempre hembra=1
@@ -247,20 +217,14 @@ class UnSocAddVivosFragment : SuperAdd() {
     }
 
     private fun vistaIndividuoSolo() {
-        var contMacho = 0
+        when (binding.root.findFocus()?.id) {
+            R.id.vAlfaS4Ad, R.id.vAlfaSams -> {
+                var contMacho = validarDominanteNulo(binding.vAlfaS4Ad, binding.vAlfaSams)
 
-        if (!binding.vAlfaS4Ad.text.isNullOrEmpty())
-            contMacho += binding.vAlfaS4Ad.text.toString().toInt()
-        if (!binding.vAlfaSams.text.isNullOrEmpty())
-            contMacho += binding.vAlfaSams.text.toString().toInt()
-
-        if (contMacho > 0)
-            Toast.makeText(
-                requireContext(),
-                requireContext().getString(R.string.socv_vistaIndividuoSolo),
-                Toast.LENGTH_LONG
-            ).show()
-
+                if (contMacho > 0)
+                    aTostar(requireContext().getString(R.string.socv_vistaIndividuoSolo))
+            }
+        }
         forzarValor("0", binding.vAlfaS4Ad)
         forzarValor("0", binding.vAlfaSams)
     }
@@ -288,18 +252,31 @@ class UnSocAddVivosFragment : SuperAdd() {
         }
 
         if (texto.isNotEmpty()) {
-            Toast.makeText(
-                requireContext(),
-                texto,
-                Toast.LENGTH_LONG
-            ).show()
+            aTostar(texto)
             forzarValor(valor, editTextPrimario)
         }
+    }
+
+    private fun validarDominanteNulo(primario: EditText, secundario: EditText): Int {
+        var contMacho = 0
+        if (!primario.text.isNullOrEmpty())
+            contMacho += primario.text.toString().toInt()
+        if (!secundario.text.isNullOrEmpty())
+            contMacho += secundario.text.toString().toInt()
+        return contMacho
     }
 
     private fun forzarValor(valor: String, categoria: EditText) {
         categoria.removeTextChangedListener(textWatcher)
         categoria.text = valor.toEditable()
         categoria.addTextChangedListener(textWatcher)
+    }
+
+    private fun aTostar(mensaje: String){
+        Toast.makeText(
+            requireContext(),
+            mensaje,
+            Toast.LENGTH_LONG
+        ).show()
     }
 }

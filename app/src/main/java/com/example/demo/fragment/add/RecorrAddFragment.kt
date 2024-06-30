@@ -87,6 +87,7 @@ class RecorrAddFragment : AddGralAbstract() {
         val areaRecorrida = binding.areaRecorr.text.toString()
         val meteo = binding.editTextMeteo.text.toString()
         val marea = binding.spinnerMarea.selectedItem.toString()
+        val observaciones = binding.observaciones.text.toString()
 
         if (latLonIni.lat == 0.0 || latLonIni.lon == 0.0)
             throw FaltaLatLongExcepcion(requireContext().getString(R.string.varias_validarGPS))
@@ -97,7 +98,7 @@ class RecorrAddFragment : AddGralAbstract() {
         return Recorrido(
             uuid, args.idDia, observador, fechaIni, "",
             latLonIni.lat, latLonIni.lon, 0.0, 0.0,
-            areaRecorrida, meteo, marea
+            areaRecorrida, meteo, marea, observaciones
         )
     }
 

@@ -5,8 +5,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.demo.R
 import com.example.demo.database.HarenKarenRoomDatabase
-import com.example.demo.exception.MultipleUsuarioException
-import com.example.demo.exception.NoExisteUsuarioException
+import com.example.demo.exception.MultipleUsuarioExcepcion
+import com.example.demo.exception.NoExisteUsuarioExcepcion
 import com.example.demo.fragment.login.UsuarioCallback
 import com.example.demo.model.Usuario
 import com.example.demo.repository.UsuarioRepository
@@ -39,10 +39,12 @@ class UsuarioViewModel(application: Application) : AndroidViewModel(application)
             repository.login(email, password) { usuario ->
                 callback.onLoginSuccess(usuario)
             }
-        } catch (e: NoExisteUsuarioException) {
+        } catch (e: NoExisteUsuarioExcepcion) {
             callback.onLoginFailure(context.getString(R.string.usr_VMLoginNoExiste))
-        } catch (e: MultipleUsuarioException) {
+        } catch (e: MultipleUsuarioExcepcion) {
             callback.onLoginFailure(context.getString(R.string.usr_VMLoginMultiple))
+        } catch (e: IllegalStateException) {
+            callback.onLoginFailure(context.getString(R.string.usr_VMLoginEsquema))
         }
     }
 

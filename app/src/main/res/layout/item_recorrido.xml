@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?attr/selectableItemBackground"
-    android:layout_margin="10dp"
+    android:layout_margin="5dp"
     android:orientation="horizontal">
 
     <TextView
@@ -21,19 +21,11 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical">
-
         <TextView
             android:id="@+id/text_resumen"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="resumen recorrido" />
-
-        <TextView
-            android:id="@+id/textViewTimestamp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="dd/mm/aa HH:mm:ss" />
-
     </LinearLayout>
 
     <ImageButton

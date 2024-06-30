@@ -37,7 +37,6 @@ class RecorrListAdapter(
 
         private val id: TextView = view.findViewById(R.id.num_recorr)
         private val resumen: TextView = view.findViewById(R.id.text_resumen)
-        private val fecha: TextView = view.findViewById(R.id.textViewTimestamp)
         private val icono: ImageView = view.findViewById(R.id.grafRecorr)
 
         init {
@@ -54,12 +53,12 @@ class RecorrListAdapter(
 
             id.text = recorrido.orden.toString()
             resumen.text = """
-                ${context.getString(R.string.rec_obsevador)}: ${recorrido.observador}
+                ${context.getString(R.string.rec_observador)}: ${recorrido.observador}
                 ${context.getString(R.string.varias_area)}: ${recorrido.areaRecorrida}
                 ${context.getString(R.string.rec_meteo)}: ${recorrido.meteo}
                 ${context.getString(R.string.rec_marea)}: ${recorrido.marea}
+                ${context.getString(R.string.rec_observaciones)}: ${recorrido.observaciones}
             """.trimIndent()
-            fecha.text = "${context.getString(R.string.rec_horaini)}: ${recorrido.fechaIni}"
         }
     }
 

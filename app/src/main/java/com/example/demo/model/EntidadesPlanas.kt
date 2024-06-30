@@ -24,6 +24,7 @@ data class EntidadesPlanas(
     val area_recorrida: String,
     val meteo: String,
     val marea: String,
+    val observaciones: String,
     /* unidad social */
     val unsoc_id: UUID,
     var unsoc_id_recorr: UUID,
@@ -81,6 +82,7 @@ data class EntidadesPlanas(
         parcel.readDouble(),
         parcel.readDouble(),
         parcel.readDouble(),
+        parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
@@ -144,6 +146,7 @@ data class EntidadesPlanas(
         parcel.writeString(area_recorrida)
         parcel.writeString(meteo)
         parcel.writeString(marea)
+        parcel.writeString(observaciones)
         /* unidad social */
         parcel.writeString(unsoc_id.toString())
         parcel.writeString(unsoc_id_recorr.toString())
@@ -205,7 +208,8 @@ data class EntidadesPlanas(
             longitudFin = recorr_longitud_fin,
             area_recorrida,
             meteo,
-            marea
+            marea,
+            observaciones
         )
     }
 

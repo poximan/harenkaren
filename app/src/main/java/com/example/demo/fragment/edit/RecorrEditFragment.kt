@@ -46,6 +46,7 @@ class RecorrEditFragment : EditGralAbstract() {
         binding.editObservador.text = args.recorrActual.observador.toEditable()
         binding.areaRecorr.text = args.recorrActual.areaRecorrida.toEditable()
         binding.meteo.text = args.recorrActual.meteo.toEditable()
+        binding.observaciones.text = args.recorrActual.observaciones.toEditable()
 
         val indice = obtenerPosicionSpinner(args.recorrActual.marea, binding.spinnerMarea)
         binding.spinnerMarea.setSelection(indice)
@@ -78,6 +79,7 @@ class RecorrEditFragment : EditGralAbstract() {
             binding.editObservador.isEnabled = isChecked
             binding.areaRecorr.isEnabled = isChecked
             binding.meteo.isEnabled = isChecked
+            binding.observaciones.isEnabled = isChecked
             binding.spinnerMarea.isEnabled = isChecked
             binding.getPosicionFin.isEnabled = isChecked
             binding.confirmarButton.isEnabled = isChecked
@@ -107,6 +109,7 @@ class RecorrEditFragment : EditGralAbstract() {
 
         args.recorrActual.areaRecorrida = binding.areaRecorr.text.toString()
         args.recorrActual.meteo = binding.meteo.text.toString()
+        args.recorrActual.observaciones = binding.observaciones.text.toString()
         args.recorrActual.marea = binding.spinnerMarea.selectedItem.toString()
 
         model!!.update(args.recorrActual)

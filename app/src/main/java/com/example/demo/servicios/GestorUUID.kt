@@ -2,7 +2,7 @@ package com.example.demo.servicios
 
 import android.provider.Settings
 import com.example.demo.activity.MainActivity
-import com.example.demo.exception.UUIDRepetidoException
+import com.example.demo.exception.UUIDRepetidoExcepcion
 import java.util.UUID
 
 class GestorUUID {
@@ -22,7 +22,7 @@ class GestorUUID {
             if (actual != ultimo)
                 ultimo = actual
             else
-                throw UUIDRepetidoException()
+                throw UUIDRepetidoExcepcion()
             return ultimo
         }
     }

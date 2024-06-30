@@ -58,7 +58,9 @@ data class Recorrido(
 
     var meteo: String,
 
-    var marea: String
+    var marea: String,
+
+    var observaciones: String
 
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
@@ -79,6 +81,7 @@ data class Recorrido(
         parcel.readValue(Double::class.java.classLoader) as Double,
         parcel.readString().toString(),
         parcel.readString().toString(),
+        parcel.readString().toString(),
         parcel.readString().toString()
     )
 
@@ -95,11 +98,12 @@ data class Recorrido(
         longitudFin: Double,
         areaRecorrida: String,
         meteo: String,
-        marea: String
+        marea: String,
+        observaciones: String
     ) : this(
         id, diaId, 0, observador, fechaIni, fechaFin,
         latitudIni, longitudIni, latitudFin, longitudFin,
-        areaRecorrida, meteo, marea
+        areaRecorrida, meteo, marea, observaciones
     )
 
     override fun describeContents(): Int {
@@ -125,6 +129,7 @@ data class Recorrido(
         parcel.writeString(areaRecorrida)
         parcel.writeString(meteo)
         parcel.writeString(marea)
+        parcel.writeString(observaciones)
     }
 
     companion object CREATOR : Parcelable.Creator<Recorrido> {

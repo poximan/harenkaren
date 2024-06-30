@@ -124,9 +124,10 @@
     <string name="pto_bajo">Bajo</string>
 
     <!-- fragment_recorr_add -->
-    <string name="rec_obsevador">Observador</string>
+    <string name="rec_observador">Observador</string>
     <string name="rec_meteo">Cond. climaticas</string>
     <string name="rec_marea">Estado de la marea</string>
+    <string name="rec_observaciones">Observaciones</string>
 
     <!-- fragment_recorr_detail -->
     <string name="rec_editar">Editar</string>
@@ -359,9 +360,10 @@
     <!-- FechaOficial -->
     <string name="ofi_transformar">Fecha inválida</string>
 
-    <!-- FechaOficial -->
+    <!-- UsuarioViewModel -->
     <string name="usr_VMLoginNoExiste">No se encontraron coincidencias para {email, contraseña}</string>
     <string name="usr_VMLoginMultiple">Inconsistencia BD, instancia multiple para {email, contraseña}</string>
+    <string name="usr_VMLoginEsquema">El esquema de base de datos ha cambiado. Es necesario rehacer desde menu "Desarrollo"</string>
 
     <!-- ****************************************************************** -->
     <!-- ****** componente navigation ************************************* -->
