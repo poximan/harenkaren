@@ -40,6 +40,11 @@ interface RecorrDAO {
     )
     fun getFechaObservada(idDia: UUID): String
 
+    @Query("""
+       SELECT * FROM recorrido WHERE substr(fecha_ini, 0, 5) = :anio 
+    """)
+    fun getAllPorAnio(anio: String): List<Recorrido>
+
     /*
    cuando se da de alta una entidad que no existio nunca en este ni en ningun
    otro dispositivo, se usa insertConUUID(elem) para asignar UUID unico.

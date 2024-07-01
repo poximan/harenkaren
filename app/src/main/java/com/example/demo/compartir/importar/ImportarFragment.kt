@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.example.demo.R
 import com.example.demo.database.HarenKarenRoomDatabase
 import com.example.demo.databinding.FragmentImportarBinding
@@ -122,10 +123,10 @@ class ImportarFragment : Fragment(), RegistroDistribuible, ListaImportable {
                 "observador_desc",
                 fechaTransformada,
                 fechaTransformada,
-                lat0,
-                lon0,
-                lat0,
-                lon0,
+                lat0+0.004,
+                lon0+0.004,
+                lat0+0.004,
+                lon0+0.004,
                 map["playa"]!!,
                 "meteo_desc",
                 marea,
@@ -225,6 +226,7 @@ class ImportarFragment : Fragment(), RegistroDistribuible, ListaImportable {
         builder.setMessage(texto)
         builder.setPositiveButton("OK") { dialog, _ ->
             dialog.dismiss()
+            findNavController().navigateUp()
         }
         val dialog = builder.create()
         dialog.show()

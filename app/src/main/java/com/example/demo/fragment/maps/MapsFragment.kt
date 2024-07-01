@@ -21,9 +21,9 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.example.demo.R
 import com.example.demo.activity.HomeActivity
-import com.example.demo.dao.UnSocDAO
 import com.example.demo.database.HarenKarenRoomDatabase
 import com.example.demo.model.UnidSocial
+import com.example.demo.repository.RecorrRepository
 import com.google.android.material.navigation.NavigationView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -41,8 +41,6 @@ class MapsFragment : Fragment() {
 
     private lateinit var filtroAnio: Spinner
     private var anios: MutableList<String> = mutableListOf()
-
-    private lateinit var unSocDAO: UnSocDAO
 
     private lateinit var mapota: SuperMapa
 
@@ -83,10 +81,6 @@ class MapsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        unSocDAO = HarenKarenRoomDatabase
-            .getDatabase(requireActivity().application, viewLifecycleOwner.lifecycleScope)
-            .unSocDao()
 
         cambiarMenuLateral(emptyList())
         configCheckbox(view)
@@ -170,14 +164,26 @@ class MapsFragment : Fragment() {
 
     private fun getInvolucrados(anio: Int, callback: (List<UnidSocial>) -> Unit) {
         var unSocList: List<UnidSocial>
+        var unSocMutante: List<UnidSocial>
+
+        val unSocDAO = HarenKarenRoomDatabase
+            .getDatabase(requireActivity().application, viewLifecycleOwner.lifecycleScope)
+            .unSocDao()
+        val recorrDAO = HarenKarenRoomDatabase
+            .getDatabase(requireActivity().application, viewLifecycleOwner.lifecycleScope)
+            .recorrDao()
+        val recorrRepo = RecorrRepository(recorrDAO)
+
         // ---------> HILO BACKGOUND
         CoroutineScope(Dispatchers.IO).launch {
             unSocList =
                 unSocDAO.getAllPorAnio(anio.toString())
                     .sortedWith(compareBy({ it.recorrId }, { it.orden }))
+            unSocMutante =
+                recorrRepo.getAllPorAnio(anio.toString(), unSocList)
 
             withContext(Dispatchers.Main) {
-                callback(unSocList)
+                callback(unSocMutante)
             }
         }
     }

@@ -50,7 +50,6 @@ class MTUClienteWF(private val callback: RegistroDistribuible) {
                 val progress = bytesRead / 1024f
 
                 withContext(Dispatchers.Main) {
-                    Log.i(TAG, progress.toString())
                     callback.progreso(progress)
                 }
             }

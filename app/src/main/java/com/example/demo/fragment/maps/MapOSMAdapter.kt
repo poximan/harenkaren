@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.example.demo.R
 import com.example.demo.model.UnidSocial
+import com.example.demo.repository.RecorrRepository
 import org.osmdroid.api.IMapController
 import org.osmdroid.config.Configuration
 import org.osmdroid.events.MapEventsReceiver
@@ -128,22 +129,26 @@ class MapOSMAdapter(mapView: MapView, context: Context) : SuperMapa(), MapEvents
         val punto = geo(unSoc)
         val marker = Marker(mapView)
         marker.position = punto
-        marker.icon = ContextCompat.getDrawable(context, R.drawable.ic_marker)
 
-        val infoWindow = BarCharInfoWindow(
-            context, unSoc,
-            R.layout.fragment_osm_bubble, mapView
-        )
+        if(unSoc.comentario != RecorrRepository.EXTREMOS_GPS){
+            marker.icon = ContextCompat.getDrawable(context, R.drawable.ic_marker)
 
-        marker.setOnMarkerClickListener { _, _ ->
-            if (infoWindow.isOpen) {
-                infoWindow.close()
-            } else {
-                marker.showInfoWindow()
+            val infoWindow = BarCharInfoWindow(
+                context, unSoc,
+                R.layout.fragment_osm_bubble, mapView
+            )
+            marker.setOnMarkerClickListener { _, _ ->
+                if (infoWindow.isOpen) {
+                    infoWindow.close()
+                } else {
+                    marker.showInfoWindow()
+                }
+                true
             }
-            true
-        }
-        marker.infoWindow = infoWindow
+            marker.infoWindow = infoWindow
+        } else
+            ContextCompat.getDrawable(context, R.drawable.ic_extremos)
+
         mapView.overlays.add(marker)
         markers.add(marker)
     }
