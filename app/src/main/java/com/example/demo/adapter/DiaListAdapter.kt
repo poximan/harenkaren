@@ -25,7 +25,7 @@ class DiaListAdapter(
 
     override fun onBindViewHolder(holder: DiaViewHolder, position: Int) {
         val dia = diaList[position]
-        holder.numDia.text = (position+1).toString()
+        holder.numDia.text = (position + 1).toString()
         holder.timestamp.text = dia.fecha
         holder.deleteButton.setOnClickListener {
             itemListener.onDeleteClick(dia)

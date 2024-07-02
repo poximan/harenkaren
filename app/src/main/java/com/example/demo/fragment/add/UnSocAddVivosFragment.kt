@@ -272,7 +272,7 @@ class UnSocAddVivosFragment : SuperAdd() {
         categoria.addTextChangedListener(textWatcher)
     }
 
-    private fun aTostar(mensaje: String){
+    private fun aTostar(mensaje: String) {
         Toast.makeText(
             requireContext(),
             mensaje,

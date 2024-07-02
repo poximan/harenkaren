@@ -99,8 +99,10 @@ class HomeFragment : Fragment() {
             val startDate = dateFormatter.format(startCalendar.time)
 
             // fecha de fin con fecha mínima establecida en funcion de inicio
-            val endDatePicker = DatePickerDialog(requireContext(), null, startYear, startMonth, startDay)
-            endDatePicker.datePicker.minDate = startCalendar.timeInMillis // Establecer la fecha mínima
+            val endDatePicker =
+                DatePickerDialog(requireContext(), null, startYear, startMonth, startDay)
+            endDatePicker.datePicker.minDate =
+                startCalendar.timeInMillis // Establecer la fecha mínima
 
             endDatePicker.setTitle(R.string.hom_fechaHasta)
             endDatePicker.setOnDateSetListener { _, endYear, endMonth, endDay ->

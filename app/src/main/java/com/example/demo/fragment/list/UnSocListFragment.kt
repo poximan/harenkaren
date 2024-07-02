@@ -167,12 +167,13 @@ class UnSocListFragment : SuperList(), UnSocListAdapter.OnUnSocClickListener {
         unSocList!!.adapter = unSocAdapter
 
         CoroutineScope(Dispatchers.IO).launch {
-            try{
+            try {
                 val unSocListAsync = unSocViewModel.readConFK(args.idRecorrido)
                 withContext(Dispatchers.Main) {
                     unSocAdapter.setUnSoc(unSocListAsync)
                 }
-            } catch (e: ConcurrentModificationException){}
+            } catch (e: ConcurrentModificationException) {
+            }
         }
     }
 
@@ -188,7 +189,8 @@ class UnSocListFragment : SuperList(), UnSocListAdapter.OnUnSocClickListener {
                     val filteredList = remove(unSocListAsync, date)
                     unSocAdapter.setUnSoc(filteredList)
                 }
-            } catch (e: ConcurrentModificationException){}
+            } catch (e: ConcurrentModificationException) {
+            }
         }
     }
 

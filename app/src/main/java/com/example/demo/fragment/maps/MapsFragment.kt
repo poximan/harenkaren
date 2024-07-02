@@ -100,7 +100,7 @@ class MapsFragment : Fragment() {
 
     private fun configCheckbox(view: View) {
         chkMapaCalor.setOnCheckedChangeListener { _, ischeck ->
-            if(selectedRadioButton != null){
+            if (selectedRadioButton != null) {
 
                 if (ischeck) mapaSecundario()
                 else mapaPorDefecto()
@@ -119,7 +119,7 @@ class MapsFragment : Fragment() {
         mapaPorDefecto()
     }
 
-    private fun configSpinner(){
+    private fun configSpinner() {
         filtroAnio.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>,
@@ -130,9 +130,9 @@ class MapsFragment : Fragment() {
                 try {
                     val anioSeleccionado = anios[position].toInt()
                     getInvolucrados(anioSeleccionado) {
-                        if(it.isNullOrEmpty())
+                        if (it.isNullOrEmpty())
                             mensajeError()
-                        else{
+                        else {
                             cambiarMenuLateral(it)
                             mapota.resolverVisibilidad(it, selectedRadioButton!!.text.toString())
                         }
@@ -145,6 +145,7 @@ class MapsFragment : Fragment() {
                     ).show()
                 }
             }
+
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
     }
@@ -212,7 +213,7 @@ class MapsFragment : Fragment() {
             }
             // Asignar el RadioButton como actionView del MenuItem
             menuItem.actionView = radioButton
-            if(i == 0){
+            if (i == 0) {
                 radioButton.isChecked = true
                 selectedRadioButton = radioButton
             }

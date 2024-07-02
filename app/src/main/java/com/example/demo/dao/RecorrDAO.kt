@@ -40,9 +40,11 @@ interface RecorrDAO {
     )
     fun getFechaObservada(idDia: UUID): String
 
-    @Query("""
+    @Query(
+        """
        SELECT * FROM recorrido WHERE substr(fecha_ini, 0, 5) = :anio 
-    """)
+    """
+    )
     fun getAllPorAnio(anio: String): List<Recorrido>
 
     /*

@@ -24,11 +24,13 @@ interface UnSocDAO {
     @Query("SELECT * FROM unidsocial WHERE unidsocial.id_recorrido = :idRecorrido")
     fun getUnSocByRecorrId(idRecorrido: UUID): List<UnidSocial>
 
-    @Query("""
+    @Query(
+        """
         SELECT *
         FROM unidsocial
         WHERE substr(date, 0, 5) = :anio AND unidsocial.id_recorrido = :idRecorr  
-    """)
+    """
+    )
     fun getAllPorAnio(anio: String, idRecorr: UUID): List<UnidSocial>
 
     @Query(

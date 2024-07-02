@@ -56,18 +56,18 @@ class RecorrRepository(private val dao: RecorrDAO) {
         val uuidgenerico = GestorUUID.obtenerUUID()
         val recorrList = dao.getAllPorAnio(anio)
 
-        for(punto in recorrList){
+        for (punto in recorrList) {
 
             val unSocList =
                 unSocDAO.getAllPorAnio(anio, punto.id)
                     .sortedWith(compareBy({ it.recorrId }, { it.orden }))
 
-            val unidInicio = UnidSocial(uuidgenerico, punto.id,"")
+            val unidInicio = UnidSocial(uuidgenerico, punto.id, "")
             unidInicio.latitud = punto.latitudIni
             unidInicio.longitud = punto.longitudIni
             unidInicio.comentario = EXTREMOS_GPS
 
-            val unidFin = UnidSocial(uuidgenerico, punto.id,"")
+            val unidFin = UnidSocial(uuidgenerico, punto.id, "")
             unidFin.latitud = punto.latitudFin
             unidFin.longitud = punto.longitudFin
             unidFin.comentario = EXTREMOS_GPS

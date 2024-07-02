@@ -2,7 +2,6 @@ package com.example.demo.fragment.statistics
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.Canvas
 import android.os.Bundle
 import android.print.PrintAttributes
 import android.print.PrintManager
@@ -315,8 +314,8 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
     private fun getInvolucrados(rangoFechas: String, callback: (List<UnidSocial>) -> Unit) {
         var unSocList: List<UnidSocial>
 
-        val desde = rangoFechas.split(" ")[0]+" 00:00:00"
-        val hasta = rangoFechas.split(" ")[1]+" 23:59:59"
+        val desde = rangoFechas.split(" ")[0] + " 00:00:00"
+        val hasta = rangoFechas.split(" ")[1] + " 23:59:59"
 
         // ---------> HILO BACKGOUND
         CoroutineScope(Dispatchers.IO).launch {

@@ -5,7 +5,10 @@ import android.graphics.BitmapFactory
 import android.util.Base64
 import android.webkit.JavascriptInterface
 
-class JavaScriptInterface(private val listener: OnImageCapturedListener, private val activity: Activity) {
+class JavaScriptInterface(
+    private val listener: OnImageCapturedListener,
+    private val activity: Activity
+) {
     @JavascriptInterface
     fun onImageCaptured(dataUrl: String) {
         val base64Image = dataUrl.split(",")[1]
