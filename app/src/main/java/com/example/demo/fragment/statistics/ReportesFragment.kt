@@ -90,6 +90,7 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
 
         getInvolucrados(args.rangoFechas) {
             if (it.isNotEmpty()) {
+                rangoFechas()
                 participantes(it)
                 completarMapa(it)
                 contarCrias(it)
@@ -116,6 +117,10 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
         binding.webViewRep.visibility = View.GONE
         binding.imgMapaCalor.visibility = View.VISIBLE
         binding.imgMapaCalor.setImageBitmap(bitmap)
+    }
+
+    private fun rangoFechas() {
+        binding.rangoFechas.text = args.rangoFechas
     }
 
     private fun participantes(unSocList: List<UnidSocial>) {
