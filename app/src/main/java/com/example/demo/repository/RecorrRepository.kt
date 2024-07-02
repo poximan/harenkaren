@@ -3,6 +3,7 @@ package com.example.demo.repository
 import android.content.Context
 import androidx.lifecycle.LiveData
 import com.example.demo.dao.RecorrDAO
+import com.example.demo.dao.UnSocDAO
 import com.example.demo.model.Recorrido
 import com.example.demo.model.UnidSocial
 import com.example.demo.servicios.GestorUUID
@@ -49,24 +50,30 @@ class RecorrRepository(private val dao: RecorrDAO) {
         return dao.getFechaObservada(idDia)
     }
 
-    fun getAllPorAnio(anio: String, unSocList: List<UnidSocial>): List<UnidSocial> {
+    fun getAllPorAnio(anio: String, unSocDAO: UnSocDAO): List<UnidSocial> {
 
-        val unSocMutante = unSocList.toMutableList()
+        val unSocMutante = mutableListOf<UnidSocial>()
         val uuidgenerico = GestorUUID.obtenerUUID()
-        val recorrExtremos = dao.getAllPorAnio(anio)
+        val recorrList = dao.getAllPorAnio(anio)
 
-        for(punto in recorrExtremos){
+        for(punto in recorrList){
+
+            val unSocList =
+                unSocDAO.getAllPorAnio(anio, punto.id)
+                    .sortedWith(compareBy({ it.recorrId }, { it.orden }))
 
             val unidInicio = UnidSocial(uuidgenerico, punto.id,"")
             unidInicio.latitud = punto.latitudIni
             unidInicio.longitud = punto.longitudIni
             unidInicio.comentario = EXTREMOS_GPS
-            unSocMutante.add(0, unidInicio)
 
             val unidFin = UnidSocial(uuidgenerico, punto.id,"")
             unidFin.latitud = punto.latitudFin
             unidFin.longitud = punto.longitudFin
             unidFin.comentario = EXTREMOS_GPS
+
+            unSocMutante.add(unidInicio)
+            unSocMutante.addAll(unSocList)
             unSocMutante.add(unidFin)
         }
         return unSocMutante

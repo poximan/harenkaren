@@ -176,11 +176,8 @@ class MapsFragment : Fragment() {
 
         // ---------> HILO BACKGOUND
         CoroutineScope(Dispatchers.IO).launch {
-            unSocList =
-                unSocDAO.getAllPorAnio(anio.toString())
-                    .sortedWith(compareBy({ it.recorrId }, { it.orden }))
             unSocMutante =
-                recorrRepo.getAllPorAnio(anio.toString(), unSocList)
+                recorrRepo.getAllPorAnio(anio.toString(), unSocDAO)
 
             withContext(Dispatchers.Main) {
                 callback(unSocMutante)
