@@ -28,6 +28,27 @@
                 android:src="@drawable/ic_print" />
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:minHeight="80dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="25dp"
+                android:layout_weight="1"
+                android:text="logo1"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="25dp"
+                android:layout_weight="1"
+                android:text="logo2"/>
+        </LinearLayout>
+
+        <!-- titulo -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -35,21 +56,41 @@
             android:text="@string/rep_subtit"
             android:gravity="center"/>
 
-        <!-- participantes -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_marginVertical="16dp">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/rep_observadores"/>
-            <TextView
-                android:id="@+id/participantes"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="#num"/>
+            <!-- rango fechas -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/rep_rangofecha"/>
+                <TextView
+                    android:id="@+id/rango_fechas"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="fechas"/>
+            </LinearLayout>
+            <!-- participantes -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/rep_observadores"/>
+                <TextView
+                    android:id="@+id/participantes"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="#num"/>
+            </LinearLayout>
         </LinearLayout>
 
         <!-- area relevada -->

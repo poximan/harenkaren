@@ -142,7 +142,8 @@
     <string name="reg_registrar">Register</string>
 
     <!-- fragment_reportes -->
-    <string name="rep_subtit">Southern elephant seal\nterrestrial survey</string>
+    <string name="rep_subtit">Southern elephant seal\npopulation survey</string>
+    <string name="rep_rangofecha">Date range:</string>
     <string name="rep_observadores">Total number of participants:</string>
     <string name="rep_crias">Total babies counted:</string>
     <string name="rep_fijar">Set box</string>
