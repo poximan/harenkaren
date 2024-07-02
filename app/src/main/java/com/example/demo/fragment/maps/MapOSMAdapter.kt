@@ -147,7 +147,7 @@ class MapOSMAdapter(mapView: MapView, context: Context) : SuperMapa(), MapEvents
             }
             marker.infoWindow = infoWindow
         } else
-            ContextCompat.getDrawable(context, R.drawable.ic_extremos)
+            marker.icon = ContextCompat.getDrawable(context, R.drawable.ic_extremos)
 
         mapView.overlays.add(marker)
         markers.add(marker)
