@@ -1,6 +1,7 @@
 package com.example.demo.fragment.statistics
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.print.PrintAttributes
@@ -9,11 +10,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
-import android.widget.LinearLayout
+import android.widget.ImageView
 import android.widget.ScrollView
-import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
@@ -26,13 +26,16 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.eazegraph.lib.charts.PieChart
-import org.eazegraph.lib.models.PieModel
 import org.osmdroid.util.GeoPoint
 import java.util.UUID
 import kotlin.math.abs
 
 class ReportesFragment : Fragment(), OnImageCapturedListener {
+
+    object DbConstants {
+        const val PERMISSION_REQUEST_PICK_IMAGE1 = 6
+        const val PERMISSION_REQUEST_PICK_IMAGE2 = 7
+    }
 
     private lateinit var unSocDAO: UnSocDAO
 
@@ -43,6 +46,11 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
     private lateinit var scrollView: ScrollView
     private lateinit var webViewHeat: WebView
 
+    private lateinit var logo1: ImageView
+    private lateinit var logo2: ImageView
+
+    private lateinit var webViewTorta: WebView
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -52,14 +60,25 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
         scrollView = binding.scrollReporte
         webViewHeat = binding.webViewRep
 
+        webViewHeat.settings.javaScriptEnabled = true
+        webViewHeat.addJavascriptInterface(JavaScriptInterface(this, requireActivity()), "Android")
+
+        logo1 = binding.logo1
+        logo2 = binding.logo2
+
+        binding.rangoFechas.text = " " + args.rangoFechas
+
+        unSocDAO = HarenKarenRoomDatabase
+            .getDatabase(requireContext(), viewLifecycleOwner.lifecycleScope)
+            .unSocDao()
+
+        webViewTorta = binding.webViewTorta
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        webViewHeat.settings.javaScriptEnabled = true
-        webViewHeat.addJavascriptInterface(JavaScriptInterface(this, requireActivity()), "Android")
 
         // Controla el scroll del ScrollView
         webViewHeat.setOnTouchListener { _, _ ->
@@ -74,6 +93,14 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
             false
         }
 
+        logo1.setOnClickListener {
+            openFileChooser(DbConstants.PERMISSION_REQUEST_PICK_IMAGE1)
+        }
+
+        logo2.setOnClickListener {
+            openFileChooser(DbConstants.PERMISSION_REQUEST_PICK_IMAGE2)
+        }
+
         binding.imprimirPdf.setOnClickListener {
             printPdf()
         }
@@ -84,13 +111,8 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
             }
         }
 
-        unSocDAO = HarenKarenRoomDatabase
-            .getDatabase(requireContext(), viewLifecycleOwner.lifecycleScope)
-            .unSocDao()
-
         getInvolucrados(args.rangoFechas) {
             if (it.isNotEmpty()) {
-                rangoFechas()
                 participantes(it)
                 completarMapa(it)
                 contarCrias(it)
@@ -99,8 +121,7 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
                 tabFilaHarenSin(it)
                 tabFilaPjaSolit(it)
                 tabFilaIndivSolo(it)
-                val reduccion = reducir(it)
-                graficar(reduccion)
+                graficar(it)
             } else {
                 val mensaje = getString(R.string.rep_rangoVacio) + " " + args.rangoFechas
                 Toast.makeText(requireContext(), mensaje, Toast.LENGTH_SHORT).show()
@@ -117,10 +138,6 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
         binding.webViewRep.visibility = View.GONE
         binding.imgMapaCalor.visibility = View.VISIBLE
         binding.imgMapaCalor.setImageBitmap(bitmap)
-    }
-
-    private fun rangoFechas() {
-        binding.rangoFechas.text = args.rangoFechas
     }
 
     private fun participantes(unSocList: List<UnidSocial>) {
@@ -154,7 +171,7 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
         binding.tablePart.promHaren.text = if (total != 0) {
             (promedio / total).toString()
         } else {
-            getString(R.string.rep_tabNoAplica)
+            "-"
         }
     }
 
@@ -172,7 +189,7 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
         binding.tablePart.promGpoharen.text = if (total != 0) {
             (promedio / total).toString()
         } else {
-            getString(R.string.rep_tabNoAplica)
+            "-"
         }
     }
 
@@ -190,7 +207,7 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
         binding.tablePart.promHarensin.text = if (total != 0) {
             (promedio / total).toString()
         } else {
-            getString(R.string.rep_tabNoAplica)
+            "-"
         }
     }
 
@@ -243,59 +260,9 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
         }
     }
 
-    private fun graficar(unidSocial: UnidSocial) {
-        val pieChart: PieChart = binding.piechart
-        pieChart.clearChart()
-
-        val contadoresNoNulos = unidSocial.getContadoresNoNulos()
-        for (atribString in contadoresNoNulos) {
-            asignarValorPorReflexion(unidSocial, atribString)
-            pieChart.addPieSlice(setData(unidSocial, atribString))
-        }
-        pieChart.startAnimation()
-    }
-
-    private fun asignarValorPorReflexion(unidSocial: UnidSocial, atribString: String) {
-
-        // Genera el nombre del campo correspondiente al componente visual
-        val capitalizar = if (atribString.startsWith('v')) 'V' else 'M'
-        val nombreCampo = "txt${capitalizar}${atribString.substring(1)}"
-
-        // Obtiene el campo del binding utilizando reflexión
-        val field = binding.javaClass.getDeclaredField(nombreCampo)
-        field.isAccessible = true
-
-        if (field.type == TextView::class.java) {
-            val textView = field.get(binding) as TextView
-
-            // obtengo un objeto Field
-            val valorAtributo = unidSocial.javaClass.getDeclaredField(atribString)
-            valorAtributo.isAccessible = true
-            // utilizar el objeto Field para obtener el valor del atributo en unidSocial.
-            val valor = valorAtributo.get(unidSocial)
-            textView.text = "$atribString: $valor"
-
-            val layoutExiste = textView.parent as LinearLayout
-            layoutExiste.visibility = View.VISIBLE
-        }
-    }
-
-    private fun setData(unidSocial: UnidSocial, atribString: String): PieModel {
-        val valorAtributo = unidSocial.javaClass.getDeclaredField(atribString)
-        valorAtributo.isAccessible = true
-        // utilizar el objeto Field para obtener el valor del atributo en unidSocial.
-        val valor = (valorAtributo.get(unidSocial) as Int).toFloat()
-        return PieModel(atribString, valor, siguienteColor(atribString))
-    }
-
-    private fun promediarPosiciones(unSocList: List<UnidSocial>): GeoPoint {
-        val totalLatitudes = unSocList.sumOf { it.latitud }
-        val totalLongitudes = unSocList.sumOf { it.longitud }
-
-        val promedioLatitud = totalLatitudes / unSocList.size
-        val promedioLongitud = totalLongitudes / unSocList.size
-
-        return GeoPoint(promedioLatitud, promedioLongitud)
+    private fun graficar(unSocList: List<UnidSocial>) {
+        val torta = ReporteTorta(webViewTorta)
+        torta.mostrarMapaCalor(unSocList)
     }
 
     private fun puntoMedioPosiciones(unSocList: List<UnidSocial>): GeoPoint {
@@ -342,33 +309,24 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
         printManager.print(jobName, printAdapter, PrintAttributes.Builder().build())
     }
 
-    private fun siguienteColor(atribString: String): Int {
-        val coloresMap = mapOf(
-            "vAlfaS4Ad" to R.color.clr_v_alfa_s4ad,
-            "vAlfaSams" to R.color.clr_v_alfa_sams,
-            "vHembrasAd" to R.color.clr_v_hembras_ad,
-            "vCrias" to R.color.clr_v_crias,
-            "vDestetados" to R.color.clr_v_destetados,
-            "vJuveniles" to R.color.clr_v_juveniles,
-            "vS4AdPerif" to R.color.clr_v_s4ad_perif,
-            "vS4AdCerca" to R.color.clr_v_s4ad_cerca,
-            "vS4AdLejos" to R.color.clr_v_s4ad_lejos,
-            "vOtrosSamsPerif" to R.color.clr_v_otros_sams_perif,
-            "vOtrosSamsCerca" to R.color.clr_v_otros_sams_cerca,
-            "vOtrosSamsLejos" to R.color.clr_v_otros_sams_lejos,
-            "mAlfaS4Ad" to R.color.clr_m_alfa_s4ad,
-            "mAlfaSams" to R.color.clr_m_alfa_sams,
-            "mHembrasAd" to R.color.clr_m_hembras_ad,
-            "mCrias" to R.color.clr_m_crias,
-            "mDestetados" to R.color.clr_m_destetados,
-            "mJuveniles" to R.color.clr_m_juveniles,
-            "mS4AdPerif" to R.color.clr_m_s4ad_perif,
-            "mS4AdCerca" to R.color.clr_m_s4ad_cerca,
-            "mS4AdLejos" to R.color.clr_m_s4ad_lejos,
-            "mOtrosSamsPerif" to R.color.clr_m_otros_sams_perif,
-            "mOtrosSamsCerca" to R.color.clr_m_otros_sams_cerca,
-            "mOtrosSamsLejos" to R.color.clr_m_otros_sams_lejos
-        )
-        return ContextCompat.getColor(requireContext(), coloresMap[atribString]!!)
+    private fun openFileChooser(requestCode: Int) {
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.type = "image/*"
+        startActivityForResult(intent, requestCode)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == AppCompatActivity.RESULT_OK && data != null && data.data != null) {
+            val uri = data.data
+            when (requestCode) {
+                DbConstants.PERMISSION_REQUEST_PICK_IMAGE1 -> {
+                    logo1.setImageURI(uri)
+                }
+                DbConstants.PERMISSION_REQUEST_PICK_IMAGE2 -> {
+                    logo2.setImageURI(uri)
+                }
+            }
+        }
     }
 }

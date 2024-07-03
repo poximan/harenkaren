@@ -75,7 +75,7 @@
     <string name="dev_logcat">Logcat</string>
     <string name="dev_limpdias">Clear days</string>
     <string name="dev_limprecorr">Clear\nroutes</string>
-    <string name="dev_limpUnsoc">Clear\nsocial units</string>
+    <string name="dev_limpLog">Clear\nlog</string>
     <string name="dev_rearmar">Rebuild\nschema</string>
 
     <!-- fragment_exportar -->
@@ -159,7 +159,6 @@
     <string name="rep_tabHarenSin">Haren\nwithout alpha</string>
     <string name="rep_tabPjaSolit">Lonely\ncouple</string>
     <string name="rep_tabIndivSolo">Single\nindividuals</string>
-    <string name="rep_tabNoAplica">not apply</string>
 
     <!-- fragment_tpo_sustrato -->
     <string name="tpo_arena">Sand(S)</string>

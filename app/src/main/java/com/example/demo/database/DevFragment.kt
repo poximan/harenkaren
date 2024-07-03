@@ -50,7 +50,7 @@ class DevFragment : Fragment() {
 
         binding.limpiarDias.setOnClickListener { limpiarDias() }
         binding.limpiarRecorr.setOnClickListener { limpiarRecorr() }
-        binding.limpiarUnsoc.setOnClickListener { limpiarUnidSoc() }
+        binding.limpiarLog.setOnClickListener { binding.logcat.text = "" }
 
         estadoBD()
         logcat()
@@ -225,22 +225,6 @@ class DevFragment : Fragment() {
                     .getDatabase(requireActivity().application, viewModelScope)
                     .recorrDao()
                 datos.vaciarRecorridos(dao)
-            }
-        }
-        estadoBD()
-    }
-
-    private fun limpiarUnidSoc() {
-        // Crear un CoroutineScope
-        val viewModelScope = viewLifecycleOwner.lifecycleScope
-
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {// Dispatchers.IO es el hilo background
-                val datos = DevDatos(requireContext())
-                val dao = HarenKarenRoomDatabase
-                    .getDatabase(requireActivity().application, viewModelScope)
-                    .unSocDao()
-                datos.vaciarUnidadesSociales(dao)
             }
         }
         estadoBD()

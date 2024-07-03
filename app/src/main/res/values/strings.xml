@@ -79,7 +79,7 @@
     <string name="dev_logcat">Loggato</string>
     <string name="dev_limpdias">Limp.dias</string>
     <string name="dev_limprecorr">Limpiar\nrecorr.</string>
-    <string name="dev_limpUnsoc">Limpiar\nunid.soc.</string>
+    <string name="dev_limpLog">Limpiar\nlog</string>
     <string name="dev_rearmar">Rearmar\nesquema</string>
 
     <!-- fragment_exportar -->
@@ -164,7 +164,6 @@
     <string name="rep_tabHarenSin">Haren\nsin alfa</string>
     <string name="rep_tabPjaSolit">Pareja\nsolitaria</string>
     <string name="rep_tabIndivSolo">Individuos\nsolos</string>
-    <string name="rep_tabNoAplica">no aplica</string>
 
     <!-- fragment_tpo_sustrato -->
     <string name="tpo_arena">Arena(A)</string>

@@ -149,7 +149,7 @@
             android:layout_weight="2"
             android:gravity="center"
             android:background="@color/color_two"
-            android:text="@string/rep_tabNoAplica" />
+            android:text="-" />
     </TableRow>
     <TableRow>
         <View
@@ -180,7 +180,7 @@
             android:layout_weight="2"
             android:gravity="center"
             android:background="@color/color_two"
-            android:text="@string/rep_tabNoAplica" />
+            android:text="-" />
     </TableRow>
     <TableRow>
         <View

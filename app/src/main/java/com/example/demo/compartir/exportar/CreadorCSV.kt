@@ -10,7 +10,7 @@ import java.util.Locale
 class CreadorCSV {
 
     companion object {
-        const val REQUEST_CODE_WRITE_EXTERNAL_STORAGE = 5
+        const val PERMISSION_REQUEST_WRITE_EXTERNAL = 5
     }
 
     // Función para generar una cadena CSV a partir de una lista de EntidadesPlanas
