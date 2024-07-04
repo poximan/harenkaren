@@ -116,6 +116,14 @@
                 android:visibility="gone"/>
         </LinearLayout>
 
+        <Button
+            android:id="@+id/fijarCuadro"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:layout_gravity="right"
+            android:text="@string/rep_fijar"
+            android:textSize="8sp"/>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -131,13 +139,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="#num"/>
-            <Button
-                android:id="@+id/fijarCuadro"
-                android:layout_width="100dp"
-                android:layout_height="30dp"
-                android:layout_marginLeft="20dp"
-                android:text="@string/rep_fijar"
-                android:textSize="8sp"/>
         </LinearLayout>
 
         <!-- resumen unidades sociales -->
@@ -161,20 +162,11 @@
             android:layout_marginTop="20dp"
             android:text="@string/rep_resIndiv"
             android:gravity="center"/>
-        <LinearLayout
+
+        <WebView
+            android:id="@+id/webViewTorta"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <WebView
-                android:id="@+id/webViewTorta"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-            <ImageView
-                android:id="@+id/imgTorta"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="gone"/>
-        </LinearLayout>
+            android:layout_height="match_parent" />
 
         <!-- terminos de uso -->
         <TextView

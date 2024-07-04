@@ -1,15 +1,14 @@
 package com.example.demo.fragment.analisis
 
 import android.app.AlertDialog
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebView
 import android.widget.CheckBox
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -24,8 +23,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.eazegraph.lib.charts.PieChart
-import org.eazegraph.lib.models.PieModel
 import java.util.UUID
 
 class StatisticsFragment : Fragment() {
@@ -34,10 +31,10 @@ class StatisticsFragment : Fragment() {
     private val binding get() = _binding!!
     private val args: StatisticsFragmentArgs by navArgs()
 
+    private lateinit var webViewTorta: WebView
+
     private var uuid: UUID = DevFragment.UUID_NULO
     private var unidSocial: UnidSocial? = null
-
-    private var datoMasChico: Float = 0.0f
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,41 +42,16 @@ class StatisticsFragment : Fragment() {
     ): View {
         _binding = FragmentStatisticsBinding.inflate(inflater, container, false)
 
+        webViewTorta = binding.webViewTorta
+        webViewTorta.settings.javaScriptEnabled = true
+
         binding.goBackButton.setOnClickListener { goBack() }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        escuchadorEventosCheck(view)
         tomarDatos()
-    }
-
-    private fun escuchadorEventosCheck(view: View) {
-        view.findViewById<CheckBox>(R.id.chk_vAlfaS4Ad).setOnClickListener { tomarDatos() }
-        view.findViewById<CheckBox>(R.id.chk_vAlfaSams).setOnClickListener { tomarDatos() }
-        view.findViewById<CheckBox>(R.id.chk_vHembrasAd).setOnClickListener { tomarDatos() }
-        view.findViewById<CheckBox>(R.id.chk_vCrias).setOnClickListener { tomarDatos() }
-        view.findViewById<CheckBox>(R.id.chk_vDestetados).setOnClickListener { tomarDatos() }
-        view.findViewById<CheckBox>(R.id.chk_vJuveniles).setOnClickListener { tomarDatos() }
-        view.findViewById<CheckBox>(R.id.chk_vS4AdPerif).setOnClickListener { tomarDatos() }
-        view.findViewById<CheckBox>(R.id.chk_vS4AdCerca).setOnClickListener { tomarDatos() }
-        view.findViewById<CheckBox>(R.id.chk_vS4AdLejos).setOnClickListener { tomarDatos() }
-        view.findViewById<CheckBox>(R.id.chk_vOtrosSamsPerif).setOnClickListener { tomarDatos() }
-        view.findViewById<CheckBox>(R.id.chk_vOtrosSamsCerca).setOnClickListener { tomarDatos() }
-        view.findViewById<CheckBox>(R.id.chk_vOtrosSamsLejos).setOnClickListener { tomarDatos() }
-        view.findViewById<CheckBox>(R.id.chk_mAlfaS4Ad).setOnClickListener { tomarDatos() }
-        view.findViewById<CheckBox>(R.id.chk_mAlfaSams).setOnClickListener { tomarDatos() }
-        view.findViewById<CheckBox>(R.id.chk_mHembrasAd).setOnClickListener { tomarDatos() }
-        view.findViewById<CheckBox>(R.id.chk_mCrias).setOnClickListener { tomarDatos() }
-        view.findViewById<CheckBox>(R.id.chk_mDestetados).setOnClickListener { tomarDatos() }
-        view.findViewById<CheckBox>(R.id.chk_mJuveniles).setOnClickListener { tomarDatos() }
-        view.findViewById<CheckBox>(R.id.chk_mS4AdPerif).setOnClickListener { tomarDatos() }
-        view.findViewById<CheckBox>(R.id.chk_mS4AdCerca).setOnClickListener { tomarDatos() }
-        view.findViewById<CheckBox>(R.id.chk_mS4AdLejos).setOnClickListener { tomarDatos() }
-        view.findViewById<CheckBox>(R.id.chk_mOtrosSamsPerif).setOnClickListener { tomarDatos() }
-        view.findViewById<CheckBox>(R.id.chk_mOtrosSamsCerca).setOnClickListener { tomarDatos() }
-        view.findViewById<CheckBox>(R.id.chk_mOtrosSamsLejos).setOnClickListener { tomarDatos() }
     }
 
     private fun tomarDatos() {
@@ -100,22 +72,18 @@ class StatisticsFragment : Fragment() {
                         }
                     }
                 }
-
                 is Dia -> {
                     uuid = entidad.id
                     unDia(viewModel)
                 }
-
                 is Recorrido -> {
                     uuid = entidad.id
                     unRecorrido(viewModel)
                 }
-
                 is UnidSocial -> {
                     uuid = entidad.id
                     unaUnidadSocial(viewModel)
                 }
-
                 else -> {}
             }
         } else
@@ -123,7 +91,6 @@ class StatisticsFragment : Fragment() {
     }
 
     private fun todosLosDias(viewModel: UnSocViewModel) {
-
         CoroutineScope(Dispatchers.IO).launch {
             unidSocial = viewModel.readSumTotal()
             withContext(Dispatchers.Main) {
@@ -133,7 +100,6 @@ class StatisticsFragment : Fragment() {
     }
 
     private fun unDia(viewModel: UnSocViewModel) {
-
         CoroutineScope(Dispatchers.IO).launch {
             unidSocial = viewModel.readSumDia(uuid)
             withContext(Dispatchers.Main) {
@@ -149,7 +115,6 @@ class StatisticsFragment : Fragment() {
     }
 
     private fun unRecorrido(viewModel: UnSocViewModel) {
-
         CoroutineScope(Dispatchers.IO).launch {
             unidSocial = viewModel.readSumRecorr(uuid)
             withContext(Dispatchers.Main) {
@@ -165,7 +130,6 @@ class StatisticsFragment : Fragment() {
     }
 
     private fun unaUnidadSocial(viewModel: UnSocViewModel) {
-
         CoroutineScope(Dispatchers.IO).launch {
             unidSocial = viewModel.readUnico(uuid)
             withContext(Dispatchers.Main) {
@@ -175,26 +139,8 @@ class StatisticsFragment : Fragment() {
     }
 
     private fun graficar() {
-
-        val pieChart: PieChart = binding.piechart
-        pieChart.clearChart()
-        datoMasChico = 0.0f
-
-        val contadores = unidSocial!!.getContadores()
-        for (atribString in contadores) {
-            ocultarEtiquetas(atribString)
-        }
-
-        val contadoresNoNulos = unidSocial!!.getContadoresNoNulos()
-        for (atribString in contadoresNoNulos) {
-
-            asignarValorPorReflexion(atribString)
-            if (atribIsCheck(atribString)) {
-                pieChart.addPieSlice(setData(atribString))
-            }
-        }
-        pieChart.addPieSlice(PieModel("", datoMasChico, Color.TRANSPARENT))
-        pieChart.startAnimation()
+        val torta = ReporteTorta(webViewTorta)
+        torta.mostrarMapaCalor(unidSocial!!)
     }
 
     private fun ocultarEtiquetas(atribString: String) {
@@ -247,48 +193,6 @@ class StatisticsFragment : Fragment() {
         val checkBox = field.get(binding) as CheckBox
 
         return checkBox.isChecked
-    }
-
-    private fun setData(atribString: String): PieModel {
-
-        val valorAtributo = unidSocial!!.javaClass.getDeclaredField(atribString)
-        valorAtributo.isAccessible = true
-        // utilizar el objeto Field para obtener el valor del atributo en unidSocial.
-        val valor = (valorAtributo.get(unidSocial) as Int).toFloat()
-
-        if (datoMasChico > valor) datoMasChico = valor
-
-        return PieModel(atribString, valor, siguienteColor(atribString))
-    }
-
-    private fun siguienteColor(atribString: String): Int {
-        val coloresMap = mapOf(
-            "vAlfaS4Ad" to R.color.clr_v_alfa_s4ad,
-            "vAlfaSams" to R.color.clr_v_alfa_sams,
-            "vHembrasAd" to R.color.clr_v_hembras_ad,
-            "vCrias" to R.color.clr_v_crias,
-            "vDestetados" to R.color.clr_v_destetados,
-            "vJuveniles" to R.color.clr_v_juveniles,
-            "vS4AdPerif" to R.color.clr_v_s4ad_perif,
-            "vS4AdCerca" to R.color.clr_v_s4ad_cerca,
-            "vS4AdLejos" to R.color.clr_v_s4ad_lejos,
-            "vOtrosSamsPerif" to R.color.clr_v_otros_sams_perif,
-            "vOtrosSamsCerca" to R.color.clr_v_otros_sams_cerca,
-            "vOtrosSamsLejos" to R.color.clr_v_otros_sams_lejos,
-            "mAlfaS4Ad" to R.color.clr_m_alfa_s4ad,
-            "mAlfaSams" to R.color.clr_m_alfa_sams,
-            "mHembrasAd" to R.color.clr_m_hembras_ad,
-            "mCrias" to R.color.clr_m_crias,
-            "mDestetados" to R.color.clr_m_destetados,
-            "mJuveniles" to R.color.clr_m_juveniles,
-            "mS4AdPerif" to R.color.clr_m_s4ad_perif,
-            "mS4AdCerca" to R.color.clr_m_s4ad_cerca,
-            "mS4AdLejos" to R.color.clr_m_s4ad_lejos,
-            "mOtrosSamsPerif" to R.color.clr_m_otros_sams_perif,
-            "mOtrosSamsCerca" to R.color.clr_m_otros_sams_cerca,
-            "mOtrosSamsLejos" to R.color.clr_m_otros_sams_lejos
-        )
-        return ContextCompat.getColor(requireContext(), coloresMap[atribString]!!)
     }
 
     private fun goBack() {
