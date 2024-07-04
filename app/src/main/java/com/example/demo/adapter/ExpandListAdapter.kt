@@ -78,7 +78,6 @@ class ExpandListAdapter(
         val childName = childView.findViewById<TextView>(R.id.childName)
         childName.text = getChild(groupPosition, childPosition).toString()
 
-        Log.i("hijo", "este es un hijo")
         return childView
     }
 

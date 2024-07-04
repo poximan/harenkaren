@@ -214,8 +214,7 @@
     <!-- HomeFragment -->
     <string name="hom_onViewUsuario">Welcome</string>
     <string name="hom_onViewHuella">Welcome, Mr. Fingerprint</string>
-    <string name="hom_fechaDesde">Since date</string>
-    <string name="hom_fechaHasta">To date</string>
+    <string name="hom_fecha">Select date range</string>
 
     <!-- DevFragment -->
     <string name="dev_E_estadoDB">The DB manager cannot verify the data integrity</string>

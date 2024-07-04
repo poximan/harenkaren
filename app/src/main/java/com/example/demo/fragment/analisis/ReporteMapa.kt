@@ -1,18 +1,17 @@
-package com.example.demo.fragment.statistics
+package com.example.demo.fragment.analisis
 
 import android.webkit.WebView
 import com.example.demo.model.UnidSocial
 import com.google.gson.Gson
 import org.osmdroid.util.GeoPoint
 
-class ReporteTorta(private val webView: WebView) {
+class ReporteMapa(private val webView: WebView, private val geoPoint: GeoPoint) {
 
     fun mostrarMapaCalor(unSocList: List<UnidSocial>) {
 
         val htmlContent = generarHTML(unSocList)
-        println(htmlContent)
         webView.loadDataWithBaseURL(
-            "file:///android_asset/index.html",
+            "file:///android_asset/indexRepCalor.html",
             htmlContent,
             "text/html",
             "UTF-8",
@@ -25,8 +24,10 @@ class ReporteTorta(private val webView: WebView) {
         val gson = Gson()
         val jsonUnSocList = gson.toJson(unSocList.map {
             mapOf(
-                "valores" to it.vAlfaS4Ad,
-                "categorias" to it.getContadores()
+                "lat" to it.latitud,
+                "lon" to it.longitud,
+                "mag" to it.vHembrasAd + it.vCrias,
+                "suma" to "vHembrasAd+vCrias"
             )
         })
 
@@ -52,9 +53,15 @@ class ReporteTorta(private val webView: WebView) {
                         var rows = $jsonUnSocList;
                     
                         var data = [{
-                            values: unpack(rows, "valores"),
-                            labels: unpack(rows, "categorias"),                                                                                
-                            type: "pie"                            
+                            lat: unpack(rows, "lat"),
+                            lon: unpack(rows, "lon"),
+                            z: unpack(rows, "mag"),
+                            text: unpack(rows, "suma"),
+                            hoverinfo: "lat+lon+z+text",
+                            hovertemplate: "lat: %{lat:.6f}<br>lon: %{lon:.6f}<br>suma: %{z}<br>%{text}<extra></extra>",
+                            radius: 25,
+                            type: "densitymapbox",
+                            coloraxis: "coloraxis"
                         }];
                         """.trimIndent()
 
@@ -62,13 +69,29 @@ class ReporteTorta(private val webView: WebView) {
 
                         var layout = {
                             margin: { t: 0, r: 0, b: 0, l: 0 },
-                            showlegend: true
+                            mapbox: {
+                                center: {
+                                    lat: ${geoPoint.latitude}, 
+                                    lon: ${geoPoint.longitude} 
+                                },
+                                style: "carto-positron",
+                                zoom: ${geoPoint.altitude}
+                            },
+                           coloraxis: { colorscale: 'RdBu' }
                         };
                         var config = {
                             responsive: true,
                             displayModeBar: false
                         };
                         Plotly.newPlot("myDiv", data, layout, config);
+                     
+                        function fijar() {
+                            var ancho = window.innerWidth;
+                            var alto = window.innerHeight;
+                            
+                            Plotly.toImage(myDiv, {format: 'png', width: ancho, height: alto})
+                                .then(function(dataUrl) { Android.onImageCaptured(dataUrl); });
+                        }
                     </script>
                 </body>
             </html>

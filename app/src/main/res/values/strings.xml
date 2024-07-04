@@ -219,8 +219,7 @@
     <!-- HomeFragment -->
     <string name="hom_onViewUsuario">Bienvenido</string>
     <string name="hom_onViewHuella">Bienvenido, señor/ra huella digital</string>
-    <string name="hom_fechaDesde">Desde fecha...</string>
-    <string name="hom_fechaHasta">Hasta fecha...</string>
+    <string name="hom_fecha">Selecciona rango de fechas</string>
 
     <!-- DevFragment -->
     <string name="dev_E_estadoDB">El gestor de BD no puede verificar la integridad de los datos</string>

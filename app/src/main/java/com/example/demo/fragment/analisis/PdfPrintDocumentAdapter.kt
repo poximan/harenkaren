@@ -1,4 +1,4 @@
-package com.example.demo.fragment.statistics
+package com.example.demo.fragment.analisis
 
 import android.content.Context
 import android.graphics.Bitmap

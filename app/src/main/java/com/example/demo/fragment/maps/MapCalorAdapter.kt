@@ -44,8 +44,6 @@ class MapCalorAdapter(webView: WebView, context: Context) : SuperMapa() {
             "UTF-8",
             null
         )
-        println(htmlContent)
-        println(webView)
     }
 
     private fun generarHTML(unSocList: List<UnidSocial>, atribString: String): String {

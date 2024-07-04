@@ -54,6 +54,9 @@ android {
 
 dependencies {
 
+    // selector de rango de fechas para reporte
+    implementation 'com.google.android.material:material:1.4.0'
+
     // imprimir en pdf
     implementation 'androidx.print:print:1.0.0'
 

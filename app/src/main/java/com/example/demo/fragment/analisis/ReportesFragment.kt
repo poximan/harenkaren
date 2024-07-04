@@ -1,4 +1,4 @@
-package com.example.demo.fragment.statistics
+package com.example.demo.fragment.analisis
 
 import android.content.Context
 import android.content.Intent
@@ -58,8 +58,8 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
         _binding = FragmentReportesBinding.inflate(inflater, container, false)
 
         scrollView = binding.scrollReporte
-        webViewHeat = binding.webViewRep
 
+        webViewHeat = binding.webViewRep
         webViewHeat.settings.javaScriptEnabled = true
         webViewHeat.addJavascriptInterface(JavaScriptInterface(this, requireActivity()), "Android")
 
@@ -73,6 +73,7 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
             .unSocDao()
 
         webViewTorta = binding.webViewTorta
+        webViewTorta.settings.javaScriptEnabled = true
 
         return binding.root
     }
@@ -121,7 +122,8 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
                 tabFilaHarenSin(it)
                 tabFilaPjaSolit(it)
                 tabFilaIndivSolo(it)
-                graficar(it)
+                val reduccion = reducir(it)
+                graficar(reduccion)
             } else {
                 val mensaje = getString(R.string.rep_rangoVacio) + " " + args.rangoFechas
                 Toast.makeText(requireContext(), mensaje, Toast.LENGTH_SHORT).show()
@@ -260,9 +262,9 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
         }
     }
 
-    private fun graficar(unSocList: List<UnidSocial>) {
+    private fun graficar(unidSocial: UnidSocial) {
         val torta = ReporteTorta(webViewTorta)
-        torta.mostrarMapaCalor(unSocList)
+        torta.mostrarMapaCalor(unidSocial)
     }
 
     private fun puntoMedioPosiciones(unSocList: List<UnidSocial>): GeoPoint {

@@ -11,8 +11,12 @@ import androidx.navigation.fragment.findNavController
 import com.example.demo.R
 import com.example.demo.databinding.FragmentHomeBinding
 import com.example.demo.model.Usuario
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.DateValidatorPointForward
+import com.google.android.material.datepicker.MaterialDatePicker
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 class HomeFragment : Fragment() {
@@ -28,7 +32,7 @@ class HomeFragment : Fragment() {
 
         binding.censosButton.setOnClickListener { gotoCensos() }
         binding.mapaButton.setOnClickListener { gotoMapas() }
-        binding.reportesButton.setOnClickListener { goToReportes() }
+        binding.reportesButton.setOnClickListener { openDatePicker() }
         binding.ayudaButton.setOnClickListener { goToAyuda() }
         binding.desarrolloButton.setOnClickListener { gotoDesarrollo() }
 
@@ -68,7 +72,7 @@ class HomeFragment : Fragment() {
         findNavController().navigate(R.id.goToMapaAction)
     }
 
-    private fun goToReportes() {
+    private fun goToReportes2() {
         showDateRangePicker { startDate, endDate ->
             val rangoFechas = "$startDate $endDate"
             val action = HomeFragmentDirections.goToRepAction(rangoFechas)
@@ -84,6 +88,30 @@ class HomeFragment : Fragment() {
         findNavController().navigate(R.id.goToDevAction)
     }
 
+    private fun openDatePicker() {
+        val constraintsBuilder = CalendarConstraints.Builder()
+
+        val dateRangePicker = MaterialDatePicker.Builder.dateRangePicker()
+            .setTitleText(getString(R.string.hom_fecha))
+            .setCalendarConstraints(constraintsBuilder.build())
+            .build()
+
+        dateRangePicker.show(parentFragmentManager, "date_range_picker")
+
+        dateRangePicker.addOnPositiveButtonClickListener { dateSelected ->
+            val startDate = dateSelected.first
+            val endDate = dateSelected.second
+
+            val dateFormat = SimpleDateFormat(getString(R.string.formato_dia), Locale.getDefault())
+            val startDateString = dateFormat.format(Date(startDate))
+            val endDateString = dateFormat.format(Date(endDate))
+
+            val rangoFechas = "$startDateString $endDateString"
+            val action = HomeFragmentDirections.goToRepAction(rangoFechas)
+            findNavController().navigate(action)
+        }
+    }
+
     private fun showDateRangePicker(onDateSelected: (String, String) -> Unit) {
         val dateFormat = getString(R.string.formato_dia)
         val dateFormatter = SimpleDateFormat(dateFormat, Locale.getDefault())
@@ -91,7 +119,7 @@ class HomeFragment : Fragment() {
         // Dialogo para elegir fecha de inicio
         val startDatePicker = DatePickerDialog(requireContext())
 
-        startDatePicker.setTitle(getString(R.string.hom_fechaDesde))
+        startDatePicker.setTitle(getString(R.string.hom_fecha))
         startDatePicker.setOnDateSetListener { _, startYear, startMonth, startDay ->
             val startCalendar = Calendar.getInstance().apply {
                 set(startYear, startMonth, startDay)
@@ -104,7 +132,7 @@ class HomeFragment : Fragment() {
             endDatePicker.datePicker.minDate =
                 startCalendar.timeInMillis // Establecer la fecha mínima
 
-            endDatePicker.setTitle(R.string.hom_fechaHasta)
+            endDatePicker.setTitle(R.string.hom_fecha)
             endDatePicker.setOnDateSetListener { _, endYear, endMonth, endDay ->
                 val endCalendar = Calendar.getInstance().apply {
                     set(endYear, endMonth, endDay)

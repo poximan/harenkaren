@@ -86,15 +86,6 @@ class UnSocListGrafFragment : Fragment() {
         webView.loadUrl("file:///${file.absolutePath}")
     }
 
-    private fun goHome() {
-        findNavController().navigate(R.id.home_fragment)
-    }
-
-    private fun nuevaUnidadSocial() {
-        val action = UnSocListFragmentDirections.goToNewUnSocFromUnSocListAction(args.idRecorrido)
-        findNavController().navigate(action)
-    }
-
     private fun cambiarVista() {
         val action = UnSocListGrafFragmentDirections.goToModoTexto(args.idRecorrido)
         findNavController().navigate(action)
