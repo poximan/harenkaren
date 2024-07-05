@@ -14,7 +14,6 @@ import com.example.demo.R
 import com.example.demo.database.HarenKarenRoomDatabase
 import com.example.demo.databinding.FragmentImportarBinding
 import com.example.demo.model.EntidadesPlanas
-import com.example.demo.servicios.ETL
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -85,89 +84,6 @@ class ImportarFragment : Fragment(), RegistroDistribuible, ListaImportable {
             if (parcelable is EntidadesPlanas) {
                 listaEntidades.add(parcelable)
             }
-        }
-        return listaEntidades
-    }
-
-    private fun desmapearLista(mapas: ArrayList<Map<String, String>>): List<EntidadesPlanas> {
-
-        val listaEntidades = mutableListOf<EntidadesPlanas>()
-        val etl = ETL(requireContext())
-        val mapasOrd = etl.ordenar(mapas)
-
-        for (map in mapasOrd) {
-
-            if (map["lat0"] == "" || map["lon0"] == "")
-                continue
-
-            val diaId = etl.extraerDiaId(map)
-            val recorrId = etl.extraerRecorrId(map)
-            val unidSocId = etl.extraerUnSocId(map)
-
-            val fechaTransformada = etl.transformarFecha(map["fecha"]!!)
-            val lat0 = etl.transformarLat(map["lat0"]!!)
-            val lon0 = etl.transformarLon(map["lon0"]!!)
-            val ptoObs = etl.transformarPtoObservacion()
-            val ctxSocial = etl.transformarCtxSocial(map["referencia"]!!)
-            val sustrato = etl.transformarSustrato()
-            val marea = etl.transformarMarea()
-
-            val entidadPlanta = EntidadesPlanas(
-                "cel_no_aplica",
-                diaId,
-                map["orden"]!!.toInt(),
-                fechaTransformada.substringBefore(" "),
-                recorrId,
-                diaId,
-                map["orden"]!!.toInt(),
-                "observador_desc",
-                fechaTransformada,
-                fechaTransformada,
-                lat0 + 0.004,
-                lon0 + 0.004,
-                lat0 + 0.004,
-                lon0 + 0.004,
-                map["playa"]!!,
-                "meteo_desc",
-                marea,
-                map["tipo"]!!,
-                unidSocId,
-                recorrId,
-                map["orden"]!!.toInt(),
-                ptoObs,
-                ctxSocial,
-                sustrato,
-                map["machosContados"]!!.toInt(),
-                0,
-                map["hembrasContadas"]!!.toInt(),
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                fechaTransformada,
-                lat0,
-                lon0,
-                "foto_desc",
-                map["tipo"]!!
-            )
-            listaEntidades.add(entidadPlanta)
         }
         return listaEntidades
     }
@@ -274,7 +190,10 @@ class ImportarFragment : Fragment(), RegistroDistribuible, ListaImportable {
 
     // callback del importador de csv's
     override fun onPelosReceived(message: ArrayList<Map<String, String>>) {
-        val listaEntidadesPlanas = desmapearLista(message)
+
+        val demaper = DemapFactory.crearDemap(requireContext(), message.first())
+        val listaEntidadesPlanas = demaper.desmapear(message)
+
         val mapContador = sumarEntidades(listaEntidadesPlanas)
         Log.i(
             TAG,

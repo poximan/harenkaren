@@ -29,7 +29,7 @@ class ETL(private val context: Context) {
         if (recorrList == null)
             recorrList = ArrayList()
 
-        val recorrActual = fila["libreta"]!!    // ¿cual es el discrinador de recorrido?
+        val recorrActual = fila["libreta"]!!    // ¿cual es el discriminador de recorrido?
         var recorr = recorrList.find {
             it.split("@").firstOrNull()?.contains(recorrActual, ignoreCase = true) == true
         }
