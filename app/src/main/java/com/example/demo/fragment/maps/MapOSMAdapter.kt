@@ -16,6 +16,7 @@ import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.MapEventsOverlay
 import org.osmdroid.views.overlay.Marker
 import org.osmdroid.views.overlay.Polyline
+import org.osmdroid.views.overlay.infowindow.BasicInfoWindow
 
 class MapOSMAdapter(mapView: MapView, context: Context) : SuperMapa(), MapEventsReceiver {
 
@@ -146,8 +147,10 @@ class MapOSMAdapter(mapView: MapView, context: Context) : SuperMapa(), MapEvents
                 true
             }
             marker.infoWindow = infoWindow
-        } else
+        } else {
             marker.icon = ContextCompat.getDrawable(context, R.drawable.ic_extremos)
+            marker.snippet = context.getString(R.string.osm_extremo)
+        }
 
         mapView.overlays.add(marker)
         markers.add(marker)

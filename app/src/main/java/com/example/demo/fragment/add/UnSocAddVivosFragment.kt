@@ -5,6 +5,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnFocusChangeListener
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
@@ -29,7 +30,7 @@ class UnSocAddVivosFragment : SuperAdd() {
 
         binding.vAlfaS4Ad.addTextChangedListener(textWatcher)
         binding.vAlfaSams.addTextChangedListener(textWatcher)
-        binding.vHembrasAd.addTextChangedListener(textWatcher)
+        binding.vHembrasAd.onFocusChangeListener = focusChange
         binding.vCrias.addTextChangedListener(textWatcher)
         binding.vDestetados.addTextChangedListener(textWatcher)
         binding.vJuveniles.addTextChangedListener(textWatcher)
@@ -90,6 +91,21 @@ class UnSocAddVivosFragment : SuperAdd() {
         }
     }
 
+    private val focusChange = OnFocusChangeListener { _, hasFocus ->
+        if (!hasFocus){
+            val ctxSocial = resources.getStringArray(R.array.op_contexto_social)
+            sharedViewModel.lastSelectedValue.observe(viewLifecycleOwner) { ctxElegido ->
+
+                when (ctxElegido) {
+                    ctxSocial[1] -> vistaHarenHembra()
+                    ctxSocial[2] -> vistaHarenSinAlfaHembra()
+                    ctxSocial[3] -> vistaGrupoHarenesHembra()
+                    ctxSocial[4] -> vistaPjaSolitariaHembra()
+                }
+            }
+        }
+    }
+
     private val textWatcher = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
@@ -113,6 +129,39 @@ class UnSocAddVivosFragment : SuperAdd() {
         }
     }
 
+    private fun vistaHarenHembra() {
+        if (!binding.vHembrasAd.text.isNullOrEmpty() &&
+            binding.vHembrasAd.text.toString().toInt() <= 1
+        ) {
+            aTostar(requireContext().getString(R.string.socv_vistaHaren))
+            binding.vHembrasAd.text = "".toEditable()
+        }
+    }
+
+    private fun vistaHarenSinAlfaHembra() {
+        if (binding.vHembrasAd.text.isNullOrEmpty() ||
+            binding.vHembrasAd.text.toString().toInt() <= 1
+        ) {
+            aTostar(requireContext().getString(R.string.socv_vistaHarenSinAlfa3))
+            forzarValor("", binding.vHembrasAd)
+        }
+    }
+
+    private fun vistaGrupoHarenesHembra() {
+        if (binding.vHembrasAd.text.isNullOrEmpty() ||
+            binding.vHembrasAd.text.toString().toInt() <= 1
+        ) {
+            aTostar(requireContext().getString(R.string.socv_vistaGrupoHarenes2))
+            forzarValor("", binding.vHembrasAd)
+        }
+    }
+
+    private fun vistaPjaSolitariaHembra() {
+        aTostar(requireContext().getString(R.string.socv_vistaPjaSolitaria))
+        // para pareja solitaria, siempre hembra=1
+        forzarValor("1", binding.vHembrasAd)
+    }
+
     private fun vistaHaren() {
         when (binding.root.findFocus()?.id) {
             R.id.vAlfaS4Ad -> {
@@ -127,15 +176,6 @@ class UnSocAddVivosFragment : SuperAdd() {
                     binding.vAlfaSams,
                     binding.vAlfaS4Ad
                 )
-            }
-
-            R.id.vHembrasAd -> {
-                if (!binding.vHembrasAd.text.isNullOrEmpty() &&
-                    binding.vHembrasAd.text.toString().toInt() <= 1
-                ) {
-                    aTostar(requireContext().getString(R.string.socv_vistaHaren))
-                    binding.vHembrasAd.text = "".toEditable()
-                }
             }
         }
     }
@@ -155,15 +195,6 @@ class UnSocAddVivosFragment : SuperAdd() {
                 if (contMacho > 0)
                     aTostar(requireContext().getString(R.string.socv_vistaHarenSinAlfa2))
             }
-
-            R.id.vHembrasAd -> {
-                if (binding.vHembrasAd.text.isNullOrEmpty() ||
-                    binding.vHembrasAd.text.toString().toInt() <= 1
-                ) {
-                    aTostar(requireContext().getString(R.string.socv_vistaHarenSinAlfa3))
-                    forzarValor("", binding.vHembrasAd)
-                }
-            }
         }
 
         forzarValor("0", binding.vAlfaS4Ad)
@@ -179,15 +210,6 @@ class UnSocAddVivosFragment : SuperAdd() {
 
                 if (contMacho <= 1)
                     aTostar(requireContext().getString(R.string.socv_vistaGrupoHarenes1))
-            }
-
-            R.id.vHembrasAd -> {
-                if (binding.vHembrasAd.text.isNullOrEmpty() ||
-                    binding.vHembrasAd.text.toString().toInt() <= 1
-                ) {
-                    aTostar(requireContext().getString(R.string.socv_vistaGrupoHarenes2))
-                    forzarValor("", binding.vHembrasAd)
-                }
             }
         }
     }
@@ -207,13 +229,7 @@ class UnSocAddVivosFragment : SuperAdd() {
                     binding.vAlfaS4Ad
                 )
             }
-
-            R.id.vHembrasAd -> {
-                aTostar(requireContext().getString(R.string.socv_vistaPjaSolitaria))
-            }
         }
-        // para pareja solitaria, siempre hembra=1
-        forzarValor("1", binding.vHembrasAd)
     }
 
     private fun vistaIndividuoSolo() {

@@ -238,7 +238,7 @@ class MapsFragment : Fragment() {
         for (unidSocial in unSocList) {
             combinedContadores.addAll(unidSocial.getContadoresNoNulos())
         }
-        return combinedContadores.toList().reversed()
+        return combinedContadores.toList()
     }
 
     private fun mensajeError() {

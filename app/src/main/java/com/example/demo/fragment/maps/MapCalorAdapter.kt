@@ -105,7 +105,7 @@ class MapCalorAdapter(webView: WebView, context: Context) : SuperMapa() {
                             text: unpack(rows, "categ."),
                             hoverinfo: "lat+lon+z+text",
                             hovertemplate: "lat: %{lat:.6f}<br>lon: %{lon:.6f}<br>total: %{z}<br>categ.: %{text}<extra></extra>",
-                            radius: 25,
+                            radius: 30,
                             type: "densitymapbox",
                             coloraxis: "coloraxis"
                         }];
@@ -125,7 +125,12 @@ class MapCalorAdapter(webView: WebView, context: Context) : SuperMapa() {
                             },
                            coloraxis: { colorscale: 'RdBu' }
                         };
-                        Plotly.newPlot("myDiv", data, layout);
+                        
+                        var config = {
+                            responsive: true,
+                            displayModeBar: false
+                        };
+                        Plotly.newPlot("myDiv", data, layout, config);
                     </script>
                 </body>
             </html>

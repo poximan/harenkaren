@@ -38,7 +38,11 @@ class ReporteTorta(private val webView: WebView) {
                         var data = [{
                             values: ${parValores.first},
                             labels: ${parValores.second},
-                            type: "pie"
+                            type: "pie",
+                            hole: 0.2,
+                            textinfo: "label+value",
+                            hoverinfo: "label+value+percent",
+                            hovertemplate: "%{label}: %{value} (%{percent})"
                         }];
                         """.trimIndent()
 
@@ -46,10 +50,8 @@ class ReporteTorta(private val webView: WebView) {
 
                         var layout = {
                             margin: { t: 0, r: 0, b: 8, l: 0 },
-                            showlegend: true,
                             legend: {
                                 orientation: 'h',
-                                y: -0.2, // Adjust the position of the legend
                                 font: {
                                     size: 10
                                 }

@@ -296,22 +296,20 @@ data class UnidSocial(
      * @return una lista de atributos Int que llevan la cuenta de esa categoria
      */
     fun getContadoresNoNulos(): List<String> {
-
         val atributos = mutableListOf<String>()
-        val campos = this.javaClass.declaredFields
+        val campos = listOf(
+            "vAlfaS4Ad", "vAlfaSams", "vHembrasAd", "vCrias", "vDestetados", "vJuveniles",
+            "vS4AdPerif", "vS4AdCerca", "vS4AdLejos", "vOtrosSamsPerif", "vOtrosSamsCerca", "vOtrosSamsLejos",
+            "mAlfaS4Ad", "mAlfaSams", "mHembrasAd", "mCrias", "mDestetados", "mJuveniles",
+            "mS4AdPerif", "mS4AdCerca", "mS4AdLejos", "mOtrosSamsPerif", "mOtrosSamsCerca", "mOtrosSamsLejos"
+        )
 
-        // Filtrar los atributos que comienzan con "v" o "m" y cuyo valor sea mayor que 0
         for (campo in campos) {
-            val nombreCampo = campo.name
-            if (nombreCampo.startsWith("v") || nombreCampo.startsWith("m")) {
-                // Acceder al valor del atributo
-                campo.isAccessible = true
-                val valor = campo.getInt(this)
-
-                // Verificar si el valor es mayor que 0
-                if (valor > 0) {
-                    atributos.add(nombreCampo)
-                }
+            val field = this.javaClass.getDeclaredField(campo)
+            field.isAccessible = true
+            val valor = field.getInt(this)
+            if (valor > 0) {
+                atributos.add(campo)
             }
         }
         return atributos

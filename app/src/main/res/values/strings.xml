@@ -117,7 +117,7 @@
 
     <!-- fragment_osm -->
     <string name="osm_mapacalor">Mapa calor</string>
-    <string name="osm_menu">Ver menu</string>
+    <string name="osm_menu">Categorias</string>
 
     <!-- fragment_pto_obs_unsoc -->
     <string name="pto_alto">Alto</string>
@@ -333,6 +333,7 @@
     <!-- OSMFragment -->
     <string name="osm_anios">año...</string>
     <string name="osm_mostrar">Para el año elegido, hay recorridos sin registros asociados</string>
+    <string name="osm_extremo">Esta marca es un extremo de recorrido, no representa una unidad social registrada</string>
     <string name="osm_categoria">Elegi una categoria primero (abri menu lateral)</string>
     <string name="osm_categNula">Esta categoria tiene todos sus elementos nulos</string>
     <string name="osm_noregTit">Set vacio</string>
