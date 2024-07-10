@@ -7,21 +7,30 @@ import android.os.Bundle
 import android.print.PrintAttributes
 import android.print.PrintManager
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.widget.ImageView
+import android.widget.RadioButton
 import android.widget.ScrollView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.example.demo.R
+import com.example.demo.activity.HomeActivity
 import com.example.demo.dao.UnSocDAO
 import com.example.demo.database.HarenKarenRoomDatabase
 import com.example.demo.databinding.FragmentReportesBinding
+import com.example.demo.fragment.maps.MapCalorAdapter
+import com.example.demo.fragment.maps.SuperMapa
 import com.example.demo.model.UnidSocial
+import com.google.android.material.navigation.NavigationView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -38,6 +47,8 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
     }
 
     private lateinit var unSocDAO: UnSocDAO
+    private var selectedRadioButton: RadioButton? = null
+    private lateinit var mapota: SuperMapa
 
     private var _binding: FragmentReportesBinding? = null
     private val binding get() = _binding!!
@@ -56,12 +67,14 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentReportesBinding.inflate(inflater, container, false)
+        setHasOptionsMenu(true)
 
         scrollView = binding.scrollReporte
 
         webViewHeat = binding.webViewRep
         webViewHeat.settings.javaScriptEnabled = true
         webViewHeat.addJavascriptInterface(JavaScriptInterface(this, requireActivity()), "Android")
+        mapota = MapCalorAdapter(webViewHeat, requireContext())
 
         logo1 = binding.logo1
         logo2 = binding.logo2
@@ -94,17 +107,9 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
             false
         }
 
-        logo1.setOnClickListener {
-            openFileChooser(DbConstants.PERMISSION_REQUEST_PICK_IMAGE1)
-        }
-
-        logo2.setOnClickListener {
-            openFileChooser(DbConstants.PERMISSION_REQUEST_PICK_IMAGE2)
-        }
-
-        binding.imprimirPdf.setOnClickListener {
-            printPdf()
-        }
+        logo1.setOnClickListener { openFileChooser(DbConstants.PERMISSION_REQUEST_PICK_IMAGE1) }
+        logo2.setOnClickListener { openFileChooser(DbConstants.PERMISSION_REQUEST_PICK_IMAGE2) }
+        binding.imprimirPdf.setOnClickListener { printPdf() }
 
         binding.fijarCuadro.setOnClickListener {
             activity?.runOnUiThread {
@@ -115,7 +120,8 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
         getInvolucrados(args.rangoFechas) {
             if (it.isNotEmpty()) {
                 participantes(it)
-                completarMapa(it)
+                cambiarMenuLateral(it)
+                mapota.resolverVisibilidad(it, selectedRadioButton!!.text.toString())
                 contarCrias(it)
                 tabFilaHaren(it)
                 tabFilaGpoHaren(it)
@@ -133,6 +139,9 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        val navigationView: NavigationView = (activity as HomeActivity).navigationView
+        navigationView.menu.clear()
+        navigationView.inflateMenu(R.menu.nav_drawer_menu)
         _binding = null
     }
 
@@ -142,14 +151,78 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
         binding.imgMapaCalor.setImageBitmap(bitmap)
     }
 
-    private fun participantes(unSocList: List<UnidSocial>) {
-        binding.participantes.text = " " + unSocList.distinctBy { it.recorrId }.size.toString()
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_categorias, menu)
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
-    private fun completarMapa(unSocList: List<UnidSocial>) {
-        val geoPoint: GeoPoint = puntoMedioPosiciones(unSocList)
-        val mapaCalor = ReporteMapa(webViewHeat, geoPoint)
-        mapaCalor.mostrarMapaCalor(unSocList)
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_categorias -> {
+                (activity as? HomeActivity)?.drawerLayout?.openDrawer(GravityCompat.START)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun cambiarMenuLateral(unSocList: List<UnidSocial>) {
+
+        val navigationView: NavigationView = (activity as HomeActivity).navigationView
+        navigationView.menu.clear()
+        navigationView.inflateMenu(R.menu.nav_map_categorias)
+
+        val categorias = outerJoinCategorias(unSocList)
+
+        for (i in categorias.indices) {
+            val categoria = categorias[i]
+
+            // Crear un nuevo MenuItem
+            val menuItem = navigationView.menu.add(Menu.NONE, i, Menu.NONE, null)
+
+            // Crear un RadioButton para este MenuItem
+            val radioButton = layoutInflater.inflate(R.layout.item_categorias, null) as RadioButton
+            radioButton.text = categoria
+
+            // Escuchar clics en el RadioButton
+            radioButton.setOnClickListener {
+                selectedRadioButton?.isChecked = false
+                selectedRadioButton = radioButton
+                radioButton.isChecked = true
+                mapota.resolverVisibilidad(unSocList, selectedRadioButton!!.text.toString())
+            }
+            // Asignar el RadioButton como actionView del MenuItem
+            menuItem.actionView = radioButton
+            if (i == 0) {
+                radioButton.isChecked = true
+                selectedRadioButton = radioButton
+            }
+        }
+
+        // Notificar cambios en el menú para que se actualice
+        navigationView.invalidate()
+    }
+
+    /**
+     * de todos los contadores de categorias que tiene una unidad social, frecuentemente es necesario
+     * operar sobre aquellos que no sean nulos. es decir si una unidad social tuviera los contadores
+     * hembras=0, crias=1, machoPeriferico=3, interesara la lista [crias,machoPeriferico]
+     * ahora bien, dada una lista esto se complejiza porque cada unidad social tendra su propio set
+     * de categorias no nulas. haciendo una analogia con SQL, esta funcion realiza un OUTER JOIN de
+     * categorias sobre todos las unidades sociales de una lista.
+     *
+     * @return la lista mas abarcativa de categorias no nulas (para al menos un caso)
+     */
+    private fun outerJoinCategorias(unSocList: List<UnidSocial>): List<String> {
+        val combinedContadores = mutableSetOf<String>()
+        for (unidSocial in unSocList) {
+            combinedContadores.addAll(unidSocial.getContadoresNoNulos())
+        }
+        return combinedContadores.toList()
+    }
+
+    private fun participantes(unSocList: List<UnidSocial>) {
+        binding.participantes.text = " " + unSocList.distinctBy { it.recorrId }.size.toString()
     }
 
     private fun contarCrias(unSocList: List<UnidSocial>) {

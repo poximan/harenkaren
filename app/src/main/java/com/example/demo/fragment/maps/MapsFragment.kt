@@ -164,7 +164,6 @@ class MapsFragment : Fragment() {
     }
 
     private fun getInvolucrados(anio: Int, callback: (List<UnidSocial>) -> Unit) {
-        var unSocList: List<UnidSocial>
         var unSocMutante: List<UnidSocial>
 
         val unSocDAO = HarenKarenRoomDatabase
