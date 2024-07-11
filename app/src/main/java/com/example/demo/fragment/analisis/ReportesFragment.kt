@@ -27,7 +27,6 @@ import com.example.demo.activity.HomeActivity
 import com.example.demo.dao.UnSocDAO
 import com.example.demo.database.HarenKarenRoomDatabase
 import com.example.demo.databinding.FragmentReportesBinding
-import com.example.demo.fragment.maps.MapCalorAdapter
 import com.example.demo.fragment.maps.SuperMapa
 import com.example.demo.model.UnidSocial
 import com.google.android.material.navigation.NavigationView
@@ -74,7 +73,7 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
         webViewHeat = binding.webViewRep
         webViewHeat.settings.javaScriptEnabled = true
         webViewHeat.addJavascriptInterface(JavaScriptInterface(this, requireActivity()), "Android")
-        mapota = MapCalorAdapter(webViewHeat, requireContext())
+        mapota = ReporteMapa(webViewHeat, requireContext())
 
         logo1 = binding.logo1
         logo2 = binding.logo2

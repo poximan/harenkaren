@@ -25,7 +25,6 @@ class MapOSMAdapter(mapView: MapView, context: Context) : SuperMapa(), MapEvents
     )
 
     private val context = context
-
     private val mapView: MapView = mapView
     private lateinit var mapController: IMapController
 

@@ -1,15 +1,40 @@
 package com.example.demo.fragment.analisis
 
+import android.content.Context
 import android.webkit.WebView
+import android.widget.Toast
+import com.example.demo.R
+import com.example.demo.exception.MagNulaExcepcion
+import com.example.demo.fragment.maps.SuperMapa
 import com.example.demo.model.UnidSocial
 import com.google.gson.Gson
-import org.osmdroid.util.GeoPoint
+import com.google.gson.reflect.TypeToken
 
-class ReporteMapa(private val webView: WebView, private val geoPoint: GeoPoint) {
+class ReporteMapa(webView: WebView, context: Context) : SuperMapa() {
 
-    fun mostrarMapaCalor(unSocList: List<UnidSocial>) {
+    private val context = context
+    private val webView: WebView = webView
+    private lateinit var atribString: String
 
-        val htmlContent = generarHTML(unSocList)
+    override fun resolverVisibilidad(unSocList: List<UnidSocial>, atribString: String) {
+        geoPoint = puntoMedioPosiciones(unSocList)
+        geoPoint.altitude -= 2
+        this.atribString = atribString
+
+        try {
+            mostrarMapaCalor(unSocList)
+        } catch (e: MagNulaExcepcion) {
+            Toast.makeText(
+                context,
+                context.getString(R.string.osm_categNula),
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }
+
+    private fun mostrarMapaCalor(unSocList: List<UnidSocial>) {
+
+        val htmlContent = generarHTML(unSocList, atribString)
         webView.loadDataWithBaseURL(
             "file:///android_asset/indexRepCalor.html",
             htmlContent,
@@ -19,17 +44,30 @@ class ReporteMapa(private val webView: WebView, private val geoPoint: GeoPoint) 
         )
     }
 
-    private fun generarHTML(unSocList: List<UnidSocial>): String {
+    private fun generarHTML(unSocList: List<UnidSocial>, atribString: String): String {
 
         val gson = Gson()
         val jsonUnSocList = gson.toJson(unSocList.map {
+
+            val campo = it.javaClass.getDeclaredField(atribString)
+            campo.isAccessible = true
+
             mapOf(
                 "lat" to it.latitud,
                 "lon" to it.longitud,
-                "mag" to it.vHembrasAd + it.vCrias,
-                "suma" to "vHembrasAd+vCrias"
+                "mag" to campo.get(it),
+                "categ." to atribString
             )
         })
+
+        // Parsear el JSON
+        val listType = object : TypeToken<List<Map<String, Any>>>() {}.type
+        val rows: List<Map<String, Any>> = gson.fromJson(jsonUnSocList, listType)
+
+        // Verificar si todos los elementos tienen mag == 0
+        if (rows.all { it["mag"] == 0.0 }) {
+            throw MagNulaExcepcion()
+        }
 
         val staticHtmlIni = """
             <!DOCTYPE html>
@@ -56,9 +94,9 @@ class ReporteMapa(private val webView: WebView, private val geoPoint: GeoPoint) 
                             lat: unpack(rows, "lat"),
                             lon: unpack(rows, "lon"),
                             z: unpack(rows, "mag"),
-                            text: unpack(rows, "suma"),
+                            text: unpack(rows, "categ."),
                             hoverinfo: "lat+lon+z+text",
-                            hovertemplate: "lat: %{lat:.6f}<br>lon: %{lon:.6f}<br>suma: %{z}<br>%{text}<extra></extra>",
+                            hovertemplate: "lat: %{lat:.6f}<br>lon: %{lon:.6f}<br>total: %{z}<br>categ.: %{text}<extra></extra>",
                             radius: 25,
                             type: "densitymapbox",
                             coloraxis: "coloraxis"
