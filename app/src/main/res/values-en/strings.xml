@@ -279,6 +279,9 @@
     <!-- UnSocDetailFragment -->
     <string name="soc_confirmarEdit">Record edited correctly</string>
 
+    <!-- AyudaFragment -->
+    <string name="ayu_importexp">Import/Export</string>
+
     <!-- DiaListFragment -->
     <string name="dia_confirmar">Day added correctly</string>
     <string name="dia_existe">Today was already added</string>
