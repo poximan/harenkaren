@@ -58,9 +58,9 @@ class ExpandListAdapter(
 
         val arrow = groupView.findViewById<ImageView>(R.id.arrow)
         if (isExpanded) {
-            arrow.setImageResource(R.drawable.ic_baseline_keyboard_arrow_up_24)
+            arrow.setImageResource(R.drawable.ic_arrow_up)
         } else {
-            arrow.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24)
+            arrow.setImageResource(R.drawable.ic_arrow_down)
         }
 
         return groupView
