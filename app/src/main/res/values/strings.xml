@@ -288,7 +288,6 @@
 
     <!-- AyudaFragment -->
     <string name="ayu_detalle1" translatable="false" formatted="true">Se ingresa persionando el boton \"%1$s\"</string>
-
     <string name="ayu_detCenso1" translatable="false" formatted="true">
         Desde el menu principal observamos todas las opciones que ofrece esta app.\n
         En esta seccion se detalla la entrada \"%1$s\" cuya navegabilidad busca guiar al censista en la definición de los datos, desde lo general a lo particular.
@@ -303,7 +302,6 @@
         Luego de seleccionar un año vemos esta pantalla, donde se observa la lista de dias en los que sucedieron los recorridos registrados.\n\n
         Adicionalmente el censista podrá dar de alta el dia en curso, si es que desea realizar un censo. Para mas detalle click en el icono \"?\".
     </string>
-
     <string name="ayu_detRecorr1" translatable="false" formatted="true">
         Desde el menu principal observamos todas las opciones que ofrece esta app.\n
         En esta seccion se detalla la entrada \"%1$s\" cuya vista pretende explotar en un mapa los datos obtenidos del censo.\n
@@ -316,7 +314,13 @@
     <string name="ayu_detRecorr3" translatable="false">
         Esta pantalla muestra un mapa de calor para la categoria definida. Haciendo click sobre el mapa se podrá ver un detalle de la densidad en ese punto.
     </string>
-
+    <string name="ayu_detImportExp1" translatable="false" formatted="true">
+        Desde el menu principal observamos todas las opciones que ofrece esta app.\n
+        En esta seccion se detallan las entradas \"%1$s\" del menu lateral, ubicado sobre la izquierda de la pantalla y por defecto escondido. Para desplegarlo basta con arrastrar el dedo de izquierda a derecha.\n\n
+        Estas opciones estan pensadas para gestionar dos actividades estrechamente vinculadas:\n
+        a) %2$s: permite incorporar datos generados desde otras instancias de esta misma app, y datos que respeten un esquema csv compatible particular.\n
+        b) %3$s: toma toda la base de datos local, para compartirla con otra instancia de esta misma app, o un csv representativo con todas las categorias, para ser explotado en cualquier app externa o simplemente backup.\n
+    </string>
     <string name="ayu_importexp">Importar/Exportar</string>
 
     <!-- DiaListFragment -->

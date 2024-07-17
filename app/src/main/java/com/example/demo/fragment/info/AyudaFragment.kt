@@ -55,6 +55,7 @@ class AyudaFragment : Fragment() {
             Pair(getString(R.string.ayu_detRecorr3), R.drawable.ayurecorridos_calor)
         )
         val thirdItem = listOf(
+            Pair(getString(R.string.ayu_detImportExp1, getString(R.string.ayu_importexp), getString(R.string.mnu_importar), getString(R.string.mnu_exportar)), null),
             Pair("Detalle X", null),
             Pair("Detalle Y", null),
             Pair("Detalle Z", null)
