@@ -44,14 +44,15 @@ class AyudaFragment : Fragment() {
 
         val firstItem = listOf(
             Pair(getString(R.string.ayu_detCenso1, getString(R.string.home_censos)), null),
-            Pair(getString(R.string.ayu_detCenso2, getString(R.string.home_censos)), R.drawable.censos_home),
-            Pair(getString(R.string.ayu_detCenso3), R.drawable.censos_anio),
-            Pair(getString(R.string.ayu_detCenso4), R.drawable.censos_aniolista)
+            Pair(getString(R.string.ayu_detalle1, getString(R.string.home_censos)), R.drawable.ayucensos_home),
+            Pair(getString(R.string.ayu_detCenso3), R.drawable.ayucensos_anio),
+            Pair(getString(R.string.ayu_detCenso4), R.drawable.ayucensos_aniolista)
         )
         val secondItem = listOf(
-            Pair("Detalle A", null),
-            Pair("Detalle B", null),
-            Pair("Detalle C", null)
+            Pair(getString(R.string.ayu_detRecorr1, getString(R.string.home_mapa)), null),
+            Pair(getString(R.string.ayu_detalle1, getString(R.string.home_mapa)), R.drawable.ayurecorridos_home),
+            Pair(getString(R.string.ayu_detRecorr2), R.drawable.ayurecorridos),
+            Pair(getString(R.string.ayu_detRecorr3), R.drawable.ayurecorridos_calor)
         )
         val thirdItem = listOf(
             Pair("Detalle X", null),
