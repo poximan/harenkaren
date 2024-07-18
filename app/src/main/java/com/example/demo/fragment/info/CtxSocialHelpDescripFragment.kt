@@ -10,7 +10,8 @@ import com.example.demo.databinding.FragmentCtxSocialDescripBinding
 
 class CtxSocialHelpDescripFragment : Fragment() {
 
-    private val arr: Array<String> = resources.getStringArray(R.array.descriptionCtxSocial)
+    private lateinit var arr: Array<String>
+
     private var _binding: FragmentCtxSocialDescripBinding? = null
     private val binding get() = _binding!!
 
@@ -19,7 +20,10 @@ class CtxSocialHelpDescripFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCtxSocialDescripBinding.inflate(inflater, container, false)
-        return binding.root
+        val view = binding.root
+
+        arr = resources.getStringArray(R.array.descriptionCtxSocial)
+        return view
     }
 
     override fun onDestroyView() {

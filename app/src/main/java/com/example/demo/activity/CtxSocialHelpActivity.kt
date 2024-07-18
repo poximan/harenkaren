@@ -7,6 +7,7 @@ import com.example.demo.fragment.info.Coordinadora
 import com.example.demo.fragment.info.CtxSocialHelpDescripFragment
 
 class CtxSocialHelpActivity : AppCompatActivity(), Coordinadora {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ctx_social_info)

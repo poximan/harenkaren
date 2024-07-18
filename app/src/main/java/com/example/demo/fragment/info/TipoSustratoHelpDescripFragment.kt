@@ -11,15 +11,14 @@ import com.example.demo.databinding.FragmentTpoSustratoDescripBinding
 class TipoSustratoHelpDescripFragment : Fragment() {
 
     private lateinit var arr: Array<String>
-    private var _binding: FragmentTpoSustratoDescripBinding? = null
 
+    private var _binding: FragmentTpoSustratoDescripBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentTpoSustratoDescripBinding.inflate(inflater, container, false)
         val view = binding.root
 

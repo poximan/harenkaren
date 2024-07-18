@@ -56,8 +56,7 @@ class AyudaFragment : Fragment() {
         )
         val thirdItem = listOf(
             Pair(getString(R.string.ayu_detImportExp1, getString(R.string.ayu_importexp), getString(R.string.mnu_importar), getString(R.string.mnu_exportar)), null),
-            Pair("Detalle X", null),
-            Pair("Detalle Y", null),
+            Pair(getString(R.string.ayu_detImportExp2), R.drawable.ayuimportarexp_home),
             Pair("Detalle Z", null)
         )
 

@@ -23,6 +23,9 @@ class CtxSocialHelpFragment : Fragment() {
         binding.ctxHarenRadioButton.setOnClickListener {
             click_en_radio_button(R.id.ctxHarenRadioButton)
         }
+        binding.ctxHarenSinRadioButton.setOnClickListener {
+            click_en_radio_button(R.id.ctxHarenSinRadioButton)
+        }
         binding.ctxGpoHarenRadioButton.setOnClickListener {
             click_en_radio_button(R.id.ctxGpoHarenRadioButton)
         }
@@ -39,9 +42,10 @@ class CtxSocialHelpFragment : Fragment() {
     private fun click_en_radio_button(id_radio_button: Int) {
         val index = when (id_radio_button) {
             R.id.ctxHarenRadioButton -> 0
-            R.id.ctxGpoHarenRadioButton -> 1
-            R.id.ctxPjaSolitariaRadioButton -> 2
-            R.id.ctxIndivSoloRadioButton -> 3
+            R.id.ctxHarenSinRadioButton -> 1
+            R.id.ctxGpoHarenRadioButton -> 2
+            R.id.ctxPjaSolitariaRadioButton -> 3
+            R.id.ctxIndivSoloRadioButton -> 4
             else -> 0
         }
         val activity = activity

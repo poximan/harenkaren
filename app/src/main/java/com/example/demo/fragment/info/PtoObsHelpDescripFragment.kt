@@ -11,15 +11,14 @@ import com.example.demo.databinding.FragmentPtoObsUnsocDescripBinding
 class PtoObsHelpDescripFragment : Fragment() {
 
     private lateinit var arr: Array<String>
-    private var _binding: FragmentPtoObsUnsocDescripBinding? = null
 
+    private var _binding: FragmentPtoObsUnsocDescripBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentPtoObsUnsocDescripBinding.inflate(inflater, container, false)
         val view = binding.root
 

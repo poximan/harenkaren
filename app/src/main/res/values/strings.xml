@@ -321,6 +321,10 @@
         a) %2$s: permite incorporar datos generados desde otras instancias de esta misma app, y datos que respeten un esquema csv compatible particular.\n
         b) %3$s: toma toda la base de datos local, para compartirla con otra instancia de esta misma app, o un csv representativo con todas las categorias, para ser explotado en cualquier app externa o simplemente backup.\n
     </string>
+    <string name="ayu_detImportExp2" translatable="false" >
+        Para ingresar se puede directamente arrastrar el dedo de izquierda a derecha comenzando desde el lateral izquierdo y hacia el centro de la pantalla.\n
+        La otra opcion es presionar direcamente sobre el menu hamburguesa, remarcado en rojo en la imagen.
+    </string>
     <string name="ayu_importexp">Importar/Exportar</string>
 
     <!-- DiaListFragment -->

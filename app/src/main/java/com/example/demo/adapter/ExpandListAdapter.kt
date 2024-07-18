@@ -81,10 +81,12 @@ class ExpandListAdapter(
         val childImage = childView.findViewById<ImageView>(R.id.childImage)
 
         childName.text = childData.first
+
         if (childData.second != null) {
             childImage.setImageResource(childData.second!!)
             childImage.visibility = View.VISIBLE
         } else {
+            childImage.setImageResource(0)
             childImage.visibility = View.GONE
         }
 
