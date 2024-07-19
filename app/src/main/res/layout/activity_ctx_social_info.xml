@@ -6,14 +6,14 @@
 
     <fragment
         android:id="@+id/fragment_ctxSocialHelp"
-        android:name="com.example.demo.fragment.info.CtxSocialHelpFragment"
+        android:name="phocidae.mirounga.leonina.fragment.info.CtxSocialHelpFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1" />
 
     <fragment
         android:id="@+id/fragment_ctxSocialHelpDescrip"
-        android:name="com.example.demo.fragment.info.CtxSocialHelpDescripFragment"
+        android:name="phocidae.mirounga.leonina.fragment.info.CtxSocialHelpDescripFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="2" />

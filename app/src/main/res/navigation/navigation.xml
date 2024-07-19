@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/home_fragment"
-        android:name="com.example.demo.fragment.HomeFragment"
+        android:name="phocidae.mirounga.leonina.fragment.HomeFragment"
         android:label="@string/nav_home_fragment"
         tools:layout="@layout/fragment_home">
         <action
@@ -48,7 +48,7 @@
     </fragment>
     <fragment
         android:id="@+id/censo_fragment"
-        android:name="com.example.demo.fragment.CensoFragment"
+        android:name="phocidae.mirounga.leonina.fragment.CensoFragment"
         android:label="@string/nav_censo_fragment"
         tools:layout="@layout/fragment_censo">
         <action
@@ -67,7 +67,7 @@
             app:argType="integer"/>
         <fragment
             android:id="@+id/dia_list_fragment"
-            android:name="com.example.demo.fragment.list.DiaListFragment"
+            android:name="phocidae.mirounga.leonina.fragment.list.DiaListFragment"
             android:label="@string/nav_dia_list_fragment"
             tools:layout="@layout/fragment_dia_list">
             <argument
@@ -89,7 +89,7 @@
                 app:argType="java.util.UUID" />
             <fragment
                 android:id="@+id/recorr_list_fragment"
-                android:name="com.example.demo.fragment.list.RecorrListFragment"
+                android:name="phocidae.mirounga.leonina.fragment.list.RecorrListFragment"
                 android:label="@string/nav_recorr_list_fragment"
                 tools:layout="@layout/fragment_recorr_list">
                 <argument
@@ -107,7 +107,7 @@
             </fragment>
             <fragment
                 android:id="@+id/recorr_add_fragment"
-                android:name="com.example.demo.fragment.add.RecorrAddFragment"
+                android:name="phocidae.mirounga.leonina.fragment.add.RecorrAddFragment"
                 android:label="@string/nav_recorr_add_fragment"
                 tools:layout="@layout/fragment_recorr_add">
                 <argument
@@ -119,12 +119,12 @@
             </fragment>
             <fragment
                 android:id="@+id/recorr_detail_fragment"
-                android:name="com.example.demo.fragment.edit.RecorrEditFragment"
+                android:name="phocidae.mirounga.leonina.fragment.edit.RecorrEditFragment"
                 android:label="@string/nav_recorr_detail_fragment"
                 tools:layout="@layout/fragment_recorr_detail">
                 <argument
                     android:name="recorrActual"
-                    app:argType="com.example.demo.model.Recorrido" />
+                    app:argType="phocidae.mirounga.leonina.model.Recorrido" />
                 <action
                     android:id="@+id/goToRecorrListAction"
                     app:destination="@id/recorr_list_fragment"
@@ -149,7 +149,7 @@
 
                 <fragment
                     android:id="@+id/unsoc_list_fragment"
-                    android:name="com.example.demo.fragment.list.UnSocListFragment"
+                    android:name="phocidae.mirounga.leonina.fragment.list.UnSocListFragment"
                     android:label="@string/nav_unsoc_list_fragment"
                     tools:layout="@layout/fragment_unsoc_list">
                     <argument
@@ -167,7 +167,7 @@
                 </fragment>
                 <fragment
                     android:id="@+id/unsoc_listgraf_fragment"
-                    android:name="com.example.demo.fragment.list.UnSocListGrafFragment"
+                    android:name="phocidae.mirounga.leonina.fragment.list.UnSocListGrafFragment"
                     android:label="@string/nav_unsoc_list_fragment"
                     tools:layout="@layout/fragment_unsoc_list_graf">
                     <argument
@@ -179,7 +179,7 @@
                 </fragment>
                 <fragment
                     android:id="@+id/unsoc_add_fragment"
-                    android:name="com.example.demo.fragment.add.UnSocAddTodoFragment"
+                    android:name="phocidae.mirounga.leonina.fragment.add.UnSocAddTodoFragment"
                     android:label="@string/nav_unsoc_add_fragment"
                     tools:layout="@layout/fragment_unsoc_add">
                     <argument
@@ -191,12 +191,12 @@
                 </fragment>
                 <fragment
                     android:id="@+id/unsoc_detail_fragment"
-                    android:name="com.example.demo.fragment.edit.UnSocEditTodoFragment"
+                    android:name="phocidae.mirounga.leonina.fragment.edit.UnSocEditTodoFragment"
                     android:label="@string/nav_unsoc_detail_fragment"
                     tools:layout="@layout/fragment_unsoc_add">
                     <argument
                         android:name="unSocActual"
-                        app:argType="com.example.demo.model.UnidSocial" />
+                        app:argType="phocidae.mirounga.leonina.model.UnidSocial" />
                     <action
                         android:id="@+id/goToUnSocListFromUnSocDetailAction"
                         app:destination="@id/unsoc_list_fragment"
@@ -210,22 +210,22 @@
                 </fragment>
                 <activity
                     android:id="@+id/ptoObsUnSoc_activity"
-                    android:name="com.example.demo.activity.PtoObsHelpActivity"
+                    android:name="phocidae.mirounga.leonina.activity.PtoObsHelpActivity"
                     tools:layout="@layout/activity_pto_obs_unsoc" />
                 <activity
                     android:id="@+id/ctxSocial_activity"
-                    android:name="com.example.demo.activity.CtxSocialHelpActivity"
+                    android:name="phocidae.mirounga.leonina.activity.CtxSocialHelpActivity"
                     tools:layout="@layout/activity_ctx_social_info" />
                 <activity
                     android:id="@+id/tpoSustrato_activity"
-                    android:name="com.example.demo.activity.TipoSustratoHelpActivity"
+                    android:name="phocidae.mirounga.leonina.activity.TipoSustratoHelpActivity"
                     tools:layout="@layout/activity_tpo_sustrato_info" />
             </navigation>
         </navigation>
     </navigation>
     <fragment
         android:id="@+id/statistics_fragment"
-        android:name="com.example.demo.fragment.analisis.StatisticsFragment"
+        android:name="phocidae.mirounga.leonina.fragment.analisis.StatisticsFragment"
         android:label="@string/nav_statistics_fragment"
         tools:layout="@layout/fragment_statistics">
         <argument
@@ -234,12 +234,12 @@
     </fragment>
     <fragment
         android:id="@+id/osm_fragment"
-        android:name="com.example.demo.fragment.maps.MapsFragment"
+        android:name="phocidae.mirounga.leonina.fragment.maps.MapsFragment"
         android:label="@string/nav_osm_fragment"
         tools:layout="@layout/fragment_osm" />
     <fragment
         android:id="@+id/reportes_fragment"
-        android:name="com.example.demo.fragment.analisis.ReportesFragment"
+        android:name="phocidae.mirounga.leonina.fragment.analisis.ReportesFragment"
         android:label="@string/nav_reportes_fragment"
         tools:layout="@layout/fragment_reportes">
         <argument
@@ -248,27 +248,27 @@
     </fragment>
     <fragment
         android:id="@+id/ayuda_fragment"
-        android:name="com.example.demo.fragment.info.AyudaFragment"
+        android:name="phocidae.mirounga.leonina.fragment.info.AyudaFragment"
         android:label="@string/nav_ayuda_fragment"
         tools:layout="@layout/fragment_ayuda" />
     <fragment
         android:id="@+id/dev_fragment"
-        android:name="com.example.demo.database.DevFragment"
+        android:name="phocidae.mirounga.leonina.database.DevFragment"
         android:label="@string/nav_dev_fragment"
         tools:layout="@layout/fragment_dev" />
     <fragment
         android:id="@+id/about_fragment"
-        android:name="com.example.demo.fragment.info.AboutFragment"
+        android:name="phocidae.mirounga.leonina.fragment.info.AboutFragment"
         android:label="@string/nav_about_fragment"
         tools:layout="@layout/fragment_about" />
     <fragment
         android:id="@+id/import_fragment"
-        android:name="com.example.demo.compartir.importar.ImportarFragment"
+        android:name="phocidae.mirounga.leonina.compartir.importar.ImportarFragment"
         android:label="@string/nav_import_fragment"
         tools:layout="@layout/fragment_importar" />
     <fragment
         android:id="@+id/export_fragment"
-        android:name="com.example.demo.compartir.exportar.ExportarFragment"
+        android:name="phocidae.mirounga.leonina.compartir.exportar.ExportarFragment"
         android:label="@string/nav_export_fragment"
         tools:layout="@layout/fragment_exportar" />
 </navigation>

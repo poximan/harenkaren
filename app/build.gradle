@@ -4,7 +4,7 @@ apply plugin: 'kotlin-kapt' /* procesador de anotaciones */
 apply plugin: "androidx.navigation.safeargs"
 
 android {
-    namespace 'com.example.demo'
+    namespace 'phocidae.mirounga.leonina'
 
     /*
     sdk/api=29(Q) es android 10 -> 84% del mercado
@@ -16,7 +16,7 @@ android {
     defaultConfig {
         minSdk 28
         targetSdk 31
-        applicationId "com.example.demo"
+        applicationId "phocidae.mirounga.leonina"
         versionCode 20240627
         versionName "julio24"
     }

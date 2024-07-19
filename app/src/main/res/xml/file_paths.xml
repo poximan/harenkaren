@@ -5,6 +5,6 @@
         path="." />
     <external-path
         name="fotos"
-        path="Android/data/com.example.demo/" />
+        path="Android/data/phocidae.mirounga.leonina/" />
 </paths>
 
