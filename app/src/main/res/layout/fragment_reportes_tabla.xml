@@ -1,24 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <!-- titulos -->
     <TableRow>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1.5"
             android:gravity="center_vertical"
             android:text="@string/rep_tabUnSoc" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginHorizontal="20dp"
             android:layout_weight=".5"
             android:gravity="center"
-            android:layout_marginHorizontal="20dp"
             android:text="@string/rep_tabTotal" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -28,21 +30,24 @@
     </TableRow>
 
     <TableRow>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_span="3"
             android:layout_weight="1"
-            android:background="@android:color/darker_gray"/>
+            android:background="@android:color/darker_gray" />
     </TableRow>
 
     <!-- haren -->
     <TableRow>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1.5"
             android:text="@string/rep_tabHaren" />
+
         <TextView
             android:id="@+id/tot_haren"
             android:layout_width="wrap_content"
@@ -50,6 +55,7 @@
             android:layout_weight=".5"
             android:gravity="center"
             android:text="#num" />
+
         <TextView
             android:id="@+id/prom_haren"
             android:layout_width="wrap_content"
@@ -58,22 +64,26 @@
             android:gravity="center"
             android:text="#num" />
     </TableRow>
+
     <TableRow>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:layout_span="3"
             android:layout_weight="1"
-            android:background="@android:color/darker_gray"/>
+            android:background="@android:color/darker_gray" />
     </TableRow>
 
     <!-- grupo de harenes -->
     <TableRow>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1.5"
             android:text="@string/rep_tabGpoHaren" />
+
         <TextView
             android:id="@+id/tot_gpoharen"
             android:layout_width="wrap_content"
@@ -81,6 +91,7 @@
             android:layout_weight=".5"
             android:gravity="center"
             android:text="#num" />
+
         <TextView
             android:id="@+id/prom_gpoharen"
             android:layout_width="wrap_content"
@@ -89,22 +100,26 @@
             android:gravity="center"
             android:text="#num" />
     </TableRow>
+
     <TableRow>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:layout_span="3"
             android:layout_weight="1"
-            android:background="@android:color/darker_gray"/>
+            android:background="@android:color/darker_gray" />
     </TableRow>
 
     <!-- haren sin alfa -->
     <TableRow>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1.5"
             android:text="@string/rep_tabHarenSin" />
+
         <TextView
             android:id="@+id/tot_harensin"
             android:layout_width="wrap_content"
@@ -112,6 +127,7 @@
             android:layout_weight=".5"
             android:gravity="center"
             android:text="#num" />
+
         <TextView
             android:id="@+id/prom_harensin"
             android:layout_width="wrap_content"
@@ -120,22 +136,26 @@
             android:gravity="center"
             android:text="#num" />
     </TableRow>
+
     <TableRow>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:layout_span="3"
             android:layout_weight="1"
-            android:background="@android:color/darker_gray"/>
+            android:background="@android:color/darker_gray" />
     </TableRow>
 
     <!-- pareja solitaria -->
     <TableRow>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1.5"
             android:text="@string/rep_tabPjaSolit" />
+
         <TextView
             android:id="@+id/tot_pjasolit"
             android:layout_width="wrap_content"
@@ -143,30 +163,35 @@
             android:layout_weight=".5"
             android:gravity="center"
             android:text="#num" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:gravity="center"
             android:background="@color/color_two"
+            android:gravity="center"
             android:text="-" />
     </TableRow>
+
     <TableRow>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:layout_span="3"
             android:layout_weight="1"
-            android:background="@android:color/darker_gray"/>
+            android:background="@android:color/darker_gray" />
     </TableRow>
 
     <!-- individuo solo -->
     <TableRow>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1.5"
             android:text="@string/rep_tabIndivSolo" />
+
         <TextView
             android:id="@+id/tot_indivsolo"
             android:layout_width="wrap_content"
@@ -174,21 +199,24 @@
             android:layout_weight=".5"
             android:gravity="center"
             android:text="#num" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:gravity="center"
             android:background="@color/color_two"
+            android:gravity="center"
             android:text="-" />
     </TableRow>
+
     <TableRow>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:layout_span="3"
             android:layout_weight="1"
-            android:background="@android:color/darker_gray"/>
+            android:background="@android:color/darker_gray" />
     </TableRow>
 
 </TableLayout>

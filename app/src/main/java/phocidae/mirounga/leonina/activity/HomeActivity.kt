@@ -7,9 +7,9 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import com.google.android.material.navigation.NavigationView
 import phocidae.mirounga.leonina.R
 import phocidae.mirounga.leonina.databinding.ActivityHomeBinding
-import com.google.android.material.navigation.NavigationView
 
 class HomeActivity : AppCompatActivity() {
 

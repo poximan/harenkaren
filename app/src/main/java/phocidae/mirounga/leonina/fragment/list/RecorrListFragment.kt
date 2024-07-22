@@ -13,15 +13,15 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import phocidae.mirounga.leonina.R
 import phocidae.mirounga.leonina.adapter.RecorrListAdapter
 import phocidae.mirounga.leonina.databinding.FragmentRecorrListBinding
 import phocidae.mirounga.leonina.model.Recorrido
 import phocidae.mirounga.leonina.viewModel.RecorrViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class RecorrListFragment : SuperList(), RecorrListAdapter.OnRecorrClickListener {
 

@@ -22,6 +22,12 @@ import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.navigation.NavigationView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import org.osmdroid.util.GeoPoint
 import phocidae.mirounga.leonina.R
 import phocidae.mirounga.leonina.activity.HomeActivity
 import phocidae.mirounga.leonina.dao.UnSocDAO
@@ -29,12 +35,6 @@ import phocidae.mirounga.leonina.database.HarenKarenRoomDatabase
 import phocidae.mirounga.leonina.databinding.FragmentReportesBinding
 import phocidae.mirounga.leonina.fragment.maps.SuperMapa
 import phocidae.mirounga.leonina.model.UnidSocial
-import com.google.android.material.navigation.NavigationView
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import org.osmdroid.util.GeoPoint
 import java.util.UUID
 import kotlin.math.abs
 
@@ -161,6 +161,7 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
                 (activity as? HomeActivity)?.drawerLayout?.openDrawer(GravityCompat.START)
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -397,6 +398,7 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
                 DbConstants.PERMISSION_REQUEST_PICK_IMAGE1 -> {
                     logo1.setImageURI(uri)
                 }
+
                 DbConstants.PERMISSION_REQUEST_PICK_IMAGE2 -> {
                     logo2.setImageURI(uri)
                 }

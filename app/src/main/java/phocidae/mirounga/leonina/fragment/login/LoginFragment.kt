@@ -20,15 +20,15 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import phocidae.mirounga.leonina.R
 import phocidae.mirounga.leonina.activity.HomeActivity
 import phocidae.mirounga.leonina.databinding.FragmentLoginBinding
 import phocidae.mirounga.leonina.model.Usuario
 import phocidae.mirounga.leonina.viewModel.UsuarioViewModel
-import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class LoginFragment : Fragment(), UsuarioCallback {
 

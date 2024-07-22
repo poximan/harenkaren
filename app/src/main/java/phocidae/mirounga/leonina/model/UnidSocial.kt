@@ -298,10 +298,30 @@ data class UnidSocial(
     fun getContadoresNoNulos(): List<String> {
         val atributos = mutableListOf<String>()
         val campos = listOf(
-            "vAlfaS4Ad", "vAlfaSams", "vHembrasAd", "vCrias", "vDestetados", "vJuveniles",
-            "vS4AdPerif", "vS4AdCerca", "vS4AdLejos", "vOtrosSamsPerif", "vOtrosSamsCerca", "vOtrosSamsLejos",
-            "mAlfaS4Ad", "mAlfaSams", "mHembrasAd", "mCrias", "mDestetados", "mJuveniles",
-            "mS4AdPerif", "mS4AdCerca", "mS4AdLejos", "mOtrosSamsPerif", "mOtrosSamsCerca", "mOtrosSamsLejos"
+            "vAlfaS4Ad",
+            "vAlfaSams",
+            "vHembrasAd",
+            "vCrias",
+            "vDestetados",
+            "vJuveniles",
+            "vS4AdPerif",
+            "vS4AdCerca",
+            "vS4AdLejos",
+            "vOtrosSamsPerif",
+            "vOtrosSamsCerca",
+            "vOtrosSamsLejos",
+            "mAlfaS4Ad",
+            "mAlfaSams",
+            "mHembrasAd",
+            "mCrias",
+            "mDestetados",
+            "mJuveniles",
+            "mS4AdPerif",
+            "mS4AdCerca",
+            "mS4AdLejos",
+            "mOtrosSamsPerif",
+            "mOtrosSamsCerca",
+            "mOtrosSamsLejos"
         )
 
         for (campo in campos) {

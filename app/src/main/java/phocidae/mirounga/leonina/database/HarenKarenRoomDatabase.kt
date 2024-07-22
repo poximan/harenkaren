@@ -6,6 +6,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import kotlinx.coroutines.CoroutineScope
 import phocidae.mirounga.leonina.dao.DiaDAO
 import phocidae.mirounga.leonina.dao.RecorrDAO
 import phocidae.mirounga.leonina.dao.UnSocDAO
@@ -14,7 +15,6 @@ import phocidae.mirounga.leonina.model.Dia
 import phocidae.mirounga.leonina.model.Recorrido
 import phocidae.mirounga.leonina.model.UnidSocial
 import phocidae.mirounga.leonina.model.Usuario
-import kotlinx.coroutines.CoroutineScope
 
 @Database(
     entities = [Dia::class, Recorrido::class, UnidSocial::class, Usuario::class],

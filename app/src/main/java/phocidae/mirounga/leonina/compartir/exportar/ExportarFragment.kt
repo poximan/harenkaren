@@ -8,14 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import phocidae.mirounga.leonina.R
 import phocidae.mirounga.leonina.database.HarenKarenRoomDatabase
 import phocidae.mirounga.leonina.databinding.FragmentExportarBinding
 import phocidae.mirounga.leonina.fragment.messaging.EmailSender
 import phocidae.mirounga.leonina.model.EntidadesPlanas
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 
 class ExportarFragment : Fragment() {
 

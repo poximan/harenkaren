@@ -8,17 +8,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <CheckBox
             android:id="@+id/chk_mapacalor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/osm_mapacalor" />
+
         <Button
             android:id="@+id/boton_menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/osm_menu" />
+
         <Spinner
             android:id="@+id/filtroAnio"
             android:layout_width="wrap_content"

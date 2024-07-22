@@ -101,6 +101,7 @@ class ExpandListAdapter(
                         childImage.visibility = View.GONE
                         childName.startAnimation(textExpand)
                     }
+
                     override fun onAnimationRepeat(animation: Animation?) {}
                 })
                 childImage.startAnimation(imageScaleDown)
@@ -114,6 +115,7 @@ class ExpandListAdapter(
                         childImage.visibility = View.VISIBLE
                         childImage.startAnimation(imageScaleUp)
                     }
+
                     override fun onAnimationRepeat(animation: Animation?) {}
                 })
                 childName.startAnimation(textShrink)

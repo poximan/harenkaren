@@ -14,14 +14,14 @@ import android.view.animation.AlphaAnimation
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import phocidae.mirounga.leonina.R
 import phocidae.mirounga.leonina.databinding.FragmentRegisterBinding
 import phocidae.mirounga.leonina.fragment.login.UsuarioCallback
 import phocidae.mirounga.leonina.model.Usuario
 import phocidae.mirounga.leonina.viewModel.UsuarioViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 private var visible: Boolean = false
 

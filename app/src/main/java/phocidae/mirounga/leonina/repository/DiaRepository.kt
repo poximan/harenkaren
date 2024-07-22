@@ -1,11 +1,11 @@
 package phocidae.mirounga.leonina.repository
 
 import androidx.lifecycle.LiveData
-import phocidae.mirounga.leonina.dao.DiaDAO
-import phocidae.mirounga.leonina.model.Dia
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import phocidae.mirounga.leonina.dao.DiaDAO
+import phocidae.mirounga.leonina.model.Dia
 
 class DiaRepository(private val diaDao: DiaDAO) {
 

@@ -9,10 +9,10 @@ import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import phocidae.mirounga.leonina.R
-import phocidae.mirounga.leonina.model.UnidSocial
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.infowindow.InfoWindow
+import phocidae.mirounga.leonina.R
+import phocidae.mirounga.leonina.model.UnidSocial
 
 class BarCharInfoWindow(
     private val context: Context,

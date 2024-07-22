@@ -1,9 +1,9 @@
 package phocidae.mirounga.leonina.adapter
 
-import phocidae.mirounga.leonina.model.UnidSocial
-import phocidae.mirounga.leonina.viewModel.UnSocViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import phocidae.mirounga.leonina.model.UnidSocial
+import phocidae.mirounga.leonina.viewModel.UnSocViewModel
 import java.util.UUID
 
 class UnSocListGrafAdapter(private val idRecorrido: UUID) {

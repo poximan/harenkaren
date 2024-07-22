@@ -92,7 +92,7 @@ class UnSocAddVivosFragment : SuperAdd() {
     }
 
     private val focusChange = OnFocusChangeListener { _, hasFocus ->
-        if (!hasFocus){
+        if (!hasFocus) {
             val ctxSocial = resources.getStringArray(R.array.op_contexto_social)
             sharedViewModel.lastSelectedValue.observe(viewLifecycleOwner) { ctxElegido ->
 

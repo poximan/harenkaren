@@ -16,15 +16,15 @@ import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import phocidae.mirounga.leonina.R
 import phocidae.mirounga.leonina.adapter.UnSocListAdapter
 import phocidae.mirounga.leonina.databinding.FragmentUnsocListBinding
 import phocidae.mirounga.leonina.model.UnidSocial
 import phocidae.mirounga.leonina.viewModel.UnSocViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class UnSocListFragment : SuperList(), UnSocListAdapter.OnUnSocClickListener {
 

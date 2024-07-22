@@ -20,6 +20,7 @@
 
     <!-- camara -->
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
@@ -46,12 +47,12 @@
         <activity
             android:name=".activity.HomeActivity"
             android:excludeFromRecents="true"
-            android:exported="false"/>
+            android:exported="false" />
 
         <activity
             android:name=".activity.PtoObsHelpActivity"
             android:excludeFromRecents="true"
-            android:exported="false"/>
+            android:exported="false" />
 
         <activity
             android:name=".activity.CtxSocialHelpActivity"
@@ -61,7 +62,7 @@
         <activity
             android:name=".activity.TipoSustratoHelpActivity"
             android:excludeFromRecents="true"
-            android:exported="false"/>
+            android:exported="false" />
 
         <meta-data
             android:name="preloaded_fonts"

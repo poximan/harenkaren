@@ -16,7 +16,11 @@ object EmailSender {
 
         val asunto = context.getString(R.string.mai_asunto)
         val uri =
-            FileProvider.getUriForFile(context, "phocidae.mirounga.leonina.fileprovider", archivoAdjunto)
+            FileProvider.getUriForFile(
+                context,
+                "phocidae.mirounga.leonina.fileprovider",
+                archivoAdjunto
+            )
 
         val intent = Intent(Intent.ACTION_SEND).apply {
             type = "message/rfc822"  // Esto asegura que se abran aplicaciones de correo electrónico

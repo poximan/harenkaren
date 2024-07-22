@@ -1,7 +1,7 @@
 package phocidae.mirounga.leonina.fragment.maps
 
-import phocidae.mirounga.leonina.model.UnidSocial
 import org.osmdroid.util.GeoPoint
+import phocidae.mirounga.leonina.model.UnidSocial
 import kotlin.math.abs
 
 abstract class SuperMapa {

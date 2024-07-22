@@ -64,7 +64,7 @@
         app:startDestination="@id/dia_list_fragment">
         <argument
             android:name="anio"
-            app:argType="integer"/>
+            app:argType="integer" />
         <fragment
             android:id="@+id/dia_list_fragment"
             android:name="phocidae.mirounga.leonina.fragment.list.DiaListFragment"
@@ -72,7 +72,7 @@
             tools:layout="@layout/fragment_dia_list">
             <argument
                 android:name="anio"
-                app:argType="integer"/>
+                app:argType="integer" />
             <action
                 android:id="@+id/goToRecorrListAction"
                 app:destination="@id/recorrido" />

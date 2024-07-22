@@ -19,17 +19,17 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import phocidae.mirounga.leonina.R
-import phocidae.mirounga.leonina.activity.HomeActivity
-import phocidae.mirounga.leonina.database.HarenKarenRoomDatabase
-import phocidae.mirounga.leonina.model.UnidSocial
-import phocidae.mirounga.leonina.repository.RecorrRepository
 import com.google.android.material.navigation.NavigationView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.osmdroid.views.MapView
+import phocidae.mirounga.leonina.R
+import phocidae.mirounga.leonina.activity.HomeActivity
+import phocidae.mirounga.leonina.database.HarenKarenRoomDatabase
+import phocidae.mirounga.leonina.model.UnidSocial
+import phocidae.mirounga.leonina.repository.RecorrRepository
 
 class MapsFragment : Fragment() {
 

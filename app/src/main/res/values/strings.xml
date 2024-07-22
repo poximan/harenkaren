@@ -287,45 +287,50 @@
     <string name="soc_confirmarEdit">Registro editado correctamente</string>
 
     <!-- AyudaFragment -->
-    <string name="ayu_detalle1" translatable="false" formatted="true">Se ingresa persionando el boton \"%1$s\"</string>
-    <string name="ayu_detCenso1" translatable="false" formatted="true">
+    <string name="ayu_detalle1" formatted="true">Se ingresa presionando el boton \"%1$s\"</string>
+    <string name="ayu_detCenso1" formatted="true">
         Desde el menu principal observamos todas las opciones que ofrece esta app.\n
         En esta seccion se detalla la entrada \"%1$s\" cuya navegabilidad busca guiar al censista en la definición de los datos, desde lo general a lo particular.
         Asi primeramente se dará de alta un Dia (como unidad de tiempo en que sucede un acto de censar), dentro de este definirá Recorridos (como descriptor de áreas geográficas donde sucede el acto de censar) y finalmente agregará tantos Registros como unidades sociales observe en el campo.\n\n
         Esta primer actividad constituye la generacion del dato primario, y a partir de él explotarán una serie de instrumentos de interpretacion de datos que se describirán mas adelante.
     </string>
-    <string name="ayu_detCenso3" translatable="false" >
+    <string name="ayu_detCenso3">
         Ya dentro de censos, se veran los registros agrupados por año.\n\nEn caso que la base de datos está vacia, solo estará presente la entrada del año en curso.\n\n
         Si desea dar de alta un registro nuevo, click en el año en curso.
     </string>
-    <string name="ayu_detCenso4" translatable="false" >
+    <string name="ayu_detCenso4">
         Luego de seleccionar un año vemos esta pantalla, donde se observa la lista de dias en los que sucedieron los recorridos registrados.\n\n
         Adicionalmente el censista podrá dar de alta el dia en curso, si es que desea realizar un censo. Para mas detalle click en el icono \"?\".
     </string>
-    <string name="ayu_detRecorr1" translatable="false" formatted="true">
+
+    <string name="ayu_detRecorr1" formatted="true">
         Desde el menu principal observamos todas las opciones que ofrece esta app.\n
         En esta seccion se detalla la entrada \"%1$s\" cuya vista pretende explotar en un mapa los datos obtenidos del censo.\n
         Aqui se podrán cortar los datos por año y categoria (macho alfa, hembra, cria, macho periferico, etc).\n
         Cuenta tambien con un mapa de calor para observar la concentracion relativa.
     </string>
-    <string name="ayu_detRecorr2" translatable="false">
+    <string name="ayu_detRecorr2">
         Esta pantalla muestra una polilinea por cada recorrido diferenciada por colores, a su vez cada recorrido se compone de puntos que representan las unidades sociales registradas.
     </string>
-    <string name="ayu_detRecorr3" translatable="false">
+    <string name="ayu_detRecorr3">
         Esta pantalla muestra un mapa de calor para la categoria definida. Haciendo click sobre el mapa se podrá ver un detalle de la densidad en ese punto.
     </string>
-    <string name="ayu_detImportExp1" translatable="false" formatted="true">
+
+    <string name="ayu_importexp">Importar/Exportar</string>
+    <string name="ayu_detImportExp1" formatted="true">
         Desde el menu principal observamos todas las opciones que ofrece esta app.\n
         En esta seccion se detallan las entradas \"%1$s\" del menu lateral, ubicado sobre la izquierda de la pantalla y por defecto escondido. Para desplegarlo basta con arrastrar el dedo de izquierda a derecha.\n\n
         Estas opciones estan pensadas para gestionar dos actividades estrechamente vinculadas:\n
         a) %2$s: permite incorporar datos generados desde otras instancias de esta misma app, y datos que respeten un esquema csv compatible particular.\n
         b) %3$s: toma toda la base de datos local, para compartirla con otra instancia de esta misma app, o un csv representativo con todas las categorias, para ser explotado en cualquier app externa o simplemente backup.\n
     </string>
-    <string name="ayu_detImportExp2" translatable="false" >
-        Para ingresar se puede directamente arrastrar el dedo de izquierda a derecha comenzando desde el lateral izquierdo y hacia el centro de la pantalla.\n
+    <string name="ayu_detImportExp2">
+        Para ingresar se debe  arrastrar el dedo de izquierda a derecha comenzando desde el lateral izquierdo de la pantalla y hacia el centro.\n
         La otra opcion es presionar direcamente sobre el menu hamburguesa, remarcado en rojo en la imagen.
     </string>
-    <string name="ayu_importexp">Importar/Exportar</string>
+    <string name="ayu_detImportExp3">
+        El menu dispone de ambas opciones. Elija la primera para agregar datos a la base de datos existente, y la segunda para extraer todos los datos presentes en su app.
+    </string>
 
     <!-- DiaListFragment -->
     <string name="dia_confirmar">Dia agregado correctamente</string>

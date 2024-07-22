@@ -3,6 +3,9 @@ package phocidae.mirounga.leonina.viewModel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import phocidae.mirounga.leonina.R
 import phocidae.mirounga.leonina.database.HarenKarenRoomDatabase
 import phocidae.mirounga.leonina.exception.MultipleUsuarioExcepcion
@@ -10,9 +13,6 @@ import phocidae.mirounga.leonina.exception.NoExisteUsuarioExcepcion
 import phocidae.mirounga.leonina.fragment.login.UsuarioCallback
 import phocidae.mirounga.leonina.model.Usuario
 import phocidae.mirounga.leonina.repository.UsuarioRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class UsuarioViewModel(application: Application) : AndroidViewModel(application) {
 

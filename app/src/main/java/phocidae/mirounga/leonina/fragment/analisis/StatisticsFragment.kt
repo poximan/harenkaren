@@ -12,6 +12,10 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import phocidae.mirounga.leonina.R
 import phocidae.mirounga.leonina.database.DevFragment
 import phocidae.mirounga.leonina.databinding.FragmentStatisticsBinding
@@ -19,10 +23,6 @@ import phocidae.mirounga.leonina.model.Dia
 import phocidae.mirounga.leonina.model.Recorrido
 import phocidae.mirounga.leonina.model.UnidSocial
 import phocidae.mirounga.leonina.viewModel.UnSocViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.util.UUID
 
 class StatisticsFragment : Fragment() {
@@ -72,18 +72,22 @@ class StatisticsFragment : Fragment() {
                         }
                     }
                 }
+
                 is Dia -> {
                     uuid = entidad.id
                     unDia(viewModel)
                 }
+
                 is Recorrido -> {
                     uuid = entidad.id
                     unRecorrido(viewModel)
                 }
+
                 is UnidSocial -> {
                     uuid = entidad.id
                     unaUnidadSocial(viewModel)
                 }
+
                 else -> {}
             }
         } else

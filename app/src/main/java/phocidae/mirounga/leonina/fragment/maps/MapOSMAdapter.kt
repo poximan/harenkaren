@@ -4,9 +4,6 @@ import android.content.Context
 import android.graphics.Color
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import phocidae.mirounga.leonina.R
-import phocidae.mirounga.leonina.model.UnidSocial
-import phocidae.mirounga.leonina.repository.RecorrRepository
 import org.osmdroid.api.IMapController
 import org.osmdroid.config.Configuration
 import org.osmdroid.events.MapEventsReceiver
@@ -16,7 +13,9 @@ import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.MapEventsOverlay
 import org.osmdroid.views.overlay.Marker
 import org.osmdroid.views.overlay.Polyline
-import org.osmdroid.views.overlay.infowindow.BasicInfoWindow
+import phocidae.mirounga.leonina.R
+import phocidae.mirounga.leonina.model.UnidSocial
+import phocidae.mirounga.leonina.repository.RecorrRepository
 
 class MapOSMAdapter(mapView: MapView, context: Context) : SuperMapa(), MapEventsReceiver {
 

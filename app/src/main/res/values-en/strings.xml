@@ -256,8 +256,8 @@
     <string name="rec_confirmar">Route added correctly</string>
 
     <!-- UnSocAddFragment -->
-   <string name="soc_confirmarOk">Record added correctly</string>
-   <string name="soc_confirmarFalla">Missing data</string>
+    <string name="soc_confirmarOk">Record added correctly</string>
+    <string name="soc_confirmarFalla">Missing data</string>
 
     <!-- ExportarFragment -->
     <string name="exp_enviarExterno">This is a backup of the records contained in the app.\nIn total, there are</string>
@@ -280,7 +280,49 @@
     <string name="soc_confirmarEdit">Record edited correctly</string>
 
     <!-- AyudaFragment -->
+    <string name="ayu_detalle1" formatted="true">Enter by pressing the button \"%1$s\"</string>
+    <string name="ayu_detCenso1" formatted="true">
+        From the main menu we see all the options that this app offers.\n
+        This section details the entry \"%1$s\" whose navigability seeks to guide the census taker in the definition of the data, from the general to the particular.
+        Thus, first a Day will be registered (as a unit of time in which an act of census occurs), within this it will define Routes (as a descriptor of geographical areas where the act of census occurs) and finally it will add as many Records as social units observed in the field.\n\n
+        This first activity constitutes the generation of primary data, and from it a series of data interpretation instruments that will be described later will be exploited.
+    </string>
+    <string name="ayu_detCenso3">
+        Once within censuses, you will see the records grouped by year.\n\nIn case the database is empty, only the entry for the current year will be present.\n\n
+        If you want to register a new record, click on the current year.
+    </string>
+    <string name="ayu_detCenso4">
+        After selecting a year we see this screen, where we see the list of days in which the recorded routes occurred.\n\n
+        Additionally, the census taker may register the current day, if he wishes to carry out a census. For more details click on the \"?\" icon.
+    </string>
+
+    <string name="ayu_detRecorr1" formatted="true">
+        From the main menu we see all the options that this app offers.\n
+        This section details the entry \"%1$s\" whose view aims to exploit the data obtained from the census on a map.\n
+        Here you can cut the data by year and category (alpha male, female, breeding, peripheral male, etc).\n
+        It also has a heat map to observe the relative concentration.
+    </string>
+    <string name="ayu_detRecorr2">
+        This screen shows a polyline for each route differentiated by color, in turn each route is made up of points that represent the registered social units.
+    </string>
+    <string name="ayu_detRecorr3">
+        This screen displays a heat map for the defined category. By clicking on the map you can see a detail of the density at that point.
+    </string>
     <string name="ayu_importexp">Import/Export</string>
+    <string name="ayu_detImportExp1" formatted="true">
+        From the main menu we see all the options that this app offers.\n
+        This section details the \"%1$s\" entries in the side menu, located on the left of the screen and hidden by default. To unfold it, just drag your finger from left to right.\n\n
+        These options are designed to manage two closely linked activities:\n
+        a) %2$s: allows you to incorporate data generated from other instances of this same app, and data that respect a particular compatible csv scheme.\n
+        b) %3$s: takes the entire local database, to share it with another instance of this same app, or a representative csv with all the categories, to be exploited in any external app or simply backup.\n
+    </string>
+    <string name="ayu_detImportExp2">
+        To enter you must drag your finger from left to right starting from the left side of the screen and towards the center.\n
+        The other option is to press directly on the hamburger menu, highlighted in red in the image.
+    </string>
+    <string name="ayu_detImportExp3">
+        The menu has both options. Choose the first to add data to the existing database, and the second to extract all the data present in your app.
+    </string>
 
     <!-- DiaListFragment -->
     <string name="dia_confirmar">Day added correctly</string>

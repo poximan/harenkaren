@@ -3,12 +3,12 @@ package phocidae.mirounga.leonina.fragment.analisis
 import android.content.Context
 import android.webkit.WebView
 import android.widget.Toast
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import phocidae.mirounga.leonina.R
 import phocidae.mirounga.leonina.exception.MagNulaExcepcion
 import phocidae.mirounga.leonina.fragment.maps.SuperMapa
 import phocidae.mirounga.leonina.model.UnidSocial
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 
 class ReporteMapa(webView: WebView, context: Context) : SuperMapa() {
 

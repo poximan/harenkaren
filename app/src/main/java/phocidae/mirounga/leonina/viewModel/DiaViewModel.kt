@@ -4,13 +4,13 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import phocidae.mirounga.leonina.database.HarenKarenRoomDatabase
-import phocidae.mirounga.leonina.model.Dia
-import phocidae.mirounga.leonina.repository.DiaRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import phocidae.mirounga.leonina.database.HarenKarenRoomDatabase
+import phocidae.mirounga.leonina.model.Dia
+import phocidae.mirounga.leonina.repository.DiaRepository
 
 class DiaViewModel(application: Application) : AndroidViewModel(application) {
 

@@ -13,11 +13,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.navGraphViewModels
+import kotlinx.coroutines.launch
 import phocidae.mirounga.leonina.R
 import phocidae.mirounga.leonina.adapter.UnSocListGrafAdapter
 import phocidae.mirounga.leonina.databinding.FragmentUnsocListGrafBinding
 import phocidae.mirounga.leonina.viewModel.UnSocViewModel
-import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStreamWriter
