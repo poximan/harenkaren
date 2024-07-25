@@ -1,4 +1,4 @@
-# ![Inicio](https://www.github.com/poximan/harenkaren/app/src/main/res/drawable/hook.png)
+# ![Inicio](https://github.com/poximan/harenkaren/app/src/main/res/drawable/hook.png)
 # harenkaren
 adaptacion de https://github.com/gustavomarcelonunez/fishing-app para monitoreo de mamiferos, en especial censo de elefantes marinos
 
