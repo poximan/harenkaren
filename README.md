@@ -84,3 +84,6 @@ se utilizó un modelo de UUID para distinguir unívocamente cada entidad, pensan
 ||`photoPath`            				|String|
 ||`comentario`            			|String|
 |-|-|-|
+
+## Manual usuario
+
