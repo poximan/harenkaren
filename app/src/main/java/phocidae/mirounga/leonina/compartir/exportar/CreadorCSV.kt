@@ -9,10 +9,6 @@ import java.util.Locale
 
 class CreadorCSV {
 
-    companion object {
-        const val PERMISSION_REQUEST_WRITE_EXTERNAL = 5
-    }
-
     // Función para generar una cadena CSV a partir de una lista de EntidadesPlanas
     private fun generarCSV(entidades: List<EntidadesPlanas>): String {
         val header =
@@ -30,7 +26,7 @@ class CreadorCSV {
                     "m_crias,m_destetados,m_juveniles," +
                     "m_s4ad_perif,m_s4ad_cerca,m_s4ad_lejos," +
                     "m_otros_sams_perif,m_otros_sams_cerca,m_otros_sams_lejos," +
-                    "unsoc_fecha,unsoc_latitud,unsoc_longitud,photo_path,comentario\n"
+                    "unsoc_fecha,unsoc_latitud,unsoc_longitud,comentario\n"
 
         val csvRows = entidades.joinToString("\n") { entidad ->
             "${entidad.celular_id},${entidad.dia_id},${entidad.dia_orden},${entidad.dia_fecha},${entidad.recorr_id}," +
@@ -47,7 +43,7 @@ class CreadorCSV {
                     "${entidad.m_crias},${entidad.m_destetados},${entidad.m_juveniles}," +
                     "${entidad.m_s4ad_perif},${entidad.m_s4ad_cerca},${entidad.m_s4ad_lejos}," +
                     "${entidad.m_otros_sams_perif},${entidad.m_otros_sams_cerca},${entidad.m_otros_sams_lejos}," +
-                    "${entidad.unsoc_fecha},${entidad.unsoc_latitud},${entidad.unsoc_longitud},${entidad.photo_path},${entidad.comentario}"
+                    "${entidad.unsoc_fecha},${entidad.unsoc_latitud},${entidad.unsoc_longitud},${entidad.comentario}"
         }
         return header + csvRows
     }

@@ -179,7 +179,6 @@
     <string name="socg_tpoSust">Sustrato(Pya):</string>
     <string name="socg_comentario">Comentario:</string>
     <string name="socg_opcional">Opcional</string>
-    <string name="socg_foto">Foto</string>
 
     <!-- fragment_unsoc_muertos -->
     <string name="socm_dominante">Dominante (\u03B1)</string>
@@ -270,7 +269,6 @@
     <string name="exp_enviarExterno">Este es un respaldo de los registros contenidos en la app.\nCuentan en total</string>
 
     <!-- UnSocGralFragment -->
-    <string name="socg_permCamara">Los permisos de la cámara son necesarios para tomar fotos</string>
     <string name="socg_permGPS">Los permisos de ubicación son necesarios para obtener la posición actual</string>
     <string name="socg_reduceBit">Las dimensiones del ImageView no pueden ser cero o negativas</string>
 

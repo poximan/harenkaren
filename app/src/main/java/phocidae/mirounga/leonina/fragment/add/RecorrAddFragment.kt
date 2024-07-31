@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import phocidae.mirounga.leonina.R
-import phocidae.mirounga.leonina.database.DevFragment
+import phocidae.mirounga.leonina.fragment.DevFragment
 import phocidae.mirounga.leonina.databinding.FragmentRecorrAddBinding
 import phocidae.mirounga.leonina.exception.CamposVaciosExcepcion
 import phocidae.mirounga.leonina.exception.FaltaLatLongExcepcion

@@ -1,10 +1,10 @@
 package phocidae.mirounga.leonina.database
 
 import android.content.Context
+import phocidae.mirounga.leonina.fragment.DevFragment
 import phocidae.mirounga.leonina.R
 import phocidae.mirounga.leonina.dao.DiaDAO
 import phocidae.mirounga.leonina.dao.RecorrDAO
-import phocidae.mirounga.leonina.dao.UnSocDAO
 import phocidae.mirounga.leonina.dao.UsuarioDAO
 import phocidae.mirounga.leonina.model.Dia
 import phocidae.mirounga.leonina.model.Recorrido
@@ -135,7 +135,6 @@ class DevDatos(private val context: Context) {
                 date = "2023-10-19 13:26:48",
                 latitud = -42.074929,
                 longitud = -63.819889,
-                photoPath = "",
                 comentario = "comentario 1"
             ),
             UnidSocial(
@@ -172,7 +171,6 @@ class DevDatos(private val context: Context) {
                 date = "2023-10-19 14:26:48",
                 latitud = -42.073655,
                 longitud = -63.794792,
-                photoPath = "",
                 comentario = "comentario 2"
             ),
             UnidSocial(
@@ -209,7 +207,6 @@ class DevDatos(private val context: Context) {
                 date = "2023-10-19 15:26:48",
                 latitud = -42.074164,
                 longitud = -63.774866,
-                photoPath = "",
                 comentario = "comentario 3"
             ),
             UnidSocial(
@@ -246,7 +243,6 @@ class DevDatos(private val context: Context) {
                 date = "2023-10-19 18:26:48",
                 latitud = -42.081554,
                 longitud = -63.757345,
-                photoPath = "",
                 comentario = "comentario 4"
             ),
             UnidSocial(
@@ -283,7 +279,6 @@ class DevDatos(private val context: Context) {
                 date = "2023-10-20 12:26:48",
                 latitud = -42.754045,
                 longitud = -63.630907,
-                photoPath = "",
                 comentario = "comentario 5"
             ),
             UnidSocial(
@@ -320,7 +315,6 @@ class DevDatos(private val context: Context) {
                 date = "2023-10-20 11:26:48",
                 latitud = -42.748813,
                 longitud = -63.634944,
-                photoPath = "",
                 comentario = "comentario 6"
             ),
             UnidSocial(
@@ -357,7 +351,6 @@ class DevDatos(private val context: Context) {
                 date = "2023-10-20 13:26:48",
                 latitud = -42.744527,
                 longitud = -63.635631,
-                photoPath = "",
                 comentario = "comentario 7"
             ),
             UnidSocial(
@@ -394,7 +387,6 @@ class DevDatos(private val context: Context) {
                 date = "2023-10-20 14:26:48",
                 latitud = -42.740619,
                 longitud = -63.633140,
-                photoPath = "",
                 comentario = "comentario 8"
             ),
             UnidSocial(
@@ -431,7 +423,6 @@ class DevDatos(private val context: Context) {
                 date = "2023-10-21 12:26:48",
                 latitud = -43.663251,
                 longitud = -65.334847,
-                photoPath = "",
                 comentario = "comentario 9"
             ),
             UnidSocial(
@@ -468,7 +459,6 @@ class DevDatos(private val context: Context) {
                 date = "2023-10-21 13:26:48",
                 latitud = -43.653316,
                 longitud = -65.326059,
-                photoPath = "",
                 comentario = "comentario 10"
             )
         )
@@ -488,9 +478,5 @@ class DevDatos(private val context: Context) {
 
     fun vaciarRecorridos(recorrDAO: RecorrDAO) {
         recorrDAO.deleteAll()
-    }
-
-    fun vaciarUnidadesSociales(unsocDAO: UnSocDAO) {
-        unsocDAO.deleteAll()
     }
 }

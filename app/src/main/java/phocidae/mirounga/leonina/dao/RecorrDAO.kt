@@ -7,7 +7,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import phocidae.mirounga.leonina.compartir.importar.ImportarFragment
-import phocidae.mirounga.leonina.database.DevFragment
+import phocidae.mirounga.leonina.fragment.DevFragment
 import phocidae.mirounga.leonina.model.EntidadesPlanas
 import phocidae.mirounga.leonina.model.Recorrido
 import phocidae.mirounga.leonina.servicios.GestorUUID

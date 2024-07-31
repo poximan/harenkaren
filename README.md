@@ -80,6 +80,5 @@ se utilizó un modelo de UUID para distinguir unívocamente cada entidad, pensan
 ||`date`          							|String|
 ||`latitud`            					|Double|
 ||`longitud`            				|Double|
-||`photoPath`            				|String|
 ||`comentario`            			|String|
 |-|-|-|

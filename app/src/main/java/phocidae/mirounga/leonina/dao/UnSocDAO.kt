@@ -6,7 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import phocidae.mirounga.leonina.compartir.importar.ImportarFragment
-import phocidae.mirounga.leonina.database.DevFragment
+import phocidae.mirounga.leonina.fragment.DevFragment
 import phocidae.mirounga.leonina.model.EntidadesPlanas
 import phocidae.mirounga.leonina.model.UnidSocial
 import phocidae.mirounga.leonina.servicios.GestorUUID
@@ -176,7 +176,6 @@ interface UnSocDAO {
                 "    unidsocial.date AS unsoc_fecha,\n" +
                 "    unidsocial.latitud AS unsoc_latitud,\n" +
                 "    unidsocial.longitud AS unsoc_longitud,\n" +
-                "    unidsocial.photo_path,\n" +
                 "    unidsocial.comentario\n" +
                 "FROM \n" +
                 "    dia\n" +
@@ -233,7 +232,7 @@ interface UnSocDAO {
                 "   SUM(m_otros_sams_perif) AS m_otros_sams_perif,\n" +
                 "   SUM(m_otros_sams_cerca) AS m_otros_sams_cerca,\n" +
                 "   SUM(m_otros_sams_lejos) AS m_otros_sams_lejos,\n" +
-                "   date, latitud, longitud, photo_path, comentario\n" +
+                "   date, latitud, longitud, comentario\n" +
                 "FROM \n" +
                 "   unidsocial\n" +
                 "JOIN\n" +
@@ -273,7 +272,7 @@ interface UnSocDAO {
                 "   SUM(m_otros_sams_perif) AS m_otros_sams_perif,\n" +
                 "   SUM(m_otros_sams_cerca) AS m_otros_sams_cerca,\n" +
                 "   SUM(m_otros_sams_lejos) AS m_otros_sams_lejos,\n" +
-                "   date, latitud, longitud, photo_path, comentario \n" +
+                "   date, latitud, longitud, comentario \n" +
                 "FROM unidsocial\n" +
                 "WHERE \n" +
                 "   unidsocial.id_recorrido = :idRecorr"
@@ -308,7 +307,7 @@ interface UnSocDAO {
                 "   SUM(m_otros_sams_perif) AS m_otros_sams_perif,\n" +
                 "   SUM(m_otros_sams_cerca) AS m_otros_sams_cerca,\n" +
                 "   SUM(m_otros_sams_lejos) AS m_otros_sams_lejos,\n" +
-                "   date, latitud, longitud, photo_path, comentario \n" +
+                "   date, latitud, longitud, comentario \n" +
                 "FROM \n" +
                 "    unidsocial\n"
     )

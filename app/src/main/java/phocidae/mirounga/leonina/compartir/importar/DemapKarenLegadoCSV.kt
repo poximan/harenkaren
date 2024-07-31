@@ -68,7 +68,6 @@ class DemapKarenLegadoCSV(context: Context) : Desmapeable {
                 map["unidsocial_fecha"]!!,
                 map["unidsocial_latitud"]!!.toDouble(),
                 map["unidsocial_longitud"]!!.toDouble(),
-                map["photo_path"]!!,
                 map["comentario"]!!
             )
             listaEntidades.add(entidadPlanta)

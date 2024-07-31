@@ -41,8 +41,8 @@ import kotlin.math.abs
 class ReportesFragment : Fragment(), OnImageCapturedListener {
 
     object DbConstants {
-        const val PERMISSION_REQUEST_PICK_IMAGE1 = 6
-        const val PERMISSION_REQUEST_PICK_IMAGE2 = 7
+        const val PERMISSION_REQUEST_PICK_IMAGE1 = 4
+        const val PERMISSION_REQUEST_PICK_IMAGE2 = 5
     }
 
     private lateinit var unSocDAO: UnSocDAO
@@ -330,7 +330,7 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
                 mOtrosSamsLejos = acc.mOtrosSamsLejos + unidSocial.mOtrosSamsLejos,
                 id = randomQueTeTiro, idRecorrido = randomQueTeTiro,
                 ptoObsUnSoc = "", ctxSocial = "", tpoSustrato = "", timeStamp = "",
-                latitud = 0.0, longitud = 0.0, photoPath = "", comentario = ""
+                latitud = 0.0, longitud = 0.0, comentario = ""
             )
         }
     }

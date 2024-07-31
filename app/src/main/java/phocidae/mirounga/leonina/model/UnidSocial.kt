@@ -135,8 +135,6 @@ data class UnidSocial(
     var longitud: Double,
 
     // ----- otros datos ----- //
-    @ColumnInfo(name = "photo_path")
-    var photoPath: String?,
 
     var comentario: String?
 ) : Parcelable {
@@ -191,7 +189,6 @@ data class UnidSocial(
         parcel.readString()!!,
         parcel.readDouble(),
         parcel.readDouble(),
-        parcel.readString(),
         parcel.readString()
     )
 
@@ -200,7 +197,7 @@ data class UnidSocial(
         id, idRecorrido, 0, "", "", "",
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, /* vivos */
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, /* muertos */
-        estampatiempo, 0.0, 0.0, "", ""
+        estampatiempo, 0.0, 0.0, ""
     )
 
     constructor(
@@ -214,7 +211,6 @@ data class UnidSocial(
         mS4AdLejos: Int, mOtrosSamsPerif: Int, mOtrosSamsCerca: Int, mOtrosSamsLejos: Int,
         timeStamp: String,
         latitud: Double, longitud: Double,
-        photoPath: String,
         comentario: String
     ) : this(
         id, idRecorrido, 0, ptoObsUnSoc, ctxSocial, tpoSustrato,
@@ -222,7 +218,7 @@ data class UnidSocial(
         vS4AdPerif, vS4AdCerca, vS4AdLejos, vOtrosSamsPerif, vOtrosSamsCerca, vOtrosSamsLejos,
         mAlfaS4Ad, mAlfaSams, mHembrasAd, mCrias, mDestetados, mJuveniles,
         mS4AdPerif, mS4AdCerca, mS4AdLejos, mOtrosSamsPerif, mOtrosSamsCerca, mOtrosSamsLejos,
-        timeStamp, latitud, longitud, photoPath, comentario
+        timeStamp, latitud, longitud, comentario
     )
 
     override fun describeContents(): Int {
@@ -265,7 +261,6 @@ data class UnidSocial(
         parcel.writeString(date)
         parcel.writeDouble(latitud)
         parcel.writeDouble(longitud)
-        parcel.writeString(photoPath)
         parcel.writeString(comentario)
     }
 

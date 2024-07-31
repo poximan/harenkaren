@@ -18,9 +18,7 @@ import phocidae.mirounga.leonina.R
 abstract class AddGralAbstract : SuperAdd() {
 
     object DbConstants {
-        const val PERMISSION_REQUEST_TAKE_PHOTO = 2
-        const val PERMISSION_REQUEST_CAMERA = 3
-        const val PERMISSION_REQUEST_LOCATION = 4
+        const val PERMISSION_REQUEST_LOCATION = 2
     }
 
     private lateinit var locationManager: LocationManager

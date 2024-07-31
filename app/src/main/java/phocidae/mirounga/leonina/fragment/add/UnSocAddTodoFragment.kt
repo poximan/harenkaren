@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import phocidae.mirounga.leonina.R
 import phocidae.mirounga.leonina.adapter.UnSocPagerAdapter
-import phocidae.mirounga.leonina.database.DevFragment
+import phocidae.mirounga.leonina.fragment.DevFragment
 import phocidae.mirounga.leonina.databinding.FragmentUnsocAddBinding
 import phocidae.mirounga.leonina.exception.CamposVaciosExcepcion
 import phocidae.mirounga.leonina.model.UnidSocial
@@ -92,7 +92,6 @@ class UnSocAddTodoFragment : Fragment() {
                 latitud = map["latitud"] as Double
                 longitud = map["longitud"] as Double
 
-                photoPath = map["photo_path"] as String
                 comentario = map["comentario"] as String
             }
             model.insert(unSoc)

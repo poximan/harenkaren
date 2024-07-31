@@ -43,7 +43,7 @@
         tools:layout="@layout/fragment_about" />
     <fragment
         android:id="@+id/dev_fragment"
-        android:name="phocidae.mirounga.leonina.database.DevFragment"
+        android:name="phocidae.mirounga.leonina.fragment.DevFragment"
         android:label="@string/nav_dev_fragment"
         tools:layout="@layout/fragment_dev" />
 </navigation>

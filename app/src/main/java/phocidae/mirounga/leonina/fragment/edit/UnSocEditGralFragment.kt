@@ -115,9 +115,6 @@ class UnSocEditGralFragment : EditGralAbstract() {
         binding.unSocComentario.setText(unSocEdit.comentario)
         updateLocationViews(unSocEdit.latitud, unSocEdit.longitud)
         binding.unSocComentario.addTextChangedListener(textWatcher)
-
-        binding.linearLayout6.visibility = View.INVISIBLE
-        binding.photoButton.visibility = View.INVISIBLE
     }
 
     override fun updateLocationViews(latitud: Double, longitud: Double) {
@@ -146,7 +143,6 @@ class UnSocEditGralFragment : EditGralAbstract() {
         map["tpo_sustrato"] = binding.spinnerAddTpoSustrato.selectedItem.toString()
         map["latitud"] = latLon.lat
         map["longitud"] = latLon.lon
-        map["photo_path"] = unSocEditable.photoPath.toString()
         map["comentario"] = binding.unSocComentario.text.toString()
 
         unSocEditable.apply {
@@ -155,7 +151,6 @@ class UnSocEditGralFragment : EditGralAbstract() {
             tpoSustrato = binding.spinnerAddTpoSustrato.selectedItem.toString()
             latitud = latLon.lat
             longitud = latLon.lon
-            photoPath = unSocEditable.photoPath
             comentario = binding.unSocComentario.text.toString()
         }
 

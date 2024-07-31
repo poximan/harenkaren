@@ -172,7 +172,6 @@
     <string name="socg_tpoSust">Substrate(Pya):</string>
     <string name="socg_comentario">Comment:</string>
     <string name="socg_opcional">Optional</string>
-    <string name="socg_foto">Photo</string>
 
     <!-- fragment_unsoc_muertos -->
     <string name="socm_dominante">Dominant (\u03B1)</string>
@@ -263,7 +262,6 @@
     <string name="exp_enviarExterno">This is a backup of the records contained in the app.\nIn total, there are</string>
 
     <!-- UnSocGralFragment -->
-    <string name="socg_permCamara">Camera permissions are required to take photos</string>
     <string name="socg_permGPS">Location permissions are required to obtain the current position</string>
     <string name="socg_reduceBit">ImageView dimensions cannot be zero or negative</string>
 

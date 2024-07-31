@@ -1,4 +1,4 @@
-package phocidae.mirounga.leonina.database
+package phocidae.mirounga.leonina.fragment
 
 import android.graphics.Color
 import android.os.Bundle
@@ -18,6 +18,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import phocidae.mirounga.leonina.R
+import phocidae.mirounga.leonina.database.DevDatos
+import phocidae.mirounga.leonina.database.HarenKarenRoomDatabase
 import phocidae.mirounga.leonina.databinding.FragmentDevBinding
 import phocidae.mirounga.leonina.repository.RecorrRepository
 import phocidae.mirounga.leonina.repository.UnSocRepository
@@ -85,8 +87,10 @@ class DevFragment : Fragment() {
         viewModelScope.launch(exceptionHandler) {
             withContext(Dispatchers.IO) {// Dispatchers.IO es el hilo background
 
-                val bd = HarenKarenRoomDatabase
-                    .getDatabase(requireActivity().application, viewModelScope)
+                val bd = HarenKarenRoomDatabase.getDatabase(
+                    requireActivity().application,
+                    viewModelScope
+                )
 
                 val dias = bd.diaDao().getCount()
                 val recorr = bd.recorrDao().getCount()
@@ -110,7 +114,7 @@ class DevFragment : Fragment() {
     }
 
     private fun logcat() {
-        val process = Runtime.getRuntime().exec("logcat -d -t 50")
+        val process = Runtime.getRuntime().exec("logcat -d -t 40")
         val bufferedReader = BufferedReader(InputStreamReader(process.inputStream))
 
         val log = SpannableStringBuilder()
@@ -150,8 +154,10 @@ class DevFragment : Fragment() {
             withContext(Dispatchers.IO) {// Dispatchers.IO es el hilo background
                 val datos = DevDatos(requireContext())
 
-                val dao = HarenKarenRoomDatabase
-                    .getDatabase(requireActivity().application, viewModelScope)
+                val dao = HarenKarenRoomDatabase.getDatabase(
+                    requireActivity().application,
+                    viewModelScope
+                )
                     .usuarioDao()
 
                 datos.generarUsuario(dao)
@@ -168,17 +174,23 @@ class DevFragment : Fragment() {
                 val datos = DevDatos(requireContext())
 
                 // Obtener los DAOs
-                val diaDao = HarenKarenRoomDatabase
-                    .getDatabase(requireActivity().application, viewModelScope)
+                val diaDao = HarenKarenRoomDatabase.getDatabase(
+                    requireActivity().application,
+                    viewModelScope
+                )
                     .diaDao()
 
-                val recorrDao = HarenKarenRoomDatabase
-                    .getDatabase(requireActivity().application, viewModelScope)
+                val recorrDao = HarenKarenRoomDatabase.getDatabase(
+                    requireActivity().application,
+                    viewModelScope
+                )
                     .recorrDao()
                 val recorrRepo = RecorrRepository(recorrDao)
 
-                val unSocDao = HarenKarenRoomDatabase
-                    .getDatabase(requireActivity().application, viewModelScope)
+                val unSocDao = HarenKarenRoomDatabase.getDatabase(
+                    requireActivity().application,
+                    viewModelScope
+                )
                     .unSocDao()
                 val unSocRepo = UnSocRepository(unSocDao)
 
@@ -202,8 +214,10 @@ class DevFragment : Fragment() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {// Dispatchers.IO es el hilo background
                 val datos = DevDatos(requireContext())
-                val dao = HarenKarenRoomDatabase
-                    .getDatabase(requireActivity().application, viewModelScope)
+                val dao = HarenKarenRoomDatabase.getDatabase(
+                    requireActivity().application,
+                    viewModelScope
+                )
                     .diaDao()
                 datos.vaciarDias(dao)
 
@@ -221,8 +235,10 @@ class DevFragment : Fragment() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {// Dispatchers.IO es el hilo background
                 val datos = DevDatos(requireContext())
-                val dao = HarenKarenRoomDatabase
-                    .getDatabase(requireActivity().application, viewModelScope)
+                val dao = HarenKarenRoomDatabase.getDatabase(
+                    requireActivity().application,
+                    viewModelScope
+                )
                     .recorrDao()
                 datos.vaciarRecorridos(dao)
             }
@@ -235,8 +251,10 @@ class DevFragment : Fragment() {
         val viewModelScope = viewLifecycleOwner.lifecycleScope
         viewModelScope.launch {
             withContext(Dispatchers.IO) {// Dispatchers.IO es el hilo background
-                HarenKarenRoomDatabase
-                    .deleteDatabase(requireActivity().application, "haren_database")
+                HarenKarenRoomDatabase.deleteDatabase(
+                    requireActivity().application,
+                    "haren_database"
+                )
                 HarenKarenRoomDatabase.getDatabase(requireActivity().application, viewModelScope)
                 val res = HarenKarenRoomDatabase.isDatabaseSchemaCreated(requireContext())
                 Log.i(TAG, "Existe esquema BD:${res}")

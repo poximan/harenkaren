@@ -78,7 +78,6 @@ class UnSocEditTodoFragment : Fragment() {
             latitud = map["latitud"] as Double
             longitud = map["longitud"] as Double
 
-            photoPath = map["photo_path"] as String
             comentario = map["comentario"] as String
         }
         model.update(unSoc)

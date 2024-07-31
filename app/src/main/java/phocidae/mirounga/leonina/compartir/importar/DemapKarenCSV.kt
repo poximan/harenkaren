@@ -1,10 +1,9 @@
 package phocidae.mirounga.leonina.compartir.importar
 
-import android.content.Context
 import phocidae.mirounga.leonina.model.EntidadesPlanas
 import java.util.UUID
 
-class DemapKarenCSV(context: Context) : Desmapeable {
+class DemapKarenCSV() : Desmapeable {
 
     override fun desmapear(entidades: List<Map<String, String>>): List<EntidadesPlanas> {
         val listaEntidades = mutableListOf<EntidadesPlanas>()
@@ -63,7 +62,6 @@ class DemapKarenCSV(context: Context) : Desmapeable {
                 map["unsoc_fecha"]!!,
                 map["unsoc_latitud"]!!.toDouble(),
                 map["unsoc_longitud"]!!.toDouble(),
-                map["photo_path"]!!,
                 map["comentario"]!!
             )
             listaEntidades.add(entidadPlanta)

@@ -16,7 +16,7 @@ import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
 import phocidae.mirounga.leonina.R
 import phocidae.mirounga.leonina.adapter.DiaListAdapter
-import phocidae.mirounga.leonina.database.DevFragment
+import phocidae.mirounga.leonina.fragment.DevFragment
 import phocidae.mirounga.leonina.databinding.FragmentDiaListBinding
 import phocidae.mirounga.leonina.model.Dia
 import phocidae.mirounga.leonina.servicios.GestorUUID

@@ -84,7 +84,6 @@ class DemapPelosCSV(context: Context) : Desmapeable {
                 fechaTransformada,
                 lat0,
                 lon0,
-                "foto_desc",
                 map["tipo"]!!
             )
             listaEntidades.add(entidadPlanta)

@@ -70,7 +70,6 @@ class UnSocPagerAdapter(
         "date" to (unSoc?.date ?: ""),
         "latitud" to (unSoc?.latitud ?: 0.0),
         "longitud" to (unSoc?.longitud ?: 0.0),
-        "photo_path" to (unSoc?.photoPath ?: ""),
         "comentario" to (unSoc?.comentario ?: "")
     )
 
@@ -86,7 +85,6 @@ class UnSocPagerAdapter(
                 map["tpo_sustrato"] = mapaActual["tpo_sustrato"] as String
                 map["latitud"] = mapaActual["latitud"] as Double
                 map["longitud"] = mapaActual["longitud"] as Double
-                map["photo_path"] = mapaActual["photo_path"] as String
                 map["comentario"] = mapaActual["comentario"] as String
             }
 

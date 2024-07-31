@@ -62,7 +62,6 @@ data class EntidadesPlanas(
     val unsoc_fecha: String,
     val unsoc_latitud: Double,
     val unsoc_longitud: Double,
-    val photo_path: String,
     val comentario: String
 ) : Parcelable, Serializable {
     constructor(parcel: Parcel) : this(
@@ -122,7 +121,6 @@ data class EntidadesPlanas(
         parcel.readString()!!,
         parcel.readDouble(),
         parcel.readDouble(),
-        parcel.readString()!!,
         parcel.readString()!!
     )
 
@@ -183,7 +181,6 @@ data class EntidadesPlanas(
         parcel.writeString(unsoc_fecha)
         parcel.writeDouble(unsoc_latitud)
         parcel.writeDouble(unsoc_longitud)
-        parcel.writeString(photo_path)
         parcel.writeString(comentario)
     }
 
@@ -248,7 +245,6 @@ data class EntidadesPlanas(
             date = unsoc_fecha,
             latitud = unsoc_latitud,
             longitud = unsoc_longitud,
-            photo_path,
             comentario
         )
     }
