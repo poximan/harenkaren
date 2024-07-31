@@ -1,3 +1,4 @@
+# ![Inicio](https://github.com/poximan/harenkaren/blob/main/app/src/main/res/drawable/hook.png)
 # harenkaren
 adaptacion de https://github.com/gustavomarcelonunez/fishing-app para monitoreo de mamiferos, en especial censo de elefantes marinos
 
@@ -82,3 +83,6 @@ se utilizó un modelo de UUID para distinguir unívocamente cada entidad, pensan
 ||`longitud`            				|Double|
 ||`comentario`            			|String|
 |-|-|-|
+
+## Manual usuario
+
