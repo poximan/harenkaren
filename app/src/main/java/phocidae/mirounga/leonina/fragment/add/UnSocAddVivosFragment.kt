@@ -230,6 +230,7 @@ class UnSocAddVivosFragment : SuperAdd() {
                 )
             }
         }
+        forzarValor("1", binding.vHembrasAd)
     }
 
     private fun vistaIndividuoSolo() {

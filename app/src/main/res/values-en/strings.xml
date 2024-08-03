@@ -29,7 +29,7 @@
         <b><u>About this app</u></b> <br/><br/>
         Fieldwork typically involves using pen and paper because its the most portable option by far. This app aims (with exaggerated optimism) to be a worthy replacement for that.<br/><br/>
         In this sense, screen navigability aims to guide the census taker in defining data, from general to specific.
-        Thus, the user will first create a <b>Day</b> (as a unit of time for census activities), within which they will define <b>Routes</b> (as descriptors of geographic areas where census activities occur), and finally add as many <b>Records</b> as social units observed in the field.<br/><br/>
+        Thus, the user will first create a <b>Date</b>, within which they will define <b>Routes</b> (as descriptors of geographic areas where census activities occur), and finally add as many <b>Records</b> as social units observed in the field.<br/><br/>
         This initial activity constitutes what can be called <b>primary data</b>, from which a series of modest yet powerful data interpretation tools will emerge.<br/><br/>
         Let the games begin, and may we triumph.<br/><br/>
         ]]>
@@ -68,12 +68,12 @@
 
     <!-- fragment_dev -->
     <string name="dev_poblar">Populate DB</string>
-    <string name="dev_dias">Days</string>
+    <string name="dev_dias">Dates</string>
     <string name="dev_recorr">Routes</string>
     <string name="dev_unsoc">Social Units</string>
     <string name="dev_usr">Add user</string>
     <string name="dev_logcat">Logcat</string>
-    <string name="dev_limpdias">Clear days</string>
+    <string name="dev_limpdias">Clear dates</string>
     <string name="dev_limprecorr">Clear\nroutes</string>
     <string name="dev_limpLog">Clear\nlog</string>
     <string name="dev_rearmar">Rebuild\nschema</string>
@@ -119,7 +119,7 @@
 
     <!-- fragment_recorr_add -->
     <string name="rec_observador">Observer</string>
-    <string name="varias_area">Surveyed area</string>
+    <string name="varias_area">Sector covered</string>
     <string name="rec_meteo">Weather conditions</string>
     <string name="rec_marea">Tide state</string>
     <string name="rec_observaciones">Observations</string>
@@ -218,7 +218,7 @@
     <!-- DevFragment -->
     <string name="dev_E_estadoDB">The DB manager cannot verify the data integrity</string>
     <string name="dev_estadoDB_entidad">entities</string>
-    <string name="dev_estadoDB_dia">day</string>
+    <string name="dev_estadoDB_dia">Date</string>
     <string name="dev_estadoDB_recorr">route</string>
     <string name="dev_estadoDB_unsoc">social unit</string>
 
@@ -282,7 +282,7 @@
     <string name="ayu_detCenso1" formatted="true">
         From the main menu we see all the options that this app offers.\n
         This section details the entry \"%1$s\" whose navigability seeks to guide the census taker in the definition of the data, from the general to the particular.
-        Thus, first a Day will be registered (as a unit of time in which an act of census occurs), within this it will define Routes (as a descriptor of geographical areas where the act of census occurs) and finally it will add as many Records as social units observed in the field.\n\n
+        Thus, first a Date will be registered, within this it will define Routes and finally it will add as many Records as social units observed in the field.\n\n
         This first activity constitutes the generation of primary data, and from it a series of data interpretation instruments that will be described later will be exploited.
     </string>
     <string name="ayu_detCenso3">
@@ -290,8 +290,8 @@
         If you want to register a new record, click on the current year.
     </string>
     <string name="ayu_detCenso4">
-        After selecting a year we see this screen, where we see the list of days in which the recorded routes occurred.\n\n
-        Additionally, the census taker may register the current day, if he wishes to carry out a census. For more details click on the \"?\" icon.
+        After selecting a year we see this screen, where we see the list of dates in which the recorded routes occurred.\n\n
+        Additionally, the census taker may register the current date, if he wishes to carry out a census. For more details click on the \"?\" icon.
     </string>
 
     <string name="ayu_detRecorr1" formatted="true">
@@ -323,32 +323,32 @@
     </string>
 
     <!-- DiaListFragment -->
-    <string name="dia_confirmar">Day added correctly</string>
+    <string name="dia_confirmar">Date added correctly</string>
     <string name="dia_existe">Today was already added</string>
-    <string name="dia_noDiaTit">Add day</string>
-    <string name="dia_noDiaMsg1">This list corresponds to days from a year prior to the one we are spending</string>
+    <string name="dia_noDiaTit">Add date</string>
+    <string name="dia_noDiaMsg1">This list corresponds to dates from a year prior to the one we are spending</string>
     <string name="dia_noDiaMsg2">and therefore it is closed to add new entries, although you can see all its content</string>
     <string name="dia_mostrarAyudaTit">Dates</string>
-    <string name="dia_mostrarAyuda0">You have not added any day yet, so the list is empty. Click on (+) to add it</string>
-    <string name="dia_mostrarAyuda1">Now there is only one day registered. When you add more, you will notice the list. Click on the existing day to manage its routes</string>
-    <string name="dia_mostrarAyudaElse">Click on the row representing the day of interest to continue to its detail. There you can manage the routes associated with the selected date</string>
-    <string name="dia_mostrarAyudaMarco">This screen represents a list of days, where each day is represented by a row.</string>
-    <string name="dia_onDeleteTit">Delete day</string>
+    <string name="dia_mostrarAyuda0">You have not added any date yet, so the list is empty. Click on (+) to add it</string>
+    <string name="dia_mostrarAyuda1">Now there is only one date registered. When you add more, you will notice the list. Click on the existing date to manage its routes</string>
+    <string name="dia_mostrarAyudaElse">Click on the row representing the date of interest to continue to its detail. There you can manage the routes associated with the selected date</string>
+    <string name="dia_mostrarAyudaMarco">This screen represents a list of dates, where each one is represented by a row.</string>
+    <string name="dia_onDeleteTit">Delete date</string>
     <string name="dia_onDeleteMsg">Do you confirm elimination?</string>
 
     <!-- RecorrListFragment -->
     <string name="rec_noRecorrTit">Add route</string>
-    <string name="rec_noRecorrMsg1">This list corresponds to tours from days prior to today</string>
+    <string name="rec_noRecorrMsg1">This list corresponds to tours from dates prior to today</string>
     <string name="rec_noRecorrMsg2">and therefore it is closed to adding new entries, although you can see all its content</string>
     <string name="rec_mostrarAyudaTit">Routes</string>
     <string name="rec_mostrarAyuda0">You have not added any route yet, so the list is empty. Click on (+) to add it</string>
     <string name="rec_mostrarAyuda1">There is only one route registered. When you add more, you will notice the list. Click on the existing route to manage its records (census social units)</string>
     <string name="rec_mostrarAyudaElse">Click on the row representing the route of interest to continue to its detail. There you can manage the records (census social units) associated with the selected route</string>
-    <string name="rec_mostrarAyudaMarco">This screen represents a list of the routes made during a single day, where each route is represented by a row.</string>
+    <string name="rec_mostrarAyudaMarco">This screen represents a list of the routes made during a single date, where each route is represented by a row.</string>
 
     <!-- UnSocListFragment -->
     <string name="soc_noUnSocTit">Add records</string>
-    <string name="soc_noUnSocMsg1">This list corresponds to records from days prior to today</string>
+    <string name="soc_noUnSocMsg1">This list corresponds to records from dates prior to today</string>
     <string name="soc_noUnSocMsg2">and therefore it is closed to add new entries, although you can see all its content</string>
     <string name="soc_mostrarAyudaTit">Records</string>
     <string name="soc_mostrarAyuda0">You have not added any record yet, so the list is empty. Click on (+) to add it</string>
@@ -374,7 +374,7 @@
     <string name="osm_extremo">This mark is an end of the route, it does not represent a registered social unit</string>
     <string name="osm_categoria">Choose a category first (open side menu)</string>
     <string name="osm_categNula">This category has all its null elements</string>
-    <string name="osm_noregTit">Empty set</string>
+    <string name="osm_noregTit">No data</string>
     <string name="osm_noregMsj">For the year you chose there are no records to show</string>
     <string name="osm_noregMsjBtn">Choose another year</string>
     <string name="osm_elegirAnio">Choose a year from the list</string>
@@ -392,7 +392,7 @@
     <string name="rep_rangoVacio">There are no records between the dates</string>
 
     <!-- StatisticsFragment -->
-    <string name="sta_unDia">There are no associated records for the selected day</string>
+    <string name="sta_unDia">There are no associated records for the selected date</string>
     <string name="sta_unRecorrido">There are no associated records for the selected route</string>
 
     <!-- FechaOficial -->

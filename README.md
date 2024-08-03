@@ -4,7 +4,7 @@ adaptacion de https://github.com/gustavomarcelonunez/fishing-app para monitoreo 
 
 ## Resumen
 habitualmente los trabajos en campo implican el uso de papel y lápiz, lo más portable por mucho. esta app pretende (con exagerado optimismo) ser un digno reemplazo de aquello. en este sentido la navegabilidad de pantallas busca guiar al censista en la definición de los datos, desde lo general a lo particular.
-asi el usuario primeramente dará de alta un **Dia** (como unidad de tiempo en que sucede un acto de censar), dentro de este definirá **Recorridos** (como descriptor de áreas geográficas donde sucede el acto de censar) y finalmente agregará tantos **Registros** como unidades sociales observe en el campo.
+asi el usuario primeramente dará de alta una **Fecha** (como unidad de tiempo en que sucede un acto de censar), dentro de este definirá **Recorridos** (como descriptor de áreas geográficas donde sucede el acto de censar) y finalmente agregará tantos **Registros** como unidades sociales observe en el campo.
 
 esta primer actividad constituye lo que bien puede llamarse generacion del **dato primario**, ya que a partir de él explotarán una serie de modestos pero contundentes instrumentos de interpretacion de datos.
 entre ellos podemos -y debemos- nombrar:

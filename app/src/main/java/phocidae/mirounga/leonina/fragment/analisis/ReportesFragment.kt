@@ -118,7 +118,6 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
 
         getInvolucrados(args.rangoFechas) {
             if (it.isNotEmpty()) {
-                participantes(it)
                 cambiarMenuLateral(it)
                 mapota.resolverVisibilidad(it, selectedRadioButton!!.text.toString())
                 contarCrias(it)
@@ -219,10 +218,6 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
             combinedContadores.addAll(unidSocial.getContadoresNoNulos())
         }
         return combinedContadores.toList()
-    }
-
-    private fun participantes(unSocList: List<UnidSocial>) {
-        binding.participantes.text = " " + unSocList.distinctBy { it.recorrId }.size.toString()
     }
 
     private fun contarCrias(unSocList: List<UnidSocial>) {

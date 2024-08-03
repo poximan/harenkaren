@@ -17,7 +17,7 @@
     <string name="varias_gps" translatable="false">GPS</string>
     <string name="varias_lat">Latitud</string>
     <string name="varias_lon">Longitud</string>
-    <string name="varias_area">Area recorrida</string>
+    <string name="varias_area">Sector recorrido</string>
 
     <!-- nav_drawer_menu -->
     <string name="mnu_importar">Importar</string>
@@ -35,7 +35,7 @@
         <b><u>Acerca de esta app</u></b> <br/><br/>
         Habitualmente los trabajos en campo implican el uso de papel y lápiz porque es lo más portable por mucho. Esta app pretende (con exagerado optimismo) ser un digno reemplazo de aquello.<br/><br/>
         En este sentido la navegabilidad de pantallas busca guiar al censista en la definición de los datos, desde lo general a lo particular.
-        Asi el usuario primeramente dará de alta un <b>Dia</b> (como unidad de tiempo en que sucede un acto de censar), dentro de este definirá <b>Recorridos</b> (como descriptor de áreas geográficas donde sucede el acto de censar) y finalmente agregará tantos <b>Registros</b> como unidades sociales observe en el campo.<br/><br/>
+        Asi el usuario primeramente dará de alta una <b>Fecha</b>, dentro de este definirá <b>Recorridos</b> (como descriptor de áreas geográficas donde sucede el censo) y finalmente agregará tantos <b>Registros</b> como unidades sociales observe en el campo.<br/><br/>
         Esta primer actividad constituye lo que puede llamarse <b>dato primario</b>, ya que a partir de él explotarán una serie de modestos pero contundentes instrumentos de interpretacion de datos.<br/><br/>
         A nosotros el juego, y a triunfar.<br/><br/>
         ]]>
@@ -74,12 +74,12 @@
 
     <!-- fragment_dev -->
     <string name="dev_poblar">Poblar BD</string>
-    <string name="dev_dias">Dias</string>
+    <string name="dev_dias">Fechas</string>
     <string name="dev_recorr">Recorridos</string>
     <string name="dev_unsoc">Unid.Sociales</string>
     <string name="dev_usr">Alta usr</string>
     <string name="dev_logcat">Loggato</string>
-    <string name="dev_limpdias">Limp.dias</string>
+    <string name="dev_limpdias">Limp.fechas</string>
     <string name="dev_limprecorr">Limpiar\nrecorr.</string>
     <string name="dev_limpLog">Limpiar\nlog</string>
     <string name="dev_rearmar">Rearmar\nesquema</string>
@@ -225,7 +225,7 @@
     <!-- DevFragment -->
     <string name="dev_E_estadoDB">El gestor de BD no puede verificar la integridad de los datos</string>
     <string name="dev_estadoDB_entidad">entidades</string>
-    <string name="dev_estadoDB_dia">dia</string>
+    <string name="dev_estadoDB_dia">fecha</string>
     <string name="dev_estadoDB_recorr">recorrido</string>
     <string name="dev_estadoDB_unsoc">unid.social</string>
 
@@ -289,7 +289,7 @@
     <string name="ayu_detCenso1" formatted="true">
         Desde el menu principal observamos todas las opciones que ofrece esta app.\n
         En esta seccion se detalla la entrada \"%1$s\" cuya navegabilidad busca guiar al censista en la definición de los datos, desde lo general a lo particular.
-        Asi primeramente se dará de alta un Dia (como unidad de tiempo en que sucede un acto de censar), dentro de este definirá Recorridos (como descriptor de áreas geográficas donde sucede el acto de censar) y finalmente agregará tantos Registros como unidades sociales observe en el campo.\n\n
+        Asi primeramente se dará de alta una Fecha, dentro de este definirá Recorridos (como descriptor de áreas geográficas donde sucede el censo) y finalmente agregará tantos Registros como unidades sociales observe en el campo.\n\n
         Esta primer actividad constituye la generacion del dato primario, y a partir de él explotarán una serie de instrumentos de interpretacion de datos que se describirán mas adelante.
     </string>
     <string name="ayu_detCenso3">
@@ -297,8 +297,8 @@
         Si desea dar de alta un registro nuevo, click en el año en curso.
     </string>
     <string name="ayu_detCenso4">
-        Luego de seleccionar un año vemos esta pantalla, donde se observa la lista de dias en los que sucedieron los recorridos registrados.\n\n
-        Adicionalmente el censista podrá dar de alta el dia en curso, si es que desea realizar un censo. Para mas detalle click en el icono \"?\".
+        Luego de seleccionar un año vemos esta pantalla, donde se observa la lista de fechas en las que sucedieron los recorridos registrados.\n\n
+        Adicionalmente el censista podrá dar de alta la fecha actual, si es que desea realizar un censo. Para mas detalle click en el icono \"?\".
     </string>
 
     <string name="ayu_detRecorr1" formatted="true">
@@ -331,32 +331,32 @@
     </string>
 
     <!-- DiaListFragment -->
-    <string name="dia_confirmar">Dia agregado correctamente</string>
-    <string name="dia_existe">El dia de hoy ya fue agregado</string>
-    <string name="dia_noDiaTit">Alta dia</string>
-    <string name="dia_noDiaMsg1">Esta lista corresponde a dias de un año anterior al que estamos cursando</string>
+    <string name="dia_confirmar">Fecha agregada correctamente</string>
+    <string name="dia_existe">La fecha de hoy ya fue agregada</string>
+    <string name="dia_noDiaTit">Alta fecha</string>
+    <string name="dia_noDiaMsg1">Esta lista corresponde a fechas de un año anterior al que estamos cursando</string>
     <string name="dia_noDiaMsg2">y por lo tanto esta cerrada para agregar nuevas entradas, aunque podes ver todo su contenido</string>
     <string name="dia_mostrarAyudaTit">Fechas</string>
-    <string name="dia_mostrarAyuda0">Aun no has agregado ningun dia, y por lo tanto la lista esta vacia. Hacé click en (+) para agregarlo</string>
-    <string name="dia_mostrarAyuda1">Ahora hay un solo dia dado de alta. Cuando agregues mas, notaras la lista. Hace click en el dia existente para administrar sus recorridos</string>
-    <string name="dia_mostrarAyudaElse">Hace click en la fila que representa el dia de interes, para poder continuar a su detalle. Allí podrás adminstrar los recorridos asociados a la fecha que seleccionaste</string>
-    <string name="dia_mostrarAyudaMarco">Esta pantalla representa una lista de dias, en donde cada dia esta representado por una fila.</string>
-    <string name="dia_onDeleteTit">Borrar dia</string>
+    <string name="dia_mostrarAyuda0">Aun no has agregado ninguna fecha, y por lo tanto la lista esta vacia. Hacé click en (+) para agregarlo</string>
+    <string name="dia_mostrarAyuda1">Ahora hay una sola fecha dada de alta. Cuando agregues mas, notaras la lista. Hace click en el fecha existente para administrar sus recorridos</string>
+    <string name="dia_mostrarAyudaElse">Hace click en la fila que representa la fecha de interes, para poder continuar a su detalle. Allí podrás adminstrar los recorridos asociados a la fecha que seleccionaste</string>
+    <string name="dia_mostrarAyudaMarco">Esta pantalla representa una lista de fechas, en donde cada una se representa por una fila.</string>
+    <string name="dia_onDeleteTit">Borrar fecha</string>
     <string name="dia_onDeleteMsg">¿Confirma eliminacion?</string>
 
     <!-- RecorrListFragment -->
     <string name="rec_noRecorrTit">Alta recorrido</string>
-    <string name="rec_noRecorrMsg1">Esta lista corresponde a recorridos de dias anteriores a hoy</string>
+    <string name="rec_noRecorrMsg1">Esta lista corresponde a recorridos de fechas anteriores a hoy</string>
     <string name="rec_noRecorrMsg2">y por lo tanto esta cerrada para agregar nuevas entradas, aunque podes ver todo su contenido</string>
     <string name="rec_mostrarAyudaTit">Recorridos</string>
     <string name="rec_mostrarAyuda0">Aun no has agregado ningun recorrido, y por lo tanto la lista esta vacia. Hacé click en (+) para agregarlo</string>
     <string name="rec_mostrarAyuda1">Hay un solo recorrido dado de alta. Cuando agregues mas, notaras la lista. Hace click en el recorrido existente para administrar sus registros (unidades sociales censadas), ya sea para ingresar nuevos o ver los existentes</string>
     <string name="rec_mostrarAyudaElse">Hace click en la fila que representa el recorrido de interes, para poder continuar a su detalle. Allí podrás adminstrar los registros (unidades sociales censadas) asociados al recorrido que seleccionaste</string>
-    <string name="rec_mostrarAyudaMarco">Esta pantalla representa una lista de los recorridos realizados durante un unico dia, en donde cada recorrido esta representado por una fila.</string>
+    <string name="rec_mostrarAyudaMarco">Esta pantalla representa una lista de los recorridos realizados durante una unica fecha, en donde cada recorrido esta representado por una fila.</string>
 
     <!-- UnSocListFragment -->
     <string name="soc_noUnSocTit">Alta registro</string>
-    <string name="soc_noUnSocMsg1">Esta lista corresponde a registros de dias anteriores a hoy</string>
+    <string name="soc_noUnSocMsg1">Esta lista corresponde a registros de fechas anteriores a hoy</string>
     <string name="soc_noUnSocMsg2">y por lo tanto esta cerrada para agregar nuevas entradas, aunque podes ver todo su contenido</string>
     <string name="soc_mostrarAyudaTit">Registros</string>
     <string name="soc_mostrarAyuda0">Aun no has agregado ningun registro, y por lo tanto la lista esta vacia. Hacé click en (+) para agregarlo</string>
@@ -382,7 +382,7 @@
     <string name="osm_extremo">Esta marca es un extremo de recorrido, no representa una unidad social registrada</string>
     <string name="osm_categoria">Elegi una categoria primero (abri menu lateral)</string>
     <string name="osm_categNula">Esta categoria tiene todos sus elementos nulos</string>
-    <string name="osm_noregTit">Set vacio</string>
+    <string name="osm_noregTit">Sin datos</string>
     <string name="osm_noregMsj">Para el año que elegiste no hay registros que mostrar</string>
     <string name="osm_noregMsjBtn">Elegir otro año</string>
     <string name="osm_elegirAnio">Elegi un año de la lista</string>
@@ -400,7 +400,7 @@
     <string name="rep_rangoVacio">No existen registros entre las fechas</string>
 
     <!-- StatisticsFragment -->
-    <string name="sta_unDia">No existen registros asociados para el dia seleccionado</string>
+    <string name="sta_unDia">No existen registros asociados para la fecha seleccionada</string>
     <string name="sta_unRecorrido">No existen registros asociados para el recorrido seleccionado</string>
 
     <!-- FechaOficial -->
