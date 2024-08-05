@@ -379,7 +379,8 @@
     <!-- OSMFragment -->
     <string name="osm_anios">año...</string>
     <string name="osm_mostrar">Para el año elegido, hay recorridos sin registros asociados</string>
-    <string name="osm_extremo">Esta marca es un extremo de recorrido, no representa una unidad social registrada</string>
+    <string name="osm_extini">Inicio del recorrido</string>
+    <string name="osm_extfin">Fin del recorrido</string>
     <string name="osm_categoria">Elegi una categoria primero (abri menu lateral)</string>
     <string name="osm_categNula">Esta categoria tiene todos sus elementos nulos</string>
     <string name="osm_noregTit">Sin datos</string>

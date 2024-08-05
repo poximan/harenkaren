@@ -129,7 +129,9 @@ class MapOSMAdapter(mapView: MapView, context: Context) : SuperMapa(), MapEvents
         val marker = Marker(mapView)
         marker.position = punto
 
-        if (unSoc.comentario != RecorrRepository.EXTREMOS_GPS) {
+        if (unSoc.comentario != context.getString(R.string.osm_extini) &&
+            unSoc.comentario != context.getString(R.string.osm_extfin)
+            ) {
             marker.icon = ContextCompat.getDrawable(context, R.drawable.ic_marker)
 
             val infoWindow = BarCharInfoWindow(
@@ -147,7 +149,7 @@ class MapOSMAdapter(mapView: MapView, context: Context) : SuperMapa(), MapEvents
             marker.infoWindow = infoWindow
         } else {
             marker.icon = ContextCompat.getDrawable(context, R.drawable.ic_extremos)
-            marker.snippet = context.getString(R.string.osm_extremo)
+            marker.snippet = unSoc.comentario
         }
 
         mapView.overlays.add(marker)

@@ -371,7 +371,8 @@
     <!-- OSMFragment -->
     <string name="osm_anios">year...</string>
     <string name="osm_mostrar">For the chosen year, there are routes without associated records</string>
-    <string name="osm_extremo">This mark is an end of the route, it does not represent a registered social unit</string>
+    <string name="osm_extini">Start of the tour</string>
+    <string name="osm_extfin">End of the tour</string>
     <string name="osm_categoria">Choose a category first (open side menu)</string>
     <string name="osm_categNula">This category has all its null elements</string>
     <string name="osm_noregTit">No data</string>

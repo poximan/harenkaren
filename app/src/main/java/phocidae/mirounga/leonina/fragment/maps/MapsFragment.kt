@@ -145,7 +145,6 @@ class MapsFragment : Fragment() {
                     ).show()
                 }
             }
-
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
     }
@@ -177,7 +176,7 @@ class MapsFragment : Fragment() {
         // ---------> HILO BACKGOUND
         CoroutineScope(Dispatchers.IO).launch {
             unSocMutante =
-                recorrRepo.getAllPorAnio(anio.toString(), unSocDAO)
+                recorrRepo.getAllPorAnio(anio.toString(), unSocDAO, requireContext())
 
             withContext(Dispatchers.Main) {
                 callback(unSocMutante)
