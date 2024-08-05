@@ -152,7 +152,7 @@
     <string name="rep_subtit">Relevamiento poblacional de\nelefante marino del sur</string>
     <string name="rep_rangofecha">Rango fechas: </string>
     <string name="rep_observadores">Numero total de participantes:</string>
-    <string name="rep_crias">Total crias contadas:</string>
+    <string name="rep_contCateg">Total contado en categoria</string>
     <string name="rep_fijar">Fijar cuadro</string>
     <string name="rep_resUnSoc">Resumen de unidades sociales</string>
     <string name="rep_resIndiv">Resumen individuos</string>

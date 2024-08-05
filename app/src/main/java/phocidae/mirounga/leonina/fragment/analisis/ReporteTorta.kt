@@ -42,7 +42,8 @@ class ReporteTorta(private val webView: WebView) {
                             hole: 0.2,
                             textinfo: "label+value",
                             hoverinfo: "label+value+percent",
-                            hovertemplate: "%{label}: %{value} (%{percent})"
+                            hovertemplate: "%{label}: %{value} (%{percent})",
+                            textposition: 'inside'
                         }];
                         """.trimIndent()
 

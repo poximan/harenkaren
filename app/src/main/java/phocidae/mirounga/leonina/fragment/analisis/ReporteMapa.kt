@@ -119,7 +119,7 @@ class ReporteMapa(webView: WebView, context: Context) : SuperMapa() {
                         };
                         var config = {
                             responsive: true,
-                            displayModeBar: false
+                            displayModeBar: false                            
                         };
                         Plotly.newPlot("myDiv", data, layout, config);
                      
@@ -127,7 +127,7 @@ class ReporteMapa(webView: WebView, context: Context) : SuperMapa() {
                             var ancho = window.innerWidth;
                             var alto = window.innerHeight;
                             
-                            Plotly.toImage(myDiv, {format: 'png', width: ancho, height: alto})
+                            Plotly.toImage(myDiv, {format: 'png', width: ancho * 1.8, height: alto * 1.8})
                                 .then(function(dataUrl) { Android.onImageCaptured(dataUrl); });
                         }
                     </script>

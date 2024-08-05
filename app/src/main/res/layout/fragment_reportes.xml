@@ -127,10 +127,10 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/rep_crias" />
+                android:text="@string/rep_contCateg" />
 
             <TextView
-                android:id="@+id/crias"
+                android:id="@+id/cont_categoria"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="#num" />

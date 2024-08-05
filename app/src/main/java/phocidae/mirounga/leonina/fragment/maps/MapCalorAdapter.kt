@@ -128,7 +128,7 @@ class MapCalorAdapter(webView: WebView, context: Context) : SuperMapa() {
                         
                         var config = {
                             responsive: true,
-                            displayModeBar: false
+                            displayModeBar: false                            
                         };
                         Plotly.newPlot("myDiv", data, layout, config);
                     </script>

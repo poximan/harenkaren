@@ -27,7 +27,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.osmdroid.util.GeoPoint
 import phocidae.mirounga.leonina.R
 import phocidae.mirounga.leonina.activity.HomeActivity
 import phocidae.mirounga.leonina.dao.UnSocDAO
@@ -36,7 +35,6 @@ import phocidae.mirounga.leonina.databinding.FragmentReportesBinding
 import phocidae.mirounga.leonina.fragment.maps.SuperMapa
 import phocidae.mirounga.leonina.model.UnidSocial
 import java.util.UUID
-import kotlin.math.abs
 
 class ReportesFragment : Fragment(), OnImageCapturedListener {
 
@@ -120,7 +118,7 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
             if (it.isNotEmpty()) {
                 cambiarMenuLateral(it)
                 mapota.resolverVisibilidad(it, selectedRadioButton!!.text.toString())
-                contarCrias(it)
+                contarCategoria(it)
                 tabFilaHaren(it)
                 tabFilaGpoHaren(it)
                 tabFilaHarenSin(it)
@@ -160,7 +158,6 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
                 (activity as? HomeActivity)?.drawerLayout?.openDrawer(GravityCompat.START)
                 true
             }
-
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -189,6 +186,7 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
                 selectedRadioButton = radioButton
                 radioButton.isChecked = true
                 mapota.resolverVisibilidad(unSocList, selectedRadioButton!!.text.toString())
+                contarCategoria(unSocList)
             }
             // Asignar el RadioButton como actionView del MenuItem
             menuItem.actionView = radioButton
@@ -220,11 +218,17 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
         return combinedContadores.toList()
     }
 
-    private fun contarCrias(unSocList: List<UnidSocial>) {
-        val vCrias = unSocList.sumOf { it.vCrias }
-        val mCrias = unSocList.sumOf { it.mCrias }
+    private fun contarCategoria(unSocList: List<UnidSocial>) {
 
-        binding.crias.text = " $vCrias(vivas) $mCrias(muertas)"
+        val atribString = selectedRadioButton!!.text.toString()
+
+        val contCategoria = unSocList.sumOf { unSoc ->
+            val field = unSoc::class.java.getDeclaredField(atribString)
+            field.isAccessible = true
+            field.get(unSoc) as Int
+        }
+
+        binding.contCategoria.text = " $atribString: $contCategoria"
     }
 
     private fun tabFilaHaren(unSocList: List<UnidSocial>) {
@@ -333,24 +337,6 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
     private fun graficar(unidSocial: UnidSocial) {
         val torta = ReporteTorta(webViewTorta)
         torta.mostrarMapaCalor(unidSocial)
-    }
-
-    private fun puntoMedioPosiciones(unSocList: List<UnidSocial>): GeoPoint {
-        val minLatitud = unSocList.minOf { it.latitud }
-        val maxLatitud = unSocList.maxOf { it.latitud }
-        val minLongitud = unSocList.minOf { it.longitud }
-        val maxLongitud = unSocList.maxOf { it.longitud }
-
-        // Calcular los puntos medios respecto a los valores extremos
-        val puntoMedioLatitud = (minLatitud + maxLatitud) / 2.0
-        val puntoMedioLongitud = (minLongitud + maxLongitud) / 2.0
-
-        val altitud = -1.9481 * abs(minLatitud - maxLatitud) + 9.5195
-        /*
-        para 0.78 dif lat --> 8 altitud
-        para 1.55 dif lat --> 6.5 altitud
-         */
-        return GeoPoint(puntoMedioLatitud, puntoMedioLongitud, altitud)
     }
 
     private fun getInvolucrados(rangoFechas: String, callback: (List<UnidSocial>) -> Unit) {
