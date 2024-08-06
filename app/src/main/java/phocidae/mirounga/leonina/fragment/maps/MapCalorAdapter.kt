@@ -97,17 +97,18 @@ class MapCalorAdapter(webView: WebView, context: Context) : SuperMapa() {
                             });
                         }
                         var rows = $jsonUnSocList;
-                    
+                        
                         var data = [{
                             lat: unpack(rows, "lat"),
                             lon: unpack(rows, "lon"),
                             z: unpack(rows, "mag"),
-                            text: unpack(rows, "categ."),
-                            hoverinfo: "lat+lon+z+text",
-                            hovertemplate: "lat: %{lat:.6f}<br>lon: %{lon:.6f}<br>total: %{z}<br>categ.: %{text}<extra></extra>",
+                            text: unpack(rows, "categ."),                            
+                            hoverinfo:'none',
                             radius: 30,
                             type: "densitymapbox",
-                            coloraxis: "coloraxis"
+                            coloraxis: "coloraxis"                            
+                            // hoverinfo: "lat+lon+z+text",                            
+                            // hovertemplate: "lat: %{lat:.6f}<br>lon: %{lon:.6f}<br>total: %{z}<br>categ.: %{text}<extra></extra>"
                         }];
                         """.trimIndent()
 
@@ -131,6 +132,10 @@ class MapCalorAdapter(webView: WebView, context: Context) : SuperMapa() {
                             displayModeBar: false                            
                         };
                         Plotly.newPlot("myDiv", data, layout, config);
+                        
+                        document.getElementById('myDiv').on('plotly_click', function(data) {
+                            console.log("click en emergente mapa calor")
+                        });
                     </script>
                 </body>
             </html>

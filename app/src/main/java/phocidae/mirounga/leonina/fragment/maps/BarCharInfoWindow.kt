@@ -94,11 +94,8 @@ class BarCharInfoWindow(
         // Crear y configurar el TextView
         val textView = TextView(context)
         textView.text = "$atribString($valor)"
-        textView.textSize = when {
-            valor < 10f -> 10f
-            valor > 14f -> 14f
-            else -> valor.toFloat()
-        }
+        textView.textSize = 10f
+
         val textLayoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.WRAP_CONTENT,
             LinearLayout.LayoutParams.WRAP_CONTENT

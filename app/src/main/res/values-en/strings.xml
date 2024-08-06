@@ -145,7 +145,7 @@
     <string name="rep_subtit">Southern elephant seal\npopulation survey</string>
     <string name="rep_rangofecha">Date range: </string>
     <string name="rep_observadores">Total number of participants:</string>
-    <string name="rep_contCateg">Total counted in category</string>
+    <string name="rep_contCateg" formatted="true">Total (category %1$s)</string>
     <string name="rep_fijar">Set box</string>
     <string name="rep_resUnSoc">Summary of social units</string>
     <string name="rep_resIndiv">Summary individuals</string>

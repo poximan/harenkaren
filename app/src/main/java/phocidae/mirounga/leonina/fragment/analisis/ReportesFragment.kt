@@ -228,7 +228,7 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
             field.get(unSoc) as Int
         }
 
-        binding.contCategoria.text = " $atribString: $contCategoria"
+        binding.contCategoria.text = requireContext().getString(R.string.rep_contCateg, atribString)+": $contCategoria"
     }
 
     private fun tabFilaHaren(unSocList: List<UnidSocial>) {

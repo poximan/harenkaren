@@ -95,8 +95,9 @@ class ReporteMapa(webView: WebView, context: Context) : SuperMapa() {
                             lon: unpack(rows, "lon"),
                             z: unpack(rows, "mag"),
                             text: unpack(rows, "categ."),
-                            hoverinfo: "lat+lon+z+text",
-                            hovertemplate: "lat: %{lat:.6f}<br>lon: %{lon:.6f}<br>total: %{z}<br>categ.: %{text}<extra></extra>",
+                            hoverinfo:'none',
+                            //hoverinfo: "lat+lon+z+text",
+                            //hovertemplate: "lat: %{lat:.6f}<br>lon: %{lon:.6f}<br>total: %{z}<br>categ.: %{text}<extra></extra>",
                             radius: 25,
                             type: "densitymapbox",
                             coloraxis: "coloraxis"

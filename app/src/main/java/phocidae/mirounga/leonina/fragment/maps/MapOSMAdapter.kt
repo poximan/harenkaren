@@ -15,7 +15,6 @@ import org.osmdroid.views.overlay.Marker
 import org.osmdroid.views.overlay.Polyline
 import phocidae.mirounga.leonina.R
 import phocidae.mirounga.leonina.model.UnidSocial
-import phocidae.mirounga.leonina.repository.RecorrRepository
 
 class MapOSMAdapter(mapView: MapView, context: Context) : SuperMapa(), MapEventsReceiver {
 
@@ -29,6 +28,7 @@ class MapOSMAdapter(mapView: MapView, context: Context) : SuperMapa(), MapEvents
 
     private var polylines = mutableListOf<Polyline>()
     private var markers = mutableListOf<Marker>()
+    private var listInfoWindows = mutableListOf<BarCharInfoWindow>()
 
     // Método llamado cuando se crea la vista del fragmento
     fun configurar() {
@@ -142,7 +142,9 @@ class MapOSMAdapter(mapView: MapView, context: Context) : SuperMapa(), MapEvents
                 if (infoWindow.isOpen) {
                     infoWindow.close()
                 } else {
+                    cerrarTodasLasVentanas()
                     marker.showInfoWindow()
+                    listInfoWindows.add(infoWindow)
                 }
                 true
             }
@@ -154,6 +156,11 @@ class MapOSMAdapter(mapView: MapView, context: Context) : SuperMapa(), MapEvents
 
         mapView.overlays.add(marker)
         markers.add(marker)
+    }
+
+    private fun cerrarTodasLasVentanas() {
+        listInfoWindows.forEach { it.close() }
+        listInfoWindows.clear()
     }
 
     private fun geo(unSoc: UnidSocial): GeoPoint {
