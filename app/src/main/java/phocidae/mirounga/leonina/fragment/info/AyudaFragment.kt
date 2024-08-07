@@ -42,7 +42,10 @@ class AyudaFragment : Fragment() {
     private fun initData(): LinkedHashMap<String, List<Pair<String, Int?>>> {
         val expandableListData = LinkedHashMap<String, List<Pair<String, Int?>>>()
 
-        val firstItem = listOf(
+        val diccionario = listOf(
+            Pair(getString(R.string.ayu_detallDicc), null)
+        )
+        val censos = listOf(
             Pair(getString(R.string.ayu_detCenso1, getString(R.string.home_censos)), null),
             Pair(
                 getString(R.string.ayu_detalle1, getString(R.string.home_censos)),
@@ -51,7 +54,7 @@ class AyudaFragment : Fragment() {
             Pair(getString(R.string.ayu_detCenso3), R.drawable.ayucensos_anio),
             Pair(getString(R.string.ayu_detCenso4), R.drawable.ayucensos_aniolista)
         )
-        val secondItem = listOf(
+        val mapas = listOf(
             Pair(getString(R.string.ayu_detRecorr1, getString(R.string.home_mapa)), null),
             Pair(
                 getString(R.string.ayu_detalle1, getString(R.string.home_mapa)),
@@ -60,7 +63,7 @@ class AyudaFragment : Fragment() {
             Pair(getString(R.string.ayu_detRecorr2), R.drawable.ayurecorridos),
             Pair(getString(R.string.ayu_detRecorr3), R.drawable.ayurecorridos_calor)
         )
-        val thirdItem = listOf(
+        val importadorexportador = listOf(
             Pair(
                 getString(
                     R.string.ayu_detImportExp1,
@@ -73,9 +76,10 @@ class AyudaFragment : Fragment() {
             Pair(getString(R.string.ayu_detImportExp3), R.drawable.ayuimportarexp_menu)
         )
 
-        expandableListData[getString(R.string.home_censos)] = firstItem
-        expandableListData[getString(R.string.home_mapa)] = secondItem
-        expandableListData[getString(R.string.ayu_importexp)] = thirdItem
+        expandableListData[getString(R.string.ayu_diccionario)] = diccionario
+        expandableListData[getString(R.string.home_censos)] = censos
+        expandableListData[getString(R.string.home_mapa)] = mapas
+        expandableListData[getString(R.string.ayu_importexp)] = importadorexportador
 
         return expandableListData
     }

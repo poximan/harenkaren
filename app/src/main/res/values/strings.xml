@@ -285,6 +285,11 @@
     <string name="soc_confirmarEdit">Registro editado correctamente</string>
 
     <!-- AyudaFragment -->
+    <string name="ayu_diccionario" >Diccionario de datos</string>
+    <string name="ayu_detallDicc" >
+        Alta censo: el formulario de ingreso posee 3 solapas.
+    </string>
+
     <string name="ayu_detalle1" formatted="true">Se ingresa presionando el boton \"%1$s\"</string>
     <string name="ayu_detCenso1" formatted="true">
         Desde el menu principal observamos todas las opciones que ofrece esta app.\n
