@@ -125,11 +125,36 @@ class ReporteMapa(webView: WebView, context: Context) : SuperMapa() {
                         Plotly.newPlot("myDiv", data, layout, config);
                      
                         function fijar() {
-                            var ancho = window.innerWidth;
-                            var alto = window.innerHeight;
                             
-                            Plotly.toImage(myDiv, {format: 'png', width: ancho * 1.8, height: alto * 1.8})
-                                .then(function(dataUrl) { Android.onImageCaptured(dataUrl); });
+                            // Obtén el contenedor del gráfico
+                            var myDiv = document.getElementById('myDiv');
+                            
+                            // Obtén las dimensiones actuales del contenedor
+                            var ancho = myDiv.clientWidth;
+                            var alto = myDiv.clientHeight;
+                            
+                            // Genera la imagen utilizando las dimensiones obtenidas
+                            Plotly.toImage(myDiv, {format: 'png', width: ancho, height: alto})
+                                .then(function(dataUrl) {
+                                    // dataUrl contiene la imagen en base64
+                                    // Puedes hacer algo con dataUrl, como enviarla a una API, descargarla, etc.
+                            
+                                    // Por ejemplo, para mostrar la imagen en un elemento <img>:
+                                    var imgElement = document.createElement('img');
+                                    imgElement.src = dataUrl;
+                                    document.body.appendChild(imgElement);
+                            
+                                    // O para descargarla directamente:
+                                    var link = document.createElement('a');
+                                    link.href = dataUrl;
+                                    link.download = 'grafico.png';
+                                    document.body.appendChild(link);
+                                    link.click();
+                                    document.body.removeChild(link);
+                            
+                                    // Llama a la función de Android si estás en un entorno Android
+                                    Android.onImageCaptured(dataUrl);
+                                })
                         }
                     </script>
                 </body>
