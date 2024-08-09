@@ -1,6 +1,7 @@
 package phocidae.mirounga.leonina.fragment.analisis
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.webkit.WebView
 import android.widget.Toast
 import com.google.gson.Gson

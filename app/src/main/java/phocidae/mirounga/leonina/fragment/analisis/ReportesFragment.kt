@@ -6,6 +6,7 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.print.PrintAttributes
 import android.print.PrintManager
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -34,6 +35,7 @@ import phocidae.mirounga.leonina.database.HarenKarenRoomDatabase
 import phocidae.mirounga.leonina.databinding.FragmentReportesBinding
 import phocidae.mirounga.leonina.fragment.maps.SuperMapa
 import phocidae.mirounga.leonina.model.UnidSocial
+import java.io.ByteArrayOutputStream
 import java.util.UUID
 
 class ReportesFragment : Fragment(), OnImageCapturedListener {
@@ -76,7 +78,7 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
         logo1 = binding.logo1
         logo2 = binding.logo2
 
-        binding.rangoFechas.text = " " + args.rangoFechas
+        binding.rangoFechas.text = ": " + args.rangoFechas
 
         unSocDAO = HarenKarenRoomDatabase
             .getDatabase(requireContext(), viewLifecycleOwner.lifecycleScope)
@@ -142,9 +144,26 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
     }
 
     override fun onImageCaptured(bitmap: Bitmap) {
-        binding.webViewRep.visibility = View.GONE
-        binding.imgMapaCalor.visibility = View.VISIBLE
-        binding.imgMapaCalor.setImageBitmap(bitmap)
+
+        // Convierte el Bitmap a un string Base64
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
+        val byteArray = byteArrayOutputStream.toByteArray()
+        val encodedImage = Base64.encodeToString(byteArray, Base64.NO_WRAP)
+
+        val htmlData = """
+            <html>
+            <body style="margin: 0; padding: 0;">
+                <img src="data:image/png;base64,$encodedImage" style="width: 100%; height: 100%; object-fit: contain;" />
+            </body>
+            </html>
+        """
+        val layoutParams = webViewHeat.layoutParams
+
+        layoutParams.height = 900
+        webViewHeat.layoutParams = layoutParams
+
+        webViewHeat.loadDataWithBaseURL(null, htmlData, "text/html", "UTF-8", null)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

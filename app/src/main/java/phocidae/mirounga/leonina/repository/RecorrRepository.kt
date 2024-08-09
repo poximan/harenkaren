@@ -47,19 +47,16 @@ class RecorrRepository(private val dao: RecorrDAO) {
         return dao.getFechaObservada(idDia)
     }
 
-    fun getAllPorAnio(anio: String, unSocDAO: UnSocDAO, contexto: Context): List<UnidSocial> {
+    fun getAllPorAnio(desde: String, hasta: String, unSocDAO: UnSocDAO, contexto: Context): List<UnidSocial> {
 
         val unSocMutante = mutableListOf<UnidSocial>()
         val uuidgenerico = GestorUUID.obtenerUUID()
-        val recorrList = dao.getAllPorAnio(anio)
+        val recorrList = dao.getEntreFechas(desde, hasta)
 
         for (punto in recorrList) {
 
-            /*
-            TODO no esta claro por que getAllPorAnio() necesita el año si con el id del recorrido deberia alcanzar
-             */
             val unSocList =
-                unSocDAO.getAllPorAnio(anio, punto.id)
+                unSocDAO.getEntreFechas(desde, hasta)
                     .sortedWith(compareBy({ it.recorrId }, { it.orden }))
 
             if (unSocList.isEmpty())

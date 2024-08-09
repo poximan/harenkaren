@@ -1,18 +1,16 @@
 package phocidae.mirounga.leonina.fragment.maps
 
 import android.app.AlertDialog
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.RadioButton
-import android.widget.Spinner
 import android.widget.Toast
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
@@ -30,6 +28,9 @@ import phocidae.mirounga.leonina.activity.HomeActivity
 import phocidae.mirounga.leonina.database.HarenKarenRoomDatabase
 import phocidae.mirounga.leonina.model.UnidSocial
 import phocidae.mirounga.leonina.repository.RecorrRepository
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class MapsFragment : Fragment() {
 
@@ -37,10 +38,11 @@ class MapsFragment : Fragment() {
     private lateinit var webView: WebView
     private lateinit var chkMapaCalor: CheckBox
     private lateinit var botonMenu: Button
-    private var selectedRadioButton: RadioButton? = null
+    private lateinit var botonFechas: Button
 
-    private lateinit var filtroAnio: Spinner
-    private var anios: MutableList<String> = mutableListOf()
+    private var selectedRadioButton: RadioButton? = null
+    private var desdeBase = ""
+    private var hastaBase = ""
 
     private lateinit var mapota: SuperMapa
 
@@ -53,29 +55,11 @@ class MapsFragment : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_osm, container, false)
 
-        val diaDAO = HarenKarenRoomDatabase
-            .getDatabase(requireActivity().application, viewLifecycleOwner.lifecycleScope)
-            .diaDao()
-
-        CoroutineScope(Dispatchers.IO).launch {
-
-            val listaDeStrings: List<String> = diaDAO.getAnios().map { it.toString() }
-            anios.add(getString(R.string.osm_anios))
-            anios.addAll(listaDeStrings)
-
-            withContext(Dispatchers.Main) {
-                // Configurar el Spinner
-                val adapter =
-                    ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, anios)
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                filtroAnio.adapter = adapter
-            }
-        }
-
         webView = view.findViewById(R.id.webViewHeat)
         mapView = view.findViewById(R.id.mapView)
         chkMapaCalor = view.findViewById(R.id.chk_mapacalor)
-        filtroAnio = view.findViewById(R.id.filtroAnio)
+        botonFechas = view.findViewById(R.id.boton_fechas)
+
         return view
     }
 
@@ -83,12 +67,13 @@ class MapsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         cambiarMenuLateral(emptyList())
-        configCheckbox(view)
+        configCheckbox()
+
         botonMenu = view.findViewById(R.id.boton_menu)
         botonMenu.setOnClickListener {
             (activity as? HomeActivity)?.drawerLayout?.openDrawer(GravityCompat.START)
         }
-        configSpinner()
+        botonFechas.setOnClickListener { seleccionarRango() }
     }
 
     override fun onDestroyView() {
@@ -98,14 +83,14 @@ class MapsFragment : Fragment() {
         navigationView.inflateMenu(R.menu.nav_drawer_menu)
     }
 
-    private fun configCheckbox(view: View) {
+    private fun configCheckbox() {
         chkMapaCalor.setOnCheckedChangeListener { _, ischeck ->
             if (selectedRadioButton != null) {
 
                 if (ischeck) mapaSecundario()
                 else mapaPorDefecto()
 
-                lanzarEventoSpinner(view)
+                lanzarMapa()
             } else {
                 chkMapaCalor.isChecked = false
                 val context = requireContext()
@@ -119,33 +104,24 @@ class MapsFragment : Fragment() {
         mapaPorDefecto()
     }
 
-    private fun configSpinner() {
-        filtroAnio.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View,
-                position: Int,
-                id: Long
-            ) {
-                try {
-                    val anioSeleccionado = anios[position].toInt()
-                    getInvolucrados(anioSeleccionado) {
-                        if (it.isNullOrEmpty())
-                            mensajeError()
-                        else {
-                            cambiarMenuLateral(it)
-                            mapota.resolverVisibilidad(it, selectedRadioButton!!.text.toString())
-                        }
-                    }
-                } catch (e: NumberFormatException) {
-                    Toast.makeText(
-                        requireContext(),
-                        getString(R.string.osm_elegirAnio),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+    private fun seleccionarRango() {
+
+        showDateRangePicker { startDate, endDate ->
+            desdeBase = startDate
+            hastaBase = endDate
+
+            lanzarMapa()
+        }
+    }
+
+    private fun lanzarMapa() {
+        getInvolucrados() {
+            if (it.isNullOrEmpty())
+                mensajeError()
+            else {
+                cambiarMenuLateral(it)
+                mapota.resolverVisibilidad(it, selectedRadioButton!!.text.toString())
             }
-            override fun onNothingSelected(parent: AdapterView<*>) {}
         }
     }
 
@@ -162,7 +138,11 @@ class MapsFragment : Fragment() {
         mapota = MapCalorAdapter(webView, requireContext())
     }
 
-    private fun getInvolucrados(anio: Int, callback: (List<UnidSocial>) -> Unit) {
+    private fun getInvolucrados(callback: (List<UnidSocial>) -> Unit) {
+
+        val desde = "$desdeBase 00:00:00"
+        val hasta = "$hastaBase 23:59:59"
+
         var unSocMutante: List<UnidSocial>
 
         val unSocDAO = HarenKarenRoomDatabase
@@ -176,7 +156,7 @@ class MapsFragment : Fragment() {
         // ---------> HILO BACKGOUND
         CoroutineScope(Dispatchers.IO).launch {
             unSocMutante =
-                recorrRepo.getAllPorAnio(anio.toString(), unSocDAO, requireContext())
+                recorrRepo.getAllPorAnio(desde, hasta, unSocDAO, requireContext())
 
             withContext(Dispatchers.Main) {
                 callback(unSocMutante)
@@ -256,19 +236,37 @@ class MapsFragment : Fragment() {
         return (activity as HomeActivity).findNavController(R.id.navHostHome)
     }
 
-    private fun lanzarEventoSpinner(view: View) {
+    private fun showDateRangePicker(onDateSelected: (String, String) -> Unit) {
+        val dateFormat = getString(R.string.formato_dia)
+        val dateFormatter = SimpleDateFormat(dateFormat, Locale.getDefault())
 
-        var defaultPosition: Int = if (filtroAnio.selectedItemPosition < 0)
-            0
-        else
-            filtroAnio.selectedItemPosition
+        // Dialogo para elegir fecha de inicio
+        val startDatePicker = DatePickerDialog(requireContext())
 
-        filtroAnio.setSelection(defaultPosition)
-        filtroAnio.onItemSelectedListener?.onItemSelected(
-            filtroAnio,
-            view,
-            defaultPosition,
-            filtroAnio.getItemIdAtPosition(defaultPosition)
-        )
+        startDatePicker.setTitle(getString(R.string.hom_fecha_desde))
+        startDatePicker.setOnDateSetListener { _, startYear, startMonth, startDay ->
+            val startCalendar = Calendar.getInstance().apply {
+                set(startYear, startMonth, startDay)
+            }
+            val startDate = dateFormatter.format(startCalendar.time)
+
+            // fecha de fin con fecha mínima establecida en funcion de inicio
+            val endDatePicker =
+                DatePickerDialog(requireContext(), null, startYear, startMonth, startDay)
+            endDatePicker.datePicker.minDate =
+                startCalendar.timeInMillis // Establecer la fecha mínima
+
+            endDatePicker.setTitle(R.string.hom_fecha_hasta)
+            endDatePicker.setOnDateSetListener { _, endYear, endMonth, endDay ->
+                val endCalendar = Calendar.getInstance().apply {
+                    set(endYear, endMonth, endDay)
+                }
+                val endDate = dateFormatter.format(endCalendar.time)
+
+                onDateSelected(startDate, endDate)
+            }
+            endDatePicker.show()
+        }
+        startDatePicker.show()
     }
 }

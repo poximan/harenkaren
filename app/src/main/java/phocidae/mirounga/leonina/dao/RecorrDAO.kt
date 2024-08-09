@@ -109,5 +109,14 @@ interface RecorrDAO {
         }
         return insertsEfectivos
     }
+
+    @Query(
+        """
+        SELECT *
+        FROM recorrido
+        WHERE fecha_ini BETWEEN :desde AND :hasta
+    """
+    )
+    fun getEntreFechas(desde: String, hasta: String): List<Recorrido>
 }
 

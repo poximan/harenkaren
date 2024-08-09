@@ -18,6 +18,7 @@
     <string name="varias_lat">Latitud</string>
     <string name="varias_lon">Longitud</string>
     <string name="varias_area">Sector recorrido</string>
+    <string name="varias_rangofecha">Rango fechas</string>
 
     <!-- nav_drawer_menu -->
     <string name="mnu_importar">Importar</string>
@@ -150,7 +151,6 @@
 
     <!-- fragment_reportes -->
     <string name="rep_subtit">Relevamiento poblacional de\nelefante marino del sur</string>
-    <string name="rep_rangofecha">Rango fechas: </string>
     <string name="rep_observadores">Numero total de participantes:</string>
     <string name="rep_contCateg" formatted="true">Total (categoria %1$s)</string>
     <string name="rep_fijar">Fijar cuadro</string>
@@ -220,7 +220,8 @@
     <!-- HomeFragment -->
     <string name="hom_onViewUsuario">Bienvenido</string>
     <string name="hom_onViewHuella">Bienvenido, señor/ra huella digital</string>
-    <string name="hom_fecha">Selecciona rango de fechas</string>
+    <string name="hom_fecha_desde">Desde fecha</string>
+    <string name="hom_fecha_hasta">Hasta fecha</string>
 
     <!-- DevFragment -->
     <string name="dev_E_estadoDB">El gestor de BD no puede verificar la integridad de los datos</string>

@@ -91,7 +91,7 @@ class HomeFragment : Fragment() {
         // Dialogo para elegir fecha de inicio
         val startDatePicker = DatePickerDialog(requireContext())
 
-        startDatePicker.setTitle(getString(R.string.hom_fecha))
+        startDatePicker.setTitle(getString(R.string.hom_fecha_desde))
         startDatePicker.setOnDateSetListener { _, startYear, startMonth, startDay ->
             val startCalendar = Calendar.getInstance().apply {
                 set(startYear, startMonth, startDay)
@@ -104,7 +104,7 @@ class HomeFragment : Fragment() {
             endDatePicker.datePicker.minDate =
                 startCalendar.timeInMillis // Establecer la fecha mínima
 
-            endDatePicker.setTitle(R.string.hom_fecha)
+            endDatePicker.setTitle(R.string.hom_fecha_hasta)
             endDatePicker.setOnDateSetListener { _, endYear, endMonth, endDay ->
                 val endCalendar = Calendar.getInstance().apply {
                     set(endYear, endMonth, endDay)

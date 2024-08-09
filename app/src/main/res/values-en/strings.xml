@@ -12,6 +12,7 @@
     <string name="varias_confirmar">Confirm</string>
     <string name="varias_lat">Latitude</string>
     <string name="varias_lon">Longitude</string>
+    <string name="varias_rangofecha">Date range</string>
 
     <!-- nav_drawer_menu -->
     <string name="mnu_importar">Import</string>
@@ -143,7 +144,6 @@
 
     <!-- fragment_reportes -->
     <string name="rep_subtit">Southern elephant seal\npopulation survey</string>
-    <string name="rep_rangofecha">Date range: </string>
     <string name="rep_observadores">Total number of participants:</string>
     <string name="rep_contCateg" formatted="true">Total (category %1$s)</string>
     <string name="rep_fijar">Set box</string>
@@ -213,7 +213,8 @@
     <!-- HomeFragment -->
     <string name="hom_onViewUsuario">Welcome</string>
     <string name="hom_onViewHuella">Welcome, Mr. Fingerprint</string>
-    <string name="hom_fecha">Select date range</string>
+    <string name="hom_fecha_desde">From date</string>
+    <string name="hom_fecha_hasta">To date</string>
 
     <!-- DevFragment -->
     <string name="dev_E_estadoDB">The DB manager cannot verify the data integrity</string>

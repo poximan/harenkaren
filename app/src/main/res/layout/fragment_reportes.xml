@@ -74,7 +74,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="@string/rep_rangofecha" />
+                    android:text="@string/varias_rangofecha" />
 
                 <TextView
                     android:id="@+id/rango_fechas"
@@ -92,22 +92,11 @@
             android:text="@string/varias_area"
             android:textSize="18dp" />
 
-        <LinearLayout
+        <!-- mapa calor -->
+        <WebView
+            android:id="@+id/webViewRep"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <WebView
-                android:id="@+id/webViewRep"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <ImageView
-                android:id="@+id/imgMapaCalor"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="gone" />
-        </LinearLayout>
+            android:layout_height="match_parent" />
 
         <Button
             android:id="@+id/fijarCuadro"
