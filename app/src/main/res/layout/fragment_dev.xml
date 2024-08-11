@@ -16,7 +16,7 @@
             android:id="@+id/dias"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/dev_dias" />
+            android:hint="@string/varias_rangofecha" />
 
         <TextView
             android:id="@+id/recorr"

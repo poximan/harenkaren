@@ -17,8 +17,8 @@ android {
         minSdk 28
         targetSdk 31
         applicationId "phocidae.mirounga.leonina"
-        versionCode 20240627
-        versionName "julio24"
+        versionCode 20240811
+        versionName "ago24"
     }
 
     buildTypes {

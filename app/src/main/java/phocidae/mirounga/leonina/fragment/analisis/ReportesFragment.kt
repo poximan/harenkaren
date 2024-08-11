@@ -3,6 +3,10 @@ package phocidae.mirounga.leonina.fragment.analisis
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Matrix
+import android.media.ExifInterface
+import android.net.Uri
 import android.os.Bundle
 import android.print.PrintAttributes
 import android.print.PrintManager
@@ -15,6 +19,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.ScrollView
 import android.widget.Toast
@@ -56,7 +61,6 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
     private lateinit var scrollView: ScrollView
     private lateinit var webViewHeat: WebView
 
-    private lateinit var logo1: ImageView
     private lateinit var logo2: ImageView
 
     private lateinit var webViewTorta: WebView
@@ -75,7 +79,6 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
         webViewHeat.addJavascriptInterface(JavaScriptInterface(this, requireActivity()), "Android")
         mapota = ReporteMapa(webViewHeat, requireContext())
 
-        logo1 = binding.logo1
         logo2 = binding.logo2
 
         binding.rangoFechas.text = ": " + args.rangoFechas
@@ -106,8 +109,8 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
             false
         }
 
-        logo1.setOnClickListener { openFileChooser(DbConstants.PERMISSION_REQUEST_PICK_IMAGE1) }
-        logo2.setOnClickListener { openFileChooser(DbConstants.PERMISSION_REQUEST_PICK_IMAGE2) }
+        binding.imageViewSelector.setOnClickListener { imgMembrete()}
+        logo2.setOnClickListener { imgPortada() }
         binding.imprimirPdf.setOnClickListener { printPdf() }
 
         binding.fijarCuadro.setOnClickListener {
@@ -384,25 +387,137 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
         printManager.print(jobName, printAdapter, PrintAttributes.Builder().build())
     }
 
-    private fun openFileChooser(requestCode: Int) {
-        val intent = Intent(Intent.ACTION_GET_CONTENT)
-        intent.type = "image/*"
-        startActivityForResult(intent, requestCode)
+    private fun imgMembrete() {
+        val intent = Intent(Intent.ACTION_PICK).apply {
+            type = "image/*"
+            putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)  // Esto permite seleccionar múltiples imágenes
+        }
+        startActivityForResult(Intent.createChooser(intent, "Selecciona imágenes"), DbConstants.PERMISSION_REQUEST_PICK_IMAGE1)
+    }
+
+    private fun imgPortada() {
+        val intent = Intent(Intent.ACTION_PICK).apply {
+            type = "image/*"
+            putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)  // Esto permite seleccionar múltiples imágenes
+        }
+        startActivityForResult(Intent.createChooser(intent, "Selecciona imágenes"), DbConstants.PERMISSION_REQUEST_PICK_IMAGE2)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == AppCompatActivity.RESULT_OK && data != null && data.data != null) {
-            val uri = data.data
+        if (resultCode == AppCompatActivity.RESULT_OK && data != null) {
             when (requestCode) {
                 DbConstants.PERMISSION_REQUEST_PICK_IMAGE1 -> {
-                    logo1.setImageURI(uri)
-                }
+                    data?.let {
+                        if (it.clipData != null) {
 
+                            binding.linearLayoutImages.removeAllViews()
+
+                            for (i in 0 until it.clipData!!.itemCount) {
+                                val imageUri = it.clipData!!.getItemAt(i).uri
+                                addImageToLinearLayout(imageUri)
+                            }
+                        } else {
+                            it.data?.let { uri -> addImageToLinearLayout(uri) }
+                        }
+                    }
+                }
                 DbConstants.PERMISSION_REQUEST_PICK_IMAGE2 -> {
-                    logo2.setImageURI(uri)
+                    data?.data?.let { uri ->
+                        val resizedBitmap = getResizedBitmapForLogo(uri)
+                        binding.logo2.setImageBitmap(resizedBitmap)
+                    }
                 }
             }
         }
+    }
+
+    private fun addImageToLinearLayout(imageUri: Uri) {
+        val maxHeight = 80
+        val resizedBitmap = getResizedBitmap(imageUri, maxHeight)
+
+        val imageView = ImageView(requireContext()).apply {
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                maxHeight
+            ).apply {
+                marginEnd = 8 // Margen entre imágenes
+            }
+            adjustViewBounds = true // Mantiene la relación de aspecto
+            scaleType = ImageView.ScaleType.FIT_CENTER // Ajuste de la imagen al centro
+            setImageBitmap(resizedBitmap)
+        }
+        binding.linearLayoutImages.addView(imageView)
+    }
+
+    private fun getResizedBitmap(imageUri: Uri, maxHeight: Int): Bitmap? {
+        val options = BitmapFactory.Options().apply {
+            inJustDecodeBounds = true
+        }
+
+        // Primero, obtenemos las dimensiones del Bitmap original
+        val inputStream = requireContext().contentResolver.openInputStream(imageUri)
+        BitmapFactory.decodeStream(inputStream, null, options)
+        inputStream?.close()
+
+        // Calcular el factor de reducción (sample size)
+        options.inSampleSize = calculateInSampleSize(options, maxHeight)
+        options.inJustDecodeBounds = false
+
+        // Decodificar el Bitmap redimensionado
+        val resizedInputStream = requireContext().contentResolver.openInputStream(imageUri)
+        val resizedBitmap = BitmapFactory.decodeStream(resizedInputStream, null, options)
+        resizedInputStream?.close()
+
+        return resizedBitmap
+    }
+
+    private fun calculateInSampleSize(options: BitmapFactory.Options, maxHeight: Int): Int {
+        val height = options.outHeight
+        var inSampleSize = 1
+
+        if (height > maxHeight) {
+            val halfHeight = height / 2
+            while ((halfHeight / inSampleSize) >= maxHeight) {
+                inSampleSize *= 2
+            }
+        }
+        return inSampleSize
+    }
+
+    private fun getResizedBitmapForLogo(imageUri: Uri): Bitmap? {
+        // Abrir el InputStream de la imagen.
+        val inputStream = requireContext().contentResolver.openInputStream(imageUri) ?: return null
+        val originalBitmap = BitmapFactory.decodeStream(inputStream) ?: return null
+
+        // Corregir la orientación EXIF si es necesario.
+        val correctedBitmap = getCorrectedBitmap(originalBitmap, imageUri)
+
+        // Redimensionar la imagen.
+        val displayMetrics = resources.displayMetrics
+        val screenWidth = displayMetrics.widthPixels
+        val maxWidth = (screenWidth * 0.7).toInt()
+
+        val aspectRatio = correctedBitmap.width.toFloat() / correctedBitmap.height.toFloat()
+        val height = (maxWidth / aspectRatio).toInt()
+
+        return Bitmap.createScaledBitmap(correctedBitmap, maxWidth, height, true)
+    }
+
+    private fun getCorrectedBitmap(bitmap: Bitmap, imageUri: Uri): Bitmap {
+        val inputStream = requireContext().contentResolver.openInputStream(imageUri) ?: return bitmap
+        val exif = ExifInterface(inputStream)
+
+        return when (exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED)) {
+            ExifInterface.ORIENTATION_ROTATE_90 -> rotateBitmap(bitmap, 90f)
+            ExifInterface.ORIENTATION_ROTATE_180 -> rotateBitmap(bitmap, 180f)
+            ExifInterface.ORIENTATION_ROTATE_270 -> rotateBitmap(bitmap, 270f)
+            else -> bitmap
+        }
+    }
+
+    private fun rotateBitmap(bitmap: Bitmap, degrees: Float): Bitmap {
+        val matrix = Matrix().apply { postRotate(degrees) }
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
     }
 }

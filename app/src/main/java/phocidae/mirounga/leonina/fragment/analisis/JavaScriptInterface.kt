@@ -9,6 +9,10 @@ class JavaScriptInterface(
     private val listener: OnImageCapturedListener,
     private val activity: Activity
 ) {
+    /*
+    esto lo ejecuta el cliente webview, por eso figura gris la referencia.
+    ver webViewHeat.addJavascriptInterface(JavaScriptInterface(this....) en ReportesFragment
+     */
     @JavascriptInterface
     fun onImageCaptured(dataUrl: String) {
         val base64Image = dataUrl.split(",")[1]

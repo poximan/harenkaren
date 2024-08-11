@@ -128,12 +128,12 @@ class ImportarFragment : Fragment(), RegistroDistribuible, ListaImportable {
     ) {
         val texto: String = "${requireContext().getString(R.string.imp_mostrarResMsg1)} $lote, " +
                 "${requireContext().getString(R.string.imp_mostrarResMsg2)}\n" +
-                "${mapContador["dias"]} ${requireContext().getString(R.string.dev_dias)}, " +
+                "${mapContador["dias"]} ${requireContext().getString(R.string.varias_rangofecha)}, " +
                 "${mapContador["recorr"]} ${requireContext().getString(R.string.dev_recorr)} y " +
                 "${mapContador["unidsoc"]} ${requireContext().getString(R.string.dev_unsoc)}.\n" +
 
                 "${requireContext().getString(R.string.imp_mostrarResMsg3)}\n" +
-                "$diasInsert ${requireContext().getString(R.string.dev_dias)}, " +
+                "$diasInsert ${requireContext().getString(R.string.varias_rangofecha)}, " +
                 "$recorrInsert ${requireContext().getString(R.string.dev_recorr)} y " +
                 "$unSocInsert ${requireContext().getString(R.string.dev_unsoc)}"
 

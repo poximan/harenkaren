@@ -12,7 +12,8 @@
     <string name="varias_confirmar">Confirm</string>
     <string name="varias_lat">Latitude</string>
     <string name="varias_lon">Longitude</string>
-    <string name="varias_rangofecha">Date range</string>
+    <string name="varias_area">Sector covered</string>
+    <string name="varias_rangofecha">Dates</string>
 
     <!-- nav_drawer_menu -->
     <string name="mnu_importar">Import</string>
@@ -69,7 +70,6 @@
 
     <!-- fragment_dev -->
     <string name="dev_poblar">Populate DB</string>
-    <string name="dev_dias">Dates</string>
     <string name="dev_recorr">Routes</string>
     <string name="dev_unsoc">Social Units</string>
     <string name="dev_usr">Add user</string>
@@ -112,7 +112,7 @@
 
     <!-- fragment_osm -->
     <string name="osm_mapacalor">Heat map</string>
-    <string name="osm_menu">Categories</string>
+    <string name="osm_menu">Categ.</string>
 
     <!-- fragment_pto_obs_unsoc -->
     <string name="pto_alto">High</string>
@@ -120,7 +120,6 @@
 
     <!-- fragment_recorr_add -->
     <string name="rec_observador">Observer</string>
-    <string name="varias_area">Sector covered</string>
     <string name="rec_meteo">Weather conditions</string>
     <string name="rec_marea">Tide state</string>
     <string name="rec_observaciones">Observations</string>
@@ -332,7 +331,6 @@
     <string name="dia_noDiaTit">Add date</string>
     <string name="dia_noDiaMsg1">This list corresponds to dates from a year prior to the one we are spending</string>
     <string name="dia_noDiaMsg2">and therefore it is closed to add new entries, although you can see all its content</string>
-    <string name="dia_mostrarAyudaTit">Dates</string>
     <string name="dia_mostrarAyuda0">You have not added any date yet, so the list is empty. Click on (+) to add it</string>
     <string name="dia_mostrarAyuda1">Now there is only one date registered. When you add more, you will notice the list. Click on the existing date to manage its routes</string>
     <string name="dia_mostrarAyudaElse">Click on the row representing the date of interest to continue to its detail. There you can manage the routes associated with the selected date</string>

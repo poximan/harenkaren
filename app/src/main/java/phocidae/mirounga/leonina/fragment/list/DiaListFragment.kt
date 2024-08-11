@@ -149,7 +149,7 @@ class DiaListFragment : SuperList(), DiaListAdapter.OnDiaClickListener {
             }
 
             val builder = AlertDialog.Builder(requireContext())
-            builder.setTitle(context.getString(R.string.dia_mostrarAyudaTit))
+            builder.setTitle(context.getString(R.string.varias_rangofecha))
             builder.setMessage(
                 "${context.getString(R.string.dia_mostrarAyudaMarco)}\n$texto"
             )

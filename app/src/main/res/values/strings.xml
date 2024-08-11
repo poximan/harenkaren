@@ -18,7 +18,7 @@
     <string name="varias_lat">Latitud</string>
     <string name="varias_lon">Longitud</string>
     <string name="varias_area">Sector recorrido</string>
-    <string name="varias_rangofecha">Rango fechas</string>
+    <string name="varias_rangofecha">Fechas</string>
 
     <!-- nav_drawer_menu -->
     <string name="mnu_importar">Importar</string>
@@ -75,7 +75,6 @@
 
     <!-- fragment_dev -->
     <string name="dev_poblar">Poblar BD</string>
-    <string name="dev_dias">Fechas</string>
     <string name="dev_recorr">Recorridos</string>
     <string name="dev_unsoc">Unid.Sociales</string>
     <string name="dev_usr">Alta usr</string>
@@ -120,7 +119,7 @@
 
     <!-- fragment_osm -->
     <string name="osm_mapacalor">Mapa calor</string>
-    <string name="osm_menu">Categorias</string>
+    <string name="osm_menu">Categ.</string>
 
     <!-- fragment_pto_obs_unsoc -->
     <string name="pto_alto">Alto</string>
@@ -342,7 +341,6 @@
     <string name="dia_noDiaTit">Alta fecha</string>
     <string name="dia_noDiaMsg1">Esta lista corresponde a fechas de un año anterior al que estamos cursando</string>
     <string name="dia_noDiaMsg2">y por lo tanto esta cerrada para agregar nuevas entradas, aunque podes ver todo su contenido</string>
-    <string name="dia_mostrarAyudaTit">Fechas</string>
     <string name="dia_mostrarAyuda0">Aun no has agregado ninguna fecha, y por lo tanto la lista esta vacia. Hacé click en (+) para agregarlo</string>
     <string name="dia_mostrarAyuda1">Ahora hay una sola fecha dada de alta. Cuando agregues mas, notaras la lista. Hace click en el fecha existente para administrar sus recorridos</string>
     <string name="dia_mostrarAyudaElse">Hace click en la fila que representa la fecha de interes, para poder continuar a su detalle. Allí podrás adminstrar los recorridos asociados a la fecha que seleccionaste</string>

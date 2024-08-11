@@ -22,7 +22,7 @@ class PdfPrintDocumentAdapter(
 ) : PrintDocumentAdapter() {
 
     private var pdfDocument: PdfDocument? = null
-    private var pageWidth: Int = 0
+    private val pageWidth: Int = 595  // Ancho A4 en puntos (210 mm x 72 dpi)
     private var pageHeight: Int = 0
 
     override fun onLayout(
@@ -32,27 +32,26 @@ class PdfPrintDocumentAdapter(
         callback: LayoutResultCallback,
         extras: Bundle
     ) {
-        pdfDocument = PrintedPdfDocument(context, newAttributes)
-        /*
-        widthMils/1000: Convierte el tamaño del papel de milésimas de pulgada (como lo usa PrintAttributes) a pulgadas
-        se multiplica por 72 para convierte el tamaño de pulgadas a puntos. En la tipografía, un punto (pt) es 1/72 de una pulgada.
-         */
-        val widthMils = newAttributes.mediaSize!!.widthMils / 1000 * 108
-        val heightMils = newAttributes.mediaSize!!.heightMils / 1000 * 108
-        val pageInfo = PdfDocument.PageInfo.Builder(widthMils, heightMils, 1).create()
+        // Calcular la altura de la página basada en el contenido
+        pageHeight = getPageHeight()
 
-        pageWidth = pageInfo.pageWidth
-        pageHeight = pageInfo.pageHeight
-
-        if (cancellationSignal.isCanceled) {
+        // Verificar que el ancho y la altura sean válidos
+        if (pageWidth <= 0 || pageHeight <= 0) {
             callback.onLayoutCancelled()
             return
         }
+
+        pdfDocument = PrintedPdfDocument(context, newAttributes)
 
         val info = PrintDocumentInfo.Builder("Reporte.pdf")
             .setContentType(PrintDocumentInfo.CONTENT_TYPE_DOCUMENT)
             .setPageCount(PrintDocumentInfo.PAGE_COUNT_UNKNOWN)
             .build()
+
+        if (cancellationSignal.isCanceled) {
+            callback.onLayoutCancelled()
+            return
+        }
 
         callback.onLayoutFinished(info, true)
     }
@@ -65,26 +64,16 @@ class PdfPrintDocumentAdapter(
     ) {
         val bitmap = getBitmapFromView(scrollView, pageWidth)
 
-        val totalPages = (bitmap.height / pageHeight.toFloat()).toInt() + 1
-        for (i in 0 until totalPages) {
-            if (cancellationSignal.isCanceled) {
-                callback.onWriteCancelled()
-                pdfDocument!!.close()
-                pdfDocument = null
-                return
-            }
+        val pageInfo = PdfDocument.PageInfo.Builder(pageWidth, pageHeight, 1).create()
+        val page = pdfDocument!!.startPage(pageInfo)
 
-            val pageInfo = PdfDocument.PageInfo.Builder(pageWidth, pageHeight, i + 1).create()
-            val page = pdfDocument!!.startPage(pageInfo)
+        val canvas = page.canvas
+        val paint = Paint()
+        val srcRect = android.graphics.Rect(0, 0, bitmap.width, bitmap.height)
+        val destRect = android.graphics.Rect(0, 0, pageWidth, pageHeight)
 
-            val canvas = page.canvas
-            val paint = Paint()
-            val srcRect = android.graphics.Rect(0, i * pageHeight, pageWidth, (i + 1) * pageHeight)
-            val destRect = android.graphics.Rect(0, 0, pageWidth, pageHeight)
-
-            canvas.drawBitmap(bitmap, srcRect, destRect, paint)
-            pdfDocument!!.finishPage(page)
-        }
+        canvas.drawBitmap(bitmap, srcRect, destRect, paint)
+        pdfDocument!!.finishPage(page)
 
         try {
             pdfDocument!!.writeTo(FileOutputStream(destination.fileDescriptor))
@@ -104,12 +93,20 @@ class PdfPrintDocumentAdapter(
         val heightSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
 
         view.measure(widthSpec, heightSpec)
-        view.layout(0, 0, pageWidth, view.measuredHeight)
+        view.layout(0, 0, view.measuredWidth, view.measuredHeight)
 
         val bitmap =
             Bitmap.createBitmap(view.measuredWidth, view.measuredHeight, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
         view.draw(canvas)
         return bitmap
+    }
+
+    private fun getPageHeight(): Int {
+        // Ajusta la altura de la página según el contenido
+        val heightSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+        scrollView.measure(pageWidth, heightSpec)
+        scrollView.layout(0, 0, scrollView.measuredWidth, scrollView.measuredHeight)
+        return scrollView.measuredHeight
     }
 }

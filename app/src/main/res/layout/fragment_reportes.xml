@@ -10,6 +10,30 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <!-- membrete -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <!-- ImageView para seleccionar imágenes -->
+            <ImageView
+                android:id="@+id/imageViewSelector"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_placeholder"
+                android:clickable="true"
+                android:focusable="true" />
+
+            <!-- Contenedor de imágenes -->
+            <LinearLayout
+                android:id="@+id/linearLayoutImages"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:orientation="horizontal"/>
+        </LinearLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -30,27 +54,13 @@
                 android:src="@drawable/ic_print" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/logo1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_placeholder" />
-
-            <ImageView
-                android:id="@+id/logo2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_placeholder" />
-        </LinearLayout>
+        <ImageView
+            android:id="@+id/logo2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="fitCenter"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_placeholder" />
 
         <!-- titulo -->
         <TextView
