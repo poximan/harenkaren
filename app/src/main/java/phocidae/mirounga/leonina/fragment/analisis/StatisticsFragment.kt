@@ -17,8 +17,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import phocidae.mirounga.leonina.R
-import phocidae.mirounga.leonina.fragment.DevFragment
 import phocidae.mirounga.leonina.databinding.FragmentStatisticsBinding
+import phocidae.mirounga.leonina.fragment.DevFragment
 import phocidae.mirounga.leonina.model.Dia
 import phocidae.mirounga.leonina.model.Recorrido
 import phocidae.mirounga.leonina.model.UnidSocial

@@ -47,7 +47,12 @@ class RecorrRepository(private val dao: RecorrDAO) {
         return dao.getFechaObservada(idDia)
     }
 
-    fun getAllPorAnio(desde: String, hasta: String, unSocDAO: UnSocDAO, contexto: Context): List<UnidSocial> {
+    fun getAllPorAnio(
+        desde: String,
+        hasta: String,
+        unSocDAO: UnSocDAO,
+        contexto: Context
+    ): List<UnidSocial> {
 
         val unSocMutante = mutableListOf<UnidSocial>()
         val uuidgenerico = GestorUUID.obtenerUUID()

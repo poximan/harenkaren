@@ -19,11 +19,13 @@ import java.io.IOException
 class PdfPrintDocumentAdapter(
     private val context: Context,
     private val scrollView: View,
+    rangoFechas: String
 ) : PrintDocumentAdapter() {
 
     private var pdfDocument: PdfDocument? = null
     private val pageWidth: Int = 595  // Ancho A4 en puntos (210 mm x 72 dpi)
     private var pageHeight: Int = 0
+    private val rangoFechas = rangoFechas
 
     override fun onLayout(
         oldAttributes: PrintAttributes,
@@ -43,7 +45,7 @@ class PdfPrintDocumentAdapter(
 
         pdfDocument = PrintedPdfDocument(context, newAttributes)
 
-        val info = PrintDocumentInfo.Builder("Reporte.pdf")
+        val info = PrintDocumentInfo.Builder("Reporte ${rangoFechas}.pdf")
             .setContentType(PrintDocumentInfo.CONTENT_TYPE_DOCUMENT)
             .setPageCount(PrintDocumentInfo.PAGE_COUNT_UNKNOWN)
             .build()

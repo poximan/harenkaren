@@ -109,7 +109,7 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
             false
         }
 
-        binding.imageViewSelector.setOnClickListener { imgMembrete()}
+        binding.imageViewSelector.setOnClickListener { imgMembrete() }
         logo2.setOnClickListener { imgPortada() }
         binding.imprimirPdf.setOnClickListener { printPdf() }
 
@@ -180,6 +180,7 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
                 (activity as? HomeActivity)?.drawerLayout?.openDrawer(GravityCompat.START)
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -250,7 +251,8 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
             field.get(unSoc) as Int
         }
 
-        binding.contCategoria.text = requireContext().getString(R.string.rep_contCateg, atribString)+": $contCategoria"
+        binding.contCategoria.text =
+            requireContext().getString(R.string.rep_contCateg, atribString) + ": $contCategoria"
     }
 
     private fun tabFilaHaren(unSocList: List<UnidSocial>) {
@@ -380,7 +382,7 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
 
     private fun printPdf() {
         val printManager = requireContext().getSystemService(Context.PRINT_SERVICE) as PrintManager
-        val printAdapter = PdfPrintDocumentAdapter(requireContext(), scrollView)
+        val printAdapter = PdfPrintDocumentAdapter(requireContext(), scrollView, args.rangoFechas)
         val jobName =
             "${requireContext().applicationInfo.loadLabel(requireContext().packageManager)} Document"
 
@@ -390,17 +392,29 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
     private fun imgMembrete() {
         val intent = Intent(Intent.ACTION_PICK).apply {
             type = "image/*"
-            putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)  // Esto permite seleccionar múltiples imágenes
+            putExtra(
+                Intent.EXTRA_ALLOW_MULTIPLE,
+                true
+            )  // Esto permite seleccionar múltiples imágenes
         }
-        startActivityForResult(Intent.createChooser(intent, "Selecciona imágenes"), DbConstants.PERMISSION_REQUEST_PICK_IMAGE1)
+        startActivityForResult(
+            Intent.createChooser(intent, "Selecciona imágenes"),
+            DbConstants.PERMISSION_REQUEST_PICK_IMAGE1
+        )
     }
 
     private fun imgPortada() {
         val intent = Intent(Intent.ACTION_PICK).apply {
             type = "image/*"
-            putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)  // Esto permite seleccionar múltiples imágenes
+            putExtra(
+                Intent.EXTRA_ALLOW_MULTIPLE,
+                false
+            )  // Esto permite seleccionar múltiples imágenes
         }
-        startActivityForResult(Intent.createChooser(intent, "Selecciona imágenes"), DbConstants.PERMISSION_REQUEST_PICK_IMAGE2)
+        startActivityForResult(
+            Intent.createChooser(intent, "Selecciona imágenes"),
+            DbConstants.PERMISSION_REQUEST_PICK_IMAGE2
+        )
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -422,6 +436,7 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
                         }
                     }
                 }
+
                 DbConstants.PERMISSION_REQUEST_PICK_IMAGE2 -> {
                     data?.data?.let { uri ->
                         val resizedBitmap = getResizedBitmapForLogo(uri)
@@ -505,10 +520,14 @@ class ReportesFragment : Fragment(), OnImageCapturedListener {
     }
 
     private fun getCorrectedBitmap(bitmap: Bitmap, imageUri: Uri): Bitmap {
-        val inputStream = requireContext().contentResolver.openInputStream(imageUri) ?: return bitmap
+        val inputStream =
+            requireContext().contentResolver.openInputStream(imageUri) ?: return bitmap
         val exif = ExifInterface(inputStream)
 
-        return when (exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED)) {
+        return when (exif.getAttributeInt(
+            ExifInterface.TAG_ORIENTATION,
+            ExifInterface.ORIENTATION_UNDEFINED
+        )) {
             ExifInterface.ORIENTATION_ROTATE_90 -> rotateBitmap(bitmap, 90f)
             ExifInterface.ORIENTATION_ROTATE_180 -> rotateBitmap(bitmap, 180f)
             ExifInterface.ORIENTATION_ROTATE_270 -> rotateBitmap(bitmap, 270f)

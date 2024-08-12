@@ -131,7 +131,7 @@ class MapOSMAdapter(mapView: MapView, context: Context) : SuperMapa(), MapEvents
 
         if (unSoc.comentario != context.getString(R.string.osm_extini) &&
             unSoc.comentario != context.getString(R.string.osm_extfin)
-            ) {
+        ) {
             marker.icon = ContextCompat.getDrawable(context, R.drawable.ic_marker)
 
             val infoWindow = BarCharInfoWindow(
