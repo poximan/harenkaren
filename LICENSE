@@ -1,21 +1,30 @@
-MIT License
+Es una aplicacion desarrollada en el marco del proyecto
+“Variación temporal y espacial de la colonia de elefantes marinos del sur de Península Valdés”,
+para facilitar la recolección y manipulación de datos científicos relacionados con la observación de elefantes marinos en su ecosistema natural.
+Los datos generados y manipulados a través de esta aplicación son propiedad del Centro Nacional Patagónico (CENPAT)
+atraves del Grupo de Estudios de Macroecología Marina (GEMMA).
 
-Copyright (c) 2023 hugo
+El uso de estos datos está permitido exclusivamente con fines científicos
+y debe citar adecuadamente al CENPAT y al grupo GEMMA como las fuentes originales.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+Al utilizar esta aplicación, usted reconoce y acepta que:
+1) Está manipulando y generando datos científicos que son propiedad del CENPAT
+2) Debe citar correctamente al CENPAT y GEMMA para cualquier uso o publicación de estos datos
+3) El uso indebido de estos datos, asi como propagarlos sin las autorizacion pertinentes estará sujeto a sanciones
+conforme la Ley de Protección de Datos Personales (Ley N° 25.326) y Ley de Acceso a la Información Pública (Ley N° 27.275)
+vigentes en la Republica Argentina
+4) Los datos están sujetos a una licencia de uso abierta con atribución (Creative Commons Attribution 4.0 International License - CC BY 4.0).
+Esto significa que los datos pueden ser compartidos siempre y cuando se otorgue el crédito adecuado a los creadores,
+y se obtenga de estos su autorizacion
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+Copyright © 2024 Centro Nacional Patagónico (CENPAT). Todos los derechos reservados.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+El aviso de copyright anterior y este aviso de permiso se incluirán en todas
+las copias o partes sustanciales del Software.
+
+EL SOFTWARE SE PROPORCIONA "TAL CUAL", SIN GARANTÍA DE NINGÚN TIPO, EXPRESA O
+IMPLÍCITA, INCLUYENDO, ENTRE OTRAS, LAS GARANTÍAS DE COMERCIABILIDAD,
+ADECUACIÓN PARA UN PROPÓSITO PARTICULAR Y NO INFRACCIÓN.
+EN NINGÚN CASO LOS AUTORES O TITULARES DE LOS DERECHOS DE AUTOR SERÁN RESPONSABLES DE NINGUNA RECLAMACIÓN,
+DAÑO U OTRA RESPONSABILIDAD, YA SEA EN UNA ACCIÓN CONTRACTUAL, AGRAVIO O DE OTRO MODO,
+QUE SURJA DE, A PARTE DE, O EN CONEXIÓN CON EL SOFTWARE O EL USO, U OTRAS OPERACIONES EN EL SOFTWARE.
