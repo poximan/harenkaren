@@ -87,7 +87,7 @@
         app:layout_constraintTop_toBottomOf="@id/linearLayout3">
 
         <Button
-            android:id="@+id/medio_btn"
+            android:id="@+id/destinatarios_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

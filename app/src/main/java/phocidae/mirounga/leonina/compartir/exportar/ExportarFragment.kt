@@ -31,7 +31,7 @@ class ExportarFragment : Fragment() {
         _binding = FragmentExportarBinding.inflate(inflater, container, false)
 
         binding.emailBtn.setOnClickListener { enviarMedioExterno() }
-        binding.medioBtn.setOnClickListener { enviarConcentrador() }
+        binding.destinatariosBtn.setOnClickListener { enviarConcentrador() }
         binding.radioWifi.setOnClickListener { clickWF() }
 
         comWF = ExportarWF(requireContext())

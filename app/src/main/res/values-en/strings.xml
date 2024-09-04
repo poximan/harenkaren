@@ -284,8 +284,8 @@
     <string name="soc_confirmarEdit">Record edited correctly</string>
 
     <!-- AyudaFragment -->
-    <string name="ayu_diccionario" >Data Dictionary</string>
-    <string name="ayu_detallDicc" ></string>
+    <string name="ayu_diccionario">Data Dictionary</string>
+    <string name="ayu_detallDicc"></string>
 
     <string name="ayu_detalle1" formatted="true">Enter by pressing the button \"%1$s\"</string>
     <string name="ayu_detCenso1" formatted="true">

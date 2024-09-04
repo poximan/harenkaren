@@ -132,6 +132,7 @@ class LoginFragment : Fragment(), UsuarioCallback {
     fun getPrimaryAccount(): Account? {
         val accountManager = AccountManager.get(requireContext())
         val accounts = accountManager.accounts
+        
         // Aquí filtramos por el tipo de cuenta (por ejemplo, cuentas de Google)
         return accounts.firstOrNull { it.type == "com.google" }
     }

@@ -291,8 +291,8 @@
     <string name="soc_confirmarEdit">Registro editado correctamente</string>
 
     <!-- AyudaFragment -->
-    <string name="ayu_diccionario" >Diccionario de datos</string>
-    <string name="ayu_detallDicc" >
+    <string name="ayu_diccionario">Diccionario de datos</string>
+    <string name="ayu_detallDicc">
         Alta censo: el formulario de ingreso posee 3 solapas.
     </string>
 
