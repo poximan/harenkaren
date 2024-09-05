@@ -116,6 +116,7 @@ class MapsFragment : Fragment() {
 
     private fun lanzarMapa() {
         getInvolucrados() {
+
             if (it.isNullOrEmpty())
                 mensajeError()
             else {

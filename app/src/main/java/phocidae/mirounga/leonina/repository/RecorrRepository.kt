@@ -1,6 +1,7 @@
 package phocidae.mirounga.leonina.repository
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import phocidae.mirounga.leonina.R
 import phocidae.mirounga.leonina.dao.RecorrDAO
@@ -61,8 +62,8 @@ class RecorrRepository(private val dao: RecorrDAO) {
         for (punto in recorrList) {
 
             val unSocList =
-                unSocDAO.getEntreFechas(desde, hasta)
-                    .sortedWith(compareBy({ it.recorrId }, { it.orden }))
+                unSocDAO.getRecorrParciales(punto.id, desde, hasta)
+                    .sortedBy { it.orden }
 
             if (unSocList.isEmpty())
                 return unSocMutante

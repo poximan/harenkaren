@@ -119,6 +119,16 @@ interface UnSocDAO {
     fun getEntreFechas(desde: String, hasta: String): List<UnidSocial>
 
     @Query(
+        """
+        SELECT *
+        FROM unidsocial
+        WHERE date BETWEEN :desde AND :hasta
+        AND id_recorrido = :idRecorr
+    """
+    )
+    fun getRecorrParciales(idRecorr: UUID, desde: String, hasta: String): List<UnidSocial>
+
+    @Query(
         "SELECT \n" +
                 "    dia.id_celular AS celular_id,\n" +
                 "    dia.id AS dia_id,\n" +
