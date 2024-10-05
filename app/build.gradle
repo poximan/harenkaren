@@ -17,8 +17,8 @@ android {
         minSdk 28
         targetSdk 31
         applicationId "phocidae.mirounga.leonina"
-        versionCode 20240811
-        versionName "ago24"
+        versionCode 20241005
+        versionName "oct24"
     }
 
     buildTypes {
@@ -78,7 +78,6 @@ dependencies {
     annotationProcessor("androidx.room:room-compiler:$rootProject.roomVersion")
     kapt "androidx.room:room-compiler:$rootProject.roomVersion"
     implementation("androidx.room:room-ktx:$rootProject.roomVersion")
-    androidTestImplementation "androidx.room:room-testing:$rootProject.roomVersion"
 
     // lifecycle
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.1'

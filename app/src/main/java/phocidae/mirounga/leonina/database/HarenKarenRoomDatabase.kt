@@ -21,7 +21,6 @@ import phocidae.mirounga.leonina.model.Usuario
     version = 1,
     exportSchema = false
 )
-@TypeConverters(Converter::class)
 abstract class HarenKarenRoomDatabase : RoomDatabase() {
 
     abstract fun diaDao(): DiaDAO
