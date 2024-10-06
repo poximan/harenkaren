@@ -225,7 +225,7 @@
     </navigation>
     <fragment
         android:id="@+id/statistics_fragment"
-        android:name="phocidae.mirounga.leonina.fragment.analisis.StatisticsFragment"
+        android:name="phocidae.mirounga.leonina.fragment.reporte.StatisticsFragment"
         android:label="@string/nav_statistics_fragment"
         tools:layout="@layout/fragment_statistics">
         <argument
@@ -239,7 +239,7 @@
         tools:layout="@layout/fragment_osm" />
     <fragment
         android:id="@+id/reportes_fragment"
-        android:name="phocidae.mirounga.leonina.fragment.analisis.ReportesFragment"
+        android:name="phocidae.mirounga.leonina.fragment.reporte.ReportesFragment"
         android:label="@string/nav_reportes_fragment"
         tools:layout="@layout/fragment_reportes">
         <argument

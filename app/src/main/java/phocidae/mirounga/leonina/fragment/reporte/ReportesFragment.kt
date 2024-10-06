@@ -1,4 +1,4 @@
-package phocidae.mirounga.leonina.fragment.analisis
+package phocidae.mirounga.leonina.fragment.reporte
 
 import android.content.Context
 import android.content.Intent

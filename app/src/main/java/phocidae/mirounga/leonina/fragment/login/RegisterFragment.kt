@@ -1,4 +1,4 @@
-package phocidae.mirounga.leonina.fragment.register
+package phocidae.mirounga.leonina.fragment.login
 
 import android.os.Bundle
 import android.os.Handler
@@ -19,11 +19,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import phocidae.mirounga.leonina.R
 import phocidae.mirounga.leonina.databinding.FragmentRegisterBinding
-import phocidae.mirounga.leonina.fragment.login.UsuarioCallback
 import phocidae.mirounga.leonina.model.Usuario
 import phocidae.mirounga.leonina.viewModel.UsuarioViewModel
-
-private var visible: Boolean = false
 
 class RegisterFragment : Fragment(), UsuarioCallback {
 
@@ -31,6 +28,7 @@ class RegisterFragment : Fragment(), UsuarioCallback {
     private val binding get() = _binding!!
 
     private lateinit var usuarioViewModel: UsuarioViewModel
+    private var visible: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

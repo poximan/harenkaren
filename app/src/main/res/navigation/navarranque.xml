@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="phocidae.mirounga.leonina.fragment.register.RegisterFragment"
+        android:name="phocidae.mirounga.leonina.fragment.login.RegisterFragment"
         android:label="@string/nav_register_fragment"
         tools:layout="@layout/fragment_register" />
     <fragment
