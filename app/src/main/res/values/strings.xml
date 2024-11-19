@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Haren Karen</string>
+    <string name="app_name" translatable="false">MiroungApp</string>
 
     <string name="formato_dia" translatable="false">yyyy-MM-dd</string>
     <string name="formato_fecha" translatable="false">yyyy-MM-dd HH:mm:ss</string>
